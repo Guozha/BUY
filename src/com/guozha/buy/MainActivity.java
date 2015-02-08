@@ -1,4 +1,6 @@
-package com.guozha.wymc.buy;
+package com.guozha.buy;
+
+import com.guozha.wymc.buy.R;
 
 import android.app.Activity;
 import android.os.Bundle;
