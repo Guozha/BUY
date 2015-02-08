@@ -3,4 +3,9 @@
 
     <string name="app_name">我要买菜</string>
 
+    <string name="activity_main_tab1_title">首页</string>
+    <string name="activity_main_tab2_title">逛菜场</string>
+    <string name="activity_main_tab3_title">购物车</string>
+    <string name="activity_main_tab4_title">我的</string>
 </resources>
+

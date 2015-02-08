@@ -30,20 +30,33 @@ abstract class BaseActivity extends Activity{
 	 */
 	private void initActionBar(ActionBar actionbar){
 		if(actionbar == null) return;
-		customActionBarStyle(actionbar);
+		CharSequence title = actionbar.getTitle();
+		if(title == null){
+			customActionBarStyle(actionbar, null);
+		}else{
+			customActionBarStyle(actionbar, title.toString());
+		}
 	}
 	
 	/**
 	 * 自定义自己的ActionBar样式
 	 */
-	protected void customActionBarStyle(ActionBar actionbar){
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(true);
-		View customView = customActionBarView(R.layout.actionbar_base_view);
-		if(customView == null) return;
-		actionbar.setCustomView(customView);
+	protected void customActionBarStyle(ActionBar actionbar, String title){
+		if(title != null){
+			actionbar.setDisplayHomeAsUpEnabled(true);
+			actionbar.setDisplayShowHomeEnabled(true);
+			actionbar.setDisplayShowTitleEnabled(true);
+			actionbar.setDisplayShowCustomEnabled(false);
+			actionbar.setTitle(title);
+		}else{
+			actionbar.setDisplayHomeAsUpEnabled(false);
+			actionbar.setDisplayShowHomeEnabled(false);
+			actionbar.setDisplayShowTitleEnabled(false);
+			actionbar.setDisplayShowCustomEnabled(true);
+			View customView = customActionBarView(R.layout.actionbar_base_view);
+			if(customView == null) return;
+			actionbar.setCustomView(customView);
+		}
 	}
 	
 	/**
@@ -61,3 +74,5 @@ abstract class BaseActivity extends Activity{
 		return view;
 	}
 }
+
+	
