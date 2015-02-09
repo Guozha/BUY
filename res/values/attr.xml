@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--  ChangeColorIconWidthText -->
     <attr name="icon" format="reference"></attr>
     <attr name="color" format="color"></attr>
     <attr name="text" format="string"></attr>
@@ -13,4 +14,10 @@
         <attr name="text_size"></attr>
     </declare-styleable>
 
+    <!-- SlidingSwitcherView -->
+    <attr name="auto_play" forMymat="boolean" />
+
+    <declare-styleable name="SlidingSwitcherView">
+        <attr name="auto_play" />
+    </declare-styleable>
 </resources>
