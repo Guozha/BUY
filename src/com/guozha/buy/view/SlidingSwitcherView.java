@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.LogUtil;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -23,8 +24,19 @@ import android.widget.RelativeLayout;
  * @author Administrator
  *
  */
-public class SlidingSwitcherView extends RelativeLayout implements OnTouchListener {
+public class SlidingSwitcherView extends RelativeLayout{
 
+	/**
+	 * 自动滚动两次直接的时间间隔，单位ms
+	 */
+	public static final int SCORLL_GAP_TIME = 3000;
+	
+	/**
+	 * 过渡速度
+	 */
+	public static final int SCROLL_SPEED = 80;
+
+	
 	/**
 	 * 让菜单滚动，手指滑动需要达到的速度。
 	 */
@@ -100,6 +112,11 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 	 * 用于计算手指滑动的速度。
 	 */
 	private VelocityTracker mVelocityTracker;
+	
+	/**
+	 * 滚动任务
+	 */
+	private TimerTask mTimerTask;
 
 	/**
 	 * 重写SlidingSwitcherView的构造函数，用于允许在XML中引用当前的自定义布局。
@@ -121,56 +138,66 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 	 * 滚动到下一个元素。
 	 */
 	public void scrollToNext() {
-		new ScrollTask().execute(-20);
+		new ScrollTask().execute(-SCROLL_SPEED);
 	}
 
 	/**
 	 * 滚动到上一个元素。
 	 */
 	public void scrollToPrevious() {
-		new ScrollTask().execute(20);
+		new ScrollTask().execute(SCROLL_SPEED);
 	}
 
 	/**
 	 * 滚动到第一个元素。
 	 */
 	public void scrollToFirstItem() {
-		new ScrollToFirstItemTask().execute(20 * itemsCount);
+		new ScrollToFirstItemTask().execute(SCROLL_SPEED * itemsCount);
 	}
 
 	/**
 	 * 用于在定时器当中操作UI界面。
 	 */
 	private Handler handler = new Handler();
+	
+	
+	public void stopAutoPlay(){
+		if(mTimerTask != null){
+			mTimerTask.cancel();
+			mTimerTask = null;
+		}
+	}
 
 	/**
 	 * 开启图片自动播放功能，当滚动到最后一张图片的时候，会自动回滚到第一张图片。
 	 */
 	public void startAutoPlay() {
-		new Timer().scheduleAtFixedRate(new TimerTask() {
+		mTimerTask = new TimerTask() {
+			private int gap = 1;
 			@Override
 			public void run() {
-				if (currentItemIndex == itemsCount - 1) {
-					currentItemIndex = 0;
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							scrollToFirstItem();
-							refreshDotsLayout();
-						}
-					});
-				} else {
-					currentItemIndex++;
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							scrollToNext();
-							refreshDotsLayout();
-						}
-					});
+				if(currentItemIndex == itemsCount - Math.abs(gap)){
+					gap = -1;
+				}else if(currentItemIndex == 0){
+					gap = 1;
 				}
+				currentItemIndex += gap;
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						if(gap > 0){
+							scrollToNext();
+						}else{
+							scrollToPrevious();
+						}
+						refreshDotsLayout();
+					}
+				});
+				
+				LogUtil.d("auto play...");
 			}
-		}, 3000, 3000);
+		};
+		new Timer().scheduleAtFixedRate(mTimerTask, SCORLL_GAP_TIME, SCORLL_GAP_TIME);
 	}
 
 	/**
@@ -199,7 +226,7 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 			MarginLayoutParams params = (MarginLayoutParams) item.getLayoutParams();
 			params.width = switcherViewWidth;
 			item.setLayoutParams(params);
-			item.setOnTouchListener(this);
+			//item.setOnTouchListener(this);
 		}
 		leftEdge = borders[itemsCount - 1];
 		firstItem = itemsLayout.getChildAt(0);
@@ -214,7 +241,7 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 		refreshDotsLayout();
 	}
 
-	@Override
+/*	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		createVelocityTracker(event);
 		switch (event.getAction()) {
@@ -256,8 +283,8 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 			recycleVelocityTracker();
 			break;
 		}
-		return false;
-	}
+		return true;
+	}*/
 
 	/**
 	 * 当前是否能够滚动，滚动到第一个或最后一个元素时将不能再滚动。
@@ -453,7 +480,7 @@ public class SlidingSwitcherView extends RelativeLayout implements OnTouchListen
 				}
 				publishProgress(leftMargin);
 				// 为了要有滚动效果产生，每次循环使线程睡眠10毫秒，这样肉眼才能够看到滚动动画。
-				sleep(10);
+				sleep(20);
 			}
 			return leftMargin;
 		}

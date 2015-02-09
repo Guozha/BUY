@@ -184,6 +184,7 @@ public class MainActivity extends FragmentActivity{
 				left.setIconAlpha(1 - positionOffset);
 				right.setIconAlpha(positionOffset);
 			}
+			
 		}
 	}
 	

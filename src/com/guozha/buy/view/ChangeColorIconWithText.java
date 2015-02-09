@@ -114,6 +114,8 @@ public class ChangeColorIconWithText extends View {
 		mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
 	}
 
+	
+	private int left;
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -126,9 +128,20 @@ public class ChangeColorIconWithText extends View {
 				/ 2;
 		mIconRect.set(left, top, left + iconWidth, top + iconWidth);
 	}
+	
+	private int mViewWidth;
+	private int mViewHeight;
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		mViewWidth = w;
+		mViewHeight = h;
+	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		canvas.clipRect(0, 0, mViewWidth, mViewHeight);
+		
 		canvas.drawBitmap(mIconBitmap, null, mIconRect, null);
 
 		int alpha = (int) Math.ceil(255 * mAlpha);
