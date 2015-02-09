@@ -26,8 +26,8 @@
             android:padding="5dp"
             hyman:icon="@drawable/ic_menu_start_conversation"
             hyman:text="@string/activity_main_tab1_title"
-            hyman:text_size="12sp"
-            hyman:color="#ff45c01a" />
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:color="@color/main_bottom_tab_item_bg_color"/>
 
         <com.guozha.buy.view.ChangeColorIconWithText
             android:id="@+id/id_indicator_two"
@@ -37,8 +37,8 @@
             android:padding="5dp"
             hyman:icon="@drawable/ic_menu_friendslist"
             hyman:text="@string/activity_main_tab2_title"
-            hyman:text_size="12sp"
-            hyman:color="#ff45c01a" />
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:color="@color/main_bottom_tab_item_bg_color"/>
 
         <com.guozha.buy.view.ChangeColorIconWithText
             android:id="@+id/id_indicator_three"
@@ -48,8 +48,8 @@
             android:padding="5dp"
             hyman:icon="@drawable/ic_menu_emoticons"
             hyman:text="@string/activity_main_tab3_title"
-            hyman:text_size="12sp"
-            hyman:color="#ff45c01a" />
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:color="@color/main_bottom_tab_item_bg_color"/>
 
         <com.guozha.buy.view.ChangeColorIconWithText
             android:id="@+id/id_indicator_four"
@@ -59,7 +59,7 @@
             android:padding="5dp"
             hyman:icon="@drawable/ic_menu_allfriends"
             hyman:text="@string/activity_main_tab4_title"
-            hyman:text_size="12sp"
-            hyman:color="#ff45c01a" />
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:color="@color/main_bottom_tab_item_bg_color"/>
     </LinearLayout>
 </LinearLayout>

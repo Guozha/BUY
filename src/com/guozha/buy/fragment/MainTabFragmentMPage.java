@@ -15,6 +15,6 @@ public class MainTabFragmentMPage extends Fragment{
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
-		return inflater.inflate(R.layout.fragment_maintab_mpage, null);
+		return inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
 	}
 }

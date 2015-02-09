@@ -1,6 +1,5 @@
 package com.guozha.buy.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -20,14 +19,16 @@ import android.view.View;
 
 import com.guozha.buy.R;
 
+/**
+ * 可改变颜色的文字按钮
+ * @author Administrator
+ *
+ */
 public class ChangeColorIconWithText extends View {
-
-	private int mColor = 0xFF45C01A;
+	private int mColor;
 	private Bitmap mIconBitmap;
-	private String mText = "首页";
-	private int mTextSize = (int) TypedValue.applyDimension(
-			TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
-
+	private String mText;
+	private int mTextSize;
 	private Canvas mCanvas;
 	private Bitmap mBitmap;
 	private Paint mPaint;
@@ -36,10 +37,6 @@ public class ChangeColorIconWithText extends View {
 	private Rect mIconRect;
 	private Rect mTextBound;
 	private Paint mTextPaint;
-
-	public ChangeColorIconWithText(Context context){
-		this(context, null);
-	}
 
 	public ChangeColorIconWithText(Context context, AttributeSet attrs){
 		this(context, attrs, 0);
@@ -55,7 +52,29 @@ public class ChangeColorIconWithText extends View {
 	public ChangeColorIconWithText(Context context, AttributeSet attrs,
 			int defStyleAttr){
 		super(context, attrs, defStyleAttr);
-
+		initData(context);
+		initTabItem(context, attrs);
+		initView();
+	}
+	
+	/**
+	 * 初始化数据
+	 * @param context
+	 */
+	private void initData(Context context){
+		mIconRect = new Rect();
+		mTextSize = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
+		mColor = context.getResources().getColor(R.color.main_bottom_tab_item_bg_color);
+		mText = context.getResources().getString(R.string.activity_main_tab1_title);
+	}
+	
+	/**
+	 * 初始化Tab
+	 * @param context
+	 * @param attrs
+	 */
+	private void initTabItem(Context context, AttributeSet attrs){
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.ChangeColorIconWithText);
 
@@ -69,7 +88,7 @@ public class ChangeColorIconWithText extends View {
 				mIconBitmap = drawable.getBitmap();
 				break;
 			case R.styleable.ChangeColorIconWithText_color:
-				mColor = a.getColor(attr, 0xFF45C01A);
+				mColor = a.getColor(attr, mColor);
 				break;
 			case R.styleable.ChangeColorIconWithText_text:
 				mText = a.getString(attr);
@@ -81,17 +100,20 @@ public class ChangeColorIconWithText extends View {
 				break;
 			}
 		}
-
 		a.recycle();
-
+	}
+	
+	/**
+	 * 初始化View
+	 */
+	private void initView(){
 		mTextBound = new Rect();
 		mTextPaint = new Paint();
 		mTextPaint.setTextSize(mTextSize);
-		mTextPaint.setColor(0Xff555555);
+		mTextPaint.setColor(0Xffffff);
 		mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
 	}
 
-	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -102,7 +124,7 @@ public class ChangeColorIconWithText extends View {
 		int left = getMeasuredWidth() / 2 - iconWidth / 2;
 		int top = getMeasuredHeight() / 2 - (mTextBound.height() + iconWidth)
 				/ 2;
-		mIconRect = new Rect(left, top, left + iconWidth, top + iconWidth);
+		mIconRect.set(left, top, left + iconWidth, top + iconWidth);
 	}
 
 	@Override

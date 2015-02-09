@@ -14,6 +14,7 @@ public class MainTabFragmentGoods extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_maintab_goods, null);
+		
+		return inflater.inflate(R.layout.fragment_maintab_goods, container, false);
 	}
 }

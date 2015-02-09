@@ -49,6 +49,10 @@ public class MainActivity extends FragmentActivity{
 		mViewPager.setAdapter(mFragmentPagerAdapter);
 	}
 	
+	/**
+	 * 初始化ActionBar
+	 * @param actionbar
+	 */
 	private void initActionBar(ActionBar actionbar) {
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayShowHomeEnabled(false);
@@ -57,6 +61,9 @@ public class MainActivity extends FragmentActivity{
 		actionbar.setDisplayShowCustomEnabled(false);
 	}
 	
+	/**
+	 * 初始化Fragment
+	 */
 	private void initFragment(){
 		mFragments.add(new MainTabFragmentMPage());
 		mFragments.add(new MainTabFragmentGoods());
@@ -64,6 +71,9 @@ public class MainActivity extends FragmentActivity{
 		mFragments.add(new MainTabFragmentMine());
 	}
 	
+	/**
+	 * 初始化Tab
+	 */
 	private void initTabIndicators(){
 		ChangeColorIconWithText one = (ChangeColorIconWithText) findViewById(R.id.id_indicator_one);
 		mTabIndicators.add(one);
@@ -81,7 +91,12 @@ public class MainActivity extends FragmentActivity{
 
 		one.setIconAlpha(1.0f);
 	}
-
+	
+	/**
+	 * 底部Tab按下监听
+	 * @author Administrator
+	 *
+	 */
 	class ClickTabItemListener implements OnClickListener{
 		@Override
 		public void onClick(View view) {
@@ -101,12 +116,11 @@ public class MainActivity extends FragmentActivity{
 	/**
 	 * 点击Tab按钮
 	 * 
-	 * @param v
+	 * @param view
 	 */
-	private void clickTab(View v) {
+	private void clickTab(View view) {
 		resetOtherTabs();
-
-		switch (v.getId()) {
+		switch (view.getId()) {
 		case R.id.id_indicator_one:
 			mTabIndicators.get(0).setIconAlpha(1.0f);
 			mViewPager.setCurrentItem(0, false);
@@ -126,7 +140,11 @@ public class MainActivity extends FragmentActivity{
 		}
 	}
 
-	
+	/**
+	 * 主界面Fragment适配器
+	 * @author lixiaoqiang
+	 *
+	 */
 	class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
 		public MyFragmentPagerAdapter(FragmentManager fm) {
@@ -144,13 +162,18 @@ public class MainActivity extends FragmentActivity{
 		}
 	}
 	
-	
-	class PagerChangeListener implements OnPageChangeListener{
+	/**
+	 * 界面滑动监听
+	 * @author lixiaoqiang
+	 *
+	 */
+	class PagerChangeListener implements OnPageChangeListener{	
 
 		@Override
-		public void onPageScrollStateChanged(int arg0) {
-		
-		}
+		public void onPageScrollStateChanged(int arg0) { }
+
+		@Override
+		public void onPageSelected(int arg0) { }
 
 		@Override
 		public void onPageScrolled(int position, 
@@ -162,12 +185,6 @@ public class MainActivity extends FragmentActivity{
 				right.setIconAlpha(positionOffset);
 			}
 		}
-
-		@Override
-		public void onPageSelected(int arg0) {
-			
-		}
-		
 	}
 	
 }

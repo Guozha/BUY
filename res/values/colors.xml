@@ -3,9 +3,9 @@
     <!-- global -->
     <color name="app_base_text_color">#ffffff</color>
     
-    
     <color name="actionbar_title_color">#ffffff</color>
     <color name="main_bottom_tab_bg_color">#e9a22f</color>
+    <color name="main_bottom_tab_item_bg_color">#ffffff</color>
     
     <!-- actionBar -->
 	<color name="actionbar_bg_color">#e9a22f</color>
