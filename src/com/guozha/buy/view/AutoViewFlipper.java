@@ -279,4 +279,27 @@ public class AutoViewFlipper extends FrameLayout{
 		mViewFlipper.showNext();
 		setPointColorByCurrentItem();
 	}
+	
+	private OnSlopTouchListener mOnSlopTouchListener;
+	
+	/**
+	 * 监听滑动等事件
+	 * @author Administrator
+	 *
+	 */
+	interface OnSlopTouchListener{
+		
+		/**
+		 * touch事件响应
+		 */
+		public void onTouchedView();
+	}
+	
+	/**
+	 * 设置滑动等事件的监听
+	 * @param onSlopTouchListener
+	 */
+	public void setOnSlopTouchListener(OnSlopTouchListener onSlopTouchListener){
+		this.mOnSlopTouchListener = onSlopTouchListener;
+	}
 }

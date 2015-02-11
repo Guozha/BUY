@@ -23,8 +23,16 @@ public class MainTabFragmentMPage extends Fragment{
 		
 		mView = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
 		mAutoViewFlipper = 
-				(AutoViewFlipper) mView.findViewById(R.id.main_page_auto_flipper_view);
+				(AutoViewFlipper) mView.findViewById(R.id.main_page_auto_flipper_view);		
 		return mView;
+	}
+	
+	public int getBeginYPoint(){
+		return (int)mAutoViewFlipper.getY();
+	}
+	
+	public int getEndYPoint(){
+		return (int) mAutoViewFlipper.getY() + mAutoViewFlipper.getHeight();
 	}
 
 	/**

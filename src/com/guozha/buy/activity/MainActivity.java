@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +19,8 @@ import com.guozha.buy.fragment.MainTabFragmentGoods;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.view.ChangeColorIconWithText;
+import com.guozha.buy.view.CustomViewPager;
+import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
 
 /**
  * 应用主界面
@@ -28,12 +29,13 @@ import com.guozha.buy.view.ChangeColorIconWithText;
  */
 public class MainActivity extends FragmentActivity{
 	
-	private ViewPager mViewPager;
+	private CustomViewPager mCustomViewPager;
 	private MyFragmentPagerAdapter mFragmentPagerAdapter;
 	
 	private List<Fragment> mFragments = new ArrayList<Fragment>();
 	private List<ChangeColorIconWithText> mTabIndicators = new ArrayList<ChangeColorIconWithText>();
 	private ClickTabItemListener mClickTabItemListener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,10 +45,24 @@ public class MainActivity extends FragmentActivity{
 		initFragment();
 		initTabIndicators();
 		
-		mViewPager = (ViewPager) findViewById(R.id.main_viewpage);
-		mViewPager.setOnPageChangeListener(new PagerChangeListener());
+		mCustomViewPager = (CustomViewPager) findViewById(R.id.main_viewpage);
+		mCustomViewPager.setOnPageChangeListener(new PagerChangeListener());
 		mFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-		mViewPager.setAdapter(mFragmentPagerAdapter);
+		mCustomViewPager.setAdapter(mFragmentPagerAdapter);
+		
+		mCustomViewPager.setOnInterceptTouchListener(new OnInterceptTouchListener() {
+			
+			@Override
+			public boolean interceptTouched(float eventX, float eventY) {
+				MainTabFragmentMPage mainTabFragmentMPage = 
+						(MainTabFragmentMPage) mFragments.get(0);
+				if(mainTabFragmentMPage == null) return true;
+				int beginYPoint = mainTabFragmentMPage.getBeginYPoint();
+				int endYPoint = mainTabFragmentMPage.getEndYPoint();
+				if(eventY < beginYPoint || (eventY > endYPoint)) return true;
+				return false;
+			}
+		});
 	}
 	
 	/**
@@ -123,19 +139,19 @@ public class MainActivity extends FragmentActivity{
 		switch (view.getId()) {
 		case R.id.id_indicator_one:
 			mTabIndicators.get(0).setIconAlpha(1.0f);
-			mViewPager.setCurrentItem(0, false);
+			mCustomViewPager.setCurrentItem(0, false);
 			break;
 		case R.id.id_indicator_two:
 			mTabIndicators.get(1).setIconAlpha(1.0f);
-			mViewPager.setCurrentItem(1, false);
+			mCustomViewPager.setCurrentItem(1, false);
 			break;
 		case R.id.id_indicator_three:
 			mTabIndicators.get(2).setIconAlpha(1.0f);
-			mViewPager.setCurrentItem(2, false);
+			mCustomViewPager.setCurrentItem(2, false);
 			break;
 		case R.id.id_indicator_four:
 			mTabIndicators.get(3).setIconAlpha(1.0f);
-			mViewPager.setCurrentItem(3, false);
+			mCustomViewPager.setCurrentItem(3, false);
 			break;
 		}
 	}
@@ -187,5 +203,4 @@ public class MainActivity extends FragmentActivity{
 			
 		}
 	}
-	
 }
