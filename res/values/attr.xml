@@ -13,11 +13,4 @@
         <attr name="text"></attr>
         <attr name="text_size"></attr>
     </declare-styleable>
-
-    <!-- SlidingSwitcherView -->
-    <attr name="auto_play" forMymat="boolean" />
-
-    <declare-styleable name="SlidingSwitcherView">
-        <attr name="auto_play" />
-    </declare-styleable>
 </resources>

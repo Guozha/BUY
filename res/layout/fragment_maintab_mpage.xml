@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:myattr="http://schemas.android.com/apk/res/com.guozha.buy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -27,44 +25,12 @@
 	        android:src="@drawable/main_page_foodmenu_image"/>
 	</LinearLayout>
 	
-    <com.guozha.buy.view.SlidingSwitcherView
-        android:id="@+id/slidingLayout"
-        myattr:auto_play="true"
+	<com.guozha.buy.view.AutoViewFlipper
+        android:id="@+id/main_page_auto_flipper_view"
         android:layout_width="match_parent"
         android:layout_height="180dip" >
+	</com.guozha.buy.view.AutoViewFlipper>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal" >
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/main_page_scroll_image1" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/main_page_scroll_image2" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/main_page_scroll_image3" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="60dip"
-            android:layout_height="20dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="15dip"
-            android:orientation="horizontal" >
-        </LinearLayout>
-        
-    </com.guozha.buy.view.SlidingSwitcherView>
-    
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"

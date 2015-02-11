@@ -8,22 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guozha.buy.R;
-import com.guozha.buy.view.SlidingSwitcherView;
+import com.guozha.buy.view.AutoViewFlipper;
 
 public class MainTabFragmentMPage extends Fragment{
 
 	private static final String TAG = "MainTabFragmentMPage";
 
 	private View mView;
-	private SlidingSwitcherView mSlidingSwitcherView;
+	private AutoViewFlipper mAutoViewFlipper;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
 		mView = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
-		mSlidingSwitcherView = 
-				(SlidingSwitcherView) mView.findViewById(R.id.slidingLayout);
+		mAutoViewFlipper = 
+				(AutoViewFlipper) mView.findViewById(R.id.main_page_auto_flipper_view);
 		return mView;
 	}
 
@@ -31,16 +31,16 @@ public class MainTabFragmentMPage extends Fragment{
 	 * 自动滚动View停止
 	 */
 	public void stopSlideViewPlay(){
-		if(mSlidingSwitcherView == null) return;
-		mSlidingSwitcherView.stopAutoPlay();
+		if(mAutoViewFlipper == null) return;
+		mAutoViewFlipper.stopAutoPlay();
 	}
 	
 	/**
 	 * 自动滚动View开始
 	 */
 	public void startSlideViewPlay(){
-		if(mSlidingSwitcherView == null) return;
-		mSlidingSwitcherView.startAutoPlay();
+		if(mAutoViewFlipper == null) return;
+		mAutoViewFlipper.startAutoPlay();
 	}
 	
 	@Override
