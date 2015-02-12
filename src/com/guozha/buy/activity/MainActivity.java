@@ -32,9 +32,12 @@ public class MainActivity extends FragmentActivity{
 	private CustomViewPager mCustomViewPager;
 	private MyFragmentPagerAdapter mFragmentPagerAdapter;
 	
-	private List<Fragment> mFragments = new ArrayList<Fragment>();
-	private List<ChangeColorIconWithText> mTabIndicators = new ArrayList<ChangeColorIconWithText>();
 	private ClickTabItemListener mClickTabItemListener;
+	
+	private List<Fragment> mFragments = new ArrayList<Fragment>();
+	
+	private List<ChangeColorIconWithText> mTabIndicators = 
+			new ArrayList<ChangeColorIconWithText>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,13 @@ public class MainActivity extends FragmentActivity{
 		initActionBar(getActionBar());
 		initFragment();
 		initTabIndicators();
-		
+		initViewPager();
+	}
+
+	/**
+	 * 初始化ViewPager
+	 */
+	private void initViewPager() {
 		mCustomViewPager = (CustomViewPager) findViewById(R.id.main_viewpage);
 		mCustomViewPager.setOnPageChangeListener(new PagerChangeListener());
 		mFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -91,14 +100,19 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化Tab
 	 */
 	private void initTabIndicators(){
-		ChangeColorIconWithText one = (ChangeColorIconWithText) findViewById(R.id.id_indicator_one);
+		ChangeColorIconWithText one = 
+				(ChangeColorIconWithText) findViewById(R.id.id_indicator_one);
 		mTabIndicators.add(one);
-		ChangeColorIconWithText two = (ChangeColorIconWithText) findViewById(R.id.id_indicator_two);
+		ChangeColorIconWithText two = 
+				(ChangeColorIconWithText) findViewById(R.id.id_indicator_two);
 		mTabIndicators.add(two);
-		ChangeColorIconWithText three = (ChangeColorIconWithText) findViewById(R.id.id_indicator_three);
+		ChangeColorIconWithText three = 
+				(ChangeColorIconWithText) findViewById(R.id.id_indicator_three);
 		mTabIndicators.add(three);
-		ChangeColorIconWithText four = (ChangeColorIconWithText) findViewById(R.id.id_indicator_four);
+		ChangeColorIconWithText four = 
+				(ChangeColorIconWithText) findViewById(R.id.id_indicator_four);
 		mTabIndicators.add(four);
+		
 		mClickTabItemListener = new ClickTabItemListener();
 		one.setOnClickListener(mClickTabItemListener);
 		two.setOnClickListener(mClickTabItemListener);
@@ -135,7 +149,9 @@ public class MainActivity extends FragmentActivity{
 	 * @param view
 	 */
 	private void clickTab(View view) {
+		
 		resetOtherTabs();
+		
 		switch (view.getId()) {
 		case R.id.id_indicator_one:
 			mTabIndicators.get(0).setIconAlpha(1.0f);
@@ -194,13 +210,12 @@ public class MainActivity extends FragmentActivity{
 		@Override
 		public void onPageScrolled(int position, 
 				float positionOffset, int positionOffsetPixels) {
-			if (positionOffset > 0) {
-				ChangeColorIconWithText left = mTabIndicators.get(position);
-				ChangeColorIconWithText right = mTabIndicators.get(position + 1);
-				left.setIconAlpha(1 - positionOffset);
-				right.setIconAlpha(positionOffset);
-			}
+			if(positionOffset <= 0) return;
 			
+			ChangeColorIconWithText left = mTabIndicators.get(position);
+			ChangeColorIconWithText right = mTabIndicators.get(position + 1);
+			left.setIconAlpha(1 - positionOffset);
+			right.setIconAlpha(positionOffset);
 		}
 	}
 }
