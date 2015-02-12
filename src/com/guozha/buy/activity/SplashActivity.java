@@ -20,6 +20,7 @@ public class SplashActivity extends BaseActivity{
 	private static final int MSG_TURN_MAIN = 0x0002;  //×ªÏòMainActivity
 	
 	private long mInitStartTime;
+	private boolean mHasInit;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -46,13 +47,17 @@ public class SplashActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		
+		mHasInit = false;
 	}
 	
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		LogUtil.e("onWindowFocusChanged");
-		handler.sendEmptyMessage(MSG_START_INIT);
+		if(hasFocus && !mHasInit){
+			handler.sendEmptyMessage(MSG_START_INIT);
+		}
 	}
 	
 	/**

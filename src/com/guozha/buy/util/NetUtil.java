@@ -27,8 +27,8 @@ import com.android.volley.toolbox.Volley;
  */
 public class NetUtil {
 	
-	private RequestQueue mQueue;
-	private Response.ErrorListener errorListener;
+	private RequestQueue mQueue;	//请求队列
+	private Response.ErrorListener errorListener;  //错误消息监听
 	private static NetUtil mNetUtil;
 	
 	private NetUtil(Context context){
@@ -93,12 +93,15 @@ public class NetUtil {
 	}
 	
 	
+	/**
+	 * 请求图片资源
+	 * @param url
+	 * @param responsListener
+	 */
 	public void volleyImageRequest(String url, Listener<Bitmap> responsListener){
 		ImageRequest imageRequest = 		//第三、四个参数，如果设置为0则默认不压缩，否则会压缩
 				new ImageRequest(url, responsListener, 0, 0, Config.ARGB_8888, errorListener);
 		mQueue.add(imageRequest);
-		
-
 	}
 	
 	/**

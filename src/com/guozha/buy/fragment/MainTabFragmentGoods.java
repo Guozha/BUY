@@ -1,6 +1,7 @@
 package com.guozha.buy.fragment;
 
 import com.guozha.buy.R;
+import com.guozha.buy.view.GoodsUpDownViewGroup;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MainTabFragmentGoods extends Fragment{
+	
+	private View mView;
+	private GoodsUpDownViewGroup mGoodsUpDownView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
-		return inflater.inflate(R.layout.fragment_maintab_goods, container, false);
+		mView = inflater.inflate(R.layout.fragment_maintab_goods, container, false);
+		mGoodsUpDownView = (GoodsUpDownViewGroup) 
+				mView.findViewById(R.id.goods_page_updown_view);
+		
+		return mView;
 	}
 }

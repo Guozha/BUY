@@ -1,5 +1,7 @@
 package com.guozha.buy.view;
 
+import com.guozha.buy.util.LogUtil;
+
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -19,6 +21,7 @@ public class CustomViewPager extends ViewPager{
 	
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event) {
+		LogUtil.e("customViewPager_onInterceptTouchEvent");
 		boolean isValidate = mOnInterceptTouchListener.interceptTouched(
 				event.getY(), event.getY());
 		if(isValidate){ //À¹½Ø

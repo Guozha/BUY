@@ -1,6 +1,7 @@
 package com.guozha.buy.util;
 
 import android.content.Context;
+import android.view.View;
 import android.view.WindowManager;
 
 /**
@@ -36,5 +37,16 @@ public class DimenUtil {
 	    screenDimen[1] = height;
 	    
 	    return screenDimen;
+	}
+	
+	/**
+	 * 获取View相对于屏幕的圆点坐标
+	 * @param view
+	 * @return
+	 */
+	public static int[] getViewOriginPoint(View view){
+		int[] location = new int[2];  
+	    view.getLocationOnScreen(location); 
+	    return location;
 	}
 }
