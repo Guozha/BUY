@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 public class MainTabFragmentGoods extends Fragment{
 	
+	private int mMaxDataNum;
+	
 	private View mView;
 	private GoodsUpDownViewGroup mGoodsUpDownView;
 
@@ -22,7 +24,17 @@ public class MainTabFragmentGoods extends Fragment{
 		mView = inflater.inflate(R.layout.fragment_maintab_goods, container, false);
 		mGoodsUpDownView = (GoodsUpDownViewGroup) 
 				mView.findViewById(R.id.goods_page_updown_view);
-		
 		return mView;
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(getUserVisibleHint()){
+			//View可见
+		}else{
+			//View不可见
+			
+		}
 	}
 }

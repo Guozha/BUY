@@ -2,7 +2,6 @@ package com.guozha.buy.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -58,13 +57,6 @@ public class GoodsUpDownViewGroup extends ViewGroup{
 		addView(mCenterView);
 	}
 	
-	/**
-	 * …Ë÷√Œ™≥ı º◊¥Ã¨
-	 */
-	public void setOriginStatus(){
-		moveToBottom();
-	}
-	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		mCenterView.layout(0, 0, mViewWidth, mViewHeight);
@@ -81,12 +73,7 @@ public class GoodsUpDownViewGroup extends ViewGroup{
 		super.onSizeChanged(w, h, oldw, oldh);
 		mViewHeight = h;
 		mViewWidth = w;
-	}
-	
-	@Override
-	public void onWindowFocusChanged(boolean hasWindowFocus) {
-		super.onWindowFocusChanged(hasWindowFocus);
-		//setOriginStatus();
+		moveToBottom();
 	}
 	
 	private float mOldY;

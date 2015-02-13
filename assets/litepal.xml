@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<litepal>  
+    <!-- 设置为数据库名称 -->
+    <dbname value="demo" ></dbname>  
+  	<!-- 设置数据库版本号 -->
+    <version value="1" ></version>  
+    
+    <!-- 映射模型 -->
+    <list>  
+        <mapping class="com.guozha.buy.entry.VegetableInfo"></mapping>
+    </list>  
+</litepal>
