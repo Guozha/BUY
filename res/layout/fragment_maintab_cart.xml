@@ -9,4 +9,10 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="page3"/>
+    
+    <Button 
+        android:id="@+id/turn_to_debugpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="进入Debug界面"/>
 </LinearLayout>

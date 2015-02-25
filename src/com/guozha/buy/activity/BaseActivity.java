@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.guozha.buy.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Activity的基类
@@ -70,6 +71,16 @@ abstract class BaseActivity extends Activity{
 			e.printStackTrace();
 		}
 		return view;
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();	
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
 	}
 }
 

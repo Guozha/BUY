@@ -6,7 +6,8 @@ import android.os.Handler;
 import android.os.SystemClock;
 
 import com.guozha.buy.R;
-import com.guozha.buy.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  * 闪屏界面
@@ -14,6 +15,8 @@ import com.guozha.buy.util.LogUtil;
  *
  */
 public class SplashActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "SplashPage";
 	
 	private static final int SPLASH_TIME = 2000; //闪屏持续时间
 	private static final int MSG_START_INIT = 0x0001;  //开始初始化
@@ -49,12 +52,21 @@ public class SplashActivity extends BaseActivity{
 		setContentView(R.layout.activity_splash);
 		
 		mHasInit = false;
+		
+		//友盟统计设置为debug模式
+		//TODO 在发布的时候注意修改
+		MobclickAgent.setDebugMode(true);
+		//禁止默认的页面统计方式
+		MobclickAgent.openActivityDurationTrack(false);
+		//友盟自动更新
+		UmengUpdateAgent.update(this);
+		//友盟静默更新
+		//UmengUpdateAgent.silentUpdate(this);
 	}
 	
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		LogUtil.e("onWindowFocusChanged");
 		if(hasFocus && !mHasInit){
 			handler.sendEmptyMessage(MSG_START_INIT);
 		}

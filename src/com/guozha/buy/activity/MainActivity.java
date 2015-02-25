@@ -21,6 +21,7 @@ import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 应用主界面
@@ -217,5 +218,21 @@ public class MainActivity extends FragmentActivity{
 			left.setIconAlpha(1 - positionOffset);
 			right.setIconAlpha(positionOffset);
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//友盟统计
+		//TODO 注意给其他界面添加友盟统计事件
+		//官方参考 http://dev.umeng.com/analytics/android-doc/integration
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		//友盟统计
+		MobclickAgent.onPause(this);
 	}
 }
