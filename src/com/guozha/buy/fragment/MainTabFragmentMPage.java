@@ -36,7 +36,7 @@ public class MainTabFragmentMPage extends Fragment{
 	}
 
 	/**
-	 * ×Ô¶¯¹ö¶¯ViewÍ£Ö¹
+	 * è‡ªåŠ¨æ»šåŠ¨Viewåœæ­¢
 	 */
 	public void stopSlideViewPlay(){
 		if(mAutoViewFlipper == null) return;
@@ -44,7 +44,7 @@ public class MainTabFragmentMPage extends Fragment{
 	}
 	
 	/**
-	 * ×Ô¶¯¹ö¶¯View¿ªÊ¼
+	 * è‡ªåŠ¨æ»šåŠ¨Viewå¼€å§‹
 	 */
 	public void startSlideViewPlay(){
 		if(mAutoViewFlipper == null) return;
@@ -55,10 +55,10 @@ public class MainTabFragmentMPage extends Fragment{
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
-			//View¿É¼û
+			//Viewå¯è§
 			startSlideViewPlay();
 		}else{
-			//View²»¿É¼û
+			//Viewä¸å¯è§
 			stopSlideViewPlay();
 		}
 	}

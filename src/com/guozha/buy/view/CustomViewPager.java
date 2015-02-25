@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * ÖØĞ´ViewPager(ÔİÊ±Ä¿µÄÊÇÎªÁËÀ¹½ØÊÂ¼ş)Oss
+ * é‡å†™ViewPager(æš‚æ—¶ç›®çš„æ˜¯ä¸ºäº†æ‹¦æˆªäº‹ä»¶)Oss
  * @author Administrator
  *
  */
@@ -24,7 +24,7 @@ public class CustomViewPager extends ViewPager{
 		LogUtil.e("customViewPager_onInterceptTouchEvent");
 		boolean isValidate = mOnInterceptTouchListener.interceptTouched(
 				event.getY(), event.getY());
-		if(isValidate){ //À¹½Ø
+		if(isValidate){ //æ‹¦æˆª
 			return super.onInterceptTouchEvent(event);
 		}else{
 			return false;
@@ -34,7 +34,7 @@ public class CustomViewPager extends ViewPager{
 	private OnInterceptTouchListener mOnInterceptTouchListener;
 	
 	/**
-	 * ¶ÔÍâÌá¹©µÄÊÂ¼şÀ¹½Ø½Ó¿Ú
+	 * å¯¹å¤–æä¾›çš„äº‹ä»¶æ‹¦æˆªæ¥å£
 	 * @author Administrator
 	 *
 	 */
@@ -43,7 +43,7 @@ public class CustomViewPager extends ViewPager{
 	}
 	
 	/**
-	 * ¶ÔInterceptTouchÊÂ¼şµÄ»Øµ÷£¨ÓÃÓÚÅĞ¶Ï×ø±ê£©
+	 * å¯¹InterceptTouchäº‹ä»¶çš„å›è°ƒï¼ˆç”¨äºåˆ¤æ–­åæ ‡ï¼‰
 	 * @param onInterceptTouchListener
 	 */
 	public void setOnInterceptTouchListener(OnInterceptTouchListener onInterceptTouchListener){

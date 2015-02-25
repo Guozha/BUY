@@ -14,7 +14,7 @@ import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
 
 /**
- * Ö÷ÊÓÍ¼¿ÉÉÏÏÂÀ­µÄÊÓÍ¼×é
+ * ä¸»è§†å›¾å¯ä¸Šä¸‹æ‹‰çš„è§†å›¾ç»„
  * @author Administrator
  *
  */
@@ -48,7 +48,7 @@ public class GoodsUpDownViewGroup extends ViewGroup{
 	}
 	
 	/**
-	 * Ìí¼ÓÊÓÍ¼
+	 * æ·»åŠ è§†å›¾
 	 */
 	private void addCenterView(){
 		View view = new ShopCarDownBar(context);
@@ -156,7 +156,7 @@ public class GoodsUpDownViewGroup extends ViewGroup{
 	}
 
 	/**
-	 * ÏòÏÂÒÆ¶¯
+	 * å‘ä¸‹ç§»åŠ¨
 	 */
 	private void moveToBottom(){
 		int dy = DimenUtil.getViewOriginPoint(mCenterView)[1] - 
@@ -166,7 +166,7 @@ public class GoodsUpDownViewGroup extends ViewGroup{
 	}
 	
 	/**
-	 * ÏòÉÏÒÆ¶¯
+	 * å‘ä¸Šç§»åŠ¨
 	 */
 	private void moveToTop(){
 		int dy = DimenUtil.getViewOriginPoint(mCenterView)[1] - mViewPointY;

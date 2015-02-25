@@ -9,15 +9,15 @@ import com.guozha.buy.R;
 import com.guozha.buy.util.LogUtil;
 
 /**
- * 闪屏界面
+ * 闂睆鐣岄潰
  * @author lixiaoqiang
  *
  */
 public class SplashActivity extends BaseActivity{
 	
-	private static final int SPLASH_TIME = 2000; //闪屏持续时间
-	private static final int MSG_START_INIT = 0x0001;  //开始初始化
-	private static final int MSG_TURN_MAIN = 0x0002;  //转向MainActivity
+	private static final int SPLASH_TIME = 2000; //闂睆鎸佺画鏃堕棿
+	private static final int MSG_START_INIT = 0x0001;  //寮�濮嬪垵濮嬪寲
+	private static final int MSG_TURN_MAIN = 0x0002;  //杞悜MainActivity
 	
 	private long mInitStartTime;
 	private boolean mHasInit;
@@ -61,7 +61,7 @@ public class SplashActivity extends BaseActivity{
 	}
 	
 	/**
-	 * 跳转到主界面
+	 * 璺宠浆鍒颁富鐣岄潰
 	 */
 	private void turnMainActivity(){
 		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
@@ -70,10 +70,10 @@ public class SplashActivity extends BaseActivity{
 	}
 	
 	/**
-	 * 做初始化操作
+	 * 鍋氬垵濮嬪寲鎿嶄綔
 	 */
 	private void doInit(){
-		//TODO 做一些业务逻辑（比如加载资源）
+		//TODO 鍋氫竴浜涗笟鍔￠�昏緫锛堟瘮濡傚姞杞借祫婧愶級
 		
 	}
 }

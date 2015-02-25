@@ -20,7 +20,7 @@ import android.view.View;
 import com.guozha.buy.R;
 
 /**
- * ¿É¸Ä±äÑÕÉ«µÄÎÄ×Ö°´Å¥
+ * å¯æ”¹å˜é¢œè‰²çš„æ–‡å­—æŒ‰é’®
  * @author Administrator
  *
  */
@@ -43,7 +43,7 @@ public class ChangeColorIconWithText extends View {
 	}
 
 	/**
-	 * »ñÈ¡×Ô¶¨ÒåÊôĞÔµÄÖµ
+	 * è·å–è‡ªå®šä¹‰å±æ€§çš„å€¼
 	 * 
 	 * @param context
 	 * @param attrs
@@ -58,7 +58,7 @@ public class ChangeColorIconWithText extends View {
 	}
 	
 	/**
-	 * ³õÊ¼»¯Êı¾İ
+	 * åˆå§‹åŒ–æ•°æ®
 	 * @param context
 	 */
 	private void initData(Context context){
@@ -70,7 +70,7 @@ public class ChangeColorIconWithText extends View {
 	}
 	
 	/**
-	 * ³õÊ¼»¯Tab
+	 * åˆå§‹åŒ–Tab
 	 * @param context
 	 * @param attrs
 	 */
@@ -104,7 +104,7 @@ public class ChangeColorIconWithText extends View {
 	}
 	
 	/**
-	 * ³õÊ¼»¯View
+	 * åˆå§‹åŒ–View
 	 */
 	private void initView(){
 		mTextBound = new Rect();
@@ -146,9 +146,9 @@ public class ChangeColorIconWithText extends View {
 
 		int alpha = (int) Math.ceil(255 * mAlpha);
 
-		// ÄÚ´æÈ¥×¼±¸mBitmap , setAlpha , ´¿É« £¬xfermode £¬ Í¼±ê
+		// å†…å­˜å»å‡†å¤‡mBitmap , setAlpha , çº¯è‰² ï¼Œxfermode ï¼Œ å›¾æ ‡
 		setupTargetBitmap(alpha);
-		// 1¡¢»æÖÆÔ­ÎÄ±¾ £» 2¡¢»æÖÆ±äÉ«µÄÎÄ±¾
+		// 1ã€ç»˜åˆ¶åŸæ–‡æœ¬ ï¼› 2ã€ç»˜åˆ¶å˜è‰²çš„æ–‡æœ¬
 		drawSourceText(canvas, alpha);
 		drawTargetText(canvas, alpha);
 		
@@ -156,7 +156,7 @@ public class ChangeColorIconWithText extends View {
 	}
 
 	/**
-	 * »æÖÆ±äÉ«µÄÎÄ±¾
+	 * ç»˜åˆ¶å˜è‰²çš„æ–‡æœ¬
 	 * 
 	 * @param canvas
 	 * @param alpha
@@ -170,7 +170,7 @@ public class ChangeColorIconWithText extends View {
 	}
 
 	/**
-	 * »æÖÆÔ­ÎÄ±¾
+	 * ç»˜åˆ¶åŸæ–‡æœ¬
 	 * 
 	 * @param canvas
 	 * @param alpha
@@ -184,7 +184,7 @@ public class ChangeColorIconWithText extends View {
 	}
 
 	/**
-	 * ÔÚÄÚ´æÖĞ»æÖÆ¿É±äÉ«µÄIcon
+	 * åœ¨å†…å­˜ä¸­ç»˜åˆ¶å¯å˜è‰²çš„Icon
 	 */
 	private void setupTargetBitmap(int alpha) {
 		mBitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(),
@@ -229,7 +229,7 @@ public class ChangeColorIconWithText extends View {
 	}
 
 	/**
-	 * ÖØ»æ
+	 * é‡ç»˜
 	 */
 	private void invalidateView() {
 		if (Looper.getMainLooper() == Looper.myLooper()) {

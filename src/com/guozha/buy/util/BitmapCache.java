@@ -6,7 +6,7 @@ import android.support.v4.util.LruCache;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
 /**
- * ÊµÏÖÍ¼Æ¬µÄ»º´æ
+ * å®ç°å›¾ç‰‡çš„ç¼“å­˜
  * @author Administrator
  *
  */
@@ -15,7 +15,7 @@ public class BitmapCache implements ImageCache{
 	private LruCache<String, Bitmap> mCache;
 	
 	public BitmapCache(){
-		//Í¼Æ¬µÄ»º´æ´óĞ¡£¨¿Õ¼ä£©ÉèÖÃÎª10M
+		//å›¾ç‰‡çš„ç¼“å­˜å¤§å°ï¼ˆç©ºé—´ï¼‰è®¾ç½®ä¸º10M
 		int maxSize = 10 * 1024 * 1024;  
 		mCache = new LruCache<String, Bitmap>(maxSize) {  
             @Override  

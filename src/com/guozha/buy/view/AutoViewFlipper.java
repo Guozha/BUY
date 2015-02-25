@@ -24,17 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
 /**
- * ×Ô¶¨²¥·ÅÍ¼Æ¬View
+ * è‡ªå®šæ’­æ”¾å›¾ç‰‡View
  * @author lixiaoqiang
  *
  */
 public class AutoViewFlipper extends FrameLayout{
-	private static final int SLOP_DELAY_TIME = 3000; //»¬¶¯µÈ´ıÊ±¼ä£¬µ¥Î»ms
-	private ViewFlipper mViewFlipper;       //»¬¶¯µÄÊÓÍ¼
-	private View mPointBar;					//Ö¸Ê¾µãÏÔÊ¾Ìõ
-	private int mItemCount;  				//ÌõÄ¿Êı
-	private int mCurrentItem;				//µ±Ç°µÄÌõÄ¿
-	private int mTouchSlop;					//ÓĞĞ§×î¶Ì»¬¶¯¾àÀë
+	private static final int SLOP_DELAY_TIME = 3000; //æ»‘åŠ¨ç­‰å¾…æ—¶é—´ï¼Œå•ä½ms
+	private ViewFlipper mViewFlipper;       //æ»‘åŠ¨çš„è§†å›¾
+	private View mPointBar;					//æŒ‡ç¤ºç‚¹æ˜¾ç¤ºæ¡
+	private int mItemCount;  				//æ¡ç›®æ•°
+	private int mCurrentItem;				//å½“å‰çš„æ¡ç›®
+	private int mTouchSlop;					//æœ‰æ•ˆæœ€çŸ­æ»‘åŠ¨è·ç¦»
 	private Context context;
 	private List<ImageView> points = new ArrayList<ImageView>();
 	
@@ -63,7 +63,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * Í£Ö¹×Ô¶¯²¥·Å
+	 * åœæ­¢è‡ªåŠ¨æ’­æ”¾
 	 */
 	public void stopAutoPlay(){
 		if(mTimerTask == null) return;
@@ -72,7 +72,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * ¿ªÊ¼×Ô¶¯²¥·Å
+	 * å¼€å§‹è‡ªåŠ¨æ’­æ”¾
 	 */
 	public void startAutoPlay(){
 		if(mTimerTask != null) return;
@@ -86,7 +86,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * Ìí¼Ó×ÓÊÓÍ¼
+	 * æ·»åŠ å­è§†å›¾
 	 * @param context
 	 */
 	private void addChild(Context context){
@@ -99,7 +99,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * »ñÈ¡ViewFlipper
+	 * è·å–ViewFlipper
 	 * @param context
 	 * @return
 	 */
@@ -110,7 +110,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * »ñÈ¡Ö¸Ê¾µãÏÔÊ¾Ìõ
+	 * è·å–æŒ‡ç¤ºç‚¹æ˜¾ç¤ºæ¡
 	 * @param context
 	 * @return
 	 */
@@ -129,7 +129,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * Ìí¼ÓĞ¡Ô²µã
+	 * æ·»åŠ å°åœ†ç‚¹
 	 * @param context
 	 * @param pointBar
 	 */
@@ -151,7 +151,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * ¸ù¾İµ±Ç°Ñ¡ÖĞÏîÀ´ÉèÖÃÔ²µã
+	 * æ ¹æ®å½“å‰é€‰ä¸­é¡¹æ¥è®¾ç½®åœ†ç‚¹
 	 */
 	private void setPointColorByCurrentItem(){
 		mCurrentItem = (Integer)mViewFlipper.getCurrentView().getTag();
@@ -170,7 +170,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * Ìí¼ÓÍ¼Æ¬×ÊÔ´
+	 * æ·»åŠ å›¾ç‰‡èµ„æº
 	 * @param context
 	 * @param viewFlipper
 	 */
@@ -195,11 +195,11 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * »ñÈ¡Í¼Æ¬×ÊÔ´
+	 * è·å–å›¾ç‰‡èµ„æº
 	 * @return
 	 */
 	private List<Bitmap> getBitmaps(){
-		//TODO ´ÓÍøÂç»ñÈ¡Í¼Æ¬
+		//TODO ä»ç½‘ç»œè·å–å›¾ç‰‡
 		List<Bitmap> bitmaps = new ArrayList<Bitmap>();	
 		
 		bitmaps.add(BitmapFactory.decodeResource(
@@ -213,7 +213,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * »ñÈ¡Ñ¡ÔñÔ²µãÍ¼Æ¬
+	 * è·å–é€‰æ‹©åœ†ç‚¹å›¾ç‰‡
 	 * @param context
 	 * @return
 	 */
@@ -223,7 +223,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * »ñÈ¡»ÒÉ«Ô²µãÍ¼Æ¬
+	 * è·å–ç°è‰²åœ†ç‚¹å›¾ç‰‡
 	 * @param context
 	 * @return
 	 */
@@ -247,10 +247,10 @@ public class AutoViewFlipper extends FrameLayout{
 			float gap = eventX - mDownX;
 			if(Math.abs(gap) > mTouchSlop){
 				if(gap > 0){
-					//ÏòÓÒ»¬¶¯
+					//å‘å³æ»‘åŠ¨
 					slopToRight();
 				}else{
-					//Ïò×ó»¬¶¯
+					//å‘å·¦æ»‘åŠ¨
 					slopToLeft();
 				}
 			}
@@ -261,7 +261,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * ÏòÓÒ»¬¶¯
+	 * å‘å³æ»‘åŠ¨
 	 */
 	private void slopToRight(){
 		mViewFlipper.setInAnimation(context, R.anim.slide_in_left);
@@ -271,7 +271,7 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
-	 * Ïò×ó»¬¶¯
+	 * å‘å·¦æ»‘åŠ¨
 	 */
 	private void slopToLeft(){
 		mViewFlipper.setInAnimation(context, R.anim.slide_in_right);
@@ -283,20 +283,20 @@ public class AutoViewFlipper extends FrameLayout{
 	private OnSlopTouchListener mOnSlopTouchListener;
 	
 	/**
-	 * ¼àÌı»¬¶¯µÈÊÂ¼ş
+	 * ç›‘å¬æ»‘åŠ¨ç­‰äº‹ä»¶
 	 * @author Administrator
 	 *
 	 */
 	interface OnSlopTouchListener{
 		
 		/**
-		 * touchÊÂ¼şÏìÓ¦
+		 * touchäº‹ä»¶å“åº”
 		 */
 		public void onTouchedView();
 	}
 	
 	/**
-	 * ÉèÖÃ»¬¶¯µÈÊÂ¼şµÄ¼àÌı
+	 * è®¾ç½®æ»‘åŠ¨ç­‰äº‹ä»¶çš„ç›‘å¬
 	 * @param onSlopTouchListener
 	 */
 	public void setOnSlopTouchListener(OnSlopTouchListener onSlopTouchListener){

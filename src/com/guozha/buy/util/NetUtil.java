@@ -21,14 +21,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 /**
- * ÍøÂç²Ù×÷¹¤¾ßÀà
+ * ç½‘ç»œæ“ä½œå·¥å…·ç±»
  * @author Administrator
  *
  */
 public class NetUtil {
 	
-	private RequestQueue mQueue;	//ÇëÇó¶ÓÁĞ
-	private Response.ErrorListener errorListener;  //´íÎóÏûÏ¢¼àÌı
+	private RequestQueue mQueue;	//è¯·æ±‚é˜Ÿåˆ—
+	private Response.ErrorListener errorListener;  //é”™è¯¯æ¶ˆæ¯ç›‘å¬
 	private static NetUtil mNetUtil;
 	
 	private NetUtil(Context context){
@@ -37,7 +37,7 @@ public class NetUtil {
 	}
 
 	/**
-	 * »ñÈ¡NetUtilÊµÀı
+	 * è·å–NetUtilå®ä¾‹
 	 * @param context
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public class NetUtil {
 	}
 
 	/**
-	 * get·½Ê½ÇëÇóstring×Ö·û´®
+	 * getæ–¹å¼è¯·æ±‚stringå­—ç¬¦ä¸²
 	 * @param url
 	 * @param responsListener
 	 */
@@ -60,7 +60,7 @@ public class NetUtil {
 	}
 	
 	/**
-	 * post·½Ê½ÇëÇóstring×Ö·û´®
+	 * postæ–¹å¼è¯·æ±‚stringå­—ç¬¦ä¸²
 	 * @param url
 	 * @param responsListener
 	 */
@@ -71,7 +71,7 @@ public class NetUtil {
 	}
 	
 	/**
-	 * get·½Ê½ÇëÇóJson¸ñÊ½µÄÊı¾İ
+	 * getæ–¹å¼è¯·æ±‚Jsonæ ¼å¼çš„æ•°æ®
 	 * @param url
 	 * @param responsListener
 	 */
@@ -82,7 +82,7 @@ public class NetUtil {
 	}
 	
 	/**
-	 * post·½Ê½ÇëÇóJson¸ñÊ½µÄÊı¾İ
+	 * postæ–¹å¼è¯·æ±‚Jsonæ ¼å¼çš„æ•°æ®
 	 * @param url
 	 * @param responsListener
 	 */
@@ -94,18 +94,18 @@ public class NetUtil {
 	
 	
 	/**
-	 * ÇëÇóÍ¼Æ¬×ÊÔ´
+	 * è¯·æ±‚å›¾ç‰‡èµ„æº
 	 * @param url
 	 * @param responsListener
 	 */
 	public void volleyImageRequest(String url, Listener<Bitmap> responsListener){
-		ImageRequest imageRequest = 		//µÚÈı¡¢ËÄ¸ö²ÎÊı£¬Èç¹ûÉèÖÃÎª0ÔòÄ¬ÈÏ²»Ñ¹Ëõ£¬·ñÔò»áÑ¹Ëõ
+		ImageRequest imageRequest = 		//ç¬¬ä¸‰ã€å››ä¸ªå‚æ•°ï¼Œå¦‚æœè®¾ç½®ä¸º0åˆ™é»˜è®¤ä¸å‹ç¼©ï¼Œå¦åˆ™ä¼šå‹ç¼©
 				new ImageRequest(url, responsListener, 0, 0, Config.ARGB_8888, errorListener);
 		mQueue.add(imageRequest);
 	}
 	
 	/**
-	 * ¿ÉÒÔÊµÏÖÍ¼Æ¬»º´æ£¬±ÜÃâÖØ¸´·¢ËÍÇëÇó
+	 * å¯ä»¥å®ç°å›¾ç‰‡ç¼“å­˜ï¼Œé¿å…é‡å¤å‘é€è¯·æ±‚
 	 * @param url
 	 * @param imageview
 	 * @param defaultImageResId
@@ -122,7 +122,7 @@ public class NetUtil {
 	}
 	
 	/**
-	 * ´íÎó½á¹û
+	 * é”™è¯¯ç»“æœ
 	 * @author Administrator
 	 *
 	 */

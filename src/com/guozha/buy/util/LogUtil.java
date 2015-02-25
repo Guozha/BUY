@@ -3,7 +3,7 @@ package com.guozha.buy.util;
 import android.util.Log;
 
 /**
- * Log¹¤¾ßÀà
+ * Logå·¥å…·ç±»
  * @author Administrator
  *
  */

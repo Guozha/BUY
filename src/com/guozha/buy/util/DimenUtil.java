@@ -5,14 +5,14 @@ import android.view.View;
 import android.view.WindowManager;
 
 /**
- * 尺寸工具
+ * 灏哄宸ュ叿
  * @author Administrator
  *
  */
 public class DimenUtil {
 
 	/**
-	 * dip转pix
+	 * dip杞琾ix
 	 * @param context
 	 * @param dp
 	 * @return
@@ -23,7 +23,7 @@ public class DimenUtil {
 	} 
 	
 	/**
-	 * 获取屏幕的宽度和高度
+	 * 鑾峰彇灞忓箷鐨勫搴﹀拰楂樺害
 	 * @param context
 	 * @return
 	 */
@@ -40,7 +40,7 @@ public class DimenUtil {
 	}
 	
 	/**
-	 * 获取View相对于屏幕的圆点坐标
+	 * 鑾峰彇View鐩稿浜庡睆骞曠殑鍦嗙偣鍧愭爣
 	 * @param view
 	 * @return
 	 */

@@ -23,7 +23,7 @@ import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
 
 /**
- * Ó¦ÓÃÖ÷½çÃæ
+ * åº”ç”¨ä¸»ç•Œé¢
  * @author lixiaoqiang
  *
  */
@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity{
 	}
 
 	/**
-	 * ³õÊ¼»¯ViewPager
+	 * åˆå§‹åŒ–ViewPager
 	 */
 	private void initViewPager() {
 		mCustomViewPager = (CustomViewPager) findViewById(R.id.main_viewpage);
@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * ³õÊ¼»¯ActionBar
+	 * åˆå§‹åŒ–ActionBar
 	 * @param actionbar
 	 */
 	private void initActionBar(ActionBar actionbar) {
@@ -87,7 +87,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * ³õÊ¼»¯Fragment
+	 * åˆå§‹åŒ–Fragment
 	 */
 	private void initFragment(){
 		mFragments.add(new MainTabFragmentMPage());
@@ -97,7 +97,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * ³õÊ¼»¯Tab
+	 * åˆå§‹åŒ–Tab
 	 */
 	private void initTabIndicators(){
 		ChangeColorIconWithText one = 
@@ -123,7 +123,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * µ×²¿Tab°´ÏÂ¼àÌı
+	 * åº•éƒ¨TabæŒ‰ä¸‹ç›‘å¬
 	 * @author Administrator
 	 *
 	 */
@@ -135,7 +135,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * ÖØÖÃÆäËûµÄTabIndicatorµÄÑÕÉ«
+	 * é‡ç½®å…¶ä»–çš„TabIndicatorçš„é¢œè‰²
 	 */
 	private void resetOtherTabs() {
 		for (int i = 0; i < mTabIndicators.size(); i++) {
@@ -144,7 +144,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * µã»÷Tab°´Å¥
+	 * ç‚¹å‡»TabæŒ‰é’®
 	 * 
 	 * @param view
 	 */
@@ -173,7 +173,7 @@ public class MainActivity extends FragmentActivity{
 	}
 
 	/**
-	 * Ö÷½çÃæFragmentÊÊÅäÆ÷
+	 * ä¸»ç•Œé¢Fragmenté€‚é…å™¨
 	 * @author lixiaoqiang
 	 *
 	 */
@@ -195,7 +195,7 @@ public class MainActivity extends FragmentActivity{
 	}
 	
 	/**
-	 * ½çÃæ»¬¶¯¼àÌı
+	 * ç•Œé¢æ»‘åŠ¨ç›‘å¬
 	 * @author lixiaoqiang
 	 *
 	 */

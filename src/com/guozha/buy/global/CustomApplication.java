@@ -3,7 +3,7 @@ package com.guozha.buy.global;
 import org.litepal.LitePalApplication;
 
 /**
- * ȫ�ֵ�Application
+ * 全局的Application
  * @author Administrator
  *
  */

@@ -14,7 +14,7 @@ public class ShopCarDownBar extends ViewGroup{
 	
 	private void addChild(Context context){
 		Button button = new Button(context);
-		button.setText("°´Å¥");
+		button.setText("æŒ‰é’®");
 		this.addView(button);
 	}
 
