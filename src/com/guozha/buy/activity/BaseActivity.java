@@ -9,7 +9,7 @@ import android.view.View;
 import com.guozha.buy.R;
 
 /**
- * ActivityµÄ»ùÀà
+ * Activityçš„åŸºç±»
  * @author lixiaoqiang
  *
  */
@@ -23,7 +23,7 @@ abstract class BaseActivity extends Activity{
 	}
 	
 	/**
-	 * Ä¬ÈÏµÄActionBarÑùÊ½³õÊ¼»¯
+	 * é»˜è®¤çš„ActionBaræ ·å¼åˆå§‹åŒ–
 	 * @param actionbar
 	 */
 	private void initActionBar(ActionBar actionbar){
@@ -37,7 +37,7 @@ abstract class BaseActivity extends Activity{
 	}
 	
 	/**
-	 * ×Ô¶¨Òå×Ô¼ºµÄActionBarÑùÊ½
+	 * è‡ªå®šä¹‰è‡ªå·±çš„ActionBaræ ·å¼
 	 */
 	protected void customActionBarStyle(ActionBar actionbar, String title){
 		if(title != null){
@@ -58,7 +58,7 @@ abstract class BaseActivity extends Activity{
 	}
 	
 	/**
-	 * ×Ô¶¨Òå×Ô¼ºµÄActionBarÊÓÍ¼
+	 * è‡ªå®šä¹‰è‡ªå·±çš„ActionBarè§†å›¾
 	 * @param layoutId
 	 * @return
 	 */
