@@ -240,6 +240,28 @@ public class MainActivity extends FragmentActivity{
 		//TODO 注意给其他界面添加友盟统计事件
 		//官方参考 http://dev.umeng.com/analytics/android-doc/integration
 		MobclickAgent.onResume(this);
+		
+		
+		
+		//TODO 友盟自定义事件，在onResume()后面调用，不要放在onCreate()中
+		//1、计数事件（统计次数）
+		//MobclickAgent.onEvent(this, "test_event_1");
+		//2、统计行为属性发生次数
+		/*
+		 *  HashMap<String,String> map = new HashMap<String,String>();
+			map.put("type","book");
+			map.put("quantity","3"); 
+			MobclickAgent.onEvent(mContext, "purchase", map);  
+		 */
+		//3、计算事件
+		/*
+		int duration = 12000; //开发者需要自己计算音乐播放时长
+	　　 Map<String, String> map_value = new HashMap<String, String>();
+	　　 map_value.put("type", "popular");
+	　　 map_value.put("artist", "JJLin");	
+		MobclickAgent.onEventValue(this, "music", map_value, duration);
+		*/
+		
 	}
 	
 	@Override
