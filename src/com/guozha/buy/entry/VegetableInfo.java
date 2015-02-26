@@ -2,20 +2,20 @@ package com.guozha.buy.entry;
 
 public class VegetableInfo {
 
-	private String name;
-	private String description;
+	private int imageId;
+	private String vegetableName;
 	
-	public String getName() {
-		return name;
+	public int getImageId() {
+		return imageId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
 	}
-	public String getDescription() {
-		return description;
+	public String getVegetableName() {
+		return vegetableName;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setVegetableName(String vegetableName) {
+		this.vegetableName = vegetableName;
 	}
 	
 }
