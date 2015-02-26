@@ -7,5 +7,7 @@
     <string name="activity_main_tab2_title">逛菜场</string>
     <string name="activity_main_tab3_title">购物车</string>
     <string name="activity_main_tab4_title">我的</string>
+    
+    <string name="list_paging_bottom_text">加载更多数据</string>
 </resources>
 

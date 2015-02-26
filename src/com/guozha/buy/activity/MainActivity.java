@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.fragment.MainTabFragmentCart;
-import com.guozha.buy.fragment.MainTabFragmentGoods;
+import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.util.LogUtil;
@@ -105,7 +105,7 @@ public class MainActivity extends FragmentActivity{
 	 */
 	private void initFragment(){
 		mFragments.add(new MainTabFragmentMPage());
-		mFragments.add(new MainTabFragmentGoods());
+		mFragments.add(new MainTabFragmentMarket());
 		mFragments.add(new MainTabFragmentCart());
 		mFragments.add(new MainTabFragmentMine());
 	}
