@@ -58,10 +58,6 @@ public class SplashActivity extends BaseActivity{
 		MobclickAgent.setDebugMode(true);
 		//禁止默认的页面统计方式
 		MobclickAgent.openActivityDurationTrack(false);
-		//友盟自动更新
-		UmengUpdateAgent.update(this);
-		//友盟静默更新
-		//UmengUpdateAgent.silentUpdate(this);
 	}
 	
 	@Override

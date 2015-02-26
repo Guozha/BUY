@@ -1,6 +1,7 @@
 package com.guozha.buy.fragment;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import android.os.Bundle;
@@ -21,16 +22,18 @@ public class MainTabFragmentMine extends Fragment{
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
-		//友盟页面统计
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		//友盟页面统计
-		MobclickAgent.onPageEnd(PAGE_NAME);
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(getUserVisibleHint()){
+			//View可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
+		}else{
+			//View不可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
 	}
 }

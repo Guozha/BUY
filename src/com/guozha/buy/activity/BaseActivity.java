@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.guozha.buy.R;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Activity的基类

@@ -18,10 +18,12 @@ import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentGoods;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMine;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  * 应用主界面
@@ -49,6 +51,17 @@ public class MainActivity extends FragmentActivity{
 		initFragment();
 		initTabIndicators();
 		initViewPager();
+		initYoumeng();
+	}
+	
+	/**
+	 * 初始化友盟相关
+	 */
+	private void initYoumeng(){
+		//友盟自动更新
+		UmengUpdateAgent.update(this);
+		//友盟静默更新
+		//UmengUpdateAgent.silentUpdate(this);
 	}
 
 	/**

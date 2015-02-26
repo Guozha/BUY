@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guozha.buy.R;
-import com.guozha.buy.view.GoodsUpDownViewGroup;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentGoods extends Fragment{
@@ -18,16 +18,23 @@ public class MainTabFragmentGoods extends Fragment{
 	private int mMaxDataNum;
 	
 	private View mView;
-	private GoodsUpDownViewGroup mGoodsUpDownView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
 		mView = inflater.inflate(R.layout.fragment_maintab_goods, container, false);
-		mGoodsUpDownView = (GoodsUpDownViewGroup) 
-				mView.findViewById(R.id.goods_page_updown_view);
+		initView(mView);
+		
 		return mView;
+	}
+	
+	/**
+	 * 初始化View
+	 * @param view
+	 */
+	private void initView(View view){
+		
 	}
 	
 	@Override
@@ -35,23 +42,15 @@ public class MainTabFragmentGoods extends Fragment{
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
 			//View不可见
+			LogUtil.e("Goods_inVisible");
 			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		//友盟页面统计
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		//友盟页面统计
-		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

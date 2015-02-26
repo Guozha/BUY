@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AutoViewFlipper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -59,9 +60,15 @@ public class MainTabFragmentMPage extends Fragment{
 		if(getUserVisibleHint()){
 			//View可见
 			startSlideViewPlay();
+			
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
 			//View不可见
 			stopSlideViewPlay();
+			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
 	}
 	
@@ -69,15 +76,12 @@ public class MainTabFragmentMPage extends Fragment{
 	public void onPause() {
 		super.onPause();
 		stopSlideViewPlay();
-		//友盟页面统计
-		MobclickAgent.onPageEnd(PAGE_NAME);
+		
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		startSlideViewPlay();
-		//友盟页面统计
-		MobclickAgent.onPageStart(PAGE_NAME);
+		startSlideViewPlay();	
 	}
 }
