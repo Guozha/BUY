@@ -40,8 +40,8 @@ public class MainTabFragmentCart extends Fragment{
 			
 			@Override
 			public void onClick(View arg0) {
-				//Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), DebugActivity.class);
-				Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
+				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), DebugActivity.class);
+				//Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
 				startActivity(intent);
 			}
 		});

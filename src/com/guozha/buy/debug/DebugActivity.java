@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
+import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.LogUtil;
 
 /**
@@ -16,16 +17,16 @@ import com.guozha.buy.util.LogUtil;
  *
  */
 public class DebugActivity extends Activity implements OnClickListener{
-	
-	private Button mYoumengPhoneidTestButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_debug);
 		
-		mYoumengPhoneidTestButton = (Button) findViewById(R.id.youmeng_phoneid_test);
-		mYoumengPhoneidTestButton.setOnClickListener(this);
+		findViewById(R.id.youmeng_phoneid_test).setOnClickListener(this);
+		
+		//分享相关
+		findViewById(R.id.share_to_qq).setOnClickListener(this);
 	}
 
 	@Override
@@ -36,6 +37,10 @@ public class DebugActivity extends Activity implements OnClickListener{
 			LogUtil.e(deviceId);
 			Toast.makeText(DebugActivity.this, 
 					"deviceId = " + deviceId, Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.share_to_qq:
+			ShareManager shareManager = new ShareManager(DebugActivity.this);
+			shareManager.shareToQQ(DebugActivity.this);
 			break;
 		default:
 			break;
