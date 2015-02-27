@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.guozha.buy.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -82,5 +84,21 @@ public class SplashActivity extends BaseActivity{
 	private void doInit(){
 		//TODO 做一些业务逻辑（比如加载资源）
 		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//极光推送 
+		JPushInterface.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//极光推送
+		JPushInterface.onPause(this);
 	}
 }

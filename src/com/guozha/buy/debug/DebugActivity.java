@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.PlanMenuActivity;
+import com.guozha.buy.alarm.PlanMenuAlarm;
 import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.LogUtil;
 
@@ -17,6 +20,9 @@ import com.guozha.buy.util.LogUtil;
  *
  */
 public class DebugActivity extends Activity implements OnClickListener{
+	
+	private EditText mAlarmHour;
+	private EditText mAlarmMinute;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,11 @@ public class DebugActivity extends Activity implements OnClickListener{
 		
 		//分享相关
 		findViewById(R.id.share_to_qq).setOnClickListener(this);
+		
+		//设置闹钟
+		findViewById(R.id.set_alarm_button).setOnClickListener(this);
+		mAlarmHour = (EditText) findViewById(R.id.set_alarm_hour);
+		mAlarmMinute = (EditText) findViewById(R.id.set_alarm_minute);
 	}
 
 	@Override
@@ -41,6 +52,13 @@ public class DebugActivity extends Activity implements OnClickListener{
 		case R.id.share_to_qq:
 			ShareManager shareManager = new ShareManager(DebugActivity.this);
 			shareManager.shareToQQ(DebugActivity.this);
+			break;
+		case R.id.set_alarm_button:
+			int hour = Integer.parseInt(mAlarmHour.getText().toString());
+			int minute = Integer.parseInt(mAlarmMinute.getText().toString());
+			if(hour == 0 && minute == 0) return;
+			PlanMenuAlarm alarm = new PlanMenuAlarm(DebugActivity.this);
+			alarm.setAlarm(DebugActivity.this, hour, minute);
 			break;
 		default:
 			break;
