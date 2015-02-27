@@ -35,4 +35,10 @@
 	    <item name="android:textSize">@dimen/actionbar_title_size</item>
 	    <item name="android:textColor">@color/actionbar_title_color</item>
 	</style>
+	
+	<!-- 友盟默认分享面板样式 -->
+	<style name="Theme.UMDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

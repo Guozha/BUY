@@ -51,13 +51,14 @@ public class PlanMenuActivity extends BaseActivity{
 		mMenuFlipperClick = new MenuFlipperClick();
 		initView();
 		getPointBar();
-		mCurrentIndex = 0;
+		mCurrentIndex = 0;//开始默认选中第一个
 	}
 	
 	/**
 	 * 初始化View视图
 	 */
 	private void initView(){
+		//设置Tag
 		mButton1 = (Button) findViewById(R.id.plantmenu_choose_button1);
 		mButton1.setTag(0);
 		mButton2 = (Button) findViewById(R.id.plantmenu_choose_button2);
@@ -72,7 +73,7 @@ public class PlanMenuActivity extends BaseActivity{
 		mButton6.setTag(5);
 		mButton7 = (Button) findViewById(R.id.plantmenu_choose_button7);
 		mButton7.setTag(6);
-		
+		//设置监听事件
 		mButton1.setOnClickListener(mMenuFlipperClick);
 		mButton2.setOnClickListener(mMenuFlipperClick);
 		mButton3.setOnClickListener(mMenuFlipperClick);
@@ -92,7 +93,7 @@ public class PlanMenuActivity extends BaseActivity{
 	private View getPointBar(){
 		LinearLayout pointBar = 
 				(LinearLayout) findViewById(R.id.plantmenu_point_bar);
-		addPoints(pointBar);
+		addPoints(pointBar); //添加小圆点
 		return pointBar;
 	}
 	
