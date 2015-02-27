@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ViewFlipper 
+        android:id="@+id/planmenu_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="2">
+        
+        <!-- Area1 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image1"/>
+        </RelativeLayout>
+        
+        <!-- Area2 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image2"/>
+        </RelativeLayout>
+        
+        <!-- Area3 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image3"/>
+        </RelativeLayout>
+        
+        <!-- Area4 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image1"/>
+        </RelativeLayout>
+        
+        <!-- Area5 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image2"/>
+        </RelativeLayout>
+        
+        <!-- Area6 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image3"/>
+        </RelativeLayout>
+        
+        <!-- Area7 -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_page_scroll_image1"/>
+        </RelativeLayout>
+
+    </ViewFlipper>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/colloection_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dip"
+            android:text="收藏菜单" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dip"
+            android:text="一键购买" />
+        
+        <LinearLayout 
+            android:id="@+id/plantmenu_point_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/colloection_menu_button"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"/>
+
+        <HorizontalScrollView
+            android:layout_below="@id/plantmenu_point_bar"
+            android:layout_width="wrap_content"
+            android:scrollbars="none"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                
+				<!-- Menu1 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/plantmenu_choose_button1"                   
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button1" />
+                </LinearLayout>
+                
+                <!-- Menu2 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">
+	                <Button
+	                    android:id="@+id/plantmenu_choose_button2"
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button2" />
+                </LinearLayout>
+
+                <!-- Menu3 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">
+	                <Button      
+	                    android:id="@+id/plantmenu_choose_button3" 
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button3" />
+                </LinearLayout>
+
+                <!-- Menu4 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">
+	                <Button
+	                    android:id="@+id/plantmenu_choose_button4"
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button4" />
+                </LinearLayout>
+
+                <!-- Menu5 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">           
+	                <Button
+	                    android:id="@+id/plantmenu_choose_button5"
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button5" />
+                </LinearLayout>
+
+                <!-- Menu6 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">                
+	                <Button
+	                    android:id="@+id/plantmenu_choose_button6"
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button6" />
+                </LinearLayout>
+
+                <!-- Menu7 -->
+                <LinearLayout 
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent">                
+	                <Button
+	                    android:id="@+id/plantmenu_choose_button7"
+	                    android:layout_width="100dip"
+	                    android:layout_height="50dip"
+	                    android:text="Button7" />
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
+
+</LinearLayout>

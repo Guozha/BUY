@@ -24,6 +24,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,22 +35,33 @@
         <!-- 主界面 -->
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             
         </activity>
         <!-- 菜场详细列表 -->
         <activity 
-            android:name=".activity.ListVegetableActivity">
+            android:name=".activity.ListVegetableActivity"
+            android:screenOrientation="portrait">
             
+        </activity>
+        <!-- 计划菜谱选择 -->
+        <activity 
+            android:name=".activity.PlanMenuActivity"
+            android:screenOrientation="portrait">
+             
         </activity>
         
         
         <!-- Debug界面 -->
         <activity
             android:name=".debug.DebugActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             
         </activity>
+        
+       
         
         
         <!-- 友盟自动更新相关 -->

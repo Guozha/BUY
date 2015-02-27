@@ -19,8 +19,6 @@ public class MainTabFragmentMarket extends Fragment{
 	
 	private static final String PAGE_NAME = "MarketPage";
 	
-	private int mMaxDataNum;
-	
 	private View mView;
 
 	@Override

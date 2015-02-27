@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.PlanMenuActivity;
 import com.guozha.buy.debug.DebugActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,7 +40,8 @@ public class MainTabFragmentCart extends Fragment{
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), DebugActivity.class);
+				//Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), DebugActivity.class);
+				Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
 				startActivity(intent);
 			}
 		});

@@ -7,7 +7,6 @@ import android.os.SystemClock;
 
 import com.guozha.buy.R;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.update.UmengUpdateAgent;
 
 /**
  * 闪屏界面
