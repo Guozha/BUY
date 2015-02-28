@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -73,7 +74,8 @@ public class SplashActivity extends BaseActivity{
 	 * 跳转到主界面
 	 */
 	private void turnMainActivity(){
-		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+		Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+		//Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 		startActivity(intent);
 		SplashActivity.this.finish();
 	}

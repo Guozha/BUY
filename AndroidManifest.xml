@@ -72,6 +72,20 @@
              
         </activity>
         
+        <!-- 注册界面 -->
+        <activity 
+            android:name=".activity.RegistActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
+        <!-- 登录界面 -->
+        <activity 
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
         <!-- Debug界面 -->
         <activity
             android:name=".debug.DebugActivity"
@@ -203,6 +217,19 @@
         
         <!-- Required SDK核心功能-->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+        
+        <!-- 自定义接受极光推送的消息 -->
+        <receiver 
+            android:name=".receiver.JPushMessageReceiver"
+            android:enabled="true">
+		 	<intent-filter>
+		        <action android:name="cn.jpush.android.intent.REGISTRATION" />
+		        <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+		        <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+		        <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+		        <category android:name="com.guozha.buy" />
+		    </intent-filter>
+        </receiver>
 
         <!-- Required. For publish channel feature -->
         <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。-->

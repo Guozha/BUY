@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
 public class ShopCarDownBar extends ViewGroup{
 
 	public ShopCarDownBar(Context context) {

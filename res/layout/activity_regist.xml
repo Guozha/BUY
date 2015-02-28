@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
+    android:orientation="vertical" >
+       
+   <!-- 手机号码 -->
+   <LinearLayout 
+        android:id="@+id/regist_phone_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/input_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+        
+	    <EditText
+	        android:id="@+id/regist_phonenum"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="@null"
+	        android:singleLine="true"
+	        android:hint="@string/activity_regist_phonenum_hint"
+	        android:textSize="16sp"
+	        android:textColorHint="#cccccc"
+	        android:gravity="center_vertical"
+	        android:inputType="phone"/>
+	    
+	     <ImageView
+            android:id="@+id/regist_phonenum_clear"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/login_clear" />
+    </LinearLayout>
+    
+    <!-- 验证码 -->
+    
+    
+    <!-- 密码 -->
+    <LinearLayout 
+        android:id="@+id/regist_pwd_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/input_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+	     
+	    <EditText
+	        android:id="@+id/regist_pwd"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1.0"
+	        android:hint="@string/activity_regist_pwd_hint"
+	        android:textColorHint="#cccccc"
+	        android:textSize="16sp"
+	        android:singleLine="true"
+	        android:background="@null"
+	        android:gravity="center_vertical"
+	        android:inputType="textPassword"/>
+	    
+	     <ImageView
+	        android:id="@+id/regist_pwd_clear"
+	        android:layout_width="24dip"
+	        android:layout_height="24dip"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/login_clear" />
+    </LinearLayout>
+    
+    <!-- 登录按钮 -->
+    <Button
+        android:id="@+id/regist_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:text="@string/activity_regist_button_text"
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dip"
+        android:background="@drawable/nomal_button_nomal_bg"
+        android:enabled="false"/>
+
+</LinearLayout>
