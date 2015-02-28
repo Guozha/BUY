@@ -72,6 +72,13 @@
              
         </activity>
         
+        <!-- 时令推荐 -->
+        <activity
+            android:name=".activity.SeasonActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
         <!-- 注册界面 -->
         <activity 
             android:name=".activity.RegistActivity"

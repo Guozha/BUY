@@ -13,64 +13,98 @@
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:orientation="horizontal">
+	    android:padding="10dip"
+	    android:orientation="vertical">
 	    
 	    <LinearLayout 
-	        android:layout_width="0dip"
-	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
 	        android:layout_weight="1"
-	        android:orientation="vertical">
+	        android:padding="10dip"
+	        android:orientation="horizontal">
+            <!-- 左边上 -->
+	        <LinearLayout 
+	            android:layout_height="match_parent"
+	            android:layout_width="0dip"
+	            android:layout_weight="1"
+	            
+	            android:background="#234923">
+	            
+	        </LinearLayout>
+	        <Space 
+	            android:layout_width="10dip"
+	            android:layout_height="match_parent"/>
+	        <!-- 右边上 -->
+	        <LinearLayout 
+	            android:layout_height="match_parent"
+	            android:layout_width="0dip"
+	            android:orientation="vertical"
+	            android:layout_weight="1">
+	            <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:background="#398332"
+	                android:layout_weight="1">
+	                
+	            </LinearLayout>
+	            <Space 
+	                android:layout_width="match_parent"
+	                android:layout_height="10dip"/>
+	            <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:background="#873423"
+	                android:layout_weight="1">
+	                
+	            </LinearLayout>
+	        </LinearLayout>
 	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_weight="2"/>
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_weight="1"/>
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_height="0dip"
-	            android:layout_weight="1"/>
 	    </LinearLayout>
 	    
+
+	    
 	    <LinearLayout 
-	        android:layout_width="0dip"
-	        android:layout_height="match_parent"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
 	        android:layout_weight="1"
-	        android:orientation="vertical">
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_weight="1"/>
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_weight="1"/>
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_page_scroll_image1"
-	            android:layout_weight="2"/>
-	        
+	        android:padding="10dip"
+	        android:orientation="horizontal">
+	        <!-- 左边下 -->
+	        <LinearLayout 
+	            android:layout_height="match_parent"
+	            android:layout_width="0dip"
+	            android:orientation="vertical"
+	            android:layout_weight="1">
+	            <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:background="#335453"
+	                android:layout_weight="1">
+	                
+	            </LinearLayout>
+	            <Space 
+	                android:layout_width="match_parent"
+	                android:layout_height="10dip"/>
+	            <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:background="#452346"
+	                android:layout_weight="1">
+	                
+	            </LinearLayout>
+	        </LinearLayout>
+	       	<Space 
+	       	    android:layout_width="10dip"
+	       	    android:layout_height="match_parent"/>
+	        <!-- 右边下 -->
+	        <LinearLayout 
+	            android:layout_height="match_parent"
+	            android:layout_width="0dip"
+	            android:layout_weight="1"
+	            
+	            android:background="#542567">
+	            
+	        </LinearLayout>
 	    </LinearLayout>
 	</LinearLayout>
-
 </LinearLayout>
