@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -28,6 +29,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	
 	private Button mObtainValidNumButton;
 	private Button mRegistButton;
+	
+	private CheckBox mProtocalAffirmCheckBox;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		
 		mObtainValidNumButton = (Button) findViewById(R.id.regist_obtain_validenum);
 		mRegistButton = (Button) findViewById(R.id.regist_button);
+		
+		mProtocalAffirmCheckBox = (CheckBox) findViewById(R.id.regist_protocal_affirm);
 		
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
@@ -80,19 +85,50 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		case R.id.regist_obtain_validenum:
 			//TODO 发送短信验证码
 			
+			
 			break;
 		case R.id.regist_button:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			pwd = mEditPwd.getText().toString();
-			if(isValidatePhoneNum(phoneNum) && isValidatePwd(pwd)){
-				//TODO 可以登录了
-			}else{
-				//TODO 提示填写有误
+			String validNum = mEditValidNum.getText().toString();
+			if(!isValidatePhoneNum(phoneNum)){
+				//TODO 提示手机号填写有误
+				
+				return;
 			}
+			if(!isValidatePwd(pwd)){
+				//TODO 提示密码设置有误
+				
+				return;
+			}
+			if(!isValideNumRight(validNum)){
+				//TODO 提示验证码错误
+				
+				return;
+			}
+			if(!mProtocalAffirmCheckBox.isChecked()){
+				//TODO 提示没有同意用户协议
+				
+				return;
+			}
+			//TODO 可以登录了
+			
 			break;
 		default:
 			break;
 		}
+	}
+	
+	/**
+	 * 判断验证码是否正确
+	 * @param validNum
+	 * @return
+	 */
+	private boolean isValideNumRight(String validNum){
+		//TODO 
+		
+		
+		return false;
 	}
 	
 	/**

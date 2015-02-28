@@ -42,39 +42,45 @@
     
     <!-- 验证码 -->
     <LinearLayout 
-        android:id="@+id/regist_validenum_input_area"
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/input_background"
-        android:paddingLeft="10dip">
-
-        <EditText
-	        android:id="@+id/regist_validenum"
+        android:orientation="horizontal">
+	    <LinearLayout 
+	        android:id="@+id/regist_validenum_input_area"
 	        android:layout_width="0dip"
-	        android:layout_height="wrap_content"
 	        android:layout_weight="1.0"
-	        android:hint="@string/activity_regist_pwd_hint"
-	        android:textColorHint="#cccccc"
-	        android:textSize="16sp"
-	        android:singleLine="true"
-	        android:background="@null"
-	        android:gravity="center_vertical"
-	        android:inputType="textPassword"/>
-        
-        <Button 
-            android:id="@+id/regist_obtain_validenum"
-            android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:layout_gravity="center_vertical"
-            android:background="#cccccc"
-            android:text="获取验证码"
-            android:textSize="16sp"
-            android:gravity="center"/>
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal"
+	        android:background="@drawable/input_background"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip">
+	
+	        <EditText
+		        android:id="@+id/regist_validenum"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="@string/activity_regist_verify_num_hint"
+		        android:textColorHint="#cccccc"
+		        android:textSize="16sp"
+		        android:singleLine="true"
+		        android:background="@null"
+		        android:gravity="center_vertical"
+		        android:layout_gravity="center_vertical"
+		        android:inputType="textPassword"/>
+	    </LinearLayout>
+	    <Button 
+	            android:id="@+id/regist_obtain_validenum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:paddingLeft="10dip"
+	            android:paddingRight="10dip"
+	            android:layout_gravity="center_vertical"
+	            android:background="#cccccc"
+	            android:text="获取验证码"
+	            android:textSize="16sp"
+	            android:gravity="center"/>
     </LinearLayout>
     
     <!-- 密码 -->
@@ -111,7 +117,26 @@
 	        android:src="@drawable/login_clear" />
     </LinearLayout>
     
-    <!-- 登录按钮 -->
+    <!-- 同意协议 -->
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="40dip"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/regist_protocal_affirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           	android:checked="true"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/activity_regist_protocol_affirm_text"/>
+    </LinearLayout>
+    
+    <!-- 注册按钮 -->
     <Button
         android:id="@+id/regist_button"
         android:layout_width="match_parent"
