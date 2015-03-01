@@ -72,16 +72,21 @@ public class MainActivity extends FragmentActivity{
 		mFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
 		mCustomViewPager.setAdapter(mFragmentPagerAdapter);
 		
+		/*
+		 *本来是为了解决滑动冲突的 
+		 */
 		mCustomViewPager.setOnInterceptTouchListener(new OnInterceptTouchListener() {
 			
 			@Override
 			public boolean interceptTouched(float eventX, float eventY) {
+				/*
 				MainTabFragmentMPage mainTabFragmentMPage = 
 						(MainTabFragmentMPage) mFragments.get(0);
 				if(mainTabFragmentMPage == null) return true;
 				int beginYPoint = mainTabFragmentMPage.getBeginYPoint();
 				int endYPoint = mainTabFragmentMPage.getEndYPoint();
 				if(eventY < beginYPoint || (eventY > endYPoint)) return true;
+				*/
 				return false;
 			}
 		});

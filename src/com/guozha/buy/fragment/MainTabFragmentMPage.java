@@ -1,57 +1,52 @@
 package com.guozha.buy.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.guozha.buy.R;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.view.AutoViewFlipper;
+import com.guozha.buy.activity.PlanMenuActivity;
 import com.umeng.analytics.MobclickAgent;
 
-public class MainTabFragmentMPage extends Fragment{
+public class MainTabFragmentMPage extends Fragment implements OnClickListener{
 	
 	private static final String TAG = "MainTabFragmentMPage";
 	private static final String PAGE_NAME = "MainPage";
-
-	private View mView;
-	private AutoViewFlipper mAutoViewFlipper;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
-		mView = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
-		mAutoViewFlipper = 
-				(AutoViewFlipper) mView.findViewById(R.id.main_page_auto_flipper_view);		
+		View mView = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);	
+		initView(mView);
 		return mView;
 	}
 	
-	public int getBeginYPoint(){
-		return (int)mAutoViewFlipper.getY();
+	/**
+	 * 初始化视图
+	 * @param view
+	 */
+	private void initView(View view){
+		view.findViewById(R.id.fragment_mpage_season).setOnClickListener(this);
 	}
 	
-	public int getEndYPoint(){
-		return (int) mAutoViewFlipper.getY() + mAutoViewFlipper.getHeight();
-	}
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		//菜谱计划
+		case R.id.fragment_mpage_season:
+			Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
+			startActivity(intent);
+			break;
 
-	/**
-	 * 自动滚动View停止
-	 */
-	public void stopSlideViewPlay(){
-		if(mAutoViewFlipper == null) return;
-		mAutoViewFlipper.stopAutoPlay();
-	}
-	
-	/**
-	 * 自动滚动View开始
-	 */
-	public void startSlideViewPlay(){
-		if(mAutoViewFlipper == null) return;
-		mAutoViewFlipper.startAutoPlay();
+		default:
+			break;
+		}
 	}
 	
 	@Override
@@ -59,13 +54,11 @@ public class MainTabFragmentMPage extends Fragment{
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			startSlideViewPlay();
 			
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
 			//View不可见
-			stopSlideViewPlay();
 			
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
@@ -75,13 +68,14 @@ public class MainTabFragmentMPage extends Fragment{
 	@Override
 	public void onPause() {
 		super.onPause();
-		stopSlideViewPlay();
+		
 		
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		startSlideViewPlay();	
+			
 	}
+
 }

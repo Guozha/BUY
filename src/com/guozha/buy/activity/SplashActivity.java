@@ -74,7 +74,7 @@ public class SplashActivity extends BaseActivity{
 	 * 跳转到主界面
 	 */
 	private void turnMainActivity(){
-		Intent intent = new Intent(SplashActivity.this, SeasonActivity.class);
+		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 		//Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 		startActivity(intent);
 		SplashActivity.this.finish();
