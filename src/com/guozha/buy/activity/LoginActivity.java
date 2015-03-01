@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.util.RegularUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 登录界面
@@ -18,6 +19,8 @@ import com.guozha.buy.util.RegularUtil;
  *
  */
 public class LoginActivity extends BaseActivity implements OnClickListener{
+	
+	private static final String PAGE_NAME = "LoginPage";
 
 	private EditText mEditPhoneNum;  
 	private EditText mEditPwd;   
@@ -152,5 +155,23 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		}else{
 			return true;
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

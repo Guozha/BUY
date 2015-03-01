@@ -36,6 +36,5 @@ public class SeasonActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
-		
 	}
 }
