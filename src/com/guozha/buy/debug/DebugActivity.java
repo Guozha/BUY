@@ -1,16 +1,16 @@
 package com.guozha.buy.debug;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.PlanMenuActivity;
 import com.guozha.buy.alarm.PlanMenuAlarm;
+import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.LogUtil;
 
@@ -36,6 +36,8 @@ public class DebugActivity extends Activity implements OnClickListener{
 		
 		//设置闹钟
 		findViewById(R.id.set_alarm_button).setOnClickListener(this);
+		
+		findViewById(R.id.weight_selected_dialog_test).setOnClickListener(this);
 		mAlarmHour = (EditText) findViewById(R.id.set_alarm_hour);
 		mAlarmMinute = (EditText) findViewById(R.id.set_alarm_minute);
 	}
@@ -59,6 +61,10 @@ public class DebugActivity extends Activity implements OnClickListener{
 			if(hour == 0 && minute == 0) return;
 			PlanMenuAlarm alarm = new PlanMenuAlarm(DebugActivity.this);
 			alarm.setAlarm(DebugActivity.this, hour, minute);
+			break;
+		case R.id.weight_selected_dialog_test:
+			Intent intent = new Intent(DebugActivity.this, WeightSelectDialog.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

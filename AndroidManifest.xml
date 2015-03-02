@@ -93,6 +93,19 @@
             
         </activity>
         
+        <!-- 找回密码 -->
+        <activity
+            android:name=".activity.FindPwdActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
+        <!-- 重量选择对话框 -->
+        <activity 
+            android:name=".dialog.WeightSelectDialog"
+            android:theme="@style/Theme.WeightSelectDialog"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- Debug界面 -->
         <activity
             android:name=".debug.DebugActivity"

@@ -59,4 +59,10 @@
  	        android:layout_height="wrap_content"
  	        android:text="设置闹钟"/>
  	</LinearLayout>
+ 	
+ 	<Button 
+ 	    android:id="@+id/weight_selected_dialog_test"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    android:text="价格选择对话框测试"/>
 </LinearLayout>

@@ -7,10 +7,15 @@
     <color name="main_bottom_tab_bg_color">#e9a22f</color>
     <color name="main_bottom_tab_item_bg_color">#ffffff</color>
     
+    <color name="transparent">#00000000</color>
+    
     <!-- actionBar -->
 	<color name="actionbar_bg_color">#e9a22f</color>
 	<color name="actionbar_text_color">#ffffff</color>
 	
 	<!-- splash -->
 	<color name="activity_splash_bg_color">#e9a22f</color>
+	
+	<!-- scroll wheel -->
+	<color name="scroll_wheel_line_color">#e8e8e8</color>
 </resources>

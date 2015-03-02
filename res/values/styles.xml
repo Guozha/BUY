@@ -36,4 +36,18 @@
 	    <item name="android:textColor">@color/actionbar_title_color</item>
 	</style>
 	
+	
+	<!-- 重量选择对话框主题 -->
+	<style name="Theme.WeightSelectDialog" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+	</style>
+	
 </resources>

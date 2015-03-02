@@ -11,17 +11,27 @@
     <string name="list_paging_bottom_text">加载更多数据</string>
     
     <!-- activity_login -->
-    <string name="activity_login_phonenum_hint">请输入手机号码</string>
-    <string name="activity_login_pwd_hint">请输入登录密码</string>
+    <string name="activity_login_phonenum_hint">输入手机号码</string>
+    <string name="activity_login_pwd_hint">输入密码</string>
     <string name="activity_login_button_text">登录</string>
     <string name="activity_login_remind_regist_text">去注册</string>
     <string name="activity_login_remind_findpwd_text">找回密码</string>
     
     <!-- activity_regist -->
-    <string name="activity_regist_phonenum_hint">请输入手机号码</string>
-    <string name="activity_regist_verify_num_hint">输入6位数字验证码</string>
-    <string name="activity_regist_pwd_hint">6-12位字符、数字或字母</string>
+    <string name="activity_regist_phonenum_hint">输入手机号码</string>
+    <string name="activity_regist_verify_num_hint">输入验证码</string>
+    <string name="activity_regist_pwd_hint">输入密码</string>
+    <string name="activity_regist_obtain_verify_button_text">获取</string>
     <string name="activity_regist_protocol_affirm_text">我已阅读并同意《用户协议》</string>
     <string name="activity_regist_button_text">注册</string>
+    
+    <!-- activity_findpwd -->
+    <string name="activity_findpwd_phonenum_hint">输入手机号码</string>
+    <string name="activity_findpwd_verify_num_hint">输入验证码</string>
+    <string name="activity_findpwd_obtain_verify_button_text">获取</string>
+    <string name="activity_findpwd_pwd_hint">输入密码</string>
+    <string name="activity_findpwd_repeat_pwd_hint">确认密码</string>
+    <string name="activity_findpwd_confirm_button_text">确认</string>
+    
 </resources>
 
