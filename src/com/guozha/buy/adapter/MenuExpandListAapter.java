@@ -6,17 +6,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
 
 /**
  * 可展开的菜单列表适配器
  * @author PeggyTong
  *
  */
-public class MenuExpandListAapter extends BaseExpandableListAdapter{
+public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 	
 	private String[] mGroupMenus;
 	
@@ -36,9 +36,9 @@ public class MenuExpandListAapter extends BaseExpandableListAdapter{
 		if(mGroupMenus.length != mChildMenus.length) return 0;
 		return mGroupMenus.length;
 	}
-
+	
 	@Override
-	public int getChildrenCount(int groupPosition) {
+	public int getRealChildrenCount(int groupPosition) {
 		if(mGroupMenus.length != mChildMenus.length) return 0;
 		return mChildMenus[groupPosition].size();
 	}
@@ -65,7 +65,7 @@ public class MenuExpandListAapter extends BaseExpandableListAdapter{
 
 	@Override
 	public boolean hasStableIds() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -92,9 +92,10 @@ public class MenuExpandListAapter extends BaseExpandableListAdapter{
 		
 		return convertView;
 	}
+	
 
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
+	public View getRealChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		ChildViewHolder holder;
 		if(convertView == null){
@@ -114,9 +115,8 @@ public class MenuExpandListAapter extends BaseExpandableListAdapter{
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		return false;
+		return true;
 	}
-	
 	
 	static class GroupViewHolder{
 		private TextView menuText;

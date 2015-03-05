@@ -1,26 +1,27 @@
 package com.guozha.buy.fragment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpException;
-import org.apache.http.client.HttpClient;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ListView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.ListVegetableActivity;
+import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
+import com.guozha.buy.entry.VegetableInfo;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener{
@@ -30,10 +31,15 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private View mView;
 	
 	private View mTopExpandMenuButton;
-	private ExpandableListView mMenuList;
+	private AnimatedExpandableListView mMenuList;
 	
 	private String[] mGroupMenus;
 	private List<String>[] mChildMenus;
+	
+	private ListView mItemList;
+	
+	private Animation mInAnimation;
+	private Animation mOutAnimation;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -41,6 +47,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
 		
+		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
+		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
+				
 		initMenuData();
 		
 		initView(mView);
@@ -73,8 +82,29 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mTopExpandMenuButton = view.findViewById(R.id.market_expand_menu_button);
 		mTopExpandMenuButton.setOnClickListener(this);
 		
-		mMenuList = (ExpandableListView) view.findViewById(R.id.market_item_menu_list);
+		mMenuList = (AnimatedExpandableListView) view.findViewById(R.id.market_item_menu_list);
 		mMenuList.setAdapter(new MenuExpandListAapter(getActivity(), mGroupMenus, mChildMenus));
+		
+		mMenuList.setOnGroupClickListener(new OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                // We call collapseGroupWithAnimation(int) and
+                // expandGroupWithAnimation(int) to animate group 
+                // expansion/collapse.
+                if (mMenuList.isGroupExpanded(groupPosition)) {
+                    mMenuList.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    mMenuList.expandGroupWithAnimation(groupPosition);
+                }
+                return true;
+            }
+            
+        });
+		
+		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
+		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
+				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
 		
 		
 	}
@@ -87,9 +117,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			if("unexpand".equals(tag)){
 				mMenuList.setVisibility(View.VISIBLE);
 				view.setTag("expand");
+				mMenuList.startAnimation(mInAnimation);
 			}else{
 				mMenuList.setVisibility(View.GONE);
 				view.setTag("unexpand");
+				mMenuList.startAnimation(mOutAnimation);
 			}
 			break;
 
