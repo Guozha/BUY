@@ -10,10 +10,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
+import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
@@ -36,7 +40,7 @@ public class MainActivity extends FragmentActivity{
 	
 	private ClickTabItemListener mClickTabItemListener;
 	
-	private List<Fragment> mFragments = new ArrayList<Fragment>();
+	private List<MainTabBaseFragment> mFragments = new ArrayList<MainTabBaseFragment>();
 	
 	private List<ChangeColorIconWithText> mTabIndicators = 
 			new ArrayList<ChangeColorIconWithText>();
@@ -90,6 +94,7 @@ public class MainActivity extends FragmentActivity{
 				return false;
 			}
 		});
+		
 	}
 	
 	/**
@@ -220,18 +225,36 @@ public class MainActivity extends FragmentActivity{
 	class PagerChangeListener implements OnPageChangeListener{	
 
 		@Override
-		public void onPageScrollStateChanged(int arg0) { }
+		public void onPageScrollStateChanged(int status) { 
+			switch (status) {
+			case 0:
+				//mCoverPlateView.setVisibility(View.GONE);
+				break;
+			case 1:
+				//mCoverPlateView.setVisibility(View.VISIBLE);
+				break;
+			case 2:
+				//mCoverPlateView.setVisibility(View.GONE);
+				break;
+			}
+		}
 
 		@Override
-		public void onPageSelected(int arg0) { }
+		public void onPageSelected(int position) {			
+			ChangeColorIconWithText choosed = mTabIndicators.get(position);
+			for(int i = 0; i < mTabIndicators.size(); i++){
+				mTabIndicators.get(i).setChoosed(false);
+			}
+			choosed.setChoosed(true);
+		}
 
 		@Override
 		public void onPageScrolled(int position, 
 				float positionOffset, int positionOffsetPixels) {
 			if(positionOffset <= 0) return;
-			
 			ChangeColorIconWithText left = mTabIndicators.get(position);
 			ChangeColorIconWithText right = mTabIndicators.get(position + 1);
+			if(right == null) return;			
 			left.setIconAlpha(1 - positionOffset);
 			right.setIconAlpha(positionOffset);
 		}
@@ -274,4 +297,27 @@ public class MainActivity extends FragmentActivity{
 		//友盟统计
 		MobclickAgent.onPause(this);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = this.getMenuInflater();
+		inflater.inflate(R.menu.main_actionbar_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_search:
+			
+			break;
+		case R.id.action_share:
+			
+			break;
+		default:
+			break;
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
+
 }

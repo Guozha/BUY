@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
-
 import cn.jpush.android.api.JPushInterface;
 
 import com.guozha.buy.R;
@@ -18,7 +16,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SplashActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SplashPage";
+	//private static final String PAGE_NAME = "SplashPage";
 	
 	private static final int SPLASH_TIME = 2000; //闪屏持续时间
 	private static final int MSG_START_INIT = 0x0001;  //开始初始化

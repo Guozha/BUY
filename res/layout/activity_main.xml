@@ -4,6 +4,7 @@
     xmlns:hyman="http://schemas.android.com/apk/res/com.guozha.buy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_base_nomal_background_color"
     android:orientation="vertical" >
     
 	<com.guozha.buy.view.CustomViewPager
@@ -24,7 +25,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            hyman:icon="@drawable/ic_menu_start_conversation"
+            hyman:checkeditem="true"
+            hyman:icon="@drawable/tab_bar_home_normal"
+            hyman:lighticon="@drawable/tab_bar_home_current"
             hyman:text="@string/activity_main_tab1_title"
             hyman:text_size="@dimen/app_nomal_text_size"
             hyman:color="@color/main_bottom_tab_item_bg_color"/>
@@ -35,7 +38,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            hyman:icon="@drawable/ic_menu_friendslist"
+            hyman:icon="@drawable/tab_bar_market_normal"
+            hyman:lighticon="@drawable/tab_bar_market_current"
             hyman:text="@string/activity_main_tab2_title"
             hyman:text_size="@dimen/app_nomal_text_size"
             hyman:color="@color/main_bottom_tab_item_bg_color"/>
@@ -46,7 +50,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            hyman:icon="@drawable/ic_menu_emoticons"
+            hyman:icon="@drawable/tab_bar_basket_normal"
+            hyman:lighticon="@drawable/tab_bar_basket_current"
             hyman:text="@string/activity_main_tab3_title"
             hyman:text_size="@dimen/app_nomal_text_size"
             hyman:color="@color/main_bottom_tab_item_bg_color"/>
@@ -57,7 +62,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            hyman:icon="@drawable/ic_menu_allfriends"
+            hyman:icon="@drawable/tab_bar_personal_normal"
+            hyman:lighticon="@drawable/tab_bar_personal_current"
             hyman:text="@string/activity_main_tab4_title"
             hyman:text_size="@dimen/app_nomal_text_size"
             hyman:color="@color/main_bottom_tab_item_bg_color"/>

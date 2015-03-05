@@ -28,14 +28,40 @@
             android:layout_marginTop="10dp"
             android:background="#81c024" />
 
-        <com.guozha.buy.view.scroll.WheelView
-            android:id="@+id/select_weight_wheelview"
+        <FrameLayout 
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp" />
-
+            android:layout_height="180dip">
+	        <com.guozha.buy.view.scroll.WheelView
+	            android:id="@+id/select_weight_wheelview"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginBottom="2dp"
+	            android:layout_marginTop="2dp" />
+	        <RelativeLayout 
+	            android:id="@+id/custom_weight_area"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:visibility="gone">
+	            <EditText 
+	                android:id="@+id/select_custom_weight_text"
+	                android:layout_width="60dip"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentBottom="true"
+	                android:layout_centerHorizontal="true"
+	                android:lines="1"
+	                android:singleLine="true"
+	                android:inputType="number"
+	                android:maxLength="4"
+	                android:text="10"/>
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBottom="@id/select_custom_weight_text"
+	                android:layout_toRightOf="@id/select_custom_weight_text"
+	                android:text="斤"/>
+	        </RelativeLayout>
+		</FrameLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

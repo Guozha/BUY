@@ -3,7 +3,6 @@ package com.guozha.buy.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.PlanMenuActivity;
 import com.guozha.buy.debug.DebugActivity;
 import com.umeng.analytics.MobclickAgent;
 
-public class MainTabFragmentCart extends Fragment{
+public class MainTabFragmentCart extends MainTabBaseFragment{
 	
 	private static final String PAGE_NAME = "CartPage";
 	

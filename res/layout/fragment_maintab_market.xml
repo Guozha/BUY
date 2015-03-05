@@ -3,11 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-	
+    <!-- 上面的菜单展开按钮 -->
+	<LinearLayout 
+	    android:id="@+id/market_expand_menu_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:gravity="center_vertical"
+	    android:tag="unexpand"
+	    android:background="#fefefe"
+	   	android:orientation="horizontal">
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="#ff9e03"
+	        android:textSize="16sp"
+	        android:layout_marginLeft="36dip"
+	        android:gravity="center_vertical"
+	        android:text="全部分类"/>
+	    
+	    <Space
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"/>
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scaleType="centerInside"
+	        android:layout_marginRight="18dip"
+	        android:src="@drawable/main_menu_down"/>
+	</LinearLayout>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="#dadedd"/>
+	<!-- 下面 -->
+	<FrameLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical">
+		    <!-- 自定义菜单 -->
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="84dip"
+	            android:orientation="horizontal">
+	            
+	        </LinearLayout>
+	        
+	   
+	   	</LinearLayout>
+	    
+		<ExpandableListView 
+		   android:id="@+id/market_item_menu_list"
+		   android:layout_width="match_parent"
+		   android:layout_height="match_parent"
+		   android:background="#ffffff"
+		   android:groupIndicator="@null"
+		   android:visibility="gone"/>
+	</FrameLayout>
     
-    <Button 
-        android:id="@+id/load_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="列表"/>
 </LinearLayout>

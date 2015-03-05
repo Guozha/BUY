@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dip"
-        android:background="@drawable/input_background"
+        android:background="@drawable/login_regist_nomal_input_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
         
@@ -27,8 +27,9 @@
 	        android:background="@null"
 	        android:singleLine="true"
 	        android:hint="@string/activity_login_phonenum_hint"
-	        android:textSize="16sp"
-	        android:textColorHint="#cccccc"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/app_base_text_color"
+	        android:textColorHint="@color/app_base_hint_text_color"
 	        android:gravity="center_vertical"
 	        android:inputType="phone"/>
 	    
@@ -37,7 +38,8 @@
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:scaleType="centerInside"
-            android:src="@drawable/login_clear" />
+            android:visibility="invisible"
+            android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
     <!-- 密码 -->
@@ -49,7 +51,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/input_background"
+        android:background="@drawable/login_regist_nomal_input_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
 	     
@@ -59,8 +61,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1.0"
 	        android:hint="@string/activity_login_pwd_hint"
-	        android:textColorHint="#cccccc"
-	        android:textSize="16sp"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
 	        android:singleLine="true"
 	        android:background="@null"
 	        android:gravity="center_vertical"
@@ -71,7 +74,8 @@
 	        android:layout_width="24dip"
 	        android:layout_height="24dip"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/login_clear" />
+	        android:visibility="invisible"
+	        android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
     <!-- 登录按钮 -->
@@ -80,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:text="@string/activity_login_button_text"
-        android:textSize="18sp"
+        android:textSize="@dimen/dimen_global_18sp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
@@ -98,16 +102,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:textColor="#1b9ee9"
-            android:textSize="16sp"
+            android:textColor="@color/app_base_text_color"
+            android:textSize="@dimen/dimen_global_14sp"
             android:text="@string/activity_login_remind_regist_text"/>
         <TextView
             android:id="@+id/login_tofindpwd_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="#1b9ee9"
-            android:textSize="16sp"
+            android:textColor="@color/app_base_text_color"
+            android:textSize="@dimen/dimen_global_14sp"
             android:text="@string/activity_login_remind_findpwd_text"/>
     </RelativeLayout>
 </LinearLayout>

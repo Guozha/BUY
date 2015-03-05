@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainTabFragmentMine extends Fragment{
+public class MainTabFragmentMine extends MainTabBaseFragment{
 	
 	private static final String PAGE_NAME = "MinePage";
 
@@ -36,4 +36,5 @@ public class MainTabFragmentMine extends Fragment{
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
 	}
+
 }

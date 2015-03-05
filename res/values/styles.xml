@@ -48,6 +48,12 @@
         <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/BottomInOutAnimStyle</item>
 	</style>
+	
+    <style name="BottomInOutAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/umeng_socialize_slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_weight_select_out_from_bottom</item>
+    </style> 	
 	
 </resources>

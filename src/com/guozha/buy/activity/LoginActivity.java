@@ -95,10 +95,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				String phoneNum = mEditPhoneNum.getText().toString(); 
+				if(phoneNum.length() == 0){
+					mPhoneNumIcon.setVisibility(View.INVISIBLE);
+				}else{
+					mPhoneNumIcon.setVisibility(View.VISIBLE);
+				}
 				if(isValidatePhoneNum(phoneNum)){
 					//TODO 设置为对号图标
+					mPhoneNumIcon.setImageResource(R.drawable.login_right_state);
 				}else{
 					//TODO 设置为叉号图标
+					mPhoneNumIcon.setImageResource(R.drawable.login_wrong_state);
 				}
 			}
 			
@@ -115,10 +122,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				String pwd = mEditPwd.getText().toString();
+				if(pwd.length() == 0){
+					mPwdIcon.setVisibility(View.INVISIBLE);
+				}else{
+					mPwdIcon.setVisibility(View.VISIBLE);
+				}
 				if(isValidatePwd(pwd)){
 					//TODO
+					mPwdIcon.setImageResource(R.drawable.login_right_state);
 				}else{
 					//TODO
+					mPwdIcon.setImageResource(R.drawable.login_wrong_state);
 				}
 			}
 			

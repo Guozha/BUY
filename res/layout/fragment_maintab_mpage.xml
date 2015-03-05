@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,7 +10,7 @@
 	    android:id="@+id/fragment_mpage_season"
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
-	    android:layout_weight="1"
+	    android:layout_weight="332"
 	    android:orientation="horizontal"
 	    android:padding="8dip">
 	   	
@@ -17,54 +18,65 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="left"
-	        android:paddingLeft="45dip"
-	        android:layout_weight="6">
+	        android:gravity="center"
+	        android:layout_weight="1">
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="3月1日"
-	            android:textSize="20sp"/>
+	            android:textColor="#999999"
+	            android:textSize="@dimen/dimen_global_39sp"/>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="正月十一"
-	            android:textSize="14sp"/>
+	            android:textColor="#999999"
+	            android:textSize="@dimen/dimen_global_20sp"/>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="#74ddbe"
+	            android:maxLines="2"
 	            android:text="宜清淡 忌咸辣"/>
 	    </LinearLayout>
 	    
-	    <LinearLayout 
+	    <RelativeLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center_horizontal"
-	        android:layout_weight="4">
+	        android:layout_weight="1">
 	        
 	        <ImageView 
-	            android:layout_width="50dip"
-	            android:layout_height="50dip"
+	            android:id="@+id/main_mpage_add_plan_icon"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
 	            android:scaleType="centerInside"
-	            android:src="@drawable/ic_launcher"/>
+	            android:layout_centerInParent="true"
+	            android:src="@drawable/main_plan_add"/>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_14sp"
+	            android:layout_below="@id/main_mpage_add_plan_icon"
+	            android:layout_centerHorizontal="true"
 	            android:text="来点菜吧"/>
 	        
-	    </LinearLayout>
+	    </RelativeLayout>
 	</LinearLayout>
 	
 	<!-- 中间部分 -->
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
-	    android:layout_weight="1"
+	    android:layout_weight="380"
+	    android:layout_marginLeft="12dip"
+	    android:layout_marginRight="12dip"
+	    android:background="@drawable/main_mpage_center_bg"
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
@@ -76,12 +88,21 @@
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_18sp"
+	            android:layout_marginLeft="24dip"
+	            android:layout_marginTop="10dip"
+	            android:paddingBottom="12dip"
+	            android:textColor="#d1aa22"
 	            android:text="逛菜场"/>
-	        
+	        <Space 
+	            android:layout_height="0dip"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"/>
 	        <ImageView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:src="@drawable/ic_launcher"/>
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_market_img"/>
 	    </LinearLayout>
 	    
 	    <!-- 菜品推进分类 -->
@@ -89,53 +110,83 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
+	        android:gravity="center"
 	        android:orientation="vertical">
 	        
 	        <LinearLayout 
 	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:layout_weight="1">
+	            android:layout_height="wrap_content"
+	            android:gravity="center">
 	            
 	            <TextView 
-	                android:layout_width="50dip"
+	                android:layout_width="55dip"
 	                android:layout_height="30dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item1_nomal_bg"
 	                android:text="水果"/>
 	            
 	            <TextView 
-	                android:layout_width="50dip"
+	                android:layout_width="55dip"
 	                android:layout_height="30dip"
-	                android:text="水果"/>
-        	</LinearLayout>
-        	
-	        <LinearLayout 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:layout_weight="1">
-	            
-	            <TextView 
-	                android:layout_width="50dip"
-	                android:layout_height="30dip"
-	                android:text="水果"/>
-	            
-	            <TextView 
-	                android:layout_width="50dip"
-	                android:layout_height="30dip"
+	                android:layout_marginLeft="16dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item2_nomal_bg"
 	                android:text="水果"/>
         	</LinearLayout>
         	
 	        <LinearLayout 
 	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:layout_weight="1">
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dip"
+	            android:gravity="center">
 	            
 	            <TextView 
-	                android:layout_width="50dip"
+	                android:layout_width="55dip"
 	                android:layout_height="30dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item3_nomal_bg"
 	                android:text="水果"/>
 	            
 	            <TextView 
-	                android:layout_width="50dip"
+	                android:layout_width="55dip"
 	                android:layout_height="30dip"
+	                android:layout_marginLeft="16dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item4_nomal_bg"
+	                android:text="水果"/>
+        	</LinearLayout>
+        	
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dip"
+	            android:gravity="center">
+	            
+	            <TextView 
+	                android:layout_width="55dip"
+	                android:layout_height="30dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item5_nomal_bg"
+	                android:text="水果"/>
+	            
+	            <TextView 
+	                android:layout_width="55dip"
+	                android:layout_height="30dip"
+	                android:layout_marginLeft="16dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="#ffffff"
+	                android:gravity="center"
+	                android:background="@drawable/main_tab_market_advice_menu_item6_nomal_bg"
 	                android:text="水果"/>
         	</LinearLayout>
 	    </LinearLayout>
@@ -145,41 +196,61 @@
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
-	    android:layout_weight="1"
+	    android:layout_weight="326"
+	    android:layout_margin="12dip"
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
+	        android:background="@drawable/main_mpage_center_bg"
 	        android:layout_weight="4">
 	        
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_18sp"
+	            android:textColor="#5cbe6c"
+	            android:layout_marginLeft="24dip"
+	            android:layout_marginTop="10dip"
 	            android:text="时令养生"/>
 	        
 	        <ImageView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:src="@drawable/ic_launcher"/>
+	            android:layout_width="match_parent"
+	            android:layout_height="0dip"
+	            android:layout_weight="1"
+	            android:scaleType="centerInside"
+	            android:paddingBottom="10dip"
+	            android:paddingTop="10dip"
+	            android:src="@drawable/main_season_icon"/>
 	    </LinearLayout>
 	    
 	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
+	        android:layout_marginLeft="8dip"
+	        android:background="@drawable/main_mpage_center_bg"
 	        android:layout_weight="6">
 	        
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="预售"/>
+	            android:layout_marginLeft="24dip"
+	            android:layout_marginTop="10dip"
+	            android:textSize="@dimen/dimen_global_18sp"
+	            android:textColor="#be5c5c"
+	            android:text="特供"/>
 	        
 	        <ImageView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:src="@drawable/ic_launcher"/>
+	            android:layout_width="match_parent"
+	            android:layout_height="0dip"
+	            android:paddingBottom="10dip"
+	            android:paddingTop="10dip"
+	            android:layout_weight="1"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_supplied_img"/>
 	    </LinearLayout>
 	</LinearLayout>
 </LinearLayout>

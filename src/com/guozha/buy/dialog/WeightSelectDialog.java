@@ -7,15 +7,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.ItemSaleInfo;
 import com.guozha.buy.entry.ItemSaleInfo.WeightOption;
+import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.view.scroll.WheelView;
+import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
 
 /**
@@ -27,6 +30,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	
 	private WheelView mWheelView;
 	
+	private View mCustomWeightArea;
+	private EditText mCustomWeight;
+	
 	private List<ItemSaleInfo.WeightOption> options;
 
 	@Override
@@ -36,21 +42,22 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		//让Dialog全屏
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		
-		/*
-		findViewById(R.id.diloag_outside).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				WeightSelectDialog.this.finish();
-			}
-		});
-		*/
-		
 		mWheelView = (WheelView) findViewById(R.id.select_weight_wheelview);
 		mWheelView.setVisibleItems(5); // Number of items
 		mWheelView.setWheelBackground(R.drawable.wheel_bg_holo);
 		mWheelView.setWheelForeground(R.drawable.wheel_val_holo);
 		mWheelView.setShadowColor(0x00000000, 0x00000000, 0x00000000);
+		mWheelView.setLastItemListener(new ItemChangeListener() {
+			
+			@Override
+			public void itemChanged(int index) {
+				if(index >= options.size() - 1){
+					mCustomWeightArea.setVisibility(View.VISIBLE);
+				}else{
+					mCustomWeightArea.setVisibility(View.GONE);
+				}
+			}
+		});
 		
 		addData();
 		
@@ -59,6 +66,13 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		findViewById(R.id.select_weight_to_details).setOnClickListener(this);
 		findViewById(R.id.select_weight_confirm).setOnClickListener(this);
 		findViewById(R.id.select_weight_free_layout).setOnClickListener(this);
+		
+		mCustomWeightArea = findViewById(R.id.custom_weight_area);
+		mCustomWeight = (EditText) findViewById(R.id.select_custom_weight_text);
+		
+		if(options != null){
+			mCustomWeight.setText(String.valueOf(options.get(options.size() - 1).getQuantity()));
+		}
 	}
 	
 	@Override
@@ -69,8 +83,19 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			break;
 		case R.id.select_weight_confirm:
 			int currentItem = mWheelView.getCurrentItem();
-			Toast.makeText(WeightSelectDialog.this, 
-					"currentItem=" + currentItem, Toast.LENGTH_SHORT).show();
+			int quantity = -1;
+			if(currentItem == options.size() - 1){
+				//自定义的
+				String quntityStr = mCustomWeight.getText().toString().trim();
+				if(RegularUtil.regularNumber(quntityStr)){
+					quantity = Integer.parseInt(quntityStr);
+				}
+			}else{
+				quantity = options.get(currentItem).getQuantity();
+			}
+			
+			Toast.makeText(this, "选择的重量是 = " + quantity, Toast.LENGTH_SHORT).show();
+
 			break;
 		case R.id.select_weight_free_layout:
 			WeightSelectDialog.this.finish();
@@ -120,8 +145,12 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		@Override
 		protected CharSequence getItemText(int index) {
 			WeightOption option = options.get(index);
-			return option.getQuantity() + option.getUnit() + " - "
-					+ option.getAmount() + option.getMoneyUnit();
+			if(index >= getItemsCount() - 1){
+				return "自定义重量";
+			}else{
+				return option.getQuantity() + option.getUnit() + " - "
+						+ option.getAmount() + option.getMoneyUnit();
+			}
 		}
 	}
 

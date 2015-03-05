@@ -3,7 +3,6 @@ package com.guozha.buy.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,18 +12,17 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.PlanMenuActivity;
 import com.umeng.analytics.MobclickAgent;
 
-public class MainTabFragmentMPage extends Fragment implements OnClickListener{
+public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
 	
 	private static final String TAG = "MainTabFragmentMPage";
 	private static final String PAGE_NAME = "MainPage";
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
-		View mView = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);	
-		initView(mView);
-		return mView;
+		View view = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
+		initView(view);
+		return view;
 	}
 	
 	/**
@@ -43,7 +41,6 @@ public class MainTabFragmentMPage extends Fragment implements OnClickListener{
 			Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
 			startActivity(intent);
 			break;
-
 		default:
 			break;
 		}

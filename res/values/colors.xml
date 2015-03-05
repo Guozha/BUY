@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- global -->
-    <color name="app_base_text_color">#ffffff</color>
+    <color name="app_base_text_color">#666666</color> <!-- app默认字体颜色 -->
+    <color name="app_base_nomal_background_color">#f4f4f4</color> <!-- app默认背景 -->
     
-    <color name="actionbar_title_color">#ffffff</color>
-    <color name="main_bottom_tab_bg_color">#e9a22f</color>
-    <color name="main_bottom_tab_item_bg_color">#ffffff</color>
+    <color name="app_base_yellow_color">#ffcc33</color>
+    <color name="app_base_hint_text_color">#bebebe</color>
+    
+    
+
     
     <color name="transparent">#00000000</color>
+    <!-- tab bar -->
+    <color name="main_bottom_tab_bg_color">#fefefe</color>
+    <color name="main_bottom_tab_item_bg_color">#ffcc33</color>
     
     <!-- actionBar -->
-	<color name="actionbar_bg_color">#e9a22f</color>
-	<color name="actionbar_text_color">#ffffff</color>
+	<color name="actionbar_bg_color">#fefefe</color>
+	<color name="actionbar_text_color">#999999</color>
+	<color name="actionbar_title_color">#ffffff</color>
 	
 	<!-- splash -->
 	<color name="activity_splash_bg_color">#e9a22f</color>
+	
+	<!-- main_frgment_mpage -->
 	
 	<!-- scroll wheel -->
 	<color name="scroll_wheel_line_color">#e8e8e8</color>

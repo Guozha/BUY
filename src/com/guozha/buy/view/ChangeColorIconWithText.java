@@ -27,6 +27,7 @@ import com.guozha.buy.R;
 public class ChangeColorIconWithText extends View {
 	private int mColor;
 	private Bitmap mIconBitmap;
+	private Bitmap mChoosedBitmap;
 	private String mText;
 	private int mTextSize;
 	private Canvas mCanvas;
@@ -37,6 +38,8 @@ public class ChangeColorIconWithText extends View {
 	private Rect mIconRect;
 	private Rect mTextBound;
 	private Paint mTextPaint;
+	
+	private boolean isChoosed;
 
 	public ChangeColorIconWithText(Context context, AttributeSet attrs){
 		this(context, attrs, 0);
@@ -83,9 +86,16 @@ public class ChangeColorIconWithText extends View {
 		for (int i = 0; i < n; i++) {
 			int attr = a.getIndex(i);
 			switch (attr) {
+			case R.styleable.ChangeColorIconWithText_checkeditem:
+				isChoosed = a.getBoolean(attr, false);
+				break;
 			case R.styleable.ChangeColorIconWithText_icon:
 				BitmapDrawable drawable = (BitmapDrawable) a.getDrawable(attr);
 				mIconBitmap = drawable.getBitmap();
+				break;
+			case R.styleable.ChangeColorIconWithText_lighticon:
+				BitmapDrawable lightDrawable = (BitmapDrawable) a.getDrawable(attr);
+				mChoosedBitmap = lightDrawable.getBitmap();
 				break;
 			case R.styleable.ChangeColorIconWithText_color:
 				mColor = a.getColor(attr, mColor);
@@ -111,6 +121,7 @@ public class ChangeColorIconWithText extends View {
 		mTextPaint = new Paint();
 		mTextPaint.setTextSize(mTextSize);
 		mTextPaint.setColor(0Xffffff);
+		mTextPaint.setAntiAlias(true);
 		mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
 	}
 
@@ -142,7 +153,11 @@ public class ChangeColorIconWithText extends View {
 	protected void onDraw(Canvas canvas) {
 		canvas.clipRect(0, 0, mViewWidth, mViewHeight);
 		
-		canvas.drawBitmap(mIconBitmap, null, mIconRect, null);
+		if(isChoosed){
+			canvas.drawBitmap(mChoosedBitmap, null, mIconRect, null);
+		}else{
+			canvas.drawBitmap(mIconBitmap, null, mIconRect, null);
+		}
 
 		int alpha = (int) Math.ceil(255 * mAlpha);
 
@@ -152,7 +167,9 @@ public class ChangeColorIconWithText extends View {
 		drawSourceText(canvas, alpha);
 		drawTargetText(canvas, alpha);
 		
-		canvas.drawBitmap(mBitmap, 0, 0, null);
+		if(!isChoosed){
+			canvas.drawBitmap(mBitmap, 0, 0, null);
+		}
 	}
 
 	/**
@@ -176,7 +193,7 @@ public class ChangeColorIconWithText extends View {
 	 * @param alpha
 	 */
 	private void drawSourceText(Canvas canvas, int alpha) {
-		mTextPaint.setColor(0xff333333);
+		mTextPaint.setColor(0xff999999);
 		mTextPaint.setAlpha(255 - alpha);
 		int x = getMeasuredWidth() / 2 - mTextBound.width() / 2;
 		int y = mIconRect.bottom + mTextBound.height();
@@ -225,6 +242,11 @@ public class ChangeColorIconWithText extends View {
 
 	public void setIconAlpha(float alpha) {
 		this.mAlpha = alpha;
+		invalidateView();
+	}
+	
+	public void setChoosed(boolean choosed){
+		isChoosed = choosed;
 		invalidateView();
 	}
 

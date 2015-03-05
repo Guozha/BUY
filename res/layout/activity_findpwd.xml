@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dip"
-        android:background="@drawable/input_background"
+        android:background="@drawable/login_regist_nomal_input_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
         
@@ -27,17 +27,19 @@
 	        android:background="@null"
 	        android:singleLine="true"
 	        android:hint="@string/activity_findpwd_phonenum_hint"
-	        android:textSize="16sp"
-	        android:textColorHint="#cccccc"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
 	        android:gravity="center_vertical"
 	        android:inputType="phone"/>
 	    
 	     <ImageView
-            android:id="@+id/regist_phonenum_clear"
+            android:id="@+id/findpwd_phonenum_clear"
             android:layout_width="24dip"
             android:layout_height="24dip"
             android:scaleType="centerInside"
-            android:src="@drawable/login_clear" />
+            android:visibility="invisible"
+            android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
     <!-- 验证码 -->
@@ -53,7 +55,7 @@
 	        android:layout_height="match_parent"
 	        android:orientation="horizontal"
 	        android:gravity="center_horizontal"
-	        android:background="@drawable/input_background"
+	        android:background="@drawable/regist_verifynum_input_background"
 	        android:paddingLeft="10dip"
 	        android:paddingRight="10dip">
 	
@@ -62,13 +64,14 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:hint="@string/activity_findpwd_verify_num_hint"
-		        android:textColorHint="#cccccc"
-		        android:textSize="16sp"
+		        android:textColorHint="@color/app_base_hint_text_color"
+		        android:textSize="@dimen/dimen_global_16sp"
+		        android:textColor="@color/app_base_text_color"
 		        android:singleLine="true"
 		        android:background="@null"
 		        android:gravity="center_vertical"
 		        android:layout_gravity="center_vertical"
-		        android:inputType="textPassword"/>
+		        android:inputType="number"/>
 	    </LinearLayout>
 	    <Button 
 	            android:id="@+id/findpwd_obtain_validenum"
@@ -77,9 +80,10 @@
 	            android:paddingLeft="10dip"
 	            android:paddingRight="10dip"
 	            android:layout_gravity="center_vertical"
-	            android:background="#cccccc"
+	            android:background="@drawable/regist_verifynum_button_background"
 	            android:text="@string/activity_findpwd_obtain_verify_button_text"
-	            android:textSize="16sp"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="#ffffff"
 	            android:gravity="center"/>
     </LinearLayout>
     
@@ -92,7 +96,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/input_background"
+        android:background="@drawable/login_regist_nomal_input_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
 	     
@@ -102,19 +106,21 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1.0"
 	        android:hint="@string/activity_findpwd_pwd_hint"
-	        android:textColorHint="#cccccc"
-	        android:textSize="16sp"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/app_base_text_color"
 	        android:singleLine="true"
 	        android:background="@null"
 	        android:gravity="center_vertical"
 	        android:inputType="textPassword"/>
 	    
 	     <ImageView
-	        android:id="@+id/regist_pwd_clear"
+	        android:id="@+id/findpwd_pwd_clear"
 	        android:layout_width="24dip"
 	        android:layout_height="24dip"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/login_clear" />
+	        android:visibility="invisible"
+	        android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
     <!-- 确认密码 -->
@@ -126,7 +132,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/input_background"
+        android:background="@drawable/login_regist_nomal_input_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
 	     
@@ -136,8 +142,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1.0"
 	        android:hint="@string/activity_findpwd_repeat_pwd_hint"
-	        android:textColorHint="#cccccc"
-	        android:textSize="16sp"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
 	        android:singleLine="true"
 	        android:background="@null"
 	        android:gravity="center_vertical"
@@ -148,7 +155,8 @@
 	        android:layout_width="24dip"
 	        android:layout_height="24dip"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/login_clear" />
+	        android:visibility="invisible"
+	        android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
     <!-- 确认按钮 -->
@@ -157,7 +165,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:text="@string/activity_findpwd_confirm_button_text"
-        android:textSize="18sp"
+        android:textSize="@dimen/dimen_global_18sp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"

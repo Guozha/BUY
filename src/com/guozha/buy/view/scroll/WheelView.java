@@ -383,7 +383,22 @@ public class WheelView extends View {
 
 				invalidate();
 			}
+			
+			mItemChangeListener.itemChanged(currentItem);
 		}
+	}
+	
+	private ItemChangeListener mItemChangeListener;
+	
+	public interface ItemChangeListener{
+		public void itemChanged(int index);
+	}
+	/**
+	 * 设置监听当前条目改变
+	 * @param changeListener
+	 */
+	public void setLastItemListener(ItemChangeListener changeListener){
+		this.mItemChangeListener = changeListener;
 	}
 
 	/**
