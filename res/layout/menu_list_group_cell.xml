@@ -22,7 +22,7 @@
             android:layout_width="30dip"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/main_menu_down"/>
     </LinearLayout>
 	
 </LinearLayout>

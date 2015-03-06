@@ -56,10 +56,9 @@ public class MarketItemListAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			//TODO
 			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		holder = (ViewHolder) convertView.getTag();
-		
 		
 		return convertView;
 	}

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -77,17 +78,19 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 			holder = new GroupViewHolder();
 			holder.menuText = (TextView) 
 					convertView.findViewById(R.id.menu_list_group_cell_text);
+			holder.arrowIcon = (ImageView)
+					convertView.findViewById(R.id.menu_list_group_cell_arrow);
 			convertView.setTag(holder);
+		}else{
+			holder = (GroupViewHolder) convertView.getTag();
 		}
-		
-		holder = (GroupViewHolder) convertView.getTag();
 		
 		holder.menuText.setText(mGroupMenus[groupPosition]);
 		
-		if(isExpanded){
-			
+		if(isExpanded){ //展开了
+			holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
 		}else{
-			
+			holder.arrowIcon.setImageResource(R.drawable.main_menu_down);
 		}
 		
 		return convertView;
@@ -104,9 +107,9 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 			holder.menuText = (TextView)
 					convertView.findViewById(R.id.menu_list_child_cell_text);
 			convertView.setTag(holder);
+		}else{
+			holder = (ChildViewHolder) convertView.getTag();
 		}
-		
-		holder = (ChildViewHolder) convertView.getTag();
 		
 		holder.menuText.setText(mChildMenus[groupPosition].get(childPosition));
 		
@@ -120,6 +123,7 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 	
 	static class GroupViewHolder{
 		private TextView menuText;
+		private ImageView arrowIcon;
 	}
 	
 	static class ChildViewHolder{

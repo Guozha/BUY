@@ -1,4 +1,4 @@
-package com.guozha.buy.fragment;
+ package com.guozha.buy.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,18 @@ import java.util.List;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
@@ -24,6 +28,11 @@ import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
+/**
+ * 逛菜场
+ * @author PeggyTong
+ *
+ */
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
@@ -40,6 +49,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private Animation mInAnimation;
 	private Animation mOutAnimation;
+	
+	private ImageView mMenuArrowIcon;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -47,9 +58,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
 		
+		//菜单出入动画
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
-				
+			
 		initMenuData();
 		
 		initView(mView);
@@ -57,6 +69,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		return mView;
 	}
 	
+	/**
+	 * 获取菜单数据
+	 */
 	private void initMenuData(){
 		mGroupMenus = new String[]{"Group1", "Group2", "Group3", "Group4"};
 		
@@ -79,9 +94,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * @param view
 	 */
 	private void initView(View view){
+		//顶部按钮
 		mTopExpandMenuButton = view.findViewById(R.id.market_expand_menu_button);
 		mTopExpandMenuButton.setOnClickListener(this);
 		
+		//菜单类目可展开列表
 		mMenuList = (AnimatedExpandableListView) view.findViewById(R.id.market_item_menu_list);
 		mMenuList.setAdapter(new MenuExpandListAapter(getActivity(), mGroupMenus, mChildMenus));
 		
@@ -89,9 +106,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                // We call collapseGroupWithAnimation(int) and
-                // expandGroupWithAnimation(int) to animate group 
-                // expansion/collapse.
                 if (mMenuList.isGroupExpanded(groupPosition)) {
                     mMenuList.collapseGroupWithAnimation(groupPosition);
                 } else {
@@ -102,31 +116,45 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
             
         });
 		
+		View header = LayoutInflater.from(this.getActivity())
+				.inflate(R.layout.market_list_item_header, null);
+		//界面分类列表
 		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
+		mItemList.addHeaderView(header);
 		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
 				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
-		
-		
+		//箭头
+		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
 	}
 	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.market_expand_menu_button:
-			String tag = (String) view.getTag();	
-			if("unexpand".equals(tag)){
-				mMenuList.setVisibility(View.VISIBLE);
-				view.setTag("expand");
-				mMenuList.startAnimation(mInAnimation);
-			}else{
-				mMenuList.setVisibility(View.GONE);
-				view.setTag("unexpand");
-				mMenuList.startAnimation(mOutAnimation);
-			}
+			expandMenuAction(view);
 			break;
 
 		default:
 			break;
+		}
+	}
+
+	/**
+	 * 展开和收起菜单
+	 * @param view
+	 */
+	private void expandMenuAction(View view) {
+		String tag = (String) view.getTag();	
+		if("unexpand".equals(tag)){
+			mMenuList.setVisibility(View.VISIBLE);
+			mMenuArrowIcon.setImageResource(R.drawable.main_menu_up);
+			view.setTag("expand");
+			mMenuList.startAnimation(mInAnimation);
+		}else{
+			mMenuList.setVisibility(View.GONE);
+			view.setTag("unexpand");
+			mMenuArrowIcon.setImageResource(R.drawable.main_menu_down);
+			mMenuList.startAnimation(mOutAnimation);
 		}
 	}
 	
