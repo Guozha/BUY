@@ -51,55 +51,26 @@ public class VegetableListAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.list_item_cell_maintab_market, null);
 			
-			holder.vegetableImage1 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image1);
-			holder.vegetableImage2 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image2);
-			holder.vegetableImage3 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image3);
+			//holder.vegetableImage1 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image1);
+			//holder.vegetableImage2 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image2);
+			//holder.vegetableImage3 = (ImageView) convertView.findViewById(R.id.vegetable_cell_image3);
 			
-			holder.vegetableName1 = (TextView) convertView.findViewById(R.id.vegetable_cell_name1);
-			holder.vegetableName2 = (TextView) convertView.findViewById(R.id.vegetable_cell_name2);
-			holder.vegetableName3 = (TextView) convertView.findViewById(R.id.vegetable_cell_name3);
-			convertView.setTag(holder);
+			//holder.vegetableName1 = (TextView) convertView.findViewById(R.id.vegetable_cell_name1);
+			//holder.vegetableName2 = (TextView) convertView.findViewById(R.id.vegetable_cell_name2);
+			//holder.vegetableName3 = (TextView) convertView.findViewById(R.id.vegetable_cell_name3);
+			//convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		VegetableInfo[] infos = mVegetables.get(position);
+		//VegetableInfo[] infos = mVegetables.get(position);
 		
-		if(infos[0] == null){
-			holder.vegetableImage1.setImageResource(0);
-			holder.vegetableName1.setText("");
-		}else{
-			holder.vegetableImage1.setImageResource(infos[0].getImageId());
-			holder.vegetableName1.setText(infos[0].getVegetableName());
-		}
-		
-		if(infos[1] == null){
-			holder.vegetableImage2.setImageResource(0);
-			holder.vegetableName2.setText("");
-		}else{
-			holder.vegetableImage2.setImageResource(infos[1].getImageId());
-			holder.vegetableName2.setText(infos[1].getVegetableName());
-		}
-		
-		if(infos[2] == null){
-			holder.vegetableImage3.setImageResource(0);
-			holder.vegetableName3.setText("");
-		}else{
-			holder.vegetableImage3.setImageResource(infos[2].getImageId());
-			holder.vegetableName3.setText(infos[2].getVegetableName());
-		}
 		
 		return convertView;
 	}
 
 	
 	static class ViewHolder{	
-		private ImageView vegetableImage1; 
-		private ImageView vegetableImage2;
-		private ImageView vegetableImage3;
 		
-		private TextView vegetableName1;
-		private TextView vegetableName2;
-		private TextView vegetableName3;
 	}
 }

@@ -88,9 +88,9 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 		holder.menuText.setText(mGroupMenus[groupPosition]);
 		
 		if(isExpanded){ //展开了
-			holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
+		//holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
 		}else{
-			holder.arrowIcon.setImageResource(R.drawable.main_menu_down);
+			//holder.arrowIcon.setImageResource(R.drawable.main_menu_down);
 		}
 		
 		return convertView;

@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 重写ViewPager(暂时目的是为了拦截事件)Oss
+ * 重写ViewPager(暂时目的是为了拦截事件)
  * @author Administrator
  *
  */
@@ -18,17 +18,20 @@ public class CustomViewPager extends ViewPager{
 		super(context, attrs);
 	
 	}
-	
+
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event) {
-		LogUtil.e("customViewPager_onInterceptTouchEvent");
+
+		/*
 		boolean isValidate = mOnInterceptTouchListener.interceptTouched(
 				event.getY(), event.getY());
 		if(isValidate){ //拦截
 			return super.onInterceptTouchEvent(event);
-		}else{
-			return false;
 		}
+		*/
+		
+		return super.onInterceptTouchEvent(event);
+		
 	}
 	
 	private OnInterceptTouchListener mOnInterceptTouchListener;

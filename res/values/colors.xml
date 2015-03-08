@@ -13,11 +13,11 @@
     <color name="transparent">#00000000</color>
     <!-- tab bar -->
     <color name="main_bottom_tab_bg_color">#fefefe</color>
-    <color name="main_bottom_tab_item_bg_color">#ffcc33</color>
+    <color name="main_bottom_tab_item_bg_color">#df3411</color>
     
     <!-- actionBar -->
 	<color name="actionbar_bg_color">#fefefe</color>
-	<color name="actionbar_text_color">#999999</color>
+	<color name="actionbar_text_color">#df3411</color>
 	<color name="actionbar_title_color">#ffffff</color>
 	
 	<!-- splash -->
@@ -27,4 +27,13 @@
 	
 	<!-- scroll wheel -->
 	<color name="scroll_wheel_line_color">#e8e8e8</color>
+	
+	<color name="color_app_base_1">#df3411</color>
+	<color name="color_app_base_2">#669999</color>
+	<color name="color_app_base_3">#e5806c</color>
+	<color name="color_app_base_4">#8a8584</color>
+	<color name="color_app_base_5">#fefefe</color>
+	<color name="color_app_base_6">#f0f0f0</color>
+	<color name="color_app_base_7">#dadada</color>
+	<color name="color_app_base_8">#bdbab9</color>
 </resources>

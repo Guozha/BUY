@@ -1,5 +1,6 @@
 package com.guozha.buy.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +15,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author lixiaoqiang
  *
  */
-public class SplashActivity extends BaseActivity{
+public class SplashActivity extends Activity{
 	
 	//private static final String PAGE_NAME = "SplashPage";
 	

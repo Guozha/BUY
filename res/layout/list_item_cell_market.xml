@@ -2,24 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="8dip"
+    android:paddingRight="8dip"
     android:orientation="vertical" >
     
     <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dip"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 	    <TextView 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:textColor="@color/app_base_text_color"
+	        android:layout_marginLeft="10dip"
+	        android:textColor="@color/color_app_base_1"
 	        android:text="肉制品"
 	        android:textSize="16sp"/>
-    
+    	<Space 
+    	    android:layout_width="0dip"
+    	    android:layout_weight="1"
+    	    android:layout_height="match_parent"/>
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scaleType="centerInside"
+	        android:layout_marginRight="10dip"
+	        android:src="@drawable/main_more"/>
      </LinearLayout>
      
      <include 
          layout="@layout/list_item_cell_maintab_market"
          android:id="@+id/list_item_cell_line1"/>
+     
+     <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/color_app_base_7"/>
      
      <include 
          layout="@layout/list_item_cell_maintab_market"

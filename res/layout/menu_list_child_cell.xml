@@ -9,6 +9,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="50dip"
 	    android:gravity="center_vertical"
-	    android:background="#cccccc"
-	    android:textSize="18sp"/>
+	    android:background="@color/color_app_base_6"
+	    android:paddingLeft="54dip"
+	    android:textSize="14sp"/>
 </LinearLayout>

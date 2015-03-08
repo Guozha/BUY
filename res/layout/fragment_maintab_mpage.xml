@@ -11,6 +11,11 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="332"
+	    android:layout_marginTop="12dip"
+	    android:layout_marginLeft="12dip"
+	    android:layout_marginRight="12dip"
+	    android:layout_marginBottom="8dip"
+	    android:background="@drawable/main_background"
 	    android:orientation="horizontal"
 	    android:padding="8dip">
 	   	
@@ -19,54 +24,78 @@
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
 	        android:gravity="center"
-	        android:layout_weight="1">
+	        android:layout_weight="420">
 	        
-	        <TextView 
-	            android:layout_width="wrap_content"
+	        <LinearLayout 
+	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:text="3月1日"
-	            android:textColor="#999999"
-	            android:textSize="@dimen/dimen_global_39sp"/>
-	        
-	        <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="正月十一"
-	            android:textColor="#999999"
-	            android:textSize="@dimen/dimen_global_20sp"/>
+	            android:gravity="center_horizontal"
+	            android:orientation="horizontal">
+	            
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="@color/color_app_base_4"
+	                android:textSize="@dimen/dimen_global_60sp"
+	                android:text="08"/>
+	            
+	            <LinearLayout 
+	                android:layout_width="wrap_content"
+	                android:layout_height="match_parent"
+	                android:gravity="center_vertical"
+	                android:layout_marginLeft="10dip"
+	                android:orientation="vertical">
+	                
+	                <TextView 
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"
+			            android:text="3月1日"
+			            android:gravity="center"
+			            android:textColor="@color/color_app_base_4"
+			            android:textSize="@dimen/dimen_global_16sp"/>
+	                
+		            <TextView 
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="正月十一"
+			            android:gravity="center"
+			            android:textColor="@color/color_app_base_4"
+			            android:textSize="@dimen/dimen_global_16sp"/>
+	            </LinearLayout>
+	        </LinearLayout>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:textColor="#74ddbe"
+	            android:textColor="@color/color_app_base_2"
 	            android:maxLines="2"
-	            android:text="宜清淡 忌咸辣"/>
+	            android:maxWidth="150dp"
+	            android:text="食清淡 饮菊花茶护肝"/>
 	    </LinearLayout>
 	    
-	    <RelativeLayout 
+	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:layout_weight="1">
+	        android:gravity="center"
+	        android:layout_weight="252">
 	        
 	        <ImageView 
 	            android:id="@+id/main_mpage_add_plan_icon"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:scaleType="centerInside"
-	            android:layout_centerInParent="true"
 	            android:src="@drawable/main_plan_add"/>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textSize="@dimen/dimen_global_14sp"
-	            android:layout_below="@id/main_mpage_add_plan_icon"
-	            android:layout_centerHorizontal="true"
+	            android:textColor="@color/color_app_base_3"
+	            android:layout_marginTop="8dip"
 	            android:text="来点菜吧"/>
 	        
-	    </RelativeLayout>
+	    </LinearLayout>
 	</LinearLayout>
 	
 	<!-- 中间部分 -->
@@ -76,7 +105,7 @@
 	    android:layout_weight="380"
 	    android:layout_marginLeft="12dip"
 	    android:layout_marginRight="12dip"
-	    android:background="@drawable/main_mpage_center_bg"
+	    android:background="@drawable/main_background"
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
@@ -88,11 +117,11 @@
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:textSize="@dimen/dimen_global_18sp"
-	            android:layout_marginLeft="24dip"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:layout_marginLeft="18dip"
 	            android:layout_marginTop="10dip"
 	            android:paddingBottom="12dip"
-	            android:textColor="#d1aa22"
+	            android:textColor="@color/color_app_base_1"
 	            android:text="逛菜场"/>
 	        <Space 
 	            android:layout_height="0dip"
@@ -122,9 +151,9 @@
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item1_nomal_bg"
+	                android:background="@drawable/main_tag_backgroung"
 	                android:text="水果"/>
 	            
 	            <TextView 
@@ -132,9 +161,9 @@
 	                android:layout_height="30dip"
 	                android:layout_marginLeft="16dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item2_nomal_bg"
+	                android:background="@drawable/main_tag_backgroung"
 	                android:text="水果"/>
         	</LinearLayout>
         	
@@ -148,9 +177,9 @@
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item3_nomal_bg"
+	                android:background="@drawable/main_tag_backgroung"
 	                android:text="水果"/>
 	            
 	            <TextView 
@@ -158,9 +187,9 @@
 	                android:layout_height="30dip"
 	                android:layout_marginLeft="16dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item4_nomal_bg"
+	                android:background="@drawable/main_tag_backgroung"
 	                android:text="水果"/>
         	</LinearLayout>
         	
@@ -174,20 +203,19 @@
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item5_nomal_bg"
+	                android:background="@drawable/main_tag_backgroung"
 	                android:text="水果"/>
 	            
-	            <TextView 
+	             <TextView 
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:layout_marginLeft="16dip"
 	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="#ffffff"
+	                android:textColor="@color/color_app_base_2"
 	                android:gravity="center"
-	                android:background="@drawable/main_tab_market_advice_menu_item6_nomal_bg"
-	                android:text="水果"/>
+	                android:background="@drawable/main_tag_edit"/>
         	</LinearLayout>
 	    </LinearLayout>
 	</LinearLayout>
@@ -197,22 +225,25 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="326"
-	    android:layout_margin="12dip"
+	    android:layout_marginLeft="12dip"
+	    android:layout_marginRight="12dip"
+	    android:layout_marginBottom="12dip"
+	    android:layout_marginTop="8dip"
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:background="@drawable/main_mpage_center_bg"
-	        android:layout_weight="4">
+	        android:background="@drawable/main_background"
+	        android:layout_weight="280">
 	        
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:textSize="@dimen/dimen_global_18sp"
-	            android:textColor="#5cbe6c"
-	            android:layout_marginLeft="24dip"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_1"
+	            android:layout_marginLeft="18dip"
 	            android:layout_marginTop="10dip"
 	            android:text="时令养生"/>
 	        
@@ -231,16 +262,16 @@
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
 	        android:layout_marginLeft="8dip"
-	        android:background="@drawable/main_mpage_center_bg"
-	        android:layout_weight="6">
+	        android:background="@drawable/main_background"
+	        android:layout_weight="378">
 	        
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="24dip"
+	            android:layout_marginLeft="18dip"
 	            android:layout_marginTop="10dip"
-	            android:textSize="@dimen/dimen_global_18sp"
-	            android:textColor="#be5c5c"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_1"
 	            android:text="特供"/>
 	        
 	        <ImageView 

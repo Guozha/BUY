@@ -4,66 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     
-    <RelativeLayout 
-        android:id="@+id/vegetable_cell_item1"
-        android:layout_height="wrap_content"
-        android:layout_width="0dip"
-        android:layout_weight="1">
-        <ImageView 
-            android:id="@+id/vegetable_cell_image1"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@drawable/vegetable_image"/>
-        
-        <TextView
-            android:id="@+id/vegetable_cell_name1"
-            android:layout_below="@id/vegetable_cell_image1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="产品名称"/>
-    </RelativeLayout>
-   
-    <RelativeLayout 
-        android:id="@+id/vegetable_cell_item2"
-        android:layout_height="wrap_content"
-        android:layout_width="0dip"
-        android:layout_weight="1">
-        <ImageView 
-            android:id="@+id/vegetable_cell_image2"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@drawable/vegetable_image"/>
-        
-        <TextView
-            android:id="@+id/vegetable_cell_name2"
-            android:layout_below="@id/vegetable_cell_image2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="产品名称"/>
-    </RelativeLayout>
+    <include 
+        layout="@layout/list_item_small_cell"/>
     
-    <RelativeLayout 
-        android:id="@+id/vegetable_cell_item3"
-        android:layout_height="wrap_content"
-        android:layout_width="0dip"
-        android:layout_weight="1">
-        <ImageView 
-            android:id="@+id/vegetable_cell_image3"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@drawable/vegetable_image"/>
+    <View 
+        android:layout_width="1dip"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_base_7"/>
+    
+    <include 
+        layout="@layout/list_item_small_cell"/> 
         
-        <TextView
-            android:id="@+id/vegetable_cell_name3"
-            android:layout_below="@id/vegetable_cell_image3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="产品名称"/>
-    </RelativeLayout>
+    <View 
+        android:layout_width="1dip"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_base_7"/>
+        
+    <include 
+        layout="@layout/list_item_small_cell"/> 
 </LinearLayout>

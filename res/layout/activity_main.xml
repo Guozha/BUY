@@ -46,7 +46,7 @@
 
         <com.guozha.buy.view.ChangeColorIconWithText
             android:id="@+id/id_indicator_three"
-            android:layout_width="0dp"
+            android:layout_width="0dp"        
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:padding="5dp"
