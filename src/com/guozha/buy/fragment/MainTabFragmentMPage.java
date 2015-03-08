@@ -1,5 +1,6 @@
 package com.guozha.buy.fragment;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	
 	private static final String TAG = "MainTabFragmentMPage";
 	private static final String PAGE_NAME = "MainPage";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			
+			//初始化ActionBar
+			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
@@ -60,6 +63,20 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
+	}
+	
+	/**
+	 * 初始化ActionBar
+	 * @param actionbar
+	 */
+	private void initActionBar(ActionBar actionbar) {
+		if(actionbar == null) return;
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(false);
+		actionbar.setTitle("我要买菜");
 	}
 	
 	@Override

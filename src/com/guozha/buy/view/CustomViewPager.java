@@ -1,7 +1,5 @@
 package com.guozha.buy.view;
 
-import com.guozha.buy.util.LogUtil;
-
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;

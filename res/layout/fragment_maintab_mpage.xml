@@ -245,7 +245,7 @@
 	            android:textColor="@color/color_app_base_1"
 	            android:layout_marginLeft="18dip"
 	            android:layout_marginTop="10dip"
-	            android:text="时令养生"/>
+	            android:text="特供"/>
 	        
 	        <ImageView 
 	            android:layout_width="match_parent"
@@ -256,32 +256,27 @@
 	            android:paddingTop="10dip"
 	            android:src="@drawable/main_season_icon"/>
 	    </LinearLayout>
-	    
-	    <LinearLayout 
-	        android:layout_width="0dip"
-	        android:layout_height="match_parent"
-	        android:orientation="vertical"
-	        android:layout_marginLeft="8dip"
-	        android:background="@drawable/main_background"
-	        android:layout_weight="378">
 	        
-	        <TextView
+        <FrameLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="378"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/main_background">
+            <ImageView 
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:scaleType="centerCrop"
+	            android:src="@drawable/main_season_img_spring"/>
+            <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="18dip"
 	            android:layout_marginTop="10dip"
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="@color/color_app_base_1"
-	            android:text="特供"/>
-	        
-	        <ImageView 
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:paddingBottom="10dip"
-	            android:paddingTop="10dip"
-	            android:layout_weight="1"
-	            android:scaleType="centerInside"
-	            android:src="@drawable/main_supplied_img"/>
-	    </LinearLayout>
+	            android:text="时令养生"/>
+        </FrameLayout>
+	       
 	</LinearLayout>
 </LinearLayout>

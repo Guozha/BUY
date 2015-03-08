@@ -8,6 +8,7 @@
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/BaseActionBarStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/action_bar_location</item>
 		<!--
 		<item name="android:homeAsUpIndicator">@drawable/basepage_back</item>
 	    <item name="android:actionBarItemBackground">@drawable/actionbar_item_background</item>

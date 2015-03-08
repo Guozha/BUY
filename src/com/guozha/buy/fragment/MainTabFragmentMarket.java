@@ -3,21 +3,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
@@ -120,6 +117,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				.inflate(R.layout.market_list_item_header, null);
 		//界面分类列表
 		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
+		mItemList.setItemsCanFocus(true);
 		mItemList.addHeaderView(header);
 		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
 				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
@@ -163,7 +161,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			
+			//初始化ActionBar
+			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
@@ -173,5 +172,19 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
+	}
+	
+	/**
+	 * 初始化ActionBar
+	 * @param actionbar
+	 */
+	private void initActionBar(ActionBar actionbar){
+		if(actionbar == null) return;
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(false);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(R.layout.actionbar_market_custom_view);
 	}
 }

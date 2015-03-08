@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -49,8 +50,6 @@ public class MainActivity extends FragmentActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		initActionBar(getActionBar());
 		initFragment();
 		initTabIndicators();
 		initViewPager();
@@ -95,18 +94,6 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
 		
-	}
-	
-	/**
-	 * 初始化ActionBar
-	 * @param actionbar
-	 */
-	private void initActionBar(ActionBar actionbar) {
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(true);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(false);
 	}
 	
 	/**
@@ -308,8 +295,9 @@ public class MainActivity extends FragmentActivity{
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_search:
-			
+		case R.id.action_search: //查找
+			Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.action_share:
 			
