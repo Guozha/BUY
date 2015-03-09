@@ -3,16 +3,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="page3"/>
-    
-    <Button 
-        android:id="@+id/turn_to_debugpage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="进入Debug界面"/>
+   
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_marginTop="8dip"
+        android:background="@color/color_app_base_5"
+        android:orientation="vertical">
+        <View 
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/color_app_base_7"/>
+	    <ListView 
+	        android:id="@+id/cart_list"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:headerDividersEnabled="true"
+	        android:footerDividersEnabled="true"
+	        android:divider="@color/color_app_base_7"
+	        android:dividerHeight="1px"/>
+	    <View 
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/color_app_base_7"/>
+    </LinearLayout>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_7"/>
+    <Space 
+        android:layout_width="match_parent"
+        android:layout_height="8dip"/>
+   	<View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_7"/>
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="94dip"
+        android:background="@color/color_app_base_5">
+		
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="18dip"
+            android:orientation="vertical">
+            
+            <TextView 
+                android:id="@+id/cart_total_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共计4件  合计￥18.00"
+                android:textSize="@dimen/dimen_global_14sp"
+                android:textColor="@color/color_app_base_4"/>
+            
+            <TextView
+                android:id="@+id/cart_server_money" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预计服务费5元"
+                android:textSize="@dimen/dimen_global_14sp"
+                android:textColor="@color/color_app_base_4"/>
+            
+            <TextView 
+                android:id="@+id/cart_free_money_gap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="离免服务费还差21元"
+                android:textSize="@dimen/dimen_global_14sp"
+                android:textColor="@color/color_app_base_4"/>
+        </LinearLayout>
+        
+        <Button 
+            android:layout_width="112dip"
+            android:layout_height="40dip"
+            android:text="立即下单"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="31dip"
+            android:background="@drawable/main_order_bg"
+            android:textColor="@color/color_app_base_5"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textColor="@color/color_app_base_1"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:layout_marginLeft="18dip"
         android:gravity="center_vertical"
         android:text="逛菜场"/>

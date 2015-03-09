@@ -36,6 +36,8 @@ import com.umeng.update.UmengUpdateAgent;
  */
 public class MainActivity extends FragmentActivity{
 	
+	private int mCurrentItem = 0;
+	
 	private CustomViewPager mCustomViewPager;
 	private MyFragmentPagerAdapter mFragmentPagerAdapter;
 	
@@ -164,22 +166,20 @@ public class MainActivity extends FragmentActivity{
 		
 		switch (view.getId()) {
 		case R.id.id_indicator_one:
-			mTabIndicators.get(0).setIconAlpha(1.0f);
-			mCustomViewPager.setCurrentItem(0, false);
+			mCurrentItem = 0;
 			break;
 		case R.id.id_indicator_two:
-			mTabIndicators.get(1).setIconAlpha(1.0f);
-			mCustomViewPager.setCurrentItem(1, false);
+			mCurrentItem = 1;
 			break;
 		case R.id.id_indicator_three:
-			mTabIndicators.get(2).setIconAlpha(1.0f);
-			mCustomViewPager.setCurrentItem(2, false);
+			mCurrentItem = 2;
 			break;
 		case R.id.id_indicator_four:
-			mTabIndicators.get(3).setIconAlpha(1.0f);
-			mCustomViewPager.setCurrentItem(3, false);
+			mCurrentItem = 3;
 			break;
 		}
+		mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
+		mCustomViewPager.setCurrentItem(mCurrentItem, false);
 	}
 
 	/**
@@ -287,9 +287,34 @@ public class MainActivity extends FragmentActivity{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = this.getMenuInflater();
-		inflater.inflate(R.menu.main_actionbar_menu, menu);
-		return true;
+		//TODO
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	/**
+	 * 修改ActionBar的菜单
+	 * 注：必须调用invalidateOptionsMenu()才能刷新
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		switch (mCurrentItem) {
+		case 0:
+			MenuInflater inflater = this.getMenuInflater();
+			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
+			break;
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		default:
+			break;
+		}
+		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	@Override

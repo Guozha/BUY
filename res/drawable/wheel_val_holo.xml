@@ -29,7 +29,7 @@
                 android:width="1dp"
                 android:color="@color/scroll_wheel_line_color" />
             <solid 
-                android:color="#5081c024"
+                android:color="#33df3411"
                 
                 />
         </shape>

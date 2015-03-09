@@ -7,8 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,6 +41,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	 * @param view
 	 */
 	private void initView(View view){
+		if(view == null) return;
 		mMineHeadImg = (ImageView) view.findViewById(R.id.mine_head_img);
 		mMineHeadImg.setOnClickListener(this);
 	}
@@ -82,7 +81,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			public void onClick(DialogInterface dialog, int which) {
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, 
-						Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
+						Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "/head.jpg")));
 				startActivityForResult(intent, 2);
 			}
 		}).show();

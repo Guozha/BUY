@@ -32,6 +32,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	 * @param view
 	 */
 	private void initView(View view){
+		if(view == null) return;
 		view.findViewById(R.id.fragment_mpage_season).setOnClickListener(this);
 	}
 	

@@ -5,6 +5,7 @@
     android:orientation="horizontal" >
     
     <include 
+        android:id="@+id/list_item_small_cell1"
         layout="@layout/list_item_small_cell"/>
     
     <View 
@@ -13,6 +14,7 @@
         android:background="@color/color_app_base_7"/>
     
     <include 
+        android:id="@+id/list_item_small_cell2"
         layout="@layout/list_item_small_cell"/> 
         
     <View 
@@ -21,5 +23,6 @@
         android:background="@color/color_app_base_7"/>
         
     <include 
+        android:id="@+id/list_item_small_cell3"
         layout="@layout/list_item_small_cell"/> 
 </LinearLayout>

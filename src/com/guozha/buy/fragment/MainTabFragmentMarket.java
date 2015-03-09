@@ -7,15 +7,16 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MarketItemListAdapter;
@@ -23,6 +24,7 @@ import com.guozha.buy.adapter.MenuExpandListAapter;
 import com.guozha.buy.entry.VegetableInfo;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
+import com.guozha.buy.view.CustomListView;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -30,7 +32,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener{
+public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnTouchListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
 	
@@ -42,12 +44,14 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private String[] mGroupMenus;
 	private List<String>[] mChildMenus;
 	
-	private ListView mItemList;
+	private CustomListView mItemList;
 	
 	private Animation mInAnimation;
 	private Animation mOutAnimation;
 	
 	private ImageView mMenuArrowIcon;
+	
+	private View mQuickInView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -91,6 +95,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * @param view
 	 */
 	private void initView(View view){
+		if(view == null) return;
 		//顶部按钮
 		mTopExpandMenuButton = view.findViewById(R.id.market_expand_menu_button);
 		mTopExpandMenuButton.setOnClickListener(this);
@@ -116,13 +121,27 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		View header = LayoutInflater.from(this.getActivity())
 				.inflate(R.layout.market_list_item_header, null);
 		//界面分类列表
-		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
+		mItemList = (CustomListView) view.findViewById(R.id.market_itemlist);
 		mItemList.setItemsCanFocus(true);
 		mItemList.addHeaderView(header);
 		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
 				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
+		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
+		mQuickInView = view.findViewById(R.id.market_quick_in_view);
+		
+		mItemList.setOnListViewEventListener(new CustomListView.OnListViewEventListener() {
+			
+			@Override
+			public void upDownEvent(boolean isUp) {
+				if(isUp){
+					mQuickInView.setVisibility(View.INVISIBLE);
+				}else{
+					mQuickInView.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -186,5 +205,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		actionbar.setDisplayUseLogoEnabled(false);
 		actionbar.setDisplayShowCustomEnabled(true);
 		actionbar.setCustomView(R.layout.actionbar_market_custom_view);
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		LogUtil.e("OnTouch。。。");
+		return false;
 	}
 }

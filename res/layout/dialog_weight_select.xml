@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:textColor="@color/color_app_base_1"
             android:text="重量 - 金额"
             android:textSize="16sp" />
 
@@ -26,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="#81c024" />
+            android:background="@color/color_app_base_1" />
 
         <FrameLayout 
             android:layout_width="match_parent"
@@ -48,10 +49,12 @@
 	                android:layout_width="60dip"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentBottom="true"
+	                android:layout_marginBottom="20dip"
 	                android:layout_centerHorizontal="true"
 	                android:lines="1"
 	                android:singleLine="true"
 	                android:inputType="number"
+	                android:background="@drawable/main_line"
 	                android:maxLength="4"
 	                android:text="10"/>
 	            <TextView 
@@ -65,7 +68,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#e8e8e8" />
+            android:background="@color/color_app_base_1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +84,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="详情"
-                android:textColor="#81c024"
+                android:textColor="@color/color_app_base_1"
                 android:textSize="18sp" />
 
             <TextView
@@ -93,7 +96,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="确定"
-                android:textColor="#81c024"
+                android:textColor="@color/color_app_base_1"
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>

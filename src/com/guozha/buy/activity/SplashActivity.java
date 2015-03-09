@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import cn.jpush.android.api.JPushInterface;
 
 import com.guozha.buy.R;
+import com.guozha.buy.dialog.WeightSelectDialog;
 import com.umeng.analytics.MobclickAgent;
 
 /**
