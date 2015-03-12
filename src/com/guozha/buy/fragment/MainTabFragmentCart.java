@@ -1,5 +1,8 @@
 package com.guozha.buy.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +12,17 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CartItemListAdapter;
+import com.guozha.buy.entry.cart.CartBaseItem;
+import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
+import com.guozha.buy.entry.cart.CartCookItem;
+import com.guozha.buy.entry.cart.CartCookMaterial;
+import com.guozha.buy.entry.cart.CartMarketItem;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -25,19 +34,47 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	
 	private static final String PAGE_NAME = "CartPage";
 	
-	private ListView mCartList;
+	private ExpandableListView mCartList;
 	
 	private TextView mMesgTotal;
 	private TextView mMesgServerMoney;
 	private TextView mMesgFreeGap;
+	private List<CartBaseItem> mCartItems;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
+		initData();
 		initView(view);
 		return view;
 	}
+	
+	private void initData(){
+		mCartItems = new ArrayList<CartBaseItem>();
+		
+		//添加5个菜谱
+		for(int i = 0; i < 5; i++){
+			List<CartCookMaterial> cookMaterials = new ArrayList<CartCookMaterial>();
+			for(int j = 0; j < 5; j++){
+				CartCookMaterial cookMaterial = new CartCookMaterial(j + "", "西红柿", "3", "两");
+				cookMaterials.add(cookMaterial);
+			}
+			CartCookItem cartCookItem = new CartCookItem(
+					i + "", "西红柿炒鸡蛋", 1, "份", "5.7", cookMaterials);
+			mCartItems.add(cartCookItem);
+		}
+		
+		//添加标题
+		mCartItems.add(new CartBaseItem(null, "逛菜场", -1, null, null, CartItemType.undefine));
+		
+		//添加10个逛菜场
+		for(int i = 0; i < 10; i++){
+			CartMarketItem cartMarketItem = new CartMarketItem(i + "", "新鲜猪肉", 14, "斤", "45.9");
+			mCartItems.add(cartMarketItem);
+		}
+	}
+	
 	
 	/**
 	 * 初始化界面
@@ -45,8 +82,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	 */
 	private void initView(View view){
 		if(view == null) return;
-		mCartList = (ListView) view.findViewById(R.id.cart_list);
-		mCartList.setAdapter(new CartItemListAdapter(getActivity(), 10));
+		mCartList = (ExpandableListView) view.findViewById(R.id.expandable_cart_list);
+		mCartList.setAdapter(new CartItemListAdapter(getActivity(), mCartItems));
+		//首次全部展开
+		for (int i = 0; i < mCartItems.size(); i++) {
+		    mCartList.expandGroup(i);
+		}
 		
 		mMesgTotal = (TextView) view.findViewById(R.id.cart_total_message);
 		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);

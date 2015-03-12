@@ -15,12 +15,14 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"
 	        android:background="@color/color_app_base_7"/>
-	    <ListView 
-	        android:id="@+id/cart_list"
+	    
+	    <ExpandableListView 
+	        android:id="@+id/expandable_cart_list"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:headerDividersEnabled="true"
 	        android:footerDividersEnabled="true"
+	        android:groupIndicator="@null"
 	        android:divider="@color/color_app_base_7"
 	        android:dividerHeight="1px"/>
 	    <View 
