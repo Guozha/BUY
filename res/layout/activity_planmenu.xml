@@ -7,187 +7,114 @@
     <ViewFlipper 
         android:id="@+id/planmenu_content_view"
         android:layout_width="match_parent"
+        android:layout_marginTop="8dip"
         android:layout_height="0dip"
-        android:layout_weight="2">
+        android:layout_weight="660">
         
         <!-- Area1 -->
-        <LinearLayout 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!-- 上面两个小菜单和一个日历 -->
-            <LinearLayout 
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="6"
-                android:orientation="horizontal">
-
-                <LinearLayout 
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
-                </LinearLayout>
-                
-                <LinearLayout 
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
-                    <!-- 小菜单1 -->
-	                <LinearLayout 
-	                    android:layout_width="match_parent"
-	                    android:layout_height="0dip"
-	                    android:orientation="vertical"
-	                    android:background="#123445"
-	                    android:layout_weight="1">
-	                    
-	                </LinearLayout>
-	                
-	                <!-- 小菜单2 -->
-	                <LinearLayout 
-	                    android:layout_width="match_parent"
-	                    android:layout_height="0dip"
-	                    android:orientation="vertical"
-	                    android:background="#834345"
-	                    android:layout_weight="1">
-	                    
-	                </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            
-            <!-- 底下三个小菜单 -->
-            <LinearLayout 
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-                <!-- 小菜单3 -->
-                <LinearLayout 
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="#434454"
-                    android:layout_weight="1">
-                    
-                </LinearLayout>
-                <!-- 小菜单4 -->
-                <LinearLayout 
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="#433456"
-                    android:layout_weight="1">
-                    
-                </LinearLayout>
-                <!-- 小菜单5 -->
-                <LinearLayout 
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="#437523"
-                    android:layout_weight="1">
-                    
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area2 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image2"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area3 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image3"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area4 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image1"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area5 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image2"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area6 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image3"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
         
         <!-- Area7 -->
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView 
+        <include 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/main_page_scroll_image1"/>
-        </RelativeLayout>
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            layout="@layout/planmenu_area_layout"/>
 
     </ViewFlipper>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" >
+        android:layout_weight="474" >
 
         <Button
             android:id="@+id/colloection_menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dip"
+            android:layout_height="32dip"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dip"
+            android:layout_marginTop="22dip"
+            android:layout_marginLeft="35dip"
+            android:background="@drawable/main_background"
+            android:textColor="@color/color_app_base_2"
+            android:textSize="@dimen/dimen_global_14sp"
             android:text="收藏菜单" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dip"
+            android:layout_height="32dip"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="20dip"
+            android:layout_marginRight="35dip"
+            android:layout_marginTop="22dip"
+            android:background="@drawable/main_background"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_2"
             android:text="一键购买" />
-        
+ 
+               
+        <TextView 
+            android:id="@+id/choosed_week_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/colloection_menu_button"
+            android:text="星期五"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dip"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"/>
         <LinearLayout 
             android:id="@+id/plantmenu_point_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/colloection_menu_button"
+            android:layout_below="@id/choosed_week_day"
+            android:layout_marginTop="12dip"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"/>
 
@@ -200,83 +127,182 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:paddingLeft="15dip"
+                android:paddingRight="15dip"
                 android:orientation="horizontal" >
                 
 				<!-- Menu1 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">
-                    <Button
-                        android:id="@+id/plantmenu_choose_button1"                   
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button1" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button1"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_added"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="今天"/>
                 </LinearLayout>
                 
                 <!-- Menu2 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">
-	                <Button
-	                    android:id="@+id/plantmenu_choose_button2"
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button2" />
+                    android:layout_width="64dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button2"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_normal"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期三"/>
                 </LinearLayout>
 
                 <!-- Menu3 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">
-	                <Button      
-	                    android:id="@+id/plantmenu_choose_button3" 
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button3" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button3"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_normal"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期四"/>
                 </LinearLayout>
 
                 <!-- Menu4 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">
-	                <Button
-	                    android:id="@+id/plantmenu_choose_button4"
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button4" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button4"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_added"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期五"/>
                 </LinearLayout>
 
                 <!-- Menu5 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">           
-	                <Button
-	                    android:id="@+id/plantmenu_choose_button5"
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button5" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button5"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_normal"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期六"/>
                 </LinearLayout>
 
                 <!-- Menu6 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">                
-	                <Button
-	                    android:id="@+id/plantmenu_choose_button6"
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button6" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button6"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_normal"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期日"/>
                 </LinearLayout>
 
                 <!-- Menu7 -->
                 <LinearLayout 
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent">                
-	                <Button
-	                    android:id="@+id/plantmenu_choose_button7"
-	                    android:layout_width="100dip"
-	                    android:layout_height="50dip"
-	                    android:text="Button7" />
+                    android:layout_width="64dip"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:orientation="vertical">
+                    
+                    <ImageView 
+                        android:id="@+id/plantmenu_choose_button7"
+                        android:layout_height="64dip"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/main_plan_days_added"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/plan_menu_week_list_bg"/>
+                    
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_app_base_4"
+                        android:textSize="@dimen/dimen_global_14sp"
+                        android:layout_marginTop="8dip"
+                        android:text="星期一"/>
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>

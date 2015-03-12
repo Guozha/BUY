@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
    <item 
-       android:id="@+id/action_share"
-       android:icon="@drawable/action_bar_share"
+       android:id="@+id/action_bell"
+       android:icon="@drawable/action_bar_bell"
        android:showAsAction="always"
-       android:title="分享"/>
+       android:title="提醒"/>
 </menu>
-

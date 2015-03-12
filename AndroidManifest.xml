@@ -101,6 +101,14 @@
             
         </activity>
         
+        <!-- 自定义快捷菜单 -->
+        <activity 
+            android:label="快捷设置"
+            android:name=".activity.ChooseMenuActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
         <!-- 重量选择对话框 -->
         <activity 
             android:name=".dialog.WeightSelectDialog"
@@ -113,7 +121,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
-        </activity>    
+        </activity>   
+        
+        <!-- 设置提醒 -->
+        <activity
+            android:name=".activity.SetWarnTimeActivity"
+            android:screenOrientation="portrait"/>
             
         <!-- Debug界面 -->
         <activity

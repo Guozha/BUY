@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -29,13 +32,13 @@ public class PlanMenuActivity extends BaseActivity{
 	private static final String PAGE_NAME = "PlanMenuPage";
 	
 	//7个选择按钮
-	private Button mButton1;
-	private Button mButton2;
-	private Button mButton3;
-	private Button mButton4;
-	private Button mButton5;
-	private Button mButton6;
-	private Button mButton7;
+	private ImageView mButton1;
+	private ImageView mButton2;
+	private ImageView mButton3;
+	private ImageView mButton4;
+	private ImageView mButton5;
+	private ImageView mButton6;
+	private ImageView mButton7;
 	
 	private ViewFlipper mViewFlipper;
 	private MenuFlipperClick mMenuFlipperClick;
@@ -49,6 +52,7 @@ public class PlanMenuActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_planmenu);
 		mMenuFlipperClick = new MenuFlipperClick();
+		customActionBarStyle("菜谱计划");
 		initView();
 		getPointBar();
 		mCurrentIndex = 0;//开始默认选中第一个
@@ -59,19 +63,19 @@ public class PlanMenuActivity extends BaseActivity{
 	 */
 	private void initView(){
 		//设置Tag
-		mButton1 = (Button) findViewById(R.id.plantmenu_choose_button1);
+		mButton1 = (ImageView) findViewById(R.id.plantmenu_choose_button1);
 		mButton1.setTag(0);
-		mButton2 = (Button) findViewById(R.id.plantmenu_choose_button2);
+		mButton2 = (ImageView) findViewById(R.id.plantmenu_choose_button2);
 		mButton2.setTag(1);
-		mButton3 = (Button) findViewById(R.id.plantmenu_choose_button3);
+		mButton3 = (ImageView) findViewById(R.id.plantmenu_choose_button3);
 		mButton3.setTag(2);
-		mButton4 = (Button) findViewById(R.id.plantmenu_choose_button4);
+		mButton4 = (ImageView) findViewById(R.id.plantmenu_choose_button4);
 		mButton4.setTag(3);
-		mButton5 = (Button) findViewById(R.id.plantmenu_choose_button5);
+		mButton5 = (ImageView) findViewById(R.id.plantmenu_choose_button5);
 		mButton5.setTag(4);
-		mButton6 = (Button) findViewById(R.id.plantmenu_choose_button6);
+		mButton6 = (ImageView) findViewById(R.id.plantmenu_choose_button6);
 		mButton6.setTag(5);
-		mButton7 = (Button) findViewById(R.id.plantmenu_choose_button7);
+		mButton7 = (ImageView) findViewById(R.id.plantmenu_choose_button7);
 		mButton7.setTag(6);
 		//设置监听事件
 		mButton1.setOnClickListener(mMenuFlipperClick);
@@ -105,8 +109,8 @@ public class PlanMenuActivity extends BaseActivity{
 	private void addPoints(LinearLayout pointBar){
 		LinearLayout.LayoutParams pointViewParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		pointViewParams.setMargins(DimenUtil.dp2px(this, 8), 0,
-				DimenUtil.dp2px(this, 8), DimenUtil.dp2px(this, 8));
+		pointViewParams.setMargins(DimenUtil.dp2px(this, 12), 0,
+				DimenUtil.dp2px(this, 12), DimenUtil.dp2px(this, 12));
 		
 		ImageView pointView;
 		for(int i = 0; i < 7; i++){
@@ -143,7 +147,7 @@ public class PlanMenuActivity extends BaseActivity{
 	 */
 	private Bitmap getLightPointBitmap(Context context){
 		return BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_page_scorll_point_selected);
+				getResources(), R.drawable.main_plan_round_current);
 	}
 	
 	/**
@@ -153,7 +157,7 @@ public class PlanMenuActivity extends BaseActivity{
 	 */
 	private Bitmap getGrayPointBitmap(Context context){
 		return BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_page_scroll_point_unselected);
+				getResources(), R.drawable.main_plan_round_normal);
 	}
 	
 	class MenuFlipperClick implements OnClickListener{
@@ -170,6 +174,26 @@ public class PlanMenuActivity extends BaseActivity{
 			setPointColorByCurrentItem();
 		}
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = this.getMenuInflater();
+		inflater.inflate(R.menu.planmenu_actionbar_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_bell:
+			Intent intent = new Intent(this, SetWarnTimeActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			break;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 	
 	/**

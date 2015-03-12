@@ -2,78 +2,233 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
     android:orientation="vertical" >
     
     <!-- 上面头像部分 -->
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="180dip"
+	    android:layout_height="160dip"
+	    android:layout_marginTop="8dip"
+	    android:layout_marginBottom="8dip"
+	    android:background="@color/color_app_base_5"
+	    android:orientation="horizontal">
+	     
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_weight="403"
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:layout_height="match_parent">
+	        <ImageView 
+            android:id="@+id/mine_head_img"
+	        android:layout_width="86dip"
+	        android:layout_height="86dip"
+	        android:src="@drawable/user_icon"
+	        android:scaleType="centerCrop"/>
+	    </LinearLayout>
+        
+	    
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="310"
+	        android:gravity="center_vertical"
+	        android:orientation="vertical">
+	        
+	        <TextView 
+	            android:id="@+id/mine_msg_phonenum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="13573321346"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="14sp"/>
+	        
+			<TextView 
+			    android:id="@+id/mine_msg_remain_money"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="我的余额 ￥20.80"
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="5dip"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+			
+			<TextView 
+			    android:id="@+id/mine_msg_tickes"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="菜票 3张"
+	            android:layout_marginTop="5dip"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+			
+			<TextView 
+			    android:id="@+id/mine_msg_bean"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="菜豆 35个"
+	            android:layout_marginTop="5dip"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+	    </LinearLayout>
+	</LinearLayout>
+	
+	<!-- 下面具体的（我的里面）菜单 -->
+	
+	<!-- 第一行 -->
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="150dip"
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:orientation="vertical">
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
 	        
 	        <ImageView 
-	            android:id="@+id/mine_head_img"
-		        android:layout_width="90dip"
-		        android:layout_height="90dip"
-		        android:layout_gravity="center"
-		        android:src="@drawable/ic_launcher"
-		        android:scaleType="centerCrop"/>
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_orders_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="18dip"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:text="我的订单"/>
 	    </LinearLayout>
 	    
 	    <LinearLayout 
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:orientation="vertical">
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:layout_marginLeft="1dip"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
+	        
+	        <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_invited_icon"/>
 	        
 	        <TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="13573321346"
-	            android:textSize="18sp"/>
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="18dip"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:text="推荐有奖"/>
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:layout_marginLeft="1dip"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
 	        
-	       <GridLayout 
-	           android:layout_width="wrap_content"
-	           android:layout_height="wrap_content"
-	           android:columnCount="2">
-	           
-	           <TextView 
-	               android:layout_width="wrap_content"
-	               android:layout_height="wrap_content"
-	               android:textSize="14sp"
-	               android:text="余额"/>
-	           
-	           <TextView
-	               android:layout_width="wrap_content"
-	               android:layout_height="wrap_content"
-	               android:textSize="14sp"
-	               android:text="￥20.80"/>
-	       </GridLayout>
+	        <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_collect_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="18dip"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:text="我的收藏"/>
 	    </LinearLayout>
 	</LinearLayout>
 	
-	<!-- 下面具体的（我的里面）菜单 -->
-	<RelativeLayout 
+    <!-- 第二行 -->
+	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="50dip">	    
-	    <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="16sp"
-	        android:layout_centerVertical="true"
-	        android:layout_alignParentLeft="true"
-	        android:text="我的地址"/>
+	    android:layout_height="150dip"
+	    android:layout_marginTop="1dip"
+	    android:orientation="horizontal">
 	    
-	    <ImageView 
-	        android:layout_height="wrap_content"
-	        android:layout_width="20dip"
-	        android:layout_centerVertical="true"
-	        android:layout_alignParentRight="true"
-	        android:src="@drawable/ic_launcher"/>
-	</RelativeLayout>
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
+	        
+	        <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_coupon_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="18dip"
+	            android:text="我的菜票"/>
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:layout_marginLeft="1dip"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
+	        
+	        <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_address_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_4"
+	            android:layout_marginTop="18dip"
+	            android:text="我的地址"/>
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center"
+	        android:layout_marginLeft="1dip"
+	        android:background="@color/color_app_base_5"
+	        android:layout_weight="1">
+	        
+	        <ImageView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scaleType="centerInside"
+	            android:src="@drawable/main_commonly_seller_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:layout_marginTop="18dip"
+	            android:text="常用卖家"/>
+	    </LinearLayout>
+	</LinearLayout>
 </LinearLayout>

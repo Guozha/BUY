@@ -219,7 +219,7 @@ public class AutoViewFlipper extends FrameLayout{
 	 */
 	private Bitmap getLightPointBitmap(Context context){
 		return BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_page_scorll_point_selected);
+				getResources(), R.drawable.main_plan_round_current);
 	}
 	
 	/**
@@ -229,7 +229,7 @@ public class AutoViewFlipper extends FrameLayout{
 	 */
 	private Bitmap getGrayPointBitmap(Context context){
 		return BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_page_scroll_point_unselected);
+				getResources(), R.drawable.main_plan_round_normal);
 	}
 	
 	

@@ -130,6 +130,7 @@
 			    android:layout_weight="1"
 			    android:layout_height="match_parent"/>
 			<TextView 
+			    android:id="@+id/choose_menu_custom"
    		        android:layout_width="45dip"
    		        android:layout_height="45dip"
    		        android:background="@drawable/main_tag_edit_round"/>

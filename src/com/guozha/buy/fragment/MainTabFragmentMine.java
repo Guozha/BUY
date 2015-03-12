@@ -12,11 +12,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.util.BitmapUtil;
@@ -27,6 +31,11 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private static final String PAGE_NAME = "MinePage";
 	
 	private ImageView mMineHeadImg;
+	
+	private TextView mMinePhoneNum;
+	private TextView mMineRemainMoney;
+	private TextView mMineTickes;
+	private TextView mMineBeans;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -42,8 +51,43 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	 */
 	private void initView(View view){
 		if(view == null) return;
+		//TODO 设置头像功能此版本暂时不做
 		mMineHeadImg = (ImageView) view.findViewById(R.id.mine_head_img);
 		mMineHeadImg.setOnClickListener(this);
+		
+		mMinePhoneNum = (TextView) view.findViewById(R.id.mine_msg_phonenum);
+		mMineRemainMoney = (TextView) view.findViewById(R.id.mine_msg_remain_money);
+		mMineTickes = (TextView) view.findViewById(R.id.mine_msg_tickes);
+		mMineBeans = (TextView) view.findViewById(R.id.mine_msg_bean);
+		
+		setTextColor();
+	}
+	
+	/**
+	 * 设置文字颜色
+	 */
+	private void setTextColor() {
+		String msgRemainMoney = mMineRemainMoney.getText().toString();
+		SpannableStringBuilder builder = new SpannableStringBuilder(msgRemainMoney);
+		
+		ForegroundColorSpan redSpan = new ForegroundColorSpan(
+				getResources().getColor(R.color.color_app_base_1));
+		int totalSpanSart = msgRemainMoney.indexOf("￥");
+		builder.setSpan(redSpan, 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(redSpan, totalSpanSart, msgRemainMoney.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mMineRemainMoney.setText(builder);
+		
+		String msgTickes = mMineTickes.getText().toString();
+		builder.clear();
+		builder.append(msgTickes);
+		builder.setSpan(redSpan, msgTickes.indexOf(" "), msgTickes.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mMineTickes.setText(builder);
+		
+		String msgBeans = mMineBeans.getText().toString();
+		builder.clear();
+		builder.append(msgBeans);
+		builder.setSpan(redSpan, msgBeans.indexOf(" "), msgBeans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		mMineBeans.setText(builder);
 	}
 	
 
@@ -94,7 +138,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			startPhotoZoom(data.getData());
 			break;
 		case 2: //相机拍照
-			File temp = new File(Environment.getExternalStorageDirectory() + "head.jpg");
+			File temp = new File(Environment.getExternalStorageDirectory() + "/head.jpg");
 			startPhotoZoom(Uri.fromFile(temp));
 			break;
 		case 3: 
@@ -121,8 +165,8 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
         intent.putExtra("aspectX", 1);  
         intent.putExtra("aspectY", 1);  
         // outputX outputY 是裁剪图片宽高  
-        intent.putExtra("outputX", 150);  
-        intent.putExtra("outputY", 150);  
+        intent.putExtra("outputX", 172);  
+        intent.putExtra("outputY", 172);  
         intent.putExtra("return-data", true);  
         startActivityForResult(intent, 3); 
 	}
@@ -165,10 +209,12 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		if(actionbar == null) return;
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(false);
-		actionbar.setTitle("我的");
+		actionbar.setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(R.layout.actionbar_base_view);
+		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
+		title.setText("我的");
 	}
 
 }

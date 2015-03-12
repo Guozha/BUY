@@ -6,12 +6,12 @@ import java.util.Set;
 import org.litepal.LitePalApplication;
 
 import android.app.Notification;
-
-import com.guozha.buy.R;
-
+import android.content.Context;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+
+import com.guozha.buy.R;
 
 /**
  * 全局的Application
@@ -19,11 +19,12 @@ import cn.jpush.android.api.TagAliasCallback;
  *
  */
 public class CustomApplication extends LitePalApplication{
-
+	
+	private static CustomApplication instance;
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+		instance = this;
 		//极光推送相关
 		//TODO 注意发布的时候修改Debug模式
 		JPushInterface.setDebugMode(true); //设置为Debug模式
@@ -51,5 +52,14 @@ public class CustomApplication extends LitePalApplication{
 		//设置默认样式
 		JPushInterface.setPushNotificationBuilder(1, builder);
 		JPushInterface.setDefaultPushNotificationBuilder(builder);
+
+	}
+	
+	/**
+	 * 获取上下文实例
+	 * @return
+	 */
+	public static Context getContext(){
+		return instance.getApplicationContext();
 	}
 }

@@ -233,6 +233,9 @@ public class MainActivity extends FragmentActivity{
 				mTabIndicators.get(i).setChoosed(false);
 			}
 			choosed.setChoosed(true);
+			
+			mCurrentItem = position;
+			invalidateOptionsMenu();
 		}
 
 		@Override
@@ -297,19 +300,19 @@ public class MainActivity extends FragmentActivity{
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuInflater inflater = this.getMenuInflater();
 		switch (mCurrentItem) {
 		case 0:
-			MenuInflater inflater = this.getMenuInflater();
 			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
 			break;
 		case 1:
-			
+			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
 			break;
 		case 2:
-			
+			inflater.inflate(R.menu.cart_actionbar_menu, menu);
 			break;
 		case 3:
-			
+			inflater.inflate(R.menu.mine_actionbar_menu, menu);
 			break;
 		default:
 			break;

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<!-- 上面一行 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+        
+        <Space 
+            android:layout_width="7dip"
+            android:layout_height="match_parent"/>
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+        
+        <Space 
+            android:layout_width="7dip"
+            android:layout_height="match_parent"/>
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+                        
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dip"/>
+    
+    <!-- 下面一行 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+        
+        <Space 
+            android:layout_width="7dip"
+            android:layout_height="match_parent"/>
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+        
+        <Space 
+            android:layout_width="7dip"
+            android:layout_height="match_parent"/>
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_background"
+            android:layout_weight="1">
+            
+                        
+            <ImageView 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="246"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_recipe_img_02"/>
+            
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:text="青菜炒香菇"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_12sp"
+                android:layout_weight="54"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

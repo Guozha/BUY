@@ -141,7 +141,6 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		infos[1] = info2;
 		infos[2] = null;
 		mAdapterData.add(infos);
-		
 	}
 	
 	private void initData(){

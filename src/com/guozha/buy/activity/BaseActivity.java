@@ -4,9 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-
-import com.guozha.buy.R;
 
 /**
  * Activity的基类
@@ -18,43 +17,46 @@ abstract class BaseActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		initActionBar(getActionBar());
 	}
 	
 	/**
-	 * 默认的ActionBar样式初始化
-	 * @param actionbar
+	 * 设置ActionBar
+	 * @return
 	 */
-	private void initActionBar(ActionBar actionbar){
+	protected ActionBar customActionBarStyle(){
+		ActionBar actionbar = getActionBar();
+		if(actionbar == null) return null;
+		actionbar.setDisplayHomeAsUpEnabled(true);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(false);
+		return actionbar;
+	}
+	
+	/**
+	 * 设置ActionBarTitle
+	 * @param title
+	 */
+	protected void customActionBarStyle(String title){
+		ActionBar actionbar = customActionBarStyle();
 		if(actionbar == null) return;
-		CharSequence title = actionbar.getTitle();
-		if(title == null){
-			customActionBarStyle(actionbar, null);
-		}else{
-			customActionBarStyle(actionbar, title.toString());
-		}
+		actionbar.setTitle(title);
 	}
 	
 	/**
 	 * 自定义自己的ActionBar样式
 	 */
-	protected void customActionBarStyle(ActionBar actionbar, String title){
-		if(title != null){
-			actionbar.setDisplayHomeAsUpEnabled(true);
-			actionbar.setDisplayShowHomeEnabled(true);
-			actionbar.setDisplayShowTitleEnabled(true);
-			actionbar.setDisplayShowCustomEnabled(false);
-			actionbar.setTitle(title);
-		}else{
-			actionbar.setDisplayHomeAsUpEnabled(false);
-			actionbar.setDisplayShowHomeEnabled(false);
-			actionbar.setDisplayShowTitleEnabled(false);
-			actionbar.setDisplayShowCustomEnabled(true);
-			View customView = customActionBarView(R.layout.actionbar_base_view);
-			if(customView == null) return;
-			actionbar.setCustomView(customView);
-		}
+	protected ActionBar customActionBarStyle(int customLayout){
+		ActionBar actionbar = getActionBar();
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(true);
+		View customView = customActionBarView(customLayout);
+		if(customView == null) return null;
+		actionbar.setCustomView(customView);
+		return actionbar;
 	}
 	
 	/**
@@ -70,6 +72,18 @@ abstract class BaseActivity extends Activity{
 			e.printStackTrace();
 		}
 		return view;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			this.finish();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

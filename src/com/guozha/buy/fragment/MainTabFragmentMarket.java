@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.ChooseMenuActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
 import com.guozha.buy.entry.VegetableInfo;
@@ -142,6 +144,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				}
 			}
 		});
+		
+		view.findViewById(R.id.choose_menu_custom).setOnClickListener(this);
 	}
 	
 	@Override
@@ -149,6 +153,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		switch (view.getId()) {
 		case R.id.market_expand_menu_button:
 			expandMenuAction(view);
+			break;
+		case R.id.choose_menu_custom:
+			Intent intent = new Intent(getActivity(), ChooseMenuActivity.class);
+			startActivity(intent);
 			break;
 
 		default:

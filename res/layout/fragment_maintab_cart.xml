@@ -64,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="预计服务费5元"
+                android:layout_marginTop="5dip"
                 android:textSize="@dimen/dimen_global_14sp"
                 android:textColor="@color/color_app_base_4"/>
             
@@ -71,6 +72,7 @@
                 android:id="@+id/cart_free_money_gap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
                 android:text="离免服务费还差21元"
                 android:textSize="@dimen/dimen_global_14sp"
                 android:textColor="@color/color_app_base_4"/>

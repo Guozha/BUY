@@ -106,9 +106,11 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		if(actionbar == null) return;
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(false);
-		actionbar.setTitle("购物车");
+		actionbar.setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(R.layout.actionbar_base_view);
+		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
+		title.setText("购物车");
 	}
 }

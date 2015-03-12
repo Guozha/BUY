@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.ChooseMenuActivity;
 import com.guozha.buy.activity.PlanMenuActivity;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
@@ -34,14 +37,21 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	private void initView(View view){
 		if(view == null) return;
 		view.findViewById(R.id.fragment_mpage_season).setOnClickListener(this);
+		view.findViewById(R.id.mpage_choose_menu_custom).setOnClickListener(this);
 	}
 	
 	@Override
 	public void onClick(View view) {
+		Intent intent;
 		switch (view.getId()) {
 		//菜谱计划
 		case R.id.fragment_mpage_season:
-			Intent intent = new Intent(getActivity(), PlanMenuActivity.class);
+			intent = new Intent(getActivity(), PlanMenuActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.mpage_choose_menu_custom:
+			LogUtil.e("mpage_choose_menu_custom");
+			intent = new Intent(MainTabFragmentMPage.this.getActivity(), ChooseMenuActivity.class);
 			startActivity(intent);
 			break;
 		default:
@@ -74,10 +84,12 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		if(actionbar == null) return;
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(false);
-		actionbar.setTitle("我要买菜");
+		actionbar.setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(R.layout.actionbar_base_view);
+		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
+		title.setText("我要买菜");
 	}
 	
 	@Override
