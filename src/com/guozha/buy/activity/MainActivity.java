@@ -3,7 +3,6 @@ package com.guozha.buy.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +20,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
+import com.guozha.buy.fragment.MainTabFragmentMPage.ClickMarketMenuListener;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.view.ChangeColorIconWithText;
@@ -102,7 +102,18 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化Fragment
 	 */
 	private void initFragment(){
-		mFragments.add(new MainTabFragmentMPage());
+		MainTabFragmentMPage mPage = new MainTabFragmentMPage();
+		mPage.setOnClickMarketMenuListener(new ClickMarketMenuListener() {
+			
+			@Override
+			public void clickMarketMenu() {
+				resetOtherTabs();
+				mCurrentItem = 1;
+				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
+				mCustomViewPager.setCurrentItem(mCurrentItem, false);
+			}
+		});
+		mFragments.add(mPage);
 		mFragments.add(new MainTabFragmentMarket());
 		mFragments.add(new MainTabFragmentCart());
 		mFragments.add(new MainTabFragmentMine());

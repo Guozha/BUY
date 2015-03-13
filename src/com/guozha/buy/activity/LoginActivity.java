@@ -1,5 +1,12 @@
 package com.guozha.buy.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,8 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.HttpManager;
+import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.RegularUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -31,7 +43,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+		customActionBarStyle("登录");
 		initView();
 		textChangeWatch();
 	}
@@ -48,6 +60,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		
 		mLoginButton = (Button) findViewById(R.id.login_button);
 		
+		findViewById(R.id.login_toregist_tv).setOnClickListener(this);
+		findViewById(R.id.login_tofindpwd_tv).setOnClickListener(this);
+		
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
 		mLoginButton.setOnClickListener(this);
@@ -55,6 +70,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View view) {
+		Intent intent;
 		String phoneNum;
 		String pwd;
 		switch (view.getId()) {
@@ -73,15 +89,63 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		case R.id.login_button:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			pwd = mEditPwd.getText().toString();
-			if(isValidatePhoneNum(phoneNum) && isValidatePwd(pwd)){
-				//TODO 可以登录了
-			}else{
+			if(!isValidatePhoneNum(phoneNum) || !isValidatePwd(pwd)){
 				//TODO 提示填写有误
+				ToastUtil.showToast(this, "手机号码或密码不正确");
+				return;
 			}
+			//请求登录
+			requestLogin(phoneNum, pwd);
+			
+			break;
+		case R.id.login_toregist_tv:
+			intent = new Intent(LoginActivity.this, RegistActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.login_tofindpwd_tv:
+			intent = new Intent(LoginActivity.this, FindPwdActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * 请求登录
+	 * @param phoneNum
+	 * @param pwd
+	 */
+	private void requestLogin(String phoneNum, String pwd) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		params.put("passwd", pwd);
+		paramPath = "account/login" + HttpUtil.generatedAddress(params);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode.trim())){
+						String userId = response.getString("userId");
+						String userToken = response.getString("token");
+						String mobileNum = response.getString("mobileNo");
+						ConfigManager.getInstance().setUserId(userId);
+						ConfigManager.getInstance().setUserToken(userToken);
+						ConfigManager.getInstance().setMobileNum(mobileNum);
+						ToastUtil.showToast(LoginActivity.this, "登录成功");
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(LoginActivity.this, msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**

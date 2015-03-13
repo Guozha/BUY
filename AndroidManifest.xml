@@ -113,7 +113,16 @@
         <activity 
             android:name=".dialog.WeightSelectDialog"
             android:theme="@style/Theme.WeightSelectDialog"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
+        <!-- 菜品详情 -->
+        <activity 
+            android:name=".activity.VegetableDetailActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
         
         <!-- 查找界面 -->
         <activity 
@@ -126,6 +135,11 @@
         <!-- 设置提醒 -->
         <activity
             android:name=".activity.SetWarnTimeActivity"
+            android:screenOrientation="portrait"/>
+        
+        <!-- 特供/预售 -->
+        <activity 
+            android:name=".activity.PreSpecialActivity"
             android:screenOrientation="portrait"/>
             
         <!-- Debug界面 -->

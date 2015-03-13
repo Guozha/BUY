@@ -1,9 +1,11 @@
 package com.guozha.buy.activity;
 
-import com.guozha.buy.R;
-import com.umeng.analytics.MobclickAgent;
-
 import android.os.Bundle;
+import android.widget.ListView;
+
+import com.guozha.buy.R;
+import com.guozha.buy.adapter.SeasonItemListAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 时令界面
@@ -13,11 +15,20 @@ import android.os.Bundle;
 public class SeasonActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SeasonPage";
+	
+	private ListView mSeasonItemList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_season);
+		customActionBarStyle("时令养生");
+		initView();
+	}
+	
+	private void initView(){
+		mSeasonItemList = (ListView) findViewById(R.id.season_vegetable_list);
+		mSeasonItemList.setAdapter(new SeasonItemListAdapter(this));
 	}
 	
 	@Override

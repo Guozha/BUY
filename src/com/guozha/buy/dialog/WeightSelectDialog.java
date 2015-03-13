@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.VegetableDetailActivity;
 import com.guozha.buy.entry.ItemSaleInfo;
 import com.guozha.buy.entry.ItemSaleInfo.WeightOption;
 import com.guozha.buy.util.RegularUtil;
@@ -79,7 +81,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.select_weight_to_details:
-			
+			Intent intent = new Intent(this, VegetableDetailActivity.class);
+			startActivity(intent);
+			this.finish();
 			break;
 		case R.id.select_weight_confirm:
 			int currentItem = mWheelView.getCurrentItem();

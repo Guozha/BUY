@@ -21,17 +21,19 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
             <CheckBox 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:text="青菜炒香菇"
+                android:text="意大利炒面清香味更多十三点了"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
         
         <Space 
@@ -48,7 +50,7 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
@@ -58,7 +60,9 @@
                 android:text="青菜炒香菇"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
         
         <Space 
@@ -76,7 +80,7 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
@@ -86,7 +90,9 @@
                 android:text="青菜炒香菇"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
     </LinearLayout>
     
@@ -111,7 +117,7 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
@@ -121,7 +127,9 @@
                 android:text="青菜炒香菇"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
         
         <Space 
@@ -138,7 +146,7 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
@@ -148,7 +156,9 @@
                 android:text="青菜炒香菇"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
         
         <Space 
@@ -166,7 +176,7 @@
             <ImageView 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="246"
+                android:layout_weight="240"
                 android:scaleType="centerInside"
                 android:src="@drawable/main_recipe_img_02"/>
             
@@ -176,7 +186,9 @@
                 android:text="青菜炒香菇"
                 android:textColor="@color/color_app_base_4"
                 android:textSize="@dimen/dimen_global_12sp"
-                android:layout_weight="54"/>
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_weight="80"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dip"
-        android:background="@drawable/login_regist_nomal_input_background"
+        android:background="@drawable/main_dialog_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
         
@@ -31,6 +31,7 @@
 	        android:textColorHint="@color/app_base_hint_text_color"
 	        android:textColor="@color/app_base_text_color"
 	        android:gravity="center_vertical"
+	        android:maxLength="15"
 	        android:inputType="phone"/>
 	    
 	     <ImageView
@@ -55,7 +56,7 @@
 	        android:layout_height="match_parent"
 	        android:orientation="horizontal"
 	        android:gravity="center_horizontal"
-	        android:background="@drawable/regist_verifynum_input_background"
+	        android:background="@drawable/main_dialog_left_background"
 	        android:paddingLeft="10dip"
 	        android:paddingRight="10dip">
 	
@@ -71,16 +72,17 @@
 		        android:background="@null"
 		        android:gravity="center_vertical"
 		        android:layout_gravity="center_vertical"
+		        android:maxLength="15"
 		        android:inputType="number"/>
 	    </LinearLayout>
 	    <Button 
 	            android:id="@+id/findpwd_obtain_validenum"
 	            android:layout_width="wrap_content"
 	            android:layout_height="match_parent"
-	            android:paddingLeft="10dip"
-	            android:paddingRight="10dip"
+	            android:paddingLeft="20dip"
+	            android:paddingRight="20dip"
 	            android:layout_gravity="center_vertical"
-	            android:background="@drawable/regist_verifynum_button_background"
+	            android:background="@drawable/main_dialog_right_background"
 	            android:text="@string/activity_findpwd_obtain_verify_button_text"
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="#ffffff"
@@ -96,7 +98,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/login_regist_nomal_input_background"
+        android:background="@drawable/main_dialog_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
 	     
@@ -111,6 +113,7 @@
 	        android:textColor="@color/app_base_text_color"
 	        android:singleLine="true"
 	        android:background="@null"
+	        android:maxLength="18"
 	        android:gravity="center_vertical"
 	        android:inputType="textPassword"/>
 	    
@@ -132,7 +135,7 @@
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dip"
-        android:background="@drawable/login_regist_nomal_input_background"
+        android:background="@drawable/main_dialog_background"
         android:paddingLeft="10dip"
         android:paddingRight="10dip">
 	     
@@ -147,6 +150,7 @@
 	        android:textSize="@dimen/dimen_global_16sp"
 	        android:singleLine="true"
 	        android:background="@null"
+	        android:maxLength="18"
 	        android:gravity="center_vertical"
 	        android:inputType="textPassword"/>
 	    
@@ -170,7 +174,6 @@
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dip"
-        android:background="@drawable/nomal_button_nomal_bg"
-        android:enabled="false"/>
+        android:background="@drawable/nomal_button_nomal_bg"/>
 
 </LinearLayout>

@@ -1,8 +1,10 @@
 package com.guozha.buy.activity;
 
-import com.guozha.buy.R;
-
 import android.os.Bundle;
+import android.widget.ListView;
+
+import com.guozha.buy.R;
+import com.guozha.buy.adapter.WarnTimeListAdapter;
 
 /**
  * 设置提醒
@@ -10,6 +12,8 @@ import android.os.Bundle;
  *
  */
 public class SetWarnTimeActivity extends BaseActivity{
+	
+	private ListView mWarnList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +21,13 @@ public class SetWarnTimeActivity extends BaseActivity{
 		setContentView(R.layout.activity_setwarntime);
 		
 		customActionBarStyle("提醒");
+		
+		initView();
+	}
+	
+	private void initView(){
+		mWarnList = (ListView) findViewById(R.id.set_warn_list);
+		mWarnList.setAdapter(new WarnTimeListAdapter(this));
 	}
 
 }

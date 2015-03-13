@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="240dip"
+	    android:gravity="center_horizontal"
+	    android:layout_marginTop="1dip"
+	    android:background="@color/color_app_base_5"
+	    android:orientation="vertical">
+	    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="180dip"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/main_vegetable_details_img_01"/>
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="青椒"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"/>
+	    
+	    <TextView 
+	        android:id="@+id/vegetable_detail_item_price"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="8dip"
+	        android:text="￥5.6 / 斤"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"/>
+	</LinearLayout>
+	
+	<TextView 
+	    android:layout_marginTop="4dip"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:padding="18dip"
+	    android:textColor="@color/color_app_base_4"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:background="@color/color_app_base_5"
+	    android:lineSpacingExtra="5dip"
+	    android:maxLines="4"
+	    android:text="青椒，别名菜椒，柿子椒。性温中散寒，开胃消食，具有增食欲，抗贫血的特点。适宜脾胃虚寒，呕吐、泻痢，冻疮、感冒者食用。青椒收拾收拾收拾收拾"
+	    android:ellipsize="end"/>
+	
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="相关菜谱"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:layout_marginTop="12dip"
+	    android:layout_marginBottom="12dip"
+	    android:layout_marginLeft="18dip"/>
+</LinearLayout>

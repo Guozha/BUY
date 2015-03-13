@@ -58,4 +58,11 @@
     <style name="CheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_style</item>
     </style>
+    
+    <!-- Switch开关样式 -->
+    <style name="switch_button_style">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">right</item>
+    </style>
 </resources>

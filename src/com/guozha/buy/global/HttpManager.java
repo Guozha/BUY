@@ -1,4 +1,4 @@
-package com.guozha.buy.util;
+package com.guozha.buy.global;
 
 import org.json.JSONObject;
 
@@ -19,19 +19,24 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.guozha.buy.util.BitmapCache;
 
 /**
  * 网络操作工具类
  * @author Administrator
  *
  */
-public class NetUtil {
+public class HttpManager {
+	/**
+	 * 服务器路径
+	 */
+	public static final String URL = "http://192.168.1.4:8080/BUY_SERVER/";
 	
 	private RequestQueue mQueue;	//请求队列
 	private Response.ErrorListener errorListener;  //错误消息监听
-	private static NetUtil mNetUtil;
+	private static HttpManager mNetUtil;
 	
-	private NetUtil(Context context){
+	private HttpManager(Context context){
 		mQueue = Volley.newRequestQueue(context.getApplicationContext());
 		errorListener = new ErrorListener();
 	}
@@ -41,9 +46,9 @@ public class NetUtil {
 	 * @param context
 	 * @return
 	 */
-	public static NetUtil getInstance(Context context){
+	public static HttpManager getInstance(Context context){
 		if(mNetUtil == null){
-			mNetUtil = new NetUtil(context);
+			mNetUtil = new HttpManager(context);
 		}
 		return mNetUtil;
 	}

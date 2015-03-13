@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="180dip"
+        android:padding="12dip"
+        android:background="@drawable/main_background"
+        android:orientation="vertical">
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/main_sale_img_01"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="智力帝王蟹鲜活熟冻"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:ellipsize="end"/>
+        
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥248.00"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/color_app_base_1"
+                android:textSize="@dimen/dimen_global_14sp"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="128人已买"
+                android:textColor="@color/color_app_base_4"
+                android:textSize="@dimen/dimen_global_14sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

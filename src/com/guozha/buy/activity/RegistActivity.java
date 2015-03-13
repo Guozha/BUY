@@ -1,5 +1,11 @@
 package com.guozha.buy.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,8 +16,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.global.HttpManager;
+import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -39,7 +50,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_regist);
-		
+		customActionBarStyle("注册");
 		initView();
 		textChangeWatch();
 
@@ -85,40 +96,108 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.regist_obtain_validenum:
+			phoneNum = mEditPhoneNum.getText().toString();
+			if(!isValidatePhoneNum(phoneNum)){
+				ToastUtil.showToast(this, "你填写的手机号不正确");
+				return;
+			}
 			//TODO 发送短信验证码
-			
-			
+			obtainPoneValidate(phoneNum);
 			break;
 		case R.id.regist_button:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			pwd = mEditPwd.getText().toString();
 			String validNum = mEditValidNum.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
-				//TODO 提示手机号填写有误
-				
+				//提示手机号填写有误
+				ToastUtil.showToast(this, "手机号码格式不正确");
 				return;
 			}
 			if(!isValidatePwd(pwd)){
-				//TODO 提示密码设置有误
-				
+				//提示密码设置有误
+				ToastUtil.showToast(this, "请检查密码设置");
 				return;
 			}
 			if(!isValideNumRight(validNum)){
-				//TODO 提示验证码错误
-				
+				//提示验证码错误
+				ToastUtil.showToast(this, "验证码输入错误");
 				return;
 			}
 			if(!mProtocalAffirmCheckBox.isChecked()){
-				//TODO 提示没有同意用户协议
-				
+				//提示没有同意用户协议
+				ToastUtil.showToast(this, "请先阅读并同意用户协议");
 				return;
 			}
-			//TODO 可以登录了
-			
+			//请求注册
+			requestRegist(phoneNum, pwd, validNum);
 			break;
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * 请求注册
+	 * @param phoneNum
+	 * @param pwd
+	 * @param validNum
+	 */
+	private void requestRegist(String phoneNum, String pwd, String validNum) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		params.put("passwd", pwd);
+		params.put("checkCode", validNum);
+		paramPath = "account/register" + HttpUtil.generatedAddress(params);
+		LogUtil.e("paramPath = " + paramPath);
+		//TODO 可以登录了
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode").trim();
+					if("1".equals(returnCode)){
+						ToastUtil.showToast(RegistActivity.this, "注册成功");
+					}else{
+						String msg = response.getString("msg").trim();
+						ToastUtil.showToast(RegistActivity.this, msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * 获取验证码
+	 * @param phoneNum
+	 */
+	private void obtainPoneValidate(String phoneNum) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		paramPath = "account/checkCodeForRegister" + HttpUtil.generatedAddress(params);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode.trim())){
+						ToastUtil.showToast(RegistActivity.this, "验证码已发送");
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(RegistActivity.this, msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**
@@ -127,10 +206,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	 * @return
 	 */
 	private boolean isValideNumRight(String validNum){
-		//TODO 
-		
-		
-		return false;
+		if(validNum.isEmpty() || validNum.length() < 5 || validNum.length() > 15) return false;
+		return true;
 	}
 	
 	/**

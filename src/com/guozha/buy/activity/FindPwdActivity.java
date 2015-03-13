@@ -38,7 +38,7 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_findpwd);
-		
+		customActionBarStyle("找回密码");
 		initView();
 		
 		textChangeWatch();
@@ -86,8 +86,9 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.findpwd_repeat_pwd_clear:
+			pwd = mEditPwd.getText().toString();
 			repeatPwd = mEditRepeatPwd.getText().toString();
-			if(!isValidatePwd(repeatPwd)){
+			if(!isValidatePwd(pwd) || (!pwd.equals(repeatPwd))){
 				mEditRepeatPwd.setText("");
 			}
 			break;
@@ -135,10 +136,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	 * @return
 	 */
 	private boolean isValideNumRight(String validNum){
-		//TODO 
-		
-		
-		return false;
+		if(validNum.isEmpty() || validNum.length() < 5 || validNum.length() > 15) return false;
+		return true;
 	}
 	
 	/**
@@ -249,7 +248,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	 * @return
 	 */
 	private boolean isValidatePwd(String pwd) {
-		if(pwd.isEmpty() || pwd.trim().length() < 6){
+		//密码不可以超过20位
+		if(pwd.isEmpty() || pwd.trim().length() < 6 || pwd.trim().length() > 20){
 			return false;
 		}else{
 			return true;

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.ChooseMenuActivity;
 import com.guozha.buy.activity.PlanMenuActivity;
+import com.guozha.buy.activity.PreSpecialActivity;
+import com.guozha.buy.activity.SeasonActivity;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -38,6 +40,9 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		if(view == null) return;
 		view.findViewById(R.id.fragment_mpage_season).setOnClickListener(this);
 		view.findViewById(R.id.mpage_choose_menu_custom).setOnClickListener(this);
+		view.findViewById(R.id.mpage_pre_special_menu).setOnClickListener(this);
+		view.findViewById(R.id.mpage_market_menu).setOnClickListener(this);
+		view.findViewById(R.id.mpage_season_menu).setOnClickListener(this);
 	}
 	
 	@Override
@@ -50,13 +55,35 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			startActivity(intent);
 			break;
 		case R.id.mpage_choose_menu_custom:
-			LogUtil.e("mpage_choose_menu_custom");
 			intent = new Intent(MainTabFragmentMPage.this.getActivity(), ChooseMenuActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.mpage_pre_special_menu:
+			intent = new Intent(getActivity(), PreSpecialActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.mpage_market_menu:
+			if(mClickMarketMenuListener != null){
+				mClickMarketMenuListener.clickMarketMenu();
+			}
+			break;
+		case R.id.mpage_season_menu:
+			intent = new Intent(getActivity(), SeasonActivity.class);
 			startActivity(intent);
 			break;
 		default:
 			break;
 		}
+	}
+	
+	public interface ClickMarketMenuListener{
+		public void clickMarketMenu();
+	}
+	
+	private ClickMarketMenuListener mClickMarketMenuListener;
+	
+	public void setOnClickMarketMenuListener(ClickMarketMenuListener clickMarketMenuListner){
+		this.mClickMarketMenuListener = clickMarketMenuListner;
 	}
 	
 	@Override

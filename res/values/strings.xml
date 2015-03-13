@@ -14,8 +14,8 @@
     <string name="activity_login_phonenum_hint">输入手机号码</string>
     <string name="activity_login_pwd_hint">输入密码</string>
     <string name="activity_login_button_text">登录</string>
-    <string name="activity_login_remind_regist_text">去注册</string>
-    <string name="activity_login_remind_findpwd_text">忘记密码？</string>
+    <string name="activity_login_remind_regist_text"><u>去注册</u></string>
+    <string name="activity_login_remind_findpwd_text"><u>忘记密码？</u></string>
     
     <!-- activity_regist -->
     <string name="activity_regist_phonenum_hint">输入手机号码</string>
