@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +24,9 @@ import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMPage.ClickMarketMenuListener;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
+import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
@@ -47,6 +51,27 @@ public class MainActivity extends FragmentActivity{
 	
 	private List<ChangeColorIconWithText> mTabIndicators = 
 			new ArrayList<ChangeColorIconWithText>();
+	private MainPageInitDataManager mInitDataManager;
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			MainTabBaseFragment fragment = null;
+			switch (msg.what) {
+			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
+				fragment = mFragments.get(1);
+				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
+				fragment = mFragments.get(3);
+				break;
+			default:
+				break;
+			}
+			
+			if(fragment != null){
+				fragment.loadDataCompleted(mInitDataManager, msg.what);
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +79,24 @@ public class MainActivity extends FragmentActivity{
 		setContentView(R.layout.activity_main);
 		initFragment();
 		initTabIndicators();
+		initData();
 		initViewPager();
 		initYoumeng();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	
+	/**
+	 * 初始化四个Fragment的数据
+	 */
+	private void initData(){
+		mInitDataManager = 
+				MainPageInitDataManager.getInstance(CustomApplication.getContext());
+		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
+		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
 	}
 	
 	/**

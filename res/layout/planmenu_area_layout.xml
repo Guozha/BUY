@@ -19,6 +19,7 @@
             android:layout_weight="1">
             
             <ImageView 
+                android:id="@+id/planmenu_detail_line1_item1"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"
@@ -48,6 +49,7 @@
             android:layout_weight="1">
             
             <ImageView 
+                android:id="@+id/planmenu_detail_line1_item2"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"
@@ -78,6 +80,7 @@
             
                         
             <ImageView 
+                android:id="@+id/planmenu_detail_line1_item3"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"
@@ -115,6 +118,7 @@
             android:layout_weight="1">
             
             <ImageView 
+                android:id="@+id/planmenu_detail_line2_item1"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"
@@ -144,6 +148,7 @@
             android:layout_weight="1">
             
             <ImageView 
+                android:id="@+id/planmenu_detail_line2_item2"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"
@@ -174,6 +179,7 @@
             
                         
             <ImageView 
+                android:id="@+id/planmenu_detail_line2_item3"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="240"

@@ -1,10 +1,10 @@
 package com.guozha.buy.receiver;
 
-import cn.jpush.android.api.JPushInterface;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 接收极光推送的消息

@@ -23,7 +23,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.LoginActivity;
+import com.guozha.buy.entry.AccountInfo;
+import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
@@ -36,7 +41,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private TextView mMineRemainMoney;
 	private TextView mMineTickes;
 	private TextView mMineBeans;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,7 +65,37 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		mMineTickes = (TextView) view.findViewById(R.id.mine_msg_tickes);
 		mMineBeans = (TextView) view.findViewById(R.id.mine_msg_bean);
 		
+		view.findViewById(R.id.mine_orderform).setOnClickListener(this);
+		view.findViewById(R.id.mine_advice_active).setOnClickListener(this);
+		view.findViewById(R.id.mine_collection).setOnClickListener(this);
+		view.findViewById(R.id.mine_ticket).setOnClickListener(this);
+		view.findViewById(R.id.mine_address).setOnClickListener(this);
+		view.findViewById(R.id.mine_buyer).setOnClickListener(this);
+		
+		setInfos();
+	}
+	
+	private void setInfos(){
+		if(mDataManager == null) return;
+		AccountInfo accountInfo = mDataManager.getAccountInfo(null);
+		if(accountInfo == null) return;
+		mMinePhoneNum.setText(accountInfo.getMobileNo());
+		mMineTickes.setText("菜票 " + accountInfo.getTicketAmount() + "张");
+		mMineBeans.setText("菜豆 " + accountInfo.getBeanAmount() + "个");
+		mMineRemainMoney.setText("我的余额 ￥" + accountInfo.getBalance());
 		setTextColor();
+	}
+	
+	@Override
+	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
+		switch (handlerType) {
+		case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
+			this.mDataManager = dataManager;
+			setInfos();
+			break;
+		default:
+			break;
+		}
 	}
 	
 	/**
@@ -89,14 +124,32 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		builder.setSpan(redSpan, msgBeans.indexOf(" "), msgBeans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mMineBeans.setText(builder);
 	}
-	
 
 	@Override
 	public void onClick(View view) {
+		Intent intent;
 		switch (view.getId()) {
-		case R.id.mine_head_img:
+		case R.id.mine_head_img:  	//更换头像
 			showChooseImageMethodDialog();
 			break;
+		case R.id.mine_orderform: 	//我的订单
+			intent = new Intent(getActivity(), LoginActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.mine_advice_active: //推荐有奖
+			break;
+		case R.id.mine_collection: 	//我的收藏
+			
+			break;
+		case R.id.mine_ticket: 		//我的菜票
+			
+			break;
+		case R.id.mine_address:		//我的地址
+			
+			break;
+		case R.id.mine_buyer:		//我的卖家
+			
+			break;	
 
 		default:
 			break;

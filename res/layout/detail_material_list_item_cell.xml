@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="34dip"
+	    android:orientation="horizontal">
+	    
+	    <TextView 
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"
+	        android:text="青椒"/>
+	    
+	    <TextView 
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:text="9两"/>
+	</LinearLayout>
+</LinearLayout>

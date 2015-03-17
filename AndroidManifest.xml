@@ -141,6 +141,11 @@
         <activity 
             android:name=".activity.PreSpecialActivity"
             android:screenOrientation="portrait"/>
+        
+        <!-- 菜谱详情 -->
+        <activity
+            android:name=".activity.CookBookDetailActivity"
+            android:screenOrientation="portrait"/>
             
         <!-- Debug界面 -->
         <activity

@@ -1,12 +1,12 @@
 package com.guozha.buy.adapter;
 
-import com.guozha.buy.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.guozha.buy.R;
 
 public class SeasonItemListAdapter extends BaseAdapter{
 	

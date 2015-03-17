@@ -18,7 +18,8 @@ import android.widget.ImageView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.global.HttpManager;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
@@ -150,7 +151,6 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		params.put("passwd", pwd);
 		params.put("checkCode", validNum);
 		paramPath = "account/register" + HttpUtil.generatedAddress(params);
-		LogUtil.e("paramPath = " + paramPath);
 		//TODO 可以登录了
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
@@ -160,6 +160,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 					String returnCode = response.getString("returnCode").trim();
 					if("1".equals(returnCode)){
 						ToastUtil.showToast(RegistActivity.this, "注册成功");
+						//存储密码
+						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 					}else{
 						String msg = response.getString("msg").trim();
 						ToastUtil.showToast(RegistActivity.this, msg);

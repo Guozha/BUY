@@ -1,9 +1,7 @@
 package com.guozha.buy.activity;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.inputmethod.InputMethodManager;
 
 import com.guozha.buy.R;
 import com.umeng.analytics.MobclickAgent;

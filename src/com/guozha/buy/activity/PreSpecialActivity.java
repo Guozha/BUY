@@ -3,8 +3,10 @@ package com.guozha.buy.activity;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
+import com.guozha.buy.global.net.HttpManager;
 
 /**
  * 预售/特供
@@ -20,8 +22,20 @@ public class PreSpecialActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pre_special);
 		customActionBarStyle("特供");
-		
+		initData();
 		initView();
+	}
+	
+	private void initData(){
+		String paramPath = "goods/special?frontTypeId=";
+		HttpManager.getInstance(this).volleyRequestByPost(
+			HttpManager.URL + paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				
+			}
+		});
+		
 	}
 	
 	private void initView(){

@@ -14,6 +14,7 @@
         
         <!-- Area1 -->
         <include 
+            android:id="@+id/planmenu_area1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -22,6 +23,7 @@
         
         <!-- Area2 -->
         <include 
+            android:id="@+id/planmenu_area2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -30,6 +32,7 @@
         
         <!-- Area3 -->
         <include 
+            android:id="@+id/planmenu_area3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -38,6 +41,7 @@
         
         <!-- Area4 -->
         <include 
+            android:id="@+id/planmenu_area4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -46,6 +50,7 @@
         
         <!-- Area5 -->
         <include 
+            android:id="@+id/planmenu_area5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -54,6 +59,7 @@
         
         <!-- Area6 -->
         <include 
+            android:id="@+id/planmenu_area6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"
@@ -62,6 +68,7 @@
         
         <!-- Area7 -->
         <include 
+            android:id="@+id/planmenu_area7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dip"

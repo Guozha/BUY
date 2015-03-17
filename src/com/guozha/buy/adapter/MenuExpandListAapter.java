@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.GoodsItemType;
+import com.guozha.buy.entry.GoodsSecondItemType;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
 
 /**
@@ -19,39 +22,40 @@ import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdap
  */
 public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 	
-	private String[] mGroupMenus;
-	
-	private List<String>[] mChildMenus;
-	
+	private List<GoodsItemType> mGoodsItemType;
 	private LayoutInflater mInflate;
 	
-	public MenuExpandListAapter(Context context, 
-			String[] groupMenus, List<String>[] childMenus){
-		this.mGroupMenus = groupMenus;
-		this.mChildMenus = childMenus;
+	public MenuExpandListAapter(Context context, List<GoodsItemType> goodsItemType){
+		mGoodsItemType = goodsItemType;
 		mInflate = LayoutInflater.from(context);
 	}
 
 	@Override
 	public int getGroupCount() {
-		if(mGroupMenus.length != mChildMenus.length) return 0;
-		return mGroupMenus.length;
+		if(mGoodsItemType == null || mGoodsItemType.isEmpty()) return 0;
+		return mGoodsItemType.size();
 	}
 	
 	@Override
 	public int getRealChildrenCount(int groupPosition) {
-		if(mGroupMenus.length != mChildMenus.length) return 0;
-		return mChildMenus[groupPosition].size();
+		if(getGroupCount() == 0) return 0;
+		GoodsItemType goodsItemType = mGoodsItemType.get(groupPosition);
+		if(goodsItemType == null) return 0;
+		List<GoodsSecondItemType> goodsSecondItemTypes = goodsItemType.getFrontTypeList();
+		if(goodsSecondItemTypes == null || goodsSecondItemTypes.isEmpty()) return 0;
+		return goodsSecondItemTypes.size();
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
-		return mGroupMenus[groupPosition];
+		return mGoodsItemType.get(groupPosition);
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return mChildMenus[groupPosition].get(childPosition);
+		GoodsItemType goodsItemType = mGoodsItemType.get(groupPosition);
+		if(goodsItemType == null) return null;
+		return goodsItemType.getFrontTypeList().get(childPosition);
 	}
 
 	@Override
@@ -85,10 +89,10 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
 		
-		holder.menuText.setText(mGroupMenus[groupPosition]);
+		holder.menuText.setText(mGoodsItemType.get(groupPosition).getShortName());
 		
 		if(isExpanded){ //展开了
-		//holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
+			//holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
 		}else{
 			//holder.arrowIcon.setImageResource(R.drawable.main_menu_down);
 		}
@@ -110,8 +114,9 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 		}else{
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		
-		holder.menuText.setText(mChildMenus[groupPosition].get(childPosition));
+		GoodsSecondItemType goodsSecondItemType = 
+				mGoodsItemType.get(groupPosition).getFrontTypeList().get(childPosition);
+		holder.menuText.setText(goodsSecondItemType.getShortName());
 		
 		return convertView;
 	}

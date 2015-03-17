@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="100dip"
+	    android:orientation="horizontal">
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="1."
+	        android:textSize="@dimen/dimen_global_18sp"
+	        android:textColor="@color/color_app_base_4"/>
+	    
+	    <TextView 
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:maxLines="4"
+	        android:ellipsize="end"
+	        android:paddingRight="14dip"
+	        android:lineSpacingExtra="5dip"
+	        android:text="原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。"/>
+	    
+	    <ImageView 
+	        android:layout_width="100dip"
+	        android:layout_height="70dip"
+	        android:scaleType="centerInside"
+	        android:layout_gravity="center_vertical"
+	        android:src="@drawable/recipe_step_01"/>
+	</LinearLayout>
+</LinearLayout>

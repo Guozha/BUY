@@ -20,6 +20,7 @@ import android.widget.ViewFlipper;
 
 import com.guozha.buy.R;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -87,6 +88,103 @@ public class PlanMenuActivity extends BaseActivity{
 		mButton7.setOnClickListener(mMenuFlipperClick);
 		
 		mViewFlipper = (ViewFlipper) findViewById(R.id.planmenu_content_view);
+		
+		initPlanMenuItem();
+	}
+	
+	private void initPlanMenuItem(){
+		View area1 = findViewById(R.id.planmenu_area1);
+		View area2 = findViewById(R.id.planmenu_area2);
+		View area3 = findViewById(R.id.planmenu_area3);
+		View area4 = findViewById(R.id.planmenu_area4);
+		View area5 = findViewById(R.id.planmenu_area5);
+		View area6 = findViewById(R.id.planmenu_area6);
+		View area7 = findViewById(R.id.planmenu_area7);
+		
+		setChildItemTag(area1, 0);
+		setChildItemTag(area2, 1);
+		setChildItemTag(area3, 2);
+		setChildItemTag(area4, 3);
+		setChildItemTag(area5, 4);
+		setChildItemTag(area6, 5);
+		setChildItemTag(area7, 6);
+	}
+	
+	private void setChildItemTag(View view, int group){
+		MenuItemClickListener listener = new MenuItemClickListener(group);
+		view.findViewById(R.id.planmenu_detail_line1_item1).setOnClickListener(listener);
+		view.findViewById(R.id.planmenu_detail_line1_item2).setOnClickListener(listener);
+		view.findViewById(R.id.planmenu_detail_line1_item3).setOnClickListener(listener);
+		view.findViewById(R.id.planmenu_detail_line2_item1).setOnClickListener(listener);
+		view.findViewById(R.id.planmenu_detail_line2_item2).setOnClickListener(listener);
+		view.findViewById(R.id.planmenu_detail_line2_item3).setOnClickListener(listener);
+	}
+	
+	class MenuItemClickListener implements OnClickListener{
+		
+		private int groupId;
+		public MenuItemClickListener(int groupId){
+			this.groupId = groupId;
+		}
+
+		@Override
+		public void onClick(View view) {
+			switch (groupId) {
+			case 0:
+				
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+			case 5:
+				
+				break;
+			case 6:
+				
+				break;
+			default:
+				break;
+			}
+			
+			int childId = -1;
+			switch (view.getId()) {
+			case R.id.planmenu_detail_line1_item1:
+				childId = 0;
+				break;
+			case R.id.planmenu_detail_line1_item2:
+				childId = 1;
+				break;
+			case R.id.planmenu_detail_line1_item3:
+				childId = 2;
+				break;
+			case R.id.planmenu_detail_line2_item1:
+				childId = 3;
+				break;
+			case R.id.planmenu_detail_line2_item2:
+				childId = 4;
+				break;
+			case R.id.planmenu_detail_line2_item3:
+				childId = 5;
+				break;
+			default:
+				break;
+			}
+
+			ToastUtil.showToast(PlanMenuActivity.this, "groupId = " + groupId + ",  childId = " + childId);
+		
+			Intent intent = new Intent(PlanMenuActivity.this, CookBookDetailActivity.class);
+			startActivity(intent);
+		}
+		
 	}
 	
 	/**

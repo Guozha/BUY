@@ -1,12 +1,12 @@
 package com.guozha.buy.view;
 
-import com.guozha.buy.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+
+import com.guozha.buy.R;
 
 public class Switch extends ImageView implements OnClickListener{
 	

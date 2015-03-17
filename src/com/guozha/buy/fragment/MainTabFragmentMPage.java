@@ -15,7 +15,7 @@ import com.guozha.buy.activity.ChooseMenuActivity;
 import com.guozha.buy.activity.PlanMenuActivity;
 import com.guozha.buy.activity.PreSpecialActivity;
 import com.guozha.buy.activity.SeasonActivity;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
@@ -43,6 +43,12 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		view.findViewById(R.id.mpage_pre_special_menu).setOnClickListener(this);
 		view.findViewById(R.id.mpage_market_menu).setOnClickListener(this);
 		view.findViewById(R.id.mpage_season_menu).setOnClickListener(this);
+	}
+	
+	@Override
+	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override

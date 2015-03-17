@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.guozha.buy.R;
-import com.guozha.buy.util.DimenUtil;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
+
+import com.guozha.buy.R;
+import com.guozha.buy.util.DimenUtil;
 
 /**
  * 自定播放图片View

@@ -1,25 +1,30 @@
 package com.guozha.buy.adapter;
 
+import com.guozha.buy.R;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.guozha.buy.R;
-
-public class WarnTimeListAdapter extends BaseAdapter{
+/**
+ * 菜谱详情的制作过程列表适配器
+ * @author PeggyTong
+ *
+ */
+public class DetailStepListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	
-	public WarnTimeListAdapter(Context context){
+	public DetailStepListAdapter(Context context){
 		mInflater = LayoutInflater.from(context);
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 3;
 	}
 
 	@Override
@@ -36,9 +41,10 @@ public class WarnTimeListAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
 		if(convertView == null){
-			convertView = mInflater.inflate(R.layout.list_warntime_item_cell, null);
+			convertView = mInflater.inflate(R.layout.detail_step_list_item_cell, null);
+		}else{
+			
 		}
 		return convertView;
 	}

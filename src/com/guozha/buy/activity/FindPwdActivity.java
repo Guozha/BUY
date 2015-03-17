@@ -1,5 +1,11 @@
 package com.guozha.buy.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,8 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.RegularUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -94,7 +105,14 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.findpwd_obtain_validenum:
 			//TODO 发送短信验证码
+			phoneNum = mEditPhoneNum.getText().toString();
+			if(!isValidatePhoneNum(phoneNum)){
+				ToastUtil.showToast(this, "输入的手机号码不正确");
+				return;
+			}
 			
+
+			//requestValidateNum(phoneNum);
 			
 			break;
 		case R.id.confirm_button:
@@ -103,31 +121,88 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			repeatPwd = mEditRepeatPwd.getText().toString();
 			String validNum = mEditValidNum.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
-				//TODO 提示手机号填写有误
-				
+				//提示手机号填写有误
+				ToastUtil.showToast(this, "输入的手机号码不正确");
 				return;
 			}
 			if(!isValidatePwd(pwd)){
-				//TODO 提示密码设置有误
-				
+				//提示密码设置有误
+				ToastUtil.showToast(this, "密码设置格式不正确");
 				return;
 			}
 			if(!pwd.equals(repeatPwd)){
-				//TODO 提示两次输入密码不同
-				
+				//提示两次输入密码不同
+				ToastUtil.showToast(this, "两次输入密码不一致");
 				return;
 			}
 			if(!isValideNumRight(validNum)){
-				//TODO 提示验证码错误
-				
+				//提示验证码错误
+				ToastUtil.showToast(this, "验证码不正确");
 				return;
 			}
-			//TODO 可以登录了
+			requestFindPwd(phoneNum, pwd, validNum);
 			
 			break;
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * 提交修改
+	 * @param phoneNum
+	 * @param pwd
+	 * @param validNum
+	 */
+	private void requestFindPwd(String phoneNum, String pwd, String validNum) {
+		//可以提交修改了
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		params.put("passwd", pwd);
+		params.put("checkCode", validNum);
+		String paramPath = "account/updatePasswd" + HttpUtil.generatedAddress(params);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				//TODO 这里和注册返回一致
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode)){
+						ToastUtil.showToast(FindPwdActivity.this, "密码修改成功");
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(FindPwdActivity.this, msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * 请求验证码
+	 * @param phoneNum
+	 */
+	private void requestValidateNum(String phoneNum) {
+		String paramPath = "account/checkCodeForResetPasswd?mobileNo=" + phoneNum;
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					//TODO ...
+					String checkCode = response.getString("checkCode");
+					
+					if(true){ //TODO 如果成功
+						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**

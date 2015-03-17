@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,7 +24,9 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.ChooseMenuActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
+import com.guozha.buy.entry.GoodsItemType;
 import com.guozha.buy.entry.VegetableInfo;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.CustomListView;
@@ -37,14 +40,15 @@ import com.umeng.analytics.MobclickAgent;
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnTouchListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
+	private static final int HANDLER_MENU_ITEM_MSG_WHAT = 0x0001;
 	
 	private View mView;
 	
 	private View mTopExpandMenuButton;
 	private AnimatedExpandableListView mMenuList;
+	private MenuExpandListAapter mMenuExpandListAapter;
 	
-	private String[] mGroupMenus;
-	private List<String>[] mChildMenus;
+	private List<GoodsItemType> mGoodsItemTypes;  //菜品类目菜单数据
 	
 	private CustomListView mItemList;
 	
@@ -52,8 +56,16 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private Animation mOutAnimation;
 	
 	private ImageView mMenuArrowIcon;
-	
 	private View mQuickInView;
+	
+	private Handler mHanlder = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			if(msg.what == HANDLER_MENU_ITEM_MSG_WHAT){
+				mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
+				mMenuList.setAdapter(mMenuExpandListAapter);
+			}
+		};
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -65,31 +77,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
 			
-		initMenuData();
-		
 		initView(mView);
 		
 		return mView;
-	}
-	
-	/**
-	 * 获取菜单数据
-	 */
-	private void initMenuData(){
-		mGroupMenus = new String[]{"Group1", "Group2", "Group3", "Group4"};
-		
-		mChildMenus = new ArrayList[mGroupMenus.length];
-		List<String> menus;
-		for(int i = 0; i < mGroupMenus.length; i++){
-			menus = new ArrayList<String>();
-			menus.add("Group" + i + "Child1");
-			menus.add("Group" + i + "Child2");
-			menus.add("Group" + i + "Child3");
-			menus.add("Group" + i + "Child4");
-			menus.add("Group" + i + "Child5");
-			
-			mChildMenus[i] = menus;
-		}
 	}
 	
 	/**
@@ -104,8 +94,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		//菜单类目可展开列表
 		mMenuList = (AnimatedExpandableListView) view.findViewById(R.id.market_item_menu_list);
-		mMenuList.setAdapter(new MenuExpandListAapter(getActivity(), mGroupMenus, mChildMenus));
-		
+		//mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
+		//mMenuList.setAdapter(mMenuExpandListAapter);
 		mMenuList.setOnGroupClickListener(new OnGroupClickListener() {
 
             @Override
@@ -119,6 +109,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
             }
             
         });
+		setGoodsItemTypeData();
 		
 		View header = LayoutInflater.from(this.getActivity())
 				.inflate(R.layout.market_list_item_header, null);
@@ -146,6 +137,33 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		});
 		
 		view.findViewById(R.id.choose_menu_custom).setOnClickListener(this);
+	}
+	
+	@Override
+	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
+		switch (handlerType) {
+		case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
+			mDataManager = dataManager;
+			setGoodsItemTypeData();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/**
+	 * 获取菜单条目列表数据
+	 */
+	private void setGoodsItemTypeData(){
+		if(mDataManager == null) {
+			LogUtil.e("mDataManager == null");
+			return;
+		}
+		mGoodsItemTypes = mDataManager.getGoodsItemType(null);
+		for(int i = 0; i < mGoodsItemTypes.size(); i++){
+			mGoodsItemTypes.get(i).getShortName();
+		}
+		mHanlder.sendEmptyMessage(HANDLER_MENU_ITEM_MSG_WHAT);
 	}
 	
 	@Override

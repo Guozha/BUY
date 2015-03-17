@@ -19,8 +19,9 @@ import android.widget.ImageView;
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.HttpManager;
+import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -130,18 +131,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				try {
 					String returnCode = response.getString("returnCode");
 					if("1".equals(returnCode.trim())){
-						String userId = response.getString("userId");
+						Integer userId = response.getInt("userId");
 						String userToken = response.getString("token");
 						String mobileNum = response.getString("mobileNo");
 						ConfigManager.getInstance().setUserId(userId);
 						ConfigManager.getInstance().setUserToken(userToken);
+						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 						ConfigManager.getInstance().setMobileNum(mobileNum);
+						LogUtil.e("登录成功");
 						ToastUtil.showToast(LoginActivity.this, "登录成功");
 					}else{
 						String msg = response.getString("msg");
+						LogUtil.e("登录失败：" + msg);
 						ToastUtil.showToast(LoginActivity.this, msg);
 					}
 				} catch (JSONException e) {
+					ToastUtil.showToast(LoginActivity.this, "服务器异常");
 					e.printStackTrace();
 				}
 			}

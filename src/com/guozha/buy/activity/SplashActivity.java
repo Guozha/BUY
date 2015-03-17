@@ -1,5 +1,11 @@
 package com.guozha.buy.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +13,14 @@ import android.os.Handler;
 import android.os.SystemClock;
 import cn.jpush.android.api.JPushInterface;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.dialog.WeightSelectDialog;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -85,7 +97,59 @@ public class SplashActivity extends Activity{
 	 */
 	private void doInit(){
 		//TODO 做一些业务逻辑（比如加载资源）
+		//初始化配置文件
+		ConfigManager.getInstance();
 		
+		//初始化入口界面数据(这里最好传全局的context)
+		MainPageInitDataManager initDataManager = MainPageInitDataManager.getInstance(
+				CustomApplication.getContext());
+		//自动登录应用
+		String mobileNum = ConfigManager.getInstance().getMobileNum();
+		String pwd = ConfigManager.getInstance().getUserPwd();
+		if(mobileNum != null && pwd != null){
+			requestLogin(mobileNum, pwd);
+		}
+		//获取账户信息
+		initDataManager.getAccountInfo(null);
+		//获取菜单信息
+		initDataManager.getGoodsItemType(null);
+	}
+	
+	/**
+	 * 请求登录
+	 * @param phoneNum
+	 * @param pwd
+	 */
+	private void requestLogin(String phoneNum, String pwd) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		params.put("passwd", pwd);
+		paramPath = "account/login" + HttpUtil.generatedAddress(params);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode.trim())){
+						Integer userId = response.getInt("userId");
+						String userToken = response.getString("token");
+						String mobileNum = response.getString("mobileNo");
+						ConfigManager.getInstance().setUserId(userId);
+						ConfigManager.getInstance().setUserToken(userToken);
+						ConfigManager.getInstance().setMobileNum(mobileNum);
+						LogUtil.e("自动登录成功！");
+					}else{
+						String msg = response.getString("msg");
+						LogUtil.e("自动登录失败：" + msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	@Override

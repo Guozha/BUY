@@ -22,7 +22,7 @@ import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartCookMaterial;
 import com.guozha.buy.entry.cart.CartMarketItem;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -93,6 +93,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);
 		mMesgFreeGap = (TextView) view.findViewById(R.id.cart_free_money_gap);
 		setTextColor();
+		
+	}
+	
+	@Override
+	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
+		
 	}
 
 	/**

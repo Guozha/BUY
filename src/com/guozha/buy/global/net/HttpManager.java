@@ -1,11 +1,10 @@
-package com.guozha.buy.global;
+package com.guozha.buy.global.net;
 
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.android.volley.Request.Method;
@@ -19,7 +18,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.util.BitmapCache;
+import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 
 /**
  * 网络操作工具类
@@ -74,6 +76,7 @@ public class HttpManager {
 				new StringRequest(Method.POST, url, responsListener, errorListener);  
 		mQueue.add(stringRequest);
 	}
+	
 	
 	/**
 	 * get方式请求Json格式的数据
@@ -135,7 +138,8 @@ public class HttpManager {
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			Log.e("TEST", error.getMessage(), error);  
+			LogUtil.e(error.getMessage());
+			ToastUtil.showToast(CustomApplication.getContext(), error.getMessage());
 		}
 	}
 }

@@ -82,6 +82,7 @@
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_orderform"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
@@ -105,6 +106,7 @@
 	    </LinearLayout>
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_advice_active"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
@@ -129,6 +131,7 @@
 	    </LinearLayout>
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_collection"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
@@ -161,6 +164,7 @@
 	    android:orientation="horizontal">
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_ticket"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
@@ -184,6 +188,7 @@
 	    </LinearLayout>
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_address"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
@@ -208,6 +213,7 @@
 	    </LinearLayout>
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_buyer"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
