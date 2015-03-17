@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						ToastUtil.showToast(LoginActivity.this, msg);
 					}
 				} catch (JSONException e) {
-					ToastUtil.showToast(LoginActivity.this, "服务器异常");
+					ToastUtil.showToast(LoginActivity.this, "数据解析异常");
 					e.printStackTrace();
 				}
 			}

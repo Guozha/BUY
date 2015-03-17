@@ -23,8 +23,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.LoginActivity;
+import com.guozha.buy.activity.global.LoginActivity;
+import com.guozha.buy.activity.mine.AdvicePraiseActivity;
+import com.guozha.buy.activity.mine.MyAddressActivity;
+import com.guozha.buy.activity.mine.MyCollectionActivity;
+import com.guozha.buy.activity.mine.MyOrderActivity;
+import com.guozha.buy.activity.mine.MySellerActivity;
+import com.guozha.buy.activity.mine.MyTicketActivity;
+import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.AccountInfo;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
@@ -41,6 +49,8 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private TextView mMineRemainMoney;
 	private TextView mMineTickes;
 	private TextView mMineBeans;
+	
+	private View mAccountInfoArea;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -65,6 +75,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		mMineTickes = (TextView) view.findViewById(R.id.mine_msg_tickes);
 		mMineBeans = (TextView) view.findViewById(R.id.mine_msg_bean);
 		
+		mAccountInfoArea = view.findViewById(R.id.mine_top_account_message_area);
 		view.findViewById(R.id.mine_orderform).setOnClickListener(this);
 		view.findViewById(R.id.mine_advice_active).setOnClickListener(this);
 		view.findViewById(R.id.mine_collection).setOnClickListener(this);
@@ -76,9 +87,16 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	}
 	
 	private void setInfos(){
-		if(mDataManager == null) return;
+		if(mDataManager == null) {
+			mAccountInfoArea.setVisibility(View.GONE);
+			return;
+		}
 		AccountInfo accountInfo = mDataManager.getAccountInfo(null);
-		if(accountInfo == null) return;
+		if(accountInfo == null) {
+			mAccountInfoArea.setVisibility(View.GONE);
+			return;
+		}
+		mAccountInfoArea.setVisibility(View.VISIBLE);
 		mMinePhoneNum.setText(accountInfo.getMobileNo());
 		mMineTickes.setText("菜票 " + accountInfo.getTicketAmount() + "张");
 		mMineBeans.setText("菜豆 " + accountInfo.getBeanAmount() + "个");
@@ -128,27 +146,40 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	@Override
 	public void onClick(View view) {
 		Intent intent;
+		//如果没有登录
+		//if(ConfigManager.getInstance().getUserToken() == null){
+		//	intent = new Intent(getActivity(), RemindLoginDialog.class);
+		//	startActivity(intent);
+		//	return;
+		//}
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
 			showChooseImageMethodDialog();
 			break;
 		case R.id.mine_orderform: 	//我的订单
 			intent = new Intent(getActivity(), LoginActivity.class);
+			//intent = new Intent(getActivity(), MyOrderActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.mine_advice_active: //推荐有奖
+			intent = new Intent(getActivity(), AdvicePraiseActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.mine_collection: 	//我的收藏
-			
+			intent = new Intent(getActivity(), MyCollectionActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.mine_ticket: 		//我的菜票
-			
+			intent = new Intent(getActivity(), MyTicketActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.mine_address:		//我的地址
-			
+			intent = new Intent(getActivity(), MyAddressActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.mine_buyer:		//我的卖家
-			
+			intent = new Intent(getActivity(), MySellerActivity.class);
+			startActivity(intent);
 			break;	
 
 		default:

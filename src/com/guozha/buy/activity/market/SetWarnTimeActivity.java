@@ -1,9 +1,10 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.market;
 
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.WarnTimeListAdapter;
 
 /**

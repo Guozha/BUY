@@ -30,6 +30,7 @@
         
 	    
 	    <LinearLayout 
+	        android:id="@+id/mine_top_account_message_area"
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="310"

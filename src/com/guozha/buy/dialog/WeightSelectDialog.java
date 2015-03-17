@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.VegetableDetailActivity;
+import com.guozha.buy.activity.market.VegetableDetailActivity;
 import com.guozha.buy.entry.ItemSaleInfo;
 import com.guozha.buy.entry.ItemSaleInfo.WeightOption;
 import com.guozha.buy.util.RegularUtil;

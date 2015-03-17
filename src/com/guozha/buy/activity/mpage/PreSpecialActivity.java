@@ -1,10 +1,11 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.mpage;
 
 import android.os.Bundle;
 import android.widget.GridView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
 import com.guozha.buy.global.net.HttpManager;
 

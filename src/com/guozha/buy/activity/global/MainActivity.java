@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +18,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.mine.SettingActivity;
+import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMPage.ClickMarketMenuListener;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
@@ -374,18 +376,33 @@ public class MainActivity extends FragmentActivity{
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		Intent intent;
 		switch (item.getItemId()) {
 		case R.id.action_search: //查找
-			Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+			intent = new Intent(MainActivity.this, SearchActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.action_share:
-			
+		case R.id.action_share:  //分享
+
+			break;
+		case R.id.action_setting: //设置
+			if(ConfigManager.getInstance().getUserToken() == null){
+				intent = new Intent(MainActivity.this, RemindLoginDialog.class);
+			}else{
+				intent = new Intent(MainActivity.this, SettingActivity.class);
+			}
+			startActivity(intent);
 			break;
 		default:
 			break;
 		}
 		return super.onMenuItemSelected(featureId, item);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ConfigManager.getInstance().setUserToken(null);
 	}
 
 }

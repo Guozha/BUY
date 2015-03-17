@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.mpage;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.DetailMaterialListAdapter;
 import com.guozha.buy.adapter.DetailSeasonListAdapter;
 import com.guozha.buy.adapter.DetailStepListAdapter;

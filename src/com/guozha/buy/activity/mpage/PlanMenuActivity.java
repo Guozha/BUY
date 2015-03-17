@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.mpage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.market.SetWarnTimeActivity;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;

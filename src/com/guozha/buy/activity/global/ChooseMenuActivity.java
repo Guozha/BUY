@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,11 @@ import com.guozha.buy.entry.QuickMenus;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
+/**
+ * 选择快捷菜单
+ * @author PeggyTong
+ *
+ */
 public class ChooseMenuActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "ChooseMenuPage";

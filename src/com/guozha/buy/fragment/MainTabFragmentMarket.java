@@ -21,7 +21,7 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.ChooseMenuActivity;
+import com.guozha.buy.activity.global.ChooseMenuActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
 import com.guozha.buy.entry.GoodsItemType;

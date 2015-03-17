@@ -25,6 +25,7 @@ public class CustomApplication extends LitePalApplication{
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
+		/*
 		//极光推送相关
 		//TODO 注意发布的时候修改Debug模式
 		JPushInterface.setDebugMode(true); //设置为Debug模式
@@ -52,6 +53,7 @@ public class CustomApplication extends LitePalApplication{
 		//设置默认样式
 		JPushInterface.setPushNotificationBuilder(1, builder);
 		JPushInterface.setDefaultPushNotificationBuilder(builder);
+		*/
 
 	}
 	

@@ -113,10 +113,6 @@ public class MainPageInitDataManager {
 			@Override
 			public void onResponse(String response) {
 				mAccountInfo = mGson.fromJson(response, AccountInfo.class);
-				LogUtil.e("Mobile = " + mAccountInfo.getMobileNo());
-				LogUtil.e("Balance = " + mAccountInfo.getBalance());
-				LogUtil.e("Amount = " + mAccountInfo.getBeanAmount());
-				LogUtil.e("Ticket = " + mAccountInfo.getTicketAmount());
 				if(handler != null && mAccountInfo != null){
 					handler.sendEmptyMessage(HAND_INITDATA_MSG_ACCOUNTINFO);
 				}

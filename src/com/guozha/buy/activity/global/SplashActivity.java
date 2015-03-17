@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import java.util.HashMap;
 import java.util.Map;

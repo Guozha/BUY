@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<ListView 
+	    android:id="@+id/my_address_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:divider="@color/color_app_base_7"
+	    android:background="@color/color_app_base_5"
+	    android:dividerHeight="1dip"/>
+	
+	<Button 
+	    android:id="@+id/myaddress_add_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:text="添加新地址"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_2"
+	    android:layout_marginTop="8dip"
+	    android:background="@color/color_app_base_5"/>
+</LinearLayout>

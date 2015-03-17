@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -20,128 +21,116 @@ import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
- * 找回密码
+ * 注册界面
  * @author PeggyTong
  *
  */
-public class FindPwdActivity extends BaseActivity implements OnClickListener{
+public class RegistActivity extends BaseActivity implements OnClickListener{
 	
-	private static final String PAGE_NAME = "FindPwdPage";
+	private static final String PAGE_NAME = "RegistPage";
 	
 	private EditText mEditPhoneNum;
 	private EditText mEditValidNum;
 	private EditText mEditPwd;
-	private EditText mEditRepeatPwd;
 	
 	private ImageView mPhoneNumIcon;
 	private ImageView mPwdIcon;
-	private ImageView mRepeatPwdIcon;
 	
 	private Button mObtainValidNumButton;
-	private Button mConfirmButton;
+	private Button mRegistButton;
+	
+	private CheckBox mProtocalAffirmCheckBox;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_findpwd);
-		customActionBarStyle("找回密码");
+		setContentView(R.layout.activity_regist);
+		customActionBarStyle("注册");
 		initView();
-		
 		textChangeWatch();
+
 	}
-	
+
 	/**
 	 * 初始化View
 	 */
 	private void initView() {
-		mEditPhoneNum = (EditText) findViewById(R.id.findpwd_phonenum);
-		mEditValidNum = (EditText) findViewById(R.id.findpwd_validenum);
-		mEditPwd = (EditText) findViewById(R.id.findpwd_pwd);
-		mEditRepeatPwd = (EditText) findViewById(R.id.findpwd_repeat_pwd);
+		mEditPhoneNum = (EditText) findViewById(R.id.regist_phonenum);
+		mEditValidNum = (EditText) findViewById(R.id.regist_validenum);
+		mEditPwd = (EditText) findViewById(R.id.regist_pwd);
 		
-		mPhoneNumIcon = (ImageView) findViewById(R.id.findpwd_phonenum_clear);
-		mPwdIcon = (ImageView) findViewById(R.id.findpwd_pwd_clear);
-		mRepeatPwdIcon = (ImageView) findViewById(R.id.findpwd_repeat_pwd_clear);
+		mPhoneNumIcon = (ImageView) findViewById(R.id.regist_phonenum_clear);
+		mPwdIcon = (ImageView) findViewById(R.id.regist_pwd_clear);
 		
-		mObtainValidNumButton = (Button) findViewById(R.id.findpwd_obtain_validenum);
-		mConfirmButton = (Button) findViewById(R.id.confirm_button);
-				
+		mObtainValidNumButton = (Button) findViewById(R.id.regist_obtain_validenum);
+		mRegistButton = (Button) findViewById(R.id.regist_button);
+		
+		mProtocalAffirmCheckBox = (CheckBox) findViewById(R.id.regist_protocal_affirm);
+		
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
-		mRepeatPwdIcon.setOnClickListener(this);
 		mObtainValidNumButton.setOnClickListener(this);
-		mConfirmButton.setOnClickListener(this);
+		mRegistButton.setOnClickListener(this);
 	}
 	
 	@Override
 	public void onClick(View view) {
 		String phoneNum;
 		String pwd;
-		String repeatPwd;
 		switch (view.getId()) {
-		case R.id.findpwd_phonenum_clear:
+		case R.id.regist_phonenum_clear:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			if(!isValidatePhoneNum(phoneNum)){
 				mEditPhoneNum.setText("");
 			}
 			break;
-		case R.id.findpwd_pwd_clear:
+		case R.id.regist_pwd_clear:
 			pwd = mEditPwd.getText().toString();
 			if(!isValidatePwd(pwd)){
 				mEditPwd.setText("");
 			}
 			break;
-		case R.id.findpwd_repeat_pwd_clear:
-			pwd = mEditPwd.getText().toString();
-			repeatPwd = mEditRepeatPwd.getText().toString();
-			if(!isValidatePwd(pwd) || (!pwd.equals(repeatPwd))){
-				mEditRepeatPwd.setText("");
-			}
-			break;
-		case R.id.findpwd_obtain_validenum:
-			//TODO 发送短信验证码
+		case R.id.regist_obtain_validenum:
 			phoneNum = mEditPhoneNum.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
-				ToastUtil.showToast(this, "输入的手机号码不正确");
+				ToastUtil.showToast(this, "你填写的手机号不正确");
 				return;
 			}
-			
-
-			//requestValidateNum(phoneNum);
-			
+			//TODO 发送短信验证码
+			obtainPoneValidate(phoneNum);
 			break;
-		case R.id.confirm_button:
+		case R.id.regist_button:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			pwd = mEditPwd.getText().toString();
-			repeatPwd = mEditRepeatPwd.getText().toString();
 			String validNum = mEditValidNum.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
 				//提示手机号填写有误
-				ToastUtil.showToast(this, "输入的手机号码不正确");
+				ToastUtil.showToast(this, "手机号码格式不正确");
 				return;
 			}
 			if(!isValidatePwd(pwd)){
 				//提示密码设置有误
-				ToastUtil.showToast(this, "密码设置格式不正确");
-				return;
-			}
-			if(!pwd.equals(repeatPwd)){
-				//提示两次输入密码不同
-				ToastUtil.showToast(this, "两次输入密码不一致");
+				ToastUtil.showToast(this, "请检查密码设置");
 				return;
 			}
 			if(!isValideNumRight(validNum)){
 				//提示验证码错误
-				ToastUtil.showToast(this, "验证码不正确");
+				ToastUtil.showToast(this, "验证码输入错误");
 				return;
 			}
-			requestFindPwd(phoneNum, pwd, validNum);
-			
+			if(!mProtocalAffirmCheckBox.isChecked()){
+				//提示没有同意用户协议
+				ToastUtil.showToast(this, "请先阅读并同意用户协议");
+				return;
+			}
+			//请求注册
+			requestRegist(phoneNum, pwd, validNum);
 			break;
 		default:
 			break;
@@ -149,30 +138,33 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
-	 * 提交修改
+	 * 请求注册
 	 * @param phoneNum
 	 * @param pwd
 	 * @param validNum
 	 */
-	private void requestFindPwd(String phoneNum, String pwd, String validNum) {
-		//可以提交修改了
-		Map<String, String> params = new HashMap<String, String>();
+	private void requestRegist(String phoneNum, String pwd, String validNum) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
 		params.put("mobileNo", phoneNum);
 		params.put("passwd", pwd);
 		params.put("checkCode", validNum);
-		String paramPath = "account/updatePasswd" + HttpUtil.generatedAddress(params);
+		paramPath = "account/register" + HttpUtil.generatedAddress(params);
+		//TODO 可以登录了
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
-				//TODO 这里和注册返回一致
 				try {
-					String returnCode = response.getString("returnCode");
+					String returnCode = response.getString("returnCode").trim();
 					if("1".equals(returnCode)){
-						ToastUtil.showToast(FindPwdActivity.this, "密码修改成功");
+						ToastUtil.showToast(RegistActivity.this, "注册成功");
+						//存储密码
+						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 					}else{
-						String msg = response.getString("msg");
-						ToastUtil.showToast(FindPwdActivity.this, msg);
+						String msg = response.getString("msg").trim();
+						ToastUtil.showToast(RegistActivity.this, msg);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -182,21 +174,26 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
-	 * 请求验证码
+	 * 获取验证码
 	 * @param phoneNum
 	 */
-	private void requestValidateNum(String phoneNum) {
-		String paramPath = "account/checkCodeForResetPasswd?mobileNo=" + phoneNum;
+	private void obtainPoneValidate(String phoneNum) {
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("mobileNo", phoneNum);
+		paramPath = "account/checkCodeForRegister" + HttpUtil.generatedAddress(params);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
-					//TODO ...
-					String checkCode = response.getString("checkCode");
-					
-					if(true){ //TODO 如果成功
-						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode.trim())){
+						ToastUtil.showToast(RegistActivity.this, "验证码已发送");
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(RegistActivity.this, msg);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -274,34 +271,6 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void afterTextChanged(Editable arg0) { }
 		});
-		
-		mEditRepeatPwd.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				String pwd = mEditPwd.getText().toString();
-				String repeatPwd = mEditRepeatPwd.getText().toString();
-				if(pwd.length() == 0){
-					mRepeatPwdIcon.setVisibility(View.INVISIBLE);
-				}else{
-					mRepeatPwdIcon.setVisibility(View.VISIBLE);
-				}
-				if(isValidatePwd(pwd) && (pwd.equals(repeatPwd))){
-					//TODO
-					mRepeatPwdIcon.setImageResource(R.drawable.login_right_state);
-				}else{
-					//TODO
-					mRepeatPwdIcon.setImageResource(R.drawable.login_wrong_state);
-				}
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) { }
-			
-			@Override
-			public void afterTextChanged(Editable arg0) { }
-		});
 	}
 	
 	/**
@@ -323,8 +292,7 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	 * @return
 	 */
 	private boolean isValidatePwd(String pwd) {
-		//密码不可以超过20位
-		if(pwd.isEmpty() || pwd.trim().length() < 6 || pwd.trim().length() > 20){
+		if(pwd.isEmpty() || pwd.trim().length() < 6){
 			return false;
 		}else{
 			return true;

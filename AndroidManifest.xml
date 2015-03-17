@@ -40,7 +40,7 @@
         
         <!-- 闪屏界面 -->
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.guozha.buy.activity.global.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
@@ -53,7 +53,7 @@
         
         <!-- 主界面 -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.guozha.buy.activity.global.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             
@@ -61,42 +61,42 @@
         
         <!-- 菜场详细列表 -->
         <activity 
-            android:name=".activity.ListVegetableActivity"
+            android:name="com.guozha.buy.activity.market.ListVegetableActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 计划菜谱选择 -->
         <activity 
-            android:name=".activity.PlanMenuActivity"
+            android:name="com.guozha.buy.activity.mpage.PlanMenuActivity"
             android:screenOrientation="portrait">
              
         </activity>
         
         <!-- 时令推荐 -->
         <activity
-            android:name=".activity.SeasonActivity"
+            android:name="com.guozha.buy.activity.mpage.SeasonActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 注册界面 -->
         <activity 
-            android:name=".activity.RegistActivity"
+            android:name="com.guozha.buy.activity.global.RegistActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 登录界面 -->
         <activity 
-            android:name=".activity.LoginActivity"
+            android:name="com.guozha.buy.activity.global.LoginActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 找回密码 -->
         <activity
-            android:name=".activity.FindPwdActivity"
+            android:name="com.guozha.buy.activity.global.FindPwdActivity"
             android:screenOrientation="portrait">
             
         </activity>
@@ -104,29 +104,21 @@
         <!-- 自定义快捷菜单 -->
         <activity 
             android:label="快捷设置"
-            android:name=".activity.ChooseMenuActivity"
-            android:screenOrientation="portrait">
-            
-        </activity>
-        
-        <!-- 重量选择对话框 -->
-        <activity 
-            android:name=".dialog.WeightSelectDialog"
-            android:theme="@style/Theme.WeightSelectDialog"
+            android:name="com.guozha.buy.activity.global.ChooseMenuActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 菜品详情 -->
         <activity 
-            android:name=".activity.VegetableDetailActivity"
+            android:name="com.guozha.buy.activity.market.VegetableDetailActivity"
             android:screenOrientation="portrait">
             
         </activity>
         
         <!-- 查找界面 -->
         <activity 
-            android:name=".activity.SearchActivity"
+            android:name="com.guozha.buy.activity.global.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
@@ -134,26 +126,84 @@
         
         <!-- 设置提醒 -->
         <activity
-            android:name=".activity.SetWarnTimeActivity"
+            android:name="com.guozha.buy.activity.market.SetWarnTimeActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 特供/预售 -->
         <activity 
-            android:name=".activity.PreSpecialActivity"
+            android:name="com.guozha.buy.activity.mpage.PreSpecialActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 菜谱详情 -->
         <activity
-            android:name=".activity.CookBookDetailActivity"
+            android:name="com.guozha.buy.activity.mpage.CookBookDetailActivity"
             android:screenOrientation="portrait"/>
+        
+        <!-- 设置界面 -->
+        <activity
+            android:name="com.guozha.buy.activity.mine.SettingActivity"
+            android:screenOrientation="portrait"/>
+        
+        <!-- 我的订单 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.MyOrderActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 推荐有奖 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.AdvicePraiseActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 我的收藏 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.MyCollectionActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 我的菜票 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.MyTicketActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 我的地址 -->
+        <activity
+            android:name="com.guozha.buy.activity.mine.MyAddressActivity"
+            android:screenOrientation="portrait"/>
+        
+        <!-- 我的卖家 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.MySellerActivity"
+            android:screenOrientation="portrait"></activity>
             
         <!-- Debug界面 -->
         <activity
-            android:name=".debug.DebugActivity"
+            android:name="com.guozha.buy.debug.DebugActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             
         </activity>
+        
+        <!-- 添加新地址 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.AddAddressActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 修改地址 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.ModifyAddressActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- *****************对话框**************** -->
+        <!-- 重量选择对话框 -->
+        <activity 
+            android:name=".dialog.WeightSelectDialog"
+            android:theme="@style/Theme.CommenDialog"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        <activity 
+            android:name=".dialog.RemindLoginDialog"
+            android:theme="@style/Theme.WeightSelectDialog"
+            android:screenOrientation="portrait"></activity>
         
         <receiver android:name=".alarm.AlarmReceiver" android:process=":remote"/>
         

@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.global;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -12,7 +12,7 @@ import android.view.View;
  * @author lixiaoqiang
  *
  */
-abstract class BaseActivity extends Activity{
+public abstract class BaseActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

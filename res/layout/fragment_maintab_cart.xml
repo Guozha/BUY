@@ -87,7 +87,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="31dip"
-            android:background="@drawable/main_order_bg"
+            android:background="@drawable/nomal_button_nomal_bg"
             android:textColor="@color/color_app_base_5"/>
     </RelativeLayout>
 </LinearLayout>

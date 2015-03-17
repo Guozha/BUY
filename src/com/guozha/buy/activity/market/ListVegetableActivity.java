@@ -1,4 +1,4 @@
-package com.guozha.buy.activity;
+package com.guozha.buy.activity.market;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.VegetableListAdapter;
 import com.guozha.buy.entry.VegetableInfo;
 import com.umeng.analytics.MobclickAgent;

@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.ChooseMenuActivity;
-import com.guozha.buy.activity.PlanMenuActivity;
-import com.guozha.buy.activity.PreSpecialActivity;
-import com.guozha.buy.activity.SeasonActivity;
+import com.guozha.buy.activity.global.ChooseMenuActivity;
+import com.guozha.buy.activity.mpage.PlanMenuActivity;
+import com.guozha.buy.activity.mpage.PreSpecialActivity;
+import com.guozha.buy.activity.mpage.SeasonActivity;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
 
