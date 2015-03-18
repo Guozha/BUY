@@ -96,10 +96,15 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			mAccountInfoArea.setVisibility(View.GONE);
 			return;
 		}
+		if(mAccountInfoArea == null) return;
 		mAccountInfoArea.setVisibility(View.VISIBLE);
+		if(mMinePhoneNum == null) return;
 		mMinePhoneNum.setText(accountInfo.getMobileNo());
+		if(mMineTickes == null) return;
 		mMineTickes.setText("菜票 " + accountInfo.getTicketAmount() + "张");
+		if(mMineBeans == null) return;
 		mMineBeans.setText("菜豆 " + accountInfo.getBeanAmount() + "个");
+		if(mMineRemainMoney == null) return;
 		mMineRemainMoney.setText("我的余额 ￥" + accountInfo.getBalance());
 		setTextColor();
 	}
@@ -147,18 +152,25 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	public void onClick(View view) {
 		Intent intent;
 		//如果没有登录
-		//if(ConfigManager.getInstance().getUserToken() == null){
-		//	intent = new Intent(getActivity(), RemindLoginDialog.class);
-		//	startActivity(intent);
-		//	return;
-		//}
+		if(ConfigManager.getInstance().getUserToken() == null){
+			outLoginStatuEvent(view);
+			return;
+		}
+		loginedStatuEvent(view);
+	}
+
+	/**
+	 * 登录状态的事件处理
+	 * @param view
+	 */
+	private void loginedStatuEvent(View view) {
+		Intent intent;
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
 			showChooseImageMethodDialog();
 			break;
 		case R.id.mine_orderform: 	//我的订单
-			intent = new Intent(getActivity(), LoginActivity.class);
-			//intent = new Intent(getActivity(), MyOrderActivity.class);
+			intent = new Intent(getActivity(), MyOrderActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.mine_advice_active: //推荐有奖
@@ -181,10 +193,48 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			intent = new Intent(getActivity(), MySellerActivity.class);
 			startActivity(intent);
 			break;	
-
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * 没有登录状态的事件处理
+	 * @param view
+	 */
+	private void outLoginStatuEvent(View view) {
+		Intent intent;
+		if(view.getId() == R.id.mine_head_img){
+			intent = new Intent(getActivity(), LoginActivity.class);
+			startActivity(intent);
+			return;
+		}
+		String turnActivityName = null;
+		switch (view.getId()) {
+		case R.id.mine_orderform: 	//我的订单
+			turnActivityName = "com.guozha.buy.activity.mine.MyOrderActivity";
+			break;
+		case R.id.mine_advice_active: //推荐有奖
+			turnActivityName = "com.guozha.buy.activity.mine.AdvicePraiseActivity";
+			break;
+		case R.id.mine_collection: 	//我的收藏
+			turnActivityName = "com.guozha.buy.activity.mine.MyCollectionActivity";
+			break;
+		case R.id.mine_ticket: 		//我的菜票
+			turnActivityName = "com.guozha.buy.activity.mine.MyTicketActivity";
+			break;
+		case R.id.mine_address:		//我的地址
+			turnActivityName = "com.guozha.buy.activity.mine.MyAddressActivity";
+			break;
+		case R.id.mine_buyer:		//我的卖家
+			turnActivityName = "com.guozha.buy.activity.mine.MySellerActivity";
+			break;	
+		}
+		if(turnActivityName == null) return;
+		intent = new Intent(getActivity(), RemindLoginDialog.class);
+		intent.putExtra(LoginActivity.SUCCESS_TURN_INTENT, turnActivityName);
+		startActivity(intent);
+		return;
 	}
 	
 	/**

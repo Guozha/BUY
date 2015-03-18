@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
@@ -86,6 +88,7 @@ public class SplashActivity extends Activity{
 	 * 跳转到主界面
 	 */
 	private void turnMainActivity(){
+
 		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 		//Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 		startActivity(intent);

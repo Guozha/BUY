@@ -148,7 +148,7 @@
 	        android:visibility="gone"
 	        android:groupIndicator="@null"
 	        android:layout_height="match_parent" />
-			<ListView
+	   <ListView
 	        android:id="@android:id/list"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" />

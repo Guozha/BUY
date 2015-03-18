@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
@@ -34,17 +36,26 @@ import com.umeng.analytics.MobclickAgent;
 public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String PAGE_NAME = "LoginPage";
+	
+	//登录成功后 跳转控制器的 路径
+	public static final String SUCCESS_TURN_INTENT = "success_turn_intent";
 
 	private EditText mEditPhoneNum;  
 	private EditText mEditPwd;   
 	private ImageView mPhoneNumIcon;
 	private ImageView mPwdIcon;
 	private Button mLoginButton;
+	
+	private String mSuccessIntent = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		customActionBarStyle("登录");
+		Bundle bundle = getIntent().getExtras();
+		if(bundle != null){
+			mSuccessIntent = bundle.getString(SUCCESS_TURN_INTENT);
+		}
 		initView();
 		textChangeWatch();
 	}
@@ -140,6 +151,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 						LogUtil.e("登录成功");
 						ToastUtil.showToast(LoginActivity.this, "登录成功");
+						
+						if(mSuccessIntent != null){
+							try {
+								Intent intent = new Intent(LoginActivity.this, Class.forName(mSuccessIntent));
+								startActivity(intent);
+							} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+							}
+						}
+						LoginActivity.this.finish();
 					}else{
 						String msg = response.getString("msg");
 						LogUtil.e("登录失败：" + msg);

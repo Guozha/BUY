@@ -14,7 +14,7 @@ public abstract class MainTabBaseFragment extends Fragment{
 	protected MainPageInitDataManager mDataManager = null;
 	
 	/**
-	 * 加载数据完成
+	 * 加载数据完成(注意：该方法是在主线程中调用的）
 	 */
 	public abstract void loadDataCompleted(MainPageInitDataManager dataManager, int handerType);
 }

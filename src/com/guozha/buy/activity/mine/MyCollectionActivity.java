@@ -1,12 +1,17 @@
 package com.guozha.buy.activity.mine;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.guozha.buy.R;
@@ -29,17 +34,35 @@ public class MyCollectionActivity extends FragmentActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_collection);
-		//customActionBarStyle("我的收藏");
+		setActionBar();
 		setUpViewPage();
 		setUpTab();
+		initView();
 	}
+
+	/**
+	 * 设置ActionBar
+	 */
+	private void setActionBar() {
+		ActionBar actionbar = getActionBar();
+		if(actionbar == null) return;
+		actionbar.setDisplayHomeAsUpEnabled(true);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(true);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(false);
+		actionbar.setTitle("我的收藏");
+	}
+	
+	
 	
 	private void setUpTab(){
 		mViewPagerTab = (ViewPagerTab) findViewById(R.id.viewpager_tab);
 		mViewPagerTab.setViewPager(mViewPager);
 		ImageView childView = new ImageView(this);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-		childView.setImageResource(R.drawable.line);
+		childView.setImageResource(R.drawable.main_favorite_background);
+		childView.setScaleType(ScaleType.FIT_XY);
 		childView.setLayoutParams(params);
 		mViewPagerTab.addView(childView);
 	}
@@ -48,6 +71,24 @@ public class MyCollectionActivity extends FragmentActivity{
 		mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 		mViewPager = (ViewPager) findViewById(R.id.viewpager);
 		mViewPager.setAdapter(mViewPagerAdapter);
+	}
+	
+	private void initView(){
+		findViewById(R.id.my_collection_frag1_tab).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mViewPager.getCurrentItem() == 0) return;
+				mViewPager.setCurrentItem(0);
+			}
+		});
+		
+		findViewById(R.id.my_collection_frag2_tab).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mViewPager.getCurrentItem() == 1) return;
+				mViewPager.setCurrentItem(1);
+			}
+		});
 	}
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{
@@ -76,7 +117,18 @@ public class MyCollectionActivity extends FragmentActivity{
 		public int getCount() {
 			return fragments.length;
 		}
-		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			this.finish();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

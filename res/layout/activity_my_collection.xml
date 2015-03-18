@@ -5,38 +5,39 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_app_base_5"
         android:orientation="vertical">
 	   <LinearLayout 
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal">
 	        <TextView 
-	            android:id="@+id/velocity_frag1_tab"
+	            android:id="@+id/my_collection_frag1_tab"
 	            android:layout_width="0dip"
 	            android:layout_weight="1"
 	            android:layout_height="40dip"
 	            android:gravity="center"
-	            android:textSize="16sp"
-	            android:textColor="#99ffffff"
-	            android:text="菜单一"/>
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_2"
+	            android:text="菜谱"/>
 	        <TextView 
-	             android:id="@+id/velocity_frag2_tab"
+	             android:id="@+id/my_collection_frag2_tab"
 	            android:layout_width="0dip"
 	            android:layout_weight="1"
 	            android:layout_height="40dip"
 	            android:gravity="center"
-	            android:textSize="16sp"
-	            android:textColor="#ffffff"
-	            android:text="菜单二"/>
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="@color/color_app_base_2"
+	            android:text="菜品"/>
 	    </LinearLayout>
 	    <com.guozha.buy.view.ViewPagerTab
 	       	android:id="@+id/viewpager_tab"
 	        android:layout_width="fill_parent"
-	   		android:layout_height="5dip"/>
+	   		android:layout_height="3dip"/>
 	    <View 
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"
-	        android:background="#FF0000"/>
+	        android:background="@color/color_app_base_7"/>
     </LinearLayout>
 	<android.support.v4.view.ViewPager
 	    android:id="@+id/viewpager"

@@ -1,5 +1,7 @@
 package com.guozha.buy.global;
 
+import com.umeng.socialize.controller.impl.InitializeController;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -49,7 +51,9 @@ public class ConfigManager {
 	 * @param changedData
 	 */
 	private void setConfig(String configType, int changedData){
-		editorData(configType, null, changedData);
+		Editor editor = sharedPreference.edit();	
+		editor.putInt(configType, changedData);
+		editor.commit();
 	}
 	
 	/**
@@ -58,17 +62,8 @@ public class ConfigManager {
 	 * @param changedData
 	 */
 	private void setConfig(String configType, String changedData){
-		editorData(configType, changedData, -1);
-	}
-	
-	private void editorData(String configType, String strData, int intData){
-		if(sharedPreference == null) return;
-		Editor editor = sharedPreference.edit();		
-		if(strData == null){
-			editor.putInt(configType, intData);
-		}else{
-			editor.putString(configType, strData);
-		}
+		Editor editor = sharedPreference.edit();
+		editor.putString(configType, changedData);
 		editor.commit();
 	}
 	
@@ -144,4 +139,15 @@ public class ConfigManager {
 	}
 
 	
+	////////////////////////////////逻辑相关//////////////////////////////////
+	
+	/**
+	 * 清空用户信息
+	 */
+	public void clearUserInfor(){
+		setUserId(-1);
+		setUserPwd(null);
+		setUserToken(null);
+		setMobileNum(null);
+	}
 }

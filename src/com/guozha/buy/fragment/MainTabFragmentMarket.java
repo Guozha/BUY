@@ -57,15 +57,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private ImageView mMenuArrowIcon;
 	private View mQuickInView;
-	
-	private Handler mHanlder = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			if(msg.what == HANDLER_MENU_ITEM_MSG_WHAT){
-				mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
-				mMenuList.setAdapter(mMenuExpandListAapter);
-			}
-		};
-	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -109,6 +100,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
             }
             
         });
+		
 		setGoodsItemTypeData();
 		
 		View header = LayoutInflater.from(this.getActivity())
@@ -160,10 +152,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			return;
 		}
 		mGoodsItemTypes = mDataManager.getGoodsItemType(null);
-		for(int i = 0; i < mGoodsItemTypes.size(); i++){
-			mGoodsItemTypes.get(i).getShortName();
-		}
-		mHanlder.sendEmptyMessage(HANDLER_MENU_ITEM_MSG_WHAT);
+		if(mGoodsItemTypes == null) return;
+		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
+		if(mMenuList == null) return;
+		mMenuList.setAdapter(mMenuExpandListAapter);
 	}
 	
 	@Override

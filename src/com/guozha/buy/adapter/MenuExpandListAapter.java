@@ -26,6 +26,7 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 	private LayoutInflater mInflate;
 	
 	public MenuExpandListAapter(Context context, List<GoodsItemType> goodsItemType){
+		if(context == null) return;
 		mGoodsItemType = goodsItemType;
 		mInflate = LayoutInflater.from(context);
 	}

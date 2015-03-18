@@ -200,10 +200,25 @@
             android:screenOrientation="portrait">
             
         </activity>
+        
+        <!-- 提醒登录对话框 -->
         <activity 
             android:name=".dialog.RemindLoginDialog"
             android:theme="@style/Theme.WeightSelectDialog"
             android:screenOrientation="portrait"></activity>
+        
+        <!-- 菜谱收藏分类对话框 -->
+        <activity 
+            android:name=".dialog.CollectionRecipeModifyDialog"
+            android:theme="@style/Theme.WeightSelectDialog"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 新建分类对话框 -->
+        <activity 
+            android:name=".dialog.CreateFolderDialog"
+            android:theme="@style/Theme.CommenDialog"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
         
         <receiver android:name=".alarm.AlarmReceiver" android:process=":remote"/>
         

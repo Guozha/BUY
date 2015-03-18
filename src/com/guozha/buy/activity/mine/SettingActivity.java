@@ -3,15 +3,25 @@ package com.guozha.buy.activity.mine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.global.LoginActivity;
 import com.guozha.buy.adapter.SettingListAdapter;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.ToastUtil;
 
 /**
  * 设置界面
@@ -46,6 +56,14 @@ public class SettingActivity extends BaseActivity{
 	}
 	
 	private void initView(){
+		findViewById(R.id.setting_login_out_button).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				requestLoginOut();
+			}
+		});
+		
 		mSettingList = (ListView) findViewById(R.id.setting_list);
 		mSettingList.setAdapter(new SettingListAdapter(this, mSettingItems));
 		
@@ -75,6 +93,39 @@ public class SettingActivity extends BaseActivity{
 					break;
 				}
 			}
+		});
+	}
+	
+	private void requestLoginOut() {
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null){
+			ToastUtil.showToast(SettingActivity.this, "难道出错了？我好像还没登录呦……");
+			return;
+		}
+		HttpManager.getInstance(SettingActivity.this)
+			.volleyJsonRequestByPost(HttpManager.URL + "account/logout?token=" + token, 
+				new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							//清空用户相关信息
+							ConfigManager.getInstance().clearUserInfor();
+							ToastUtil.showToast(SettingActivity.this, "退出成功");
+							//跳到登录界面
+							Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+							startActivity(intent);
+							SettingActivity.this.finish();
+						}else{
+							String message = response.getString("msg");
+							ToastUtil.showToast(SettingActivity.this, message);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
+				}
 		});
 	}
 	
