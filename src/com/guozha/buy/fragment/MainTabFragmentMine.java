@@ -19,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.LoginActivity;
@@ -30,13 +32,13 @@ import com.guozha.buy.activity.mine.MyCollectionActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
 import com.guozha.buy.activity.mine.MySellerActivity;
 import com.guozha.buy.activity.mine.MyTicketActivity;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
@@ -87,6 +89,10 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	}
 	
 	private void setInfos(){
+		if(ConfigManager.getInstance().getUserToken() == null){
+			mAccountInfoArea.setVisibility(View.GONE);
+			return;
+		}
 		if(mDataManager == null) {
 			mAccountInfoArea.setVisibility(View.GONE);
 			return;
@@ -232,7 +238,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		}
 		if(turnActivityName == null) return;
 		intent = new Intent(getActivity(), RemindLoginDialog.class);
-		intent.putExtra(LoginActivity.SUCCESS_TURN_INTENT, turnActivityName);
 		startActivity(intent);
 		return;
 	}
@@ -241,32 +246,35 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	 * 显示选择图片方式对话框
 	 */
 	private void showChooseImageMethodDialog(){
-		new AlertDialog.Builder(getActivity())
-		.setTitle("设置头像")
-		.setNegativeButton("相册", new DialogInterface.OnClickListener() {
-			
+		final CustomDialog setHeadDialog = new CustomDialog(getActivity(), R.layout.dialog_set_head);
+		Button albumButton = (Button) setHeadDialog.getViewById(R.id.album_button);
+		Button photoButton = (Button) setHeadDialog.getViewById(R.id.photograph_button);
+		albumButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
+			public void onClick(View v) {
+				setHeadDialog.dismiss();
 				Intent intent = new Intent(Intent.ACTION_PICK, null);
 				intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 				startActivityForResult(intent, 1);
 			}
-		})
-		.setPositiveButton("拍照", new DialogInterface.OnClickListener() {
+		});
+		
+		photoButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(View v) {
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, 
 						Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "/head.jpg")));
 				startActivityForResult(intent, 2);
 			}
-		}).show();
+		});
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(data == null) return;
 		switch (requestCode) {
 		case 1: //从相册获取
 			startPhotoZoom(data.getData());
@@ -283,7 +291,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		default:
 			break;
 		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	/**

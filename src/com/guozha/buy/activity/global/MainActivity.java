@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
 import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
@@ -89,6 +91,12 @@ public class MainActivity extends FragmentActivity{
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
 	}
 	
 	/**
@@ -332,7 +340,6 @@ public class MainActivity extends FragmentActivity{
 	　　 map_value.put("artist", "JJLin");	
 		MobclickAgent.onEventValue(this, "music", map_value, duration);
 		*/
-		
 	}
 	
 	@Override
@@ -404,5 +411,26 @@ public class MainActivity extends FragmentActivity{
 		super.onDestroy();
 		ConfigManager.getInstance().setUserToken(null);
 	}
-
+	
+	/**
+	 * 防止误操作退出
+	 */
+	long mWaitTime = 2000;    
+	long mTouchTime = 0;   
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		//按下了物理返回键
+		if(KeyEvent.KEYCODE_BACK == keyCode){
+			long currentTimes = System.currentTimeMillis();
+			if((currentTimes - mTouchTime) >= mWaitTime){
+				mTouchTime = currentTimes;
+				ToastUtil.showToast(this, "再按一次退出");
+			}else{
+				mTouchTime = 0;
+				finish();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }

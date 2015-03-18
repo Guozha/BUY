@@ -47,6 +47,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	private Button mLoginButton;
 	
 	private String mSuccessIntent = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
