@@ -164,6 +164,16 @@
             android:name="com.guozha.buy.activity.mine.MyTicketActivity"
             android:screenOrientation="portrait"></activity>
         
+        <!-- 订单详情 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.OrderDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 行政区选择 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.ChooseCantonActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 我的地址 -->
         <activity
             android:name="com.guozha.buy.activity.mine.MyAddressActivity"

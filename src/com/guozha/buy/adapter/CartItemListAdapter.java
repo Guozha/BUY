@@ -160,7 +160,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 		return false;
 	}
 	
-	
 	static class GroupViewHolder{
 		private TextView title;
 		private ImageView minus;

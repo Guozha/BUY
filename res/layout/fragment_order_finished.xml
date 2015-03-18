@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
     android:orientation="vertical" >
-    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="8dip"
+        android:background="@color/color_app_base_6"/>
 	<ListView 
 	    android:id="@+id/order_finished_list"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@color/color_app_base_5"
-	    android:divider="@color/color_app_base_7"
-	    android:dividerHeight="1dip"/>
+	    android:divider="@color/color_app_base_6"
+	    android:dividerHeight="8dip"/>
 </LinearLayout>
 
