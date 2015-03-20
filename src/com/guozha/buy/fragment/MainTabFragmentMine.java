@@ -34,7 +34,7 @@ import com.guozha.buy.activity.mine.MySellerActivity;
 import com.guozha.buy.activity.mine.MyTicketActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
-import com.guozha.buy.entry.AccountInfo;
+import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
@@ -89,6 +89,9 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	}
 	
 	private void setInfos(){
+		if(mAccountInfoArea == null) return;
+		mAccountInfoArea.setVisibility(View.VISIBLE);
+		
 		if(ConfigManager.getInstance().getUserToken() == null){
 			mAccountInfoArea.setVisibility(View.GONE);
 			return;
@@ -102,8 +105,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			mAccountInfoArea.setVisibility(View.GONE);
 			return;
 		}
-		if(mAccountInfoArea == null) return;
-		mAccountInfoArea.setVisibility(View.VISIBLE);
+		
 		if(mMinePhoneNum == null) return;
 		mMinePhoneNum.setText(accountInfo.getMobileNo());
 		if(mMineTickes == null) return;
@@ -156,7 +158,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 
 	@Override
 	public void onClick(View view) {
-		Intent intent;
 		//如果没有登录
 		if(ConfigManager.getInstance().getUserToken() == null){
 			outLoginStatuEvent(view);

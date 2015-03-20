@@ -27,6 +27,7 @@
             android:orientation="vertical">
             
             <TextView 
+                android:id="@+id/seller_descript"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="菜摊1号 卖菜哥 18923432422"
@@ -34,6 +35,7 @@
                 android:textColor="@color/color_app_base_4"/>
             
             <TextView 
+                android:id="@+id/seller_visit_count"
                 android:layout_marginTop="10dip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

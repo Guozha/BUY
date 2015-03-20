@@ -26,6 +26,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <EditText 
+            android:id="@+id/add_address_receivename"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -59,6 +60,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <EditText 
+            android:id="@+id/add_address_mobileno"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -77,6 +79,7 @@
 	    android:background="@color/color_app_base_7"/>
     
     <LinearLayout 
+        android:id="@+id/add_city_button"
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:orientation="horizontal"
@@ -92,6 +95,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <TextView 
+            android:id="@+id/add_address_city"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -130,6 +134,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <TextView
+            android:id="@+id/add_address_country"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -166,10 +171,12 @@
             android:textColor="@color/color_app_base_4"
             android:textSize="@dimen/dimen_global_16sp"/>
         
-        <EditText 
+        <AutoCompleteTextView
+            android:id="@+id/add_address_detailaddr"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:completionHint="请填入小区，写字楼等"
             android:hint="请填入小区，写字楼等"
             android:background="@color/color_app_base_5"
             android:textColorHint="@color/color_app_base_8"
@@ -200,6 +207,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <EditText 
+            android:id="@+id/add_address_detail_number"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -226,6 +234,7 @@
         android:orientation="horizontal">
         
         <Button 
+            android:id="@+id/add_address_setting_default"
             android:layout_width="150dip"
             android:layout_height="match_parent"
             android:text="设为默认"
@@ -237,6 +246,7 @@
            android:layout_width="18dip"
            android:layout_height="match_parent"/>
        <Button 
+            android:id="@+id/add_address_request_button"
             android:layout_width="150dip"
             android:layout_height="match_parent"
             android:text="添加"

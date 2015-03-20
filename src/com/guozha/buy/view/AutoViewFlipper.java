@@ -37,6 +37,7 @@ public class AutoViewFlipper extends FrameLayout{
 	private int mTouchSlop;					//有效最短滑动距离
 	private Context context;
 	private List<ImageView> points = new ArrayList<ImageView>();
+	private List<ImageView> mImageViews = null;
 	
 	private TimerTask mTimerTask;
 	
@@ -151,6 +152,14 @@ public class AutoViewFlipper extends FrameLayout{
 	}
 	
 	/**
+	 * 获取当前条目的下标
+	 * @return
+	 */
+	public int getCurrentItemIndex(){
+		return mCurrentItem;
+	}
+	
+	/**
 	 * 根据当前选中项来设置圆点
 	 */
 	private void setPointColorByCurrentItem(){
@@ -182,6 +191,7 @@ public class AutoViewFlipper extends FrameLayout{
 		LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		
+		mImageViews = new ArrayList<ImageView>();
 		ImageView imageView;
 		mItemCount = bitmaps.size();
 		for(int i = 0; i < mItemCount; i++){
@@ -191,8 +201,30 @@ public class AutoViewFlipper extends FrameLayout{
 			imageView.setLayoutParams(imageViewParams);
 			imageView.setTag(i);
 			viewFlipper.addView(imageView);
+			mImageViews.add(imageView);
 		}	
 	}
+	
+	/**
+	 * 获取ImageView对象
+	 * @return
+	 */
+	public List<ImageView> getImageViews(){
+		return mImageViews;
+	}
+	
+	/**
+	 * 设置图片资源
+	 * @param bitmaps
+	 */
+	public void setImages(List<Bitmap> bitmaps){
+		if(mImageViews == null) return;
+		for(int i = 0; i < bitmaps.size(); i++){
+			mImageViews.get(i).setImageBitmap(bitmaps.get(i));
+		}
+	}
+	
+	//13761015601
 	
 	/**
 	 * 获取图片资源

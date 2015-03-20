@@ -104,16 +104,13 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.findpwd_obtain_validenum:
-			//TODO 发送短信验证码
+			//发送短信验证码
 			phoneNum = mEditPhoneNum.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
 				ToastUtil.showToast(this, "输入的手机号码不正确");
 				return;
 			}
-			
-
-			//requestValidateNum(phoneNum);
-			
+			requestValidateNum(phoneNum);
 			break;
 		case R.id.confirm_button:
 			phoneNum = mEditPhoneNum.getText().toString(); 
@@ -170,6 +167,7 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 					String returnCode = response.getString("returnCode");
 					if("1".equals(returnCode)){
 						ToastUtil.showToast(FindPwdActivity.this, "密码修改成功");
+						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 					}else{
 						String msg = response.getString("msg");
 						ToastUtil.showToast(FindPwdActivity.this, msg);
@@ -192,11 +190,12 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
-					//TODO ...
-					String checkCode = response.getString("checkCode");
-					
-					if(true){ //TODO 如果成功
-						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode)){
+						ToastUtil.showToast(FindPwdActivity.this, "验证码已发送");
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(FindPwdActivity.this, msg);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

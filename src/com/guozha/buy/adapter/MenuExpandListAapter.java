@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.entry.GoodsItemType;
-import com.guozha.buy.entry.GoodsSecondItemType;
+import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
 

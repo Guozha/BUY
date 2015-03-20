@@ -1,17 +1,8 @@
 package com.guozha.buy.global;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.litepal.LitePalApplication;
 
-import android.app.Notification;
 import android.content.Context;
-import cn.jpush.android.api.BasicPushNotificationBuilder;
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
-
-import com.guozha.buy.R;
 
 /**
  * 全局的Application
@@ -21,6 +12,7 @@ import com.guozha.buy.R;
 public class CustomApplication extends LitePalApplication{
 	
 	private static CustomApplication instance;
+    
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -55,6 +47,9 @@ public class CustomApplication extends LitePalApplication{
 		JPushInterface.setDefaultPushNotificationBuilder(builder);
 		*/
 
+		//捕获错误日志
+		CrashHandler crashHandler = CrashHandler.getInstance();
+		crashHandler.init(getApplicationContext());
 	}
 	
 	/**
@@ -64,4 +59,5 @@ public class CustomApplication extends LitePalApplication{
 	public static Context getContext(){
 		return instance.getApplicationContext();
 	}
+	
 }

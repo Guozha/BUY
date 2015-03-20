@@ -197,11 +197,6 @@
             android:name="com.guozha.buy.activity.mine.AddAddressActivity"
             android:screenOrientation="portrait"></activity>
         
-        <!-- 修改地址 -->
-        <activity 
-            android:name="com.guozha.buy.activity.mine.ModifyAddressActivity"
-            android:screenOrientation="portrait"></activity>
-        
         <!-- *****************对话框**************** -->
         <!-- 重量选择对话框 -->
         <activity 

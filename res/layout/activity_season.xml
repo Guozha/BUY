@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     
     <com.guozha.buy.view.AutoViewFlipper
-        android:id="@+id/main_page_auto_flipper_view"
+        android:id="@+id/season_auto_flipper_view"
         android:layout_width="match_parent"
         android:layout_height="180dip" >
 	</com.guozha.buy.view.AutoViewFlipper>

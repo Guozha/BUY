@@ -9,8 +9,8 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.entry.AccountInfo;
-import com.guozha.buy.entry.GoodsItemType;
+import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
 

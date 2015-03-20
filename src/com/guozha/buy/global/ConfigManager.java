@@ -1,10 +1,13 @@
 package com.guozha.buy.global;
 
-import com.umeng.socialize.controller.impl.InitializeController;
+import java.io.InputStream;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import com.guozha.buy.util.XMLUtil;
 
 /**
  * 简单配置管理类
@@ -17,6 +20,8 @@ public class ConfigManager {
 	
 	private static final ConfigManager instance = new ConfigManager();
 	private SharedPreferences sharedPreference;
+	
+	private Map<String, Map<String, String>> mConstantXML;
 	
 	private int mUserId;
 	private String mUserToken;
@@ -43,6 +48,27 @@ public class ConfigManager {
 		mUserToken = sharedPreference.getString(USER_TOKEN, null);
 		mUserPwd = sharedPreference.getString(USER_PWD, null);
 		mMobileNumber = sharedPreference.getString(MOBILE_NUMBER, null);
+		
+		initConfigXML();
+	}
+	
+	/**
+	 * 初始化constant.xml文件
+	 */
+	private void initConfigXML(){
+		if(mConstantXML != null) return;
+		new Thread(){
+			public void run() {
+				try {
+					InputStream inStream = 
+						CustomApplication.getContext().getAssets().open("constant.xml");
+					mConstantXML = XMLUtil.getConfigXml(inStream);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			};
+		}.start();
 	}
 	
 	/**
@@ -117,7 +143,7 @@ public class ConfigManager {
 	public void setUserPwd(String pwd){
 		if(mUserPwd != null && mUserPwd.equals(pwd)) return;
 		mUserPwd = pwd;
-		setConfig(USER_TOKEN, pwd);
+		setConfig(USER_PWD, pwd);
 	}
 	
 	/**
@@ -137,7 +163,6 @@ public class ConfigManager {
 		mMobileNumber = mobileNum;
 		setConfig(MOBILE_NUMBER, mobileNum);
 	}
-
 	
 	////////////////////////////////逻辑相关//////////////////////////////////
 	
