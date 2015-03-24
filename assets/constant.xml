@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <constants>
+    <!-- 用户状态 -->
     <constant constantDef="USER_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">锁定</constantName>
     	<constantName value="3">停用</constantName>
 	</constant>
+	<!-- 卖家状态 -->
 	<constant constantDef="SELLER_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">锁定</constantName>
     	<constantName value="3">停用</constantName>
 	</constant>
+	<!-- 配送员状态 -->
 	<constant constantDef="SENDER_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">锁定</constantName>
     	<constantName value="3">停用</constantName>
 	</constant>
+	<!-- 菜票类型 -->
 	<constant constantDef="TICKET_TYPE">
     	<constantName value="1">注册赠送</constantName>
     	<constantName value="2">好友赠送</constantName>
     	<constantName value="3">售后赠送</constantName>
     	<constantName value="4">推广收益</constantName>
 	</constant>
+	<!-- 各类型菜票默认面值 -->
 	<constant constantDef="TICKET_VALUE">
+	    <!-- 注册赠送菜票默认面值 -->
     	<constantName value="REGISTER">5</constantName>
+    	<!-- 好友赠送菜票默认面值 -->
     	<constantName value="FRIEND">5</constantName>
+    	<!-- 售后赠送菜票默认面值 -->
     	<constantName value="AFTERSALE">5</constantName>
+    	<!-- 推广收益菜票默认面值 -->
     	<constantName value="PROMOTE">5</constantName>
 	</constant>
+	<!-- 菜谱制作方式 -->
 	<constant constantDef="COOKIE_WAY">
     	<constantName value="01">拌</constantName>
     	<constantName value="02">煮</constantName>
     	<constantName value="03">蒸</constantName>
     	<constantName value="04">煎</constantName>
 	</constant>
+	<!-- 组织状态 -->
 	<constant constantDef="ORG_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
-	<constant constantDef="MENU_TYPE">
+	<!-- 菜谱状态 -->
+	<constant constantDef="MENU_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
+	<!-- 计划提醒闹钟时间 -->
 	<constant constantDef="PLAN_TIME">
     	<constantName value="0900">9:00</constantName>
     	<constantName value="1000">10:00</constantName>
@@ -51,6 +64,7 @@
     	<constantName value="1500">15:00</constantName>
     	<constantName value="1600">16:00</constantName>
 	</constant>
+	<!-- 24节气 -->
 	<constant constantDef="SEASON">
     	<constantName value="01">立春</constantName>
     	<constantName value="02">雨水</constantName>
@@ -77,25 +91,31 @@
     	<constantName value="23">小寒</constantName>
     	<constantName value="24">大寒</constantName>
 	</constant>
+	<!-- 食材性质 -->
 	<constant constantDef="GOODS_PROP">
     	<constantName value="01">普通商品</constantName>
     	<constantName value="02">特供商品</constantName>
     	<constantName value="03">预售商品</constantName>
 	</constant>
+	<!-- 食材状态 -->
 	<constant constantDef="GOODS_STATUS">
     	<constantName value="1">可用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
-	<constant constantDef="THINGS_TYPE">
-    	<constantName value="1">商品</constantName>
-    	<constantName value="2">菜谱</constantName>
+	<!-- 产品类型 -->
+	<constant constantDef="PRODUCT_TYPE">
+		<constantName value="01">菜谱</constantName>
+    	<constantName value="02">食材</constantName>
 	</constant>
+	<!-- 订单类型 -->
 	<constant constantDef="ORDER_TYPE">
     	<constantName value="1">普通订单</constantName>
     	<constantName value="2">特供订单</constantName>
     	<constantName value="3">预售订单</constantName>
 	</constant>
+	<!-- 订单状态 -->
 	<constant constantDef="ORDER_STATUS">
+	    <constantName value="00">已取消</constantName>
     	<constantName value="01">新创建</constantName>
     	<constantName value="02">新订单</constantName>
     	<constantName value="03">已接收</constantName>
@@ -103,56 +123,59 @@
     	<constantName value="05">配送中</constantName>
     	<constantName value="06">已签收</constantName>
 	</constant>
-	<constant constantDef="PAY_WAY">
-    	<constantName value="01">支付宝支付</constantName>
-    	<constantName value="02">微信支付</constantName>
-    	<constantName value="03">网银支付</constantName>
-    	<constantName value="04">货到付款</constantName>
-	</constant>
+	<!-- 支付接口费率 -->
 	<constant constantDef="PAY_INTERFACE_FEE">
     	<constantName value="01">0.03</constantName>
     	<constantName value="02">0.02</constantName>
     	<constantName value="03">0.02</constantName>
 	</constant>
+	<!-- 食材满意度 -->
 	<constant constantDef="GOODS_STAR">
     	<constantName value="01">不满意</constantName>
     	<constantName value="02">一般</constantName>
     	<constantName value="03">满意</constantName>
 	</constant>
+	<!-- 子订单状态 -->
 	<constant constantDef="CHILD_ORDER_STATUS">
     	<constantName value="01">未抢单</constantName>
     	<constantName value="02">已抢单</constantName>
     	<constantName value="03">已称重</constantName>
     	<constantName value="04">已揽件</constantName>
 	</constant>
+	<!-- 子订单食材数据来源 -->
 	<constant constantDef="CHILD_ORDER_GOODS_FROM_TYPE">
     	<constantName value="1">订单商品</constantName>
     	<constantName value="2">订单菜谱商品</constantName>
 	</constant>
+	<!-- 农贸市场状态 -->
 	<constant constantDef="MARKET_STATUS">
     	<constantName value="1">在用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
+	<!-- 小区/建筑/楼宇状态 -->
 	<constant constantDef="BUILDING_STATUS">
     	<constantName value="1">在用</constantName>
     	<constantName value="2">停用</constantName>
 	</constant>
+	<!-- 行区级别 -->
 	<constant constantDef="AREA_LEVEL">
     	<constantName value="1">省级</constantName>
     	<constantName value="2">市级</constantName>
     	<constantName value="3">区县级</constantName>
-    	<constantName value="4">乡镇级</constantName>
 	</constant>
+	<!-- 组织类型 -->
 	<constant constantDef="ORG_TYPE">
     	<constantName value="1">自有组织</constantName>
     	<constantName value="2">合作商户</constantName>
 	</constant>
+	<!-- 自有组织级别 -->
 	<constant constantDef="OWN_ORG_LEVEL">
     	<constantName value="1">总部</constantName>
     	<constantName value="2">大区</constantName>
     	<constantName value="3">省公司</constantName>
     	<constantName value="4">市公司</constantName>
 	</constant>
+	<!-- 计量单位 -->
 	<constant constantDef="UNIT">
     	<constantName value="01">500克</constantName>
     	<constantName value="02">盒</constantName>
@@ -161,13 +184,43 @@
     	<constantName value="05">包</constantName>
     	<constantName value="06">瓶</constantName>
     	<constantName value="07">篮</constantName>
+    	<constantName value="08">份</constantName>
 	</constant>
-	<constant constantDef="TIME_SCOPE">
-    	<constantName value="1">上午</constantName>
-    	<constantName value="2">下午</constantName>
-	</constant>
+	<!-- 短信类型 -->
 	<constant constantDef="SMS_TYPE">
     	<constantName value="01">注册获取验证码</constantName>
     	<constantName value="02">密码重置获取验证码</constantName>
+	</constant>
+	<!-- 卖家标记 -->
+	<constant constantDef="SELLER_TAG">
+    	<constantName value="1">首选</constantName>
+    	<constantName value="2">黑名单</constantName>
+    	<constantName value="3">正常</constantName>
+	</constant>
+	<constant constantDef="SEQ_TYPE">
+    	<constantName value="1">注册生成菜票</constantName>
+    	<constantName value="2">好友赠送生成菜票</constantName>
+    	<constantName value="3">推广赠送生成菜票</constantName>
+    	<constantName value="4">售后赠送生成菜票</constantName>
+	</constant>
+	<!-- 收藏类型 -->
+	<constant constantDef="FAVO_TYPE">
+	    <constantName value="1">食材收藏</constantName>
+    	<constantName value="2">菜谱收藏</constantName>
+	</constant>
+	<!-- 订单查询类型 -->
+	<constant constantDef="ORDER_SEARCH_TYPE">
+	    <constantName value="1">进行中</constantName>
+    	<constantName value="2">已完成</constantName>
+	</constant>
+	<!--菜谱制作难易程度  -->
+	<constant constantDef="MENU_COOK_HARD_TYPE">
+	    <constantName value="1">简单</constantName>
+	    <constantName value="2">中等</constantName>
+	    <constantName value="3">复杂</constantName>
+	</constant>
+	<!-- 业务单据类型 -->
+	<constant constantDef="PAPER_TYPE">
+	    <constantName value="01">用户订单</constantName>
 	</constant>
 </constants>

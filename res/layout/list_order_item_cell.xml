@@ -19,19 +19,38 @@
 	        android:orientation="vertical">
 	        
 	        <TextView 
+	            android:id="@+id/order_time"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="4月1日 14：23"
 	            android:textColor="@color/color_app_base_4"
 	            android:textSize="@dimen/dimen_global_14sp"/>
 	        
-	        <TextView 
+	        <LinearLayout 
 	            android:layout_width="wrap_content"
-	            android:layout_marginTop="12dip"
 	            android:layout_height="wrap_content"
-	            android:text="猪肉等共9件商品，已支付，预计4月5号送达"
+	            android:orientation="horizontal"
+	            android:layout_marginTop="12dip">
+	            
+	            <TextView 
+	            android:id="@+id/order_product_count"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="共%d件商品，"
 	            android:textColor="@color/color_app_base_4"
 	            android:textSize="@dimen/dimen_global_14sp"/>
+	            
+	            <TextView 
+	            android:id="@+id/order_status"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="已支付，预计%d月%d号送达"
+	            android:singleLine="true"
+	            android:ellipsize="end"
+	            android:textColor="@color/color_app_base_1"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+	        </LinearLayout>
+	        
 	    </LinearLayout>
 	    
 	    <ImageView 

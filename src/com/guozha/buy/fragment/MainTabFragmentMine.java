@@ -3,8 +3,6 @@ package com.guozha.buy.fragment;
 import java.io.File;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -22,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.LoginActivity;
@@ -38,7 +35,6 @@ import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
@@ -264,6 +260,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			
 			@Override
 			public void onClick(View v) {
+				setHeadDialog.dismiss();
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, 
 						Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "/head.jpg")));
@@ -275,9 +272,9 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(data == null) return;
 		switch (requestCode) {
 		case 1: //从相册获取
+			if(data == null) return;
 			startPhotoZoom(data.getData());
 			break;
 		case 2: //相机拍照

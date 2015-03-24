@@ -16,6 +16,7 @@ import com.guozha.buy.adapter.MySellerListAdapter;
 import com.guozha.buy.entry.mine.seller.Seller;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 我的卖家
@@ -60,6 +61,11 @@ public class MySellerActivity extends BaseActivity{
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mSellers = gson.fromJson(response, new TypeToken<List<Seller>>() { }.getType());
+					for(int i = 0; i < mSellers.size(); i++){
+						Seller seller = mSellers.get(i);
+						LogUtil.e("sellerName = " + seller.getSellerName());
+						LogUtil.e("transCount = " + seller.getTransCount());
+					}
 					handler.sendEmptyMessage(HAND_SELLER_LIST_COMPLETED);
 				}
 			});

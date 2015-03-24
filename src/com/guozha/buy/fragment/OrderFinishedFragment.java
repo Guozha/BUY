@@ -39,7 +39,7 @@ public class OrderFinishedFragment extends Fragment{
 	 */
 	private void initView(View view){
 		mOrderFinishList = (ListView) view.findViewById(R.id.order_finished_list);
-		mOrderFinishList.setAdapter(new OrderListAdapter(getActivity()));
+		mOrderFinishList.setAdapter(new OrderListAdapter(getActivity(), null));
 		
 		mOrderFinishList.setOnItemClickListener(new OnItemClickListener() {
 			@Override

@@ -15,7 +15,7 @@
 	    android:textColor="@color/color_app_base_4"
 	    android:singleLine="true"
 	    android:ellipsize="end"
-	    android:text="删除提醒"/>
+	    android:text="联系客服"/>
 	
 	<TextView 
 	    android:layout_marginTop="14dip"
@@ -25,7 +25,7 @@
 	    android:textColor="@color/color_app_base_4"
 	    android:paddingLeft="20dip"
 	    android:paddingRight="20dip"
-	    android:text="您确定要删除该项吗？"/>
+	    android:text="0571-86021150"/>
 	
     <LinearLayout 
         android:layout_width="match_parent"
@@ -45,11 +45,11 @@
             android:background="@drawable/grey_button_nomal_bg"/>
         
        <Button 
-            android:id="@+id/agree_button"
+            android:id="@+id/dial_tel_button"
             android:layout_marginLeft="20dip"
             android:layout_width="130dip"
             android:layout_height="40dip"
-            android:text="确定"
+            android:text="拨打"
             android:textColor="@color/color_app_base_5"
             android:background="@drawable/nomal_button_nomal_bg"
             android:textSize="@dimen/dimen_global_16sp"/>

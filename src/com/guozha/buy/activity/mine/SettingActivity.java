@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.global.LoginActivity;
 import com.guozha.buy.adapter.SettingListAdapter;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.ToastUtil;
@@ -72,21 +74,25 @@ public class SettingActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				Intent intent;
 				switch (position) {
 				case 0:     //意见反馈
-					
+					intent = new Intent(SettingActivity.this, FeadbackActivity.class);
+					startActivity(intent);
 					break;
 				case 1:		//常见问题
-					
+					intent = new Intent(SettingActivity.this, AnswerQuestionActivity.class);
+					startActivity(intent);
 					break;
 				case 2:     //在线客服
-					
+					dialServerTelephone();
 					break;
 				case 3:     //系统更新
 					
 					break;
 				case 4:     //关于我们
-					
+					intent = new Intent(SettingActivity.this, AboutOurActivity.class);
+					startActivity(intent);
 					break;
 
 				default:
@@ -96,6 +102,9 @@ public class SettingActivity extends BaseActivity{
 		});
 	}
 	
+	/**
+	 * 请求退出登录
+	 */
 	private void requestLoginOut() {
 		String token = ConfigManager.getInstance().getUserToken();
 		if(token == null){
@@ -126,6 +135,24 @@ public class SettingActivity extends BaseActivity{
 					}
 					
 				}
+		});
+	}
+	
+	/**
+	 * 拨打客服电话
+	 */
+	private void dialServerTelephone() {
+		final CustomDialog dialDialog = 
+			new CustomDialog(SettingActivity.this, R.layout.dialog_dial_telephone);
+		dialDialog.setDismissButtonId(R.id.cancel_button);
+		dialDialog.getViewById(R.id.dial_tel_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dialDialog.dismiss();
+				String phoneNum = "0571-86021150";
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
+				SettingActivity.this.startActivity(intent);
+			}
 		});
 	}
 	

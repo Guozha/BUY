@@ -7,12 +7,13 @@ package com.guozha.buy.entry.mine.seller;
  */
 public class Seller {
 
-	private int mySellerId;
-	private int sellerId;
-	private String sellerName;
-	private byte[] logo;
-	private String mainBusi;
-	private String sellerTag;
+	private int mySellerId;     //业务id
+	private int sellerId;		//卖家id
+	private String sellerName;	//卖家名称
+	private byte[] logo;		//Logo
+	private String mainBusi;    //主营介绍
+	private int transCount;     //交易次数
+	private String sellerTag; 	//卖家标签
 	
 	public int getMySellerId() {
 		return mySellerId;
@@ -43,6 +44,12 @@ public class Seller {
 	}
 	public void setMainBusi(String mainBusi) {
 		this.mainBusi = mainBusi;
+	}
+	public int getTransCount() {
+		return transCount;
+	}
+	public void setTransCount(int transCount) {
+		this.transCount = transCount;
 	}
 	public String getSellerTag() {
 		return sellerTag;

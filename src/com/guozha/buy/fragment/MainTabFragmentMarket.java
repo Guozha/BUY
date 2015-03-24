@@ -16,6 +16,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
@@ -37,7 +39,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnTouchListener{
+public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnScrollListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
 	private static final int HANDLER_MENU_ITEM_MSG_WHAT = 0x0001;
@@ -51,6 +53,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private List<GoodsItemType> mGoodsItemTypes;  //菜品类目菜单数据
 	
 	private CustomListView mItemList;
+	private int mFirstVisibleItem;  //屏幕上可见的第一条
 	
 	private Animation mInAnimation;
 	private Animation mOutAnimation;
@@ -101,6 +104,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
             
         });
 		
+		
 		setGoodsItemTypeData();
 		
 		View header = LayoutInflater.from(this.getActivity())
@@ -111,6 +115,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mItemList.addHeaderView(header);
 		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
 				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
+		mItemList.setOnScrollListener(this);
 		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
@@ -148,7 +153,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 */
 	private void setGoodsItemTypeData(){
 		if(mDataManager == null) {
-			LogUtil.e("mDataManager == null");
 			return;
 		}
 		mGoodsItemTypes = mDataManager.getGoodsItemType(null);
@@ -226,8 +230,17 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	}
 
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		LogUtil.e("OnTouch。。。");
-		return false;
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		//当滑动到最顶部后显示快捷菜单
+		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
+				&& mFirstVisibleItem == 0){
+			mQuickInView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		mFirstVisibleItem = firstVisibleItem;
 	}
 }

@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.entry.mine.address.KeyWord;
@@ -187,7 +188,15 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.add_address_request_button:
 			if(mAddressInfo != null){
-				handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
+				CustomDialog dialog = 
+						new CustomDialog(AddAddressActivity.this, R.layout.dialog_delete_notify);
+				dialog.setDismissButtonId(R.id.cancel_button);
+				dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
+					}
+				});
 				return;
 			}
 			if(!valideRequestAddress()) return;
@@ -286,8 +295,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		String detailAddr = mAddressDetai.getText().toString();
-		if(detailAddr.length() <= 5){
-			ToastUtil.showToast(AddAddressActivity.this, "您的详细地址不够详细哦~");
+		if(detailAddr.length() < 3){
+			ToastUtil.showToast(AddAddressActivity.this, "详细地址不能少于3个字");
 			return false;
 		}
 		return true;
@@ -338,7 +347,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == REQUEST_CODE){
+		if(requestCode == REQUEST_CODE && data != null){
 			Bundle bundle = data.getExtras();
 			mCountryId = bundle.getInt("areaId");
 			String areaName = bundle.getString("areaName");

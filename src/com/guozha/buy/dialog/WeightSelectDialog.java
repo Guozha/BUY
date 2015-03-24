@@ -99,6 +99,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			}
 			
 			Toast.makeText(this, "选择的重量是 = " + quantity, Toast.LENGTH_SHORT).show();
+			
 
 			break;
 		case R.id.select_weight_free_layout:

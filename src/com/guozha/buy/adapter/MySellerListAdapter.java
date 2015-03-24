@@ -57,7 +57,7 @@ public class MySellerListAdapter extends BaseAdapter{
 		}
 		Seller seller = mSellers.get(position);
 		holder.sellerDescript.setText(seller.getSellerName() + " " + seller.getMainBusi());
-		holder.sellerVisitCount.setText("已有39人光顾");
+		holder.sellerVisitCount.setText("已有" + seller.getTransCount() + "人光顾");
 		return convertView;
 	}
 	

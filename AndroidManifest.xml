@@ -13,7 +13,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>  
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />    
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />  
+    <uses-permission android:name="android.permission.CALL_PHONE"/>  
     <!-- QQ、QQ空间所需权限 -->
 	<uses-permission android:name="android.permission.GET_TASKS" />
 	
@@ -28,6 +29,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!--since 1.6.0 -->
+    
 	
     <application
         android:allowBackup="true"
@@ -195,6 +197,21 @@
         <!-- 添加新地址 -->
         <activity 
             android:name="com.guozha.buy.activity.mine.AddAddressActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 意见反馈 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.FeadbackActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 常见问题 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.AnswerQuestionActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 关于我们 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.AboutOurActivity"
             android:screenOrientation="portrait"></activity>
         
         <!-- *****************对话框**************** -->

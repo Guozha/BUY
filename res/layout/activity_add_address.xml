@@ -176,7 +176,6 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:completionHint="请填入小区，写字楼等"
             android:hint="请填入小区，写字楼等"
             android:background="@color/color_app_base_5"
             android:textColorHint="@color/color_app_base_8"

@@ -137,4 +137,13 @@ public class MainPageInitDataManager {
 		});
 	}
 	
+	/**
+	 * 获取(简要：6条）菜品信息
+	 * @param handler
+	 */
+	private void requestGoodsBriefItemData(final Handler handler){
+		
+		//HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL, responsListener)
+	}
+	
 }

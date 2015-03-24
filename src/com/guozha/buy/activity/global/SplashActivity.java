@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,13 +15,14 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.NetManager;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -102,6 +102,14 @@ public class SplashActivity extends Activity{
 		//TODO 做一些业务逻辑（比如加载资源）
 		//初始化配置文件
 		ConfigManager.getInstance();
+		
+		//判断网络状态
+		if(!NetManager.isNetConnection(this)){
+			ToastUtil.showToast(this, "您的网络好像有问题哦~");
+			return;
+		}
+		
+		//注意：下面的操作和网络状态有关（联网状态下才请求）
 		
 		//初始化入口界面数据(这里最好传全局的context)
 		MainPageInitDataManager initDataManager = MainPageInitDataManager.getInstance(

@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="40dip"
     android:paddingLeft="18dip"
+    android:gravity="center_vertical"
     android:textSize="@dimen/dimen_global_14sp"
     android:textColor="@color/color_app_base_4"/>
 

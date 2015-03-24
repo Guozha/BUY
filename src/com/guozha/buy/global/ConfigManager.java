@@ -6,6 +6,10 @@ import java.util.Map;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
 
 import com.guozha.buy.util.XMLUtil;
 
@@ -14,7 +18,7 @@ import com.guozha.buy.util.XMLUtil;
  * @author PeggyTong
  *
  */
-public class ConfigManager {
+public class ConfigManager{
 	
 	private static final String STORE_NAME = "settings";
 	
@@ -164,6 +168,36 @@ public class ConfigManager {
 		setConfig(MOBILE_NUMBER, mobileNum);
 	}
 	
+	/**
+	 * 获取常亮列表
+	 * @return
+	 */
+	public Map<String, Map<String, String>> getConstantXML(){
+		return mConstantXML;
+	}
+	
+	/**
+	 * 根据常亮类型返回map列表
+	 * @param type
+	 * @return
+	 */
+	public Map<String, String> getConstantMap(String type){
+		if(mConstantXML == null) return null;
+		return mConstantXML.get(type);
+	}
+	
+	/**
+	 * 获取常量的value值
+	 * @param type
+	 * @param key
+	 * @return
+	 */
+	public String getConstantValue(String type, String key){
+		Map<String, String> map = getConstantMap(key);
+		if(map == null) return null;
+		return map.get(key);
+	}
+	
 	////////////////////////////////逻辑相关//////////////////////////////////
 	
 	/**
@@ -175,4 +209,5 @@ public class ConfigManager {
 		setUserToken(null);
 		setMobileNum(null);
 	}
+
 }

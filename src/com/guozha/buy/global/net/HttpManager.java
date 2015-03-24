@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.util.BitmapCache;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -139,7 +140,11 @@ public class HttpManager {
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			LogUtil.e(error.getMessage());
-			ToastUtil.showToast(CustomApplication.getContext(), error.getMessage());
+			if(!NetManager.isNetConnection(CustomApplication.getContext())){
+				ToastUtil.showToast(CustomApplication.getContext(), "你的网络已经断开");
+			}else{
+				ToastUtil.showToast(CustomApplication.getContext(), error.getMessage());
+			}
 		}
 	}
 }
