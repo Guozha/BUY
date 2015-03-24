@@ -18,6 +18,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.mpage.CookBookDetailActivity;
 import com.guozha.buy.adapter.CollectionRecipeExpandAdapter;
 import com.guozha.buy.view.AnimatedExpandableListView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 食谱收藏
@@ -25,6 +26,8 @@ import com.guozha.buy.view.AnimatedExpandableListView;
  *
  */
 public class CollectionRecipeFragment extends Fragment{
+	
+	private static final String PAGE_NAME = "CollectionRecipePage";
 	
 	private AnimatedExpandableListView mCollectionRecipeList;
 	
@@ -53,7 +56,21 @@ public class CollectionRecipeFragment extends Fragment{
 				return false;
 			}
 		});
+	}
 	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(getUserVisibleHint()){
+			//View可见	
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
+		}else{
+			//View不可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
 	}
 
 }

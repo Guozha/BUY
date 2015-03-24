@@ -35,6 +35,7 @@ import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 添加地址
@@ -42,6 +43,8 @@ import com.guozha.buy.util.ToastUtil;
  *
  */
 public class AddAddressActivity extends BaseActivity implements OnClickListener{
+	
+	private static final String PAGE_NAME = "AddAddressPage";
 	
 	private static final int HAND_CHOOSED_COUNTRY = 0x0001;  //选择了区
 	private static final int HAND_KEYWORD_COMPLETED = 0x0002;  //关键字获取成功
@@ -356,5 +359,23 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(AddAddressActivity.this, areaName);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

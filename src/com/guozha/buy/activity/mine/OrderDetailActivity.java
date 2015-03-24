@@ -14,6 +14,7 @@ import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartCookMaterial;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 订单详情
@@ -21,6 +22,8 @@ import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
  *
  */
 public class OrderDetailActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "OrderDetailPage";
 	
 	private ExpandableListView mOrderDetailList;
 	
@@ -67,5 +70,23 @@ public class OrderDetailActivity extends BaseActivity{
 			CartMarketItem cartMarketItem = new CartMarketItem(i + "", "新鲜猪肉", 14, "斤", "45.9");
 			mOrderItems.add(cartMarketItem);
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

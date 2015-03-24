@@ -24,6 +24,7 @@ import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 设置界面
@@ -31,6 +32,8 @@ import com.guozha.buy.util.ToastUtil;
  *
  */
 public class SettingActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "SettingPage";
 	
 	private ListView mSettingList;
 	
@@ -53,8 +56,9 @@ public class SettingActivity extends BaseActivity{
 		mSettingItems.add("意见反馈");
 		mSettingItems.add("常见问题");
 		mSettingItems.add("在线客服");
-		mSettingItems.add("系统更新");
+		//mSettingItems.add("系统更新");
 		mSettingItems.add("关于我们");
+		mSettingItems.add("服务协议");
 	}
 	
 	private void initView(){
@@ -87,12 +91,33 @@ public class SettingActivity extends BaseActivity{
 				case 2:     //在线客服
 					dialServerTelephone();
 					break;
+			    /*
 				case 3:     //系统更新
+					//TODO 从服务器获取版本号进行判断，
+					
+					//如果没有新版本
+					//ToastUtil.showToast(SettingActivity.this, "您当前使用的已经是最新版本");
+					
+					final CustomDialog versionDialog = 
+							new CustomDialog(SettingActivity.this, R.layout.dialog_version_update);
+					versionDialog.setDismissButtonId(R.id.cancel_button);
+					versionDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							// TODO 开始更新
+							versionDialog.dismiss();
+						}
+					});
 					
 					break;
-				case 4:     //关于我们
+					*/
+				case 3:     //关于我们
 					intent = new Intent(SettingActivity.this, AboutOurActivity.class);
 					startActivity(intent);
+					break;
+				case 4:
+					
 					break;
 
 				default:
@@ -156,4 +181,21 @@ public class SettingActivity extends BaseActivity{
 		});
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
 }

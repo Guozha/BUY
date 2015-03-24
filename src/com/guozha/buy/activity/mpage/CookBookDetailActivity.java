@@ -12,6 +12,7 @@ import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.DetailMaterialListAdapter;
 import com.guozha.buy.adapter.DetailSeasonListAdapter;
 import com.guozha.buy.adapter.DetailStepListAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 菜谱详情
@@ -19,6 +20,8 @@ import com.guozha.buy.adapter.DetailStepListAdapter;
  *
  */
 public class CookBookDetailActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "CookBookDetailPage";
 	
 	private ListView mMaterialList;//食材
 	private ListView mSeasonList;  //调料
@@ -78,5 +81,23 @@ public class CookBookDetailActivity extends BaseActivity{
 			((MarginLayoutParams)params).setMargins(10, 10, 10, 10);
 			listView.setLayoutParams(params); 
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

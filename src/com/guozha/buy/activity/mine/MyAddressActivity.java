@@ -22,6 +22,7 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 我的地址
@@ -29,6 +30,8 @@ import com.guozha.buy.util.ToastUtil;
  *
  */
 public class MyAddressActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "AddressListPage";
 	
 	private static final int REQUEST_CODE = 0;
 	
@@ -111,6 +114,9 @@ public class MyAddressActivity extends BaseActivity{
 		});
 	}
 	
+	/**
+	 * 更新地址列表
+	 */
 	private void updateAddressList(){
 		if(mAddressList == null) return;
 		mAddressList.setAdapter(new MyAdressListAdapter(this, mAdressInfos));
@@ -124,4 +130,21 @@ public class MyAddressActivity extends BaseActivity{
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
 }

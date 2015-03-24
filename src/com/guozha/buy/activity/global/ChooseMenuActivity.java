@@ -36,6 +36,7 @@ public class ChooseMenuActivity extends BaseActivity{
 		customActionBarStyle();
 		initQuickMenuData();
 		initView();
+		//initData();
 	}
 	
 	/**
@@ -138,7 +139,7 @@ public class ChooseMenuActivity extends BaseActivity{
 		LogUtil.e("onStop");
 		List<String> choosedMenusId = mChooseMenuListAdapter.getChoosedMenusID();
 		for(int i = 0; i < choosedMenusId.size(); i++){
-			LogUtil.e("choosedID = " + i);
+			LogUtil.e("choosedID = " + choosedMenusId.get(i));
 		}
 	}
 	

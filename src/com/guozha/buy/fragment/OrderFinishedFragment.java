@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.mine.OrderDetailActivity;
 import com.guozha.buy.adapter.OrderListAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 已完成订单列表
@@ -21,6 +22,8 @@ import com.guozha.buy.adapter.OrderListAdapter;
  *
  */
 public class OrderFinishedFragment extends Fragment{
+	
+	private static final String PAGE_NAME = "FinishedOrderPage";
 	
 	private ListView mOrderFinishList;
 
@@ -51,6 +54,21 @@ public class OrderFinishedFragment extends Fragment{
 			}
 			
 		});
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(getUserVisibleHint()){
+			//View可见	
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
+		}else{
+			//View不可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
 	}
 	
 }

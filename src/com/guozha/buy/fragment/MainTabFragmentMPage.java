@@ -4,10 +4,12 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -16,12 +18,15 @@ import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
 	
 	private static final String TAG = "MainTabFragmentMPage";
 	private static final String PAGE_NAME = "MainPage";
+	
+	private ImageView mSeasonImage;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -42,7 +47,30 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		view.findViewById(R.id.mpage_choose_menu_custom).setOnClickListener(this);
 		view.findViewById(R.id.mpage_pre_special_menu).setOnClickListener(this);
 		view.findViewById(R.id.mpage_market_menu).setOnClickListener(this);
-		view.findViewById(R.id.mpage_season_menu).setOnClickListener(this);
+		mSeasonImage = (ImageView) view.findViewById(R.id.mpage_season_menu);
+		mSeasonImage.setOnClickListener(this);
+		
+		setSeasonImageByMonth();
+	}
+	
+	/**
+	 * 根据季节设置图片
+	 */
+	private void setSeasonImageByMonth(){
+		if(mSeasonImage == null) return;
+		Time time = new Time();
+		time.setToNow();
+		int month = time.month + 1;
+		ToastUtil.showToast(getActivity(), "month = " + month);
+		if(month >= 2 && month < 5){  //2,3,4月份
+			mSeasonImage.setImageResource(R.drawable.main_season_img_spring);
+		}else if(month >= 5 && month < 8){ //5,6,7月份
+			//TODO 夏天的图片
+		}else if(month >= 8 && month < 11){ //8,9,10月份
+			mSeasonImage.setImageResource(R.drawable.main_season_img_autumn);
+		}else{//11,12,1月份
+			//TODO 冬天的图片
+		}
 	}
 	
 	@Override

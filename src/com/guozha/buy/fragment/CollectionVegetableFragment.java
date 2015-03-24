@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CollectionVegetableListAdapter;
 import com.guozha.buy.dialog.WeightSelectDialog;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 菜品收藏
@@ -21,6 +22,8 @@ import com.guozha.buy.dialog.WeightSelectDialog;
  *
  */
 public class CollectionVegetableFragment extends Fragment{
+	
+	private static final String PAGE_NAME = "CollectionVegetablePage";
 
 	private ListView mCollectionVegetableList;
 	
@@ -47,6 +50,21 @@ public class CollectionVegetableFragment extends Fragment{
 				startActivity(intent);
 			}
 		});
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(getUserVisibleHint()){
+			//View可见	
+			//友盟页面统计
+			MobclickAgent.onPageStart(PAGE_NAME);
+		}else{
+			//View不可见
+			
+			//友盟页面统计
+			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
 	}
 	
 }

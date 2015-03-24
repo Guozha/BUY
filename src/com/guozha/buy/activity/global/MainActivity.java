@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.weak.WeakReferenceHandler;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
@@ -76,6 +78,23 @@ public class MainActivity extends FragmentActivity{
 			}
 		};
 	};
+	
+	/** 弱引用
+	 private WeakReferenceHandler<MainActivity> weakHandler = new MyWeakReferenceHandler(this);
+	
+		static class MyWeakReferenceHandler extends WeakReferenceHandler<MainActivity>{
+
+		public MyWeakReferenceHandler(MainActivity ref) {
+			super(ref);
+		}
+
+		@Override
+		protected void handleMessage(MainActivity ref, Message msg) {
+			
+		}
+		
+		}
+	 */
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

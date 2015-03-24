@@ -1,16 +1,16 @@
 package com.guozha.buy.global;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
 
+import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -26,6 +26,8 @@ public class ConfigManager{
 	private SharedPreferences sharedPreference;
 	
 	private Map<String, Map<String, String>> mConstantXML;
+	
+	private List<QuickMenu> mQuickMenus;
 	
 	private int mUserId;
 	private String mUserToken;
@@ -73,6 +75,60 @@ public class ConfigManager{
 				
 			};
 		}.start();
+	}
+	
+	/**
+	 * 设置快捷菜单
+	 * @param quickMenus
+	 */
+	public void setQuickMenus(List<QuickMenu> quickMenus){
+		if(quickMenus.isEmpty()){
+			mQuickMenus = null;
+		}else{
+			mQuickMenus = quickMenus;
+		}
+		StringBuffer quickBuf = new StringBuffer();
+		for(int i = 0; i < quickMenus.size(); i++){
+			QuickMenu quickMenu = quickMenus.get(i);
+			if(quickMenu == null) continue;
+			quickBuf.append(quickMenu.getMenuId());
+			quickBuf.append(":");
+			quickBuf.append(quickMenu.getName());
+			quickBuf.append(",");
+		}
+		String quickStr;
+		if(quickBuf.length() >= 1){
+			quickStr = quickBuf.deleteCharAt(quickBuf.length() -1).toString();
+		}else{
+			quickStr = null;
+		}
+		Editor editor = sharedPreference.edit();
+		editor.putString("quickMenus", quickStr);
+		editor.commit();
+	}
+	
+	/**
+	 * 获取快捷菜单
+	 * @return
+	 */
+	public List<QuickMenu> getQuickMenus(){
+		if(mQuickMenus != null) return mQuickMenus;
+		List<QuickMenu> quickMenus = null;
+		String quickStr = sharedPreference.getString("quickMenus", null);
+		if(quickStr == null) return null;
+		quickMenus = new ArrayList<QuickMenu>();
+		String[] menus = quickStr.split(",");
+		
+		QuickMenu quickMenu;
+		for(int i = 0; i < menus.length; i ++){
+			String[] menu = menus[i].split(":");
+			quickMenu = new QuickMenu();
+			quickMenu.setMenuId(Integer.parseInt(menu[0]));
+			quickMenu.setName(menu[1]);
+			quickMenus.add(quickMenu);
+		}
+		mQuickMenus = quickMenus;
+		return quickMenus;
 	}
 	
 	/**

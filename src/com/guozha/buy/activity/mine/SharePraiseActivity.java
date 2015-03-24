@@ -7,19 +7,19 @@ import com.guozha.buy.activity.global.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
 /**
- * 关于我们
+ * 推荐有奖
  * @author PeggyTong
  *
  */
-public class AboutOurActivity extends BaseActivity{
+public class SharePraiseActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "AboutOurPage";
+	private static final String PAGE_NAME = "SharePraisePage";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_about_our);
-		customActionBarStyle("关于我们");
+		setContentView(R.layout.activity_advice_praise);
+		customActionBarStyle("推荐有奖");
 	}
 	
 	@Override

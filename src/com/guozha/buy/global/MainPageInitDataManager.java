@@ -31,8 +31,6 @@ public class MainPageInitDataManager {
 	private AccountInfo mAccountInfo;
 	private ArrayList<GoodsItemType> mGoodsItemTypes;
 	
-	
-	
 	private static MainPageInitDataManager mInitDataManager;
 	
 	private MainPageInitDataManager(Context context){

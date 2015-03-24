@@ -22,6 +22,7 @@ import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 重量选择对话框
@@ -29,6 +30,8 @@ import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
  *
  */
 public class WeightSelectDialog extends Activity implements OnClickListener{
+	
+	private static final String PAGE_NAME = "WeightSelectPage";
 	
 	private WheelView mWheelView;
 	
@@ -157,6 +160,24 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 						+ option.getAmount() + option.getMoneyUnit();
 			}
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 
 }

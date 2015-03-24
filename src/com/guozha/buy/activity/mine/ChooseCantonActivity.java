@@ -21,6 +21,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.global.net.HttpManager;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 选择行政区
@@ -28,6 +29,8 @@ import com.guozha.buy.global.net.HttpManager;
  *
  */
 public class ChooseCantonActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "ChooseCountryPage";
 	
 	public static final String BUNDLE_DATA = "countrys";
 	
@@ -100,5 +103,23 @@ public class ChooseCantonActivity extends BaseActivity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

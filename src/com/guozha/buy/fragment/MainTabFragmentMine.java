@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.LoginActivity;
-import com.guozha.buy.activity.mine.AdvicePraiseActivity;
+import com.guozha.buy.activity.mine.SharePraiseActivity;
 import com.guozha.buy.activity.mine.MyAddressActivity;
 import com.guozha.buy.activity.mine.MyCollectionActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
@@ -177,7 +177,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			startActivity(intent);
 			break;
 		case R.id.mine_advice_active: //推荐有奖
-			intent = new Intent(getActivity(), AdvicePraiseActivity.class);
+			intent = new Intent(getActivity(), SharePraiseActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.mine_collection: 	//我的收藏

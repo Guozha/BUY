@@ -14,7 +14,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.QuickMenus;
+import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 
 /**
  * 快捷菜单适配器
@@ -66,6 +68,7 @@ public class ChooseMenuListAdapter extends BaseAdapter implements OnCheckedChang
 			holder.checkBox1.setOnCheckedChangeListener(this);
 			holder.checkBox2.setOnCheckedChangeListener(this);
 			holder.checkBox3.setOnCheckedChangeListener(this);
+			
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
@@ -118,13 +121,18 @@ public class ChooseMenuListAdapter extends BaseAdapter implements OnCheckedChang
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		//TODO 这块还有问题
+		String tag = String.valueOf(buttonView.getTag());
 		if(isChecked){
-			LogUtil.e("isChecked");
-			mChoosedMenusID.add(String.valueOf(buttonView.getTag()));
+			LogUtil.e("isChecked_checkid = " + buttonView.getTag());
+			if(mChoosedMenusID.size() >= 5){
+				buttonView.setChecked(false);
+				return;
+			}
+			if(!mChoosedMenusID.contains(tag)){
+				mChoosedMenusID.add(tag);
+			}
 		}else{
-			LogUtil.e("unChecked");
-			mChoosedMenusID.remove(String.valueOf(buttonView.getTag()));
+			mChoosedMenusID.remove(tag);
 		}
 	}
 

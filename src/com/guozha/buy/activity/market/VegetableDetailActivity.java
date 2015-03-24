@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.CookBookListAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 菜品详情
@@ -18,6 +19,8 @@ import com.guozha.buy.adapter.CookBookListAdapter;
  *
  */
 public class VegetableDetailActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "VegetableDetailPage";
 	
 	private ListView mConnCookBookList;
 	private TextView mItemPrice;
@@ -55,5 +58,23 @@ public class VegetableDetailActivity extends BaseActivity{
 		int totalSpanSart = msgTotal.indexOf("/");
 		builder.setSpan(redSpan, 0, totalSpanSart - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mItemPrice.setText(builder);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }
