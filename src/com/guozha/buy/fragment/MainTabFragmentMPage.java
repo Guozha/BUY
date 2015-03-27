@@ -1,5 +1,8 @@
 package com.guozha.buy.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +20,8 @@ import com.guozha.buy.activity.global.ChooseMenuActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
+import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -25,6 +30,9 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	
 	private static final String TAG = "MainTabFragmentMPage";
 	private static final String PAGE_NAME = "MainPage";
+	private static final int REQUEST_CODE = 0;
+	
+	private List<TextView> mQuickMenus;
 	
 	private ImageView mSeasonImage;
 	
@@ -34,6 +42,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		
 		View view = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
 		initView(view);
+		initQuickMenusData();
 		return view;
 	}
 	
@@ -47,10 +56,50 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		view.findViewById(R.id.mpage_choose_menu_custom).setOnClickListener(this);
 		view.findViewById(R.id.mpage_pre_special_menu).setOnClickListener(this);
 		view.findViewById(R.id.mpage_market_menu).setOnClickListener(this);
+		mQuickMenus = new ArrayList<TextView>();
+		mQuickMenus.add((TextView)view.findViewById(R.id.mpage_quick_menu_1));
+		mQuickMenus.add((TextView)view.findViewById(R.id.mpage_quick_menu_2));
+		mQuickMenus.add((TextView)view.findViewById(R.id.mpage_quick_menu_3));
+		mQuickMenus.add((TextView)view.findViewById(R.id.mpage_quick_menu_4));
+		mQuickMenus.add((TextView)view.findViewById(R.id.mpage_quick_menu_5));
+		
+		for(int i = 0; i < mQuickMenus.size(); i++){
+			mQuickMenus.get(i).setOnClickListener(this);
+		}
+		
 		mSeasonImage = (ImageView) view.findViewById(R.id.mpage_season_menu);
 		mSeasonImage.setOnClickListener(this);
 		
 		setSeasonImageByMonth();
+	}
+	
+	/**
+	 * 初始化快捷菜单数据
+	 */
+	private void initQuickMenusData(){
+		if(mQuickMenus == null) return;
+		List<QuickMenu> quickMenus = ConfigManager.getInstance().getQuickMenus();
+		
+		if(quickMenus == null) {
+			for(int i = 0; i < 5; i++){
+				mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_edit);
+				mQuickMenus.get(i).setTag(-1);
+				mQuickMenus.get(i).setText("");
+			}
+			return;
+		}
+		ToastUtil.showToast(getActivity(), "quickMenusSize = " + quickMenus.size());
+		for(int i = 0; i < quickMenus.size(); i++){
+			mQuickMenus.get(i).setText(quickMenus.get(i).getName());
+			mQuickMenus.get(i).setTag(quickMenus.get(i).getMenuId());
+			mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_backgroung);
+		}
+		
+		for(int i = 0; i < 5 - quickMenus.size(); i++){
+			mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_edit);
+			mQuickMenus.get(i).setTag(-1);
+			mQuickMenus.get(i).setText("");
+		}
 	}
 	
 	/**
@@ -90,7 +139,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			break;
 		case R.id.mpage_choose_menu_custom:
 			intent = new Intent(MainTabFragmentMPage.this.getActivity(), ChooseMenuActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.mpage_pre_special_menu:
 			intent = new Intent(getActivity(), PreSpecialActivity.class);
@@ -105,8 +154,27 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			intent = new Intent(getActivity(), SeasonActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.mpage_quick_menu_1:
+		case R.id.mpage_quick_menu_2:
+		case R.id.mpage_quick_menu_3:
+		case R.id.mpage_quick_menu_4:
+		case R.id.mpage_quick_menu_5:
+			clickQuickMneuEvent(view);
+			break;
 		default:
 			break;
+		}
+	}
+
+	private void clickQuickMneuEvent(View view) {
+		int tag = (Integer) view.getTag();
+		Intent intent;
+		if(-1 == tag){
+			intent = new Intent(MainTabFragmentMPage.this.getActivity(), ChooseMenuActivity.class);
+			startActivityForResult(intent, REQUEST_CODE);
+		}else{
+			if(view == null) return;
+			//TODO 跳转到对应的类目
 		}
 	}
 	
@@ -151,6 +219,15 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		actionbar.setCustomView(R.layout.actionbar_base_view);
 		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
 		title.setText("我要买菜");
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if(requestCode == REQUEST_CODE){
+			initQuickMenusData();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	@Override

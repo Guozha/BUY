@@ -1,37 +1,50 @@
 package com.guozha.buy.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 
+/**
+ * 提醒设置时间列表适配器
+ * @author PeggyTong
+ *
+ */
 public class WarnTimeListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	
-	public WarnTimeListAdapter(Context context){
+	private List<String> mWarnTimes;
+	
+	private String mChoosedTime;
+	
+	public WarnTimeListAdapter(Context context, String choosedTime, List<String> warnTimes){
 		mInflater = LayoutInflater.from(context);
+		mChoosedTime = choosedTime;
+		mWarnTimes = warnTimes;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 6;
+		if(mWarnTimes == null) return 0;
+		return mWarnTimes.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mWarnTimes.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -40,7 +53,18 @@ public class WarnTimeListAdapter extends BaseAdapter{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_warntime_item_cell, null);
 		}
+		TextView warnTimeText = (TextView) convertView.findViewById(R.id.warn_time_text);
+		ImageView choosedIcon = (ImageView) convertView.findViewById(R.id.choosed_icon);
+		String warnTime = mWarnTimes.get(position);
+		warnTimeText.setText(warnTime);
+		if(warnTime.equals(mChoosedTime)){
+			choosedIcon.setImageResource(R.drawable.main_plan_selected);
+		}else{
+			choosedIcon.setImageResource(0);
+		}
+		
 		return convertView;
 	}
+
 
 }

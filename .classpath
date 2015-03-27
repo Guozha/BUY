@@ -18,5 +18,9 @@
 	<classpathentry kind="lib" path="libs/volley.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="lib" path="libs/alipaysdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/alipaysecsdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/alipayutdid.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gson-2.2.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -27,16 +27,18 @@
 		        android:textColor="@color/color_app_base_4"/>
 	    
 		    <TextView 
+		        android:id="@+id/setting_warn_time"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="10dip"
 		        android:textSize="@dimen/dimen_global_30sp"
 		        android:textColor="@color/color_app_base_4"
-		        android:text="10:00"/>
+		        android:text="16:00"/>
 	    </LinearLayout>
 
 	    
     	<com.guozha.buy.view.Switch
+    	    android:id="@+id/switch_warn"
             style="@style/switch_button_style"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

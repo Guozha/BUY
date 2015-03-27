@@ -1,4 +1,4 @@
-package com.guozha.buy.entry;
+package com.guozha.buy.entry.mpage;
 
 public class PreSpecialItem {
 

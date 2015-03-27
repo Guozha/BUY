@@ -1,120 +1,55 @@
 package com.guozha.buy.entry.market;
 
-import java.util.List;
+import java.io.Serializable;
+
 //单个物品的属性类
-public class ItemSaleInfo {
+public class ItemSaleInfo implements Serializable{
 
-	private String itemId;  //单品ID
-	private String skuId;
-	private String itemImage;  //单品图片
-	private String itemName;   //单品名称
-	private float skuPrice;	   
-	private String itemUnit;   //单品单位
-	private int defaultWeight; //默认重量
-	private List<WeightOption> weightOption;  //选择的重量
-
-	public String getItemId() {
-		return itemId;
+	private static final long serialVersionUID = 6331248942615481326L;
+	
+	private int goodsId;		//商品ID
+	private String goodsName;	//商品名称
+	private int unitPrice;		//单价
+	private String unit;		//计量单位
+	private byte[] goodsImg;	//商品图片
+	private String goodsProp;	//商品性质
+	
+	public int getGoodsId() {
+		return goodsId;
 	}
-
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
 	}
-
-	public String getSkuId() {
-		return skuId;
+	public String getGoodsName() {
+		return goodsName;
 	}
-
-	public void setSkuId(String skuId) {
-		this.skuId = skuId;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
-
-	public String getItemImage() {
-		return itemImage;
+	public int getUnitPrice() {
+		return unitPrice;
 	}
-
-	public void setItemImage(String itemImage) {
-		this.itemImage = itemImage;
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
 	}
-
-	public String getItemName() {
-		return itemName;
+	public String getUnit() {
+		return unit;
 	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
-
-	public float getSkuPrice() {
-		return skuPrice;
+	public byte[] getGoodsImg() {
+		return goodsImg;
 	}
-
-	public void setSkuPrice(float skuPrice) {
-		this.skuPrice = skuPrice;
+	public void setGoodsImg(byte[] goodsImg) {
+		this.goodsImg = goodsImg;
 	}
-
-	public String getItemUnit() {
-		return itemUnit;
+	public String getGoodsProp() {
+		return goodsProp;
 	}
-
-	public void setItemUnit(String itemUnit) {
-		this.itemUnit = itemUnit;
+	public void setGoodsProp(String goodsProp) {
+		this.goodsProp = goodsProp;
 	}
-
-	public int getDefaultWeight() {
-		return defaultWeight;
-	}
-
-	public void setDefaultWeight(int defaultWeight) {
-		this.defaultWeight = defaultWeight;
-	}
-
-	public List<WeightOption> getWeightOption() {
-		return weightOption;
-	}
-
-	public void setWeightOption(List<WeightOption> weightOption) {
-		this.weightOption = weightOption;
-	}
-
-	public static class WeightOption {
-		private int quantity;
-		private float amount;
-		private String unit;
-		private String moneyUnit;
-
-		public String getUnit() {
-			return unit;
-		}
-
-		public void setUnit(String unit) {
-			this.unit = unit;
-		}
-
-		public String getMoneyUnit() {
-			return moneyUnit;
-		}
-
-		public void setMoneyUnit(String moneyUnit) {
-			this.moneyUnit = moneyUnit;
-		}
-
-		public int getQuantity() {
-			return quantity;
-		}
-
-		public void setQuantity(int quantity) {
-			this.quantity = quantity;
-		}
-
-		public float getAmount() {
-			return amount;
-		}
-
-		public void setAmount(float amount) {
-			this.amount = amount;
-		}
-
-	}
-
+	
+	
 }

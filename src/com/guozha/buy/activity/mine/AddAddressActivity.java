@@ -1,5 +1,6 @@
 package com.guozha.buy.activity.mine;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -235,8 +236,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				+ mAddressDetaiNum.getText().toString());
 		params.put("defaultFlag", String.valueOf(defaultFlag));
 		paramPath = "account/address/insert" + HttpUtil.generatedAddress(params);
+
 		HttpManager.getInstance(
-			AddAddressActivity.this).volleyJsonRequestByPost(
+			AddAddressActivity.this).volleyJsonRequestByGet(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {

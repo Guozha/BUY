@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.VegetableListAdapter;
-import com.guozha.buy.entry.VegetableInfo;
+import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -39,7 +39,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
 	
-	private List<VegetableInfo[]> mAdapterData;
+	private List<ItemSaleInfo[]> mAdapterData;
 	private VegetableListAdapter mVegetableAdapter;
 	
 	private int mLastVisibleIndex;
@@ -86,21 +86,21 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	}
 	
 	private void loadMoreData(){
-		List<VegetableInfo> listData = new ArrayList<VegetableInfo>();
+		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
 		int count = mVegetableAdapter.getCount() * 3;
-		VegetableInfo info;
+		ItemSaleInfo info;
 		if(count + LOADING_ITEM_COUNT < mMaxDateNum){
 			for(int i = 0; i < LOADING_ITEM_COUNT; i++){
-				info = new VegetableInfo();
-				info.setImageId(R.drawable.vegetable_image);
-				info.setVegetableName("产品名称" + (count + i));
+				info = new ItemSaleInfo();
+				//info.setImageId(R.drawable.vegetable_image);
+				//info.setVegetableName("产品名称" + (count + i));
 				listData.add(info);
 			}
 		}else{
 			for (int i = count; i < mMaxDateNum; i++) {
-				info = new VegetableInfo();
-				info.setImageId(R.drawable.vegetable_image);
-				info.setVegetableName("产品名称" + i);
+				info = new ItemSaleInfo();
+				//info.setImageId(R.drawable.vegetable_image);
+				//info.setVegetableName("产品名称" + i);
 				listData.add(info);
             }
 		}
@@ -110,15 +110,15 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	/**
 	 * 适配数据
 	 */
-	private void addFormatData(List<VegetableInfo> vegetables){
-		VegetableInfo[] infos;
+	private void addFormatData(List<ItemSaleInfo> vegetables){
+		ItemSaleInfo[] infos;
 		if(mAdapterData == null){
-			mAdapterData = new ArrayList<VegetableInfo[]>();
+			mAdapterData = new ArrayList<ItemSaleInfo[]>();
 		}
 		int count = vegetables.size() / 3;
 
 		for(int i = 0; i < count; i++){
-			infos = new VegetableInfo[3];
+			infos = new ItemSaleInfo[3];
 			infos[0] = vegetables.get(i * 3);
 			infos[1] = vegetables.get(i * 3 + 1);
 			infos[2] = vegetables.get(i * 3 + 2);
@@ -128,9 +128,9 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		int remain = vegetables.size() % 3;
 		
 		if(remain == 0) return;
-		infos = new VegetableInfo[3];
-		VegetableInfo info1;
-		VegetableInfo info2;
+		infos = new ItemSaleInfo[3];
+		ItemSaleInfo info1;
+		ItemSaleInfo info2;
 		if(remain == 1){
 			info1 = vegetables.get(count * 3);
 			info2 = null;
@@ -145,13 +145,13 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	}
 	
 	private void initData(){
-		List<VegetableInfo> listData = new ArrayList<VegetableInfo>();
+		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
 		
-		VegetableInfo info;
+		ItemSaleInfo info;
 		for(int i = 0; i < LOADING_ITEM_COUNT; i++){
-			info = new VegetableInfo();
-			info.setImageId(R.drawable.vegetable_image);
-			info.setVegetableName("产品名称" + i);
+			info = new ItemSaleInfo();
+			//info.setImageId(R.drawable.vegetable_image);
+			//info.setVegetableName("产品名称" + i);
 			listData.add(info);
 		}
 		addFormatData(listData);

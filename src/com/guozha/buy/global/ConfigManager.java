@@ -2,9 +2,9 @@ package com.guozha.buy.global;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,11 +33,13 @@ public class ConfigManager{
 	private String mUserToken;
 	private String mUserPwd;
 	private String mMobileNumber;
+	private String mWarnTime;
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
 	private static final String USER_PWD = "user_pwd";      		//用户密码
 	private static final String MOBILE_NUMBER = "mobile_number"; 	//账号（手机号)
+	private static final String WARN_TIME = "warn_time";			//提醒时间
 	
 	/**
 	 * 获取配置管理对象
@@ -54,7 +56,7 @@ public class ConfigManager{
 		mUserToken = sharedPreference.getString(USER_TOKEN, null);
 		mUserPwd = sharedPreference.getString(USER_PWD, null);
 		mMobileNumber = sharedPreference.getString(MOBILE_NUMBER, null);
-		
+		mWarnTime = sharedPreference.getString(WARN_TIME, "16:00");
 		initConfigXML();
 	}
 	
@@ -89,11 +91,11 @@ public class ConfigManager{
 		}
 		StringBuffer quickBuf = new StringBuffer();
 		for(int i = 0; i < quickMenus.size(); i++){
-			QuickMenu quickMenu = quickMenus.get(i);
-			if(quickMenu == null) continue;
-			quickBuf.append(quickMenu.getMenuId());
+			QuickMenu quickMenuId = quickMenus.get(i);
+			if(quickMenuId == null) continue;
+			quickBuf.append(quickMenuId.getMenuId());
 			quickBuf.append(":");
-			quickBuf.append(quickMenu.getName());
+			quickBuf.append(quickMenuId.getName());
 			quickBuf.append(",");
 		}
 		String quickStr;
@@ -103,7 +105,7 @@ public class ConfigManager{
 			quickStr = null;
 		}
 		Editor editor = sharedPreference.edit();
-		editor.putString("quickMenus", quickStr);
+		editor.putString("quickMenusId", quickStr);
 		editor.commit();
 	}
 	
@@ -113,21 +115,20 @@ public class ConfigManager{
 	 */
 	public List<QuickMenu> getQuickMenus(){
 		if(mQuickMenus != null) return mQuickMenus;
-		List<QuickMenu> quickMenus = null;
-		String quickStr = sharedPreference.getString("quickMenus", null);
-		if(quickStr == null) return null;
-		quickMenus = new ArrayList<QuickMenu>();
+		String quickStr = sharedPreference.getString("quickMenusId", null);
+		if(quickStr == null) {
+			//TODO 这里前面的5个ID不能变化，必须是（0-4）
+			quickStr = "0:干货,1:蔬菜,2:肉类,3:水果,4:水产";
+		}
 		String[] menus = quickStr.split(",");
-		
+		List<QuickMenu> quickMenus = new ArrayList<QuickMenu>();
 		QuickMenu quickMenu;
-		for(int i = 0; i < menus.length; i ++){
-			String[] menu = menus[i].split(":");
-			quickMenu = new QuickMenu();
-			quickMenu.setMenuId(Integer.parseInt(menu[0]));
-			quickMenu.setName(menu[1]);
+		for(int i = 0; i < menus.length; i++){
+			String[] quickMenusArr = menus[i].split(":");
+			if(quickMenusArr.length != 2) continue;
+			quickMenu = new QuickMenu(Integer.parseInt(quickMenusArr[0]), quickMenusArr[1]);
 			quickMenus.add(quickMenu);
 		}
-		mQuickMenus = quickMenus;
 		return quickMenus;
 	}
 	
@@ -222,6 +223,24 @@ public class ConfigManager{
 		if(mMobileNumber != null && mMobileNumber.equals(mobileNum)) return;
 		mMobileNumber = mobileNum;
 		setConfig(MOBILE_NUMBER, mobileNum);
+	}
+	
+	/**
+	 * 获取提醒时间
+	 * @return
+	 */
+	public String getWarnTime(){
+		return mWarnTime;
+	}
+	
+	/**
+	 * 设置提醒时间
+	 * @param warnTime
+	 */
+	public void setWarnTime(String warnTime){
+		if(mWarnTime != null && mWarnTime.equals(warnTime)) return;
+		mWarnTime = warnTime;
+		setConfig(WARN_TIME, warnTime);
 	}
 	
 	/**

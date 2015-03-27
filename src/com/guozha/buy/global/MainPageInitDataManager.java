@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
@@ -22,7 +23,8 @@ import com.guozha.buy.util.LogUtil;
 public class MainPageInitDataManager {
 	
 	public static final int HAND_INITDATA_MSG_ACCOUNTINFO = 0x0001;  //账户信息
-	public static final int HAND_INITDATA_MSG_ITEMTYPE = 0X0002;  //菜单
+	public static final int HAND_INITDATA_MSG_ITEMTYPE = 0x0002;  	 //菜单
+	public static final int HAND_INITDATA_MSG_MARKETHOME = 0x0003;	 //逛菜场的主页数据
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -30,6 +32,7 @@ public class MainPageInitDataManager {
 	
 	private AccountInfo mAccountInfo;
 	private ArrayList<GoodsItemType> mGoodsItemTypes;
+	private MarketHomePage mMarketHomePage;
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -92,6 +95,24 @@ public class MainPageInitDataManager {
 		return mGoodsItemTypes;
 	}
 	
+	/**
+	 * 获取逛菜场首页的列表数据
+	 * @param handler
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public MarketHomePage getMarketHomePage(Handler handler, int pageNum, int pageSize){
+		if(mMarketHomePage == null){
+			requestGoodsBriefItemData(handler, pageNum, pageSize);
+		}else{
+			if(handler != null){
+				handler.sendEmptyMessage(HAND_INITDATA_MSG_MARKETHOME);
+			}
+		}
+		return mMarketHomePage;
+	}
+	
 	//////////////////////////////HTTP-请求////////////////////////////////
 	
 	/**
@@ -139,9 +160,20 @@ public class MainPageInitDataManager {
 	 * 获取(简要：6条）菜品信息
 	 * @param handler
 	 */
-	private void requestGoodsBriefItemData(final Handler handler){
-		
-		//HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL, responsListener)
+	private void requestGoodsBriefItemData(final Handler handler, int pageNum, int pageSize){
+		String addressId = "";;
+		String paramsPath = "generalList?addressId=" + addressId + "&&pageNum=" + pageNum + "&&pageSize=" + pageSize;
+		HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL + paramsPath, 
+			new Listener<String>() {
+				@Override
+				public void onResponse(String response) {
+					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+					mMarketHomePage = gson.fromJson(response, new TypeToken<MarketHomePage>() { }.getType());
+					if(handler != null && mMarketHomePage != null){
+						handler.sendEmptyMessage(HAND_INITDATA_MSG_MARKETHOME);
+					}
+				}
+			});
 	}
 	
 }

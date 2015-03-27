@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.guozha.buy.R;
-import com.guozha.buy.entry.VegetableInfo;
+import com.guozha.buy.entry.market.ItemSaleInfo;
 
 
 /**
@@ -19,10 +19,10 @@ import com.guozha.buy.entry.VegetableInfo;
  */
 public class VegetableListAdapter extends BaseAdapter{
 	
-	private List<VegetableInfo[]> mVegetables;
+	private List<ItemSaleInfo[]> mVegetables;
 	private LayoutInflater mInflater;
 	
-	public VegetableListAdapter(Context context, List<VegetableInfo[]> vegetables){
+	public VegetableListAdapter(Context context, List<ItemSaleInfo[]> vegetables){
 		mInflater = LayoutInflater.from(context);
 		this.mVegetables = vegetables;
 	}

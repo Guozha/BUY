@@ -32,6 +32,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.weak.WeakReferenceHandler;
+import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
@@ -409,7 +410,8 @@ public class MainActivity extends FragmentActivity{
 			startActivity(intent);
 			break;
 		case R.id.action_share:  //分享
-
+			ShareManager shareManager = new ShareManager(MainActivity.this);
+			shareManager.showSharePlatform(this);
 			break;
 		case R.id.action_setting: //设置
 			if(ConfigManager.getInstance().getUserToken() == null){

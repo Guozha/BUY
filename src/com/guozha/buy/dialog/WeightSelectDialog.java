@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.market.VegetableDetailActivity;
+import com.guozha.buy.entry.global.WeightOption;
 import com.guozha.buy.entry.market.ItemSaleInfo;
-import com.guozha.buy.entry.market.ItemSaleInfo.WeightOption;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
@@ -38,7 +38,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	private View mCustomWeightArea;
 	private EditText mCustomWeight;
 	
-	private List<ItemSaleInfo.WeightOption> options;
+	private List<WeightOption> options;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		mCustomWeight = (EditText) findViewById(R.id.select_custom_weight_text);
 		
 		if(options != null){
-			mCustomWeight.setText(String.valueOf(options.get(options.size() - 1).getQuantity()));
+			mCustomWeight.setText(String.valueOf(options.get(options.size() - 1).getAmount()));
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 					quantity = Integer.parseInt(quntityStr);
 				}
 			}else{
-				quantity = options.get(currentItem).getQuantity();
+				quantity = options.get(currentItem).getAmount();
 			}
 			
 			Toast.makeText(this, "选择的重量是 = " + quantity, Toast.LENGTH_SHORT).show();
@@ -114,15 +114,16 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	}
 	
 	private void addData(){
-		options = new ArrayList<ItemSaleInfo.WeightOption>();
+		options = new ArrayList<WeightOption>();
 		
 		
 		for(int i=0; i<8; i++){
 			WeightOption option = new WeightOption();
-			option.setQuantity(i + 1);
-			option.setMoneyUnit("块");
+			option.setPrice(i + 1);
+			option.setUnitPrice(i + 1);
 			option.setUnit("斤");
-			option.setAmount(i + 2.1f);
+			option.setGoodsId(i);
+			option.setAmount(i);
 			
 			options.add(option);
 		}
@@ -156,8 +157,8 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			if(index >= getItemsCount() - 1){
 				return "自定义重量";
 			}else{
-				return option.getQuantity() + option.getUnit() + " - "
-						+ option.getAmount() + option.getMoneyUnit();
+				return option.getAmount() + option.getUnit() + " - "
+						+ option.getAmount() + option.getUnit();
 			}
 		}
 	}

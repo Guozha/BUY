@@ -9,10 +9,17 @@ import java.io.Serializable;
  */
 public class QuickMenu implements Serializable{
 
-	private static final long serialVersionUID = 2832681425267302158L;
+	private static final long serialVersionUID = -3878306234523432266L;
 	
 	private int menuId;
 	private String name;
+	
+	public QuickMenu(){ }
+	
+	public QuickMenu(int menuId, String name){
+		this.menuId = menuId;
+		this.name = name;
+	}
 	
 	public int getMenuId() {
 		return menuId;

@@ -6,13 +6,10 @@ import java.util.List;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,8 +23,9 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
-import com.guozha.buy.entry.VegetableInfo;
 import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.market.MarketHomeItem;
+import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
@@ -49,8 +47,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private View mTopExpandMenuButton;
 	private AnimatedExpandableListView mMenuList;
 	private MenuExpandListAapter mMenuExpandListAapter;
+	private MarketItemListAdapter mMarketItemListAdapter;
 	
 	private List<GoodsItemType> mGoodsItemTypes;  //菜品类目菜单数据
+	private List<MarketHomeItem> mMarketHomeItems = new ArrayList<MarketHomeItem>();	//逛菜场主页的列表
 	
 	private CustomListView mItemList;
 	private int mFirstVisibleItem;  //屏幕上可见的第一条
@@ -60,6 +60,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private ImageView mMenuArrowIcon;
 	private View mQuickInView;
+	
+	private int mTotalPageSize;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -113,8 +115,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mItemList = (CustomListView) view.findViewById(R.id.market_itemlist);
 		mItemList.setItemsCanFocus(true);
 		mItemList.addHeaderView(header);
-		mItemList.setAdapter(new MarketItemListAdapter(this.getActivity(), 
-				new ArrayList<String>(), new ArrayList<VegetableInfo[]>()));
+		
 		mItemList.setOnScrollListener(this);
 		
 		//箭头
@@ -138,10 +139,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	@Override
 	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
+		mDataManager = dataManager;
 		switch (handlerType) {
-		case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
-			mDataManager = dataManager;
+		case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:  //菜单
 			setGoodsItemTypeData();
+			break;
+		case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME: //列表
+			setMarketHomeData();
 			break;
 		default:
 			break;
@@ -160,6 +164,20 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
 		if(mMenuList == null) return;
 		mMenuList.setAdapter(mMenuExpandListAapter);
+	}
+	
+	private void setMarketHomeData(){
+		if(mDataManager == null){
+			return;
+		}
+		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(null, 1, 6);
+		if(marketHomePage == null) return;
+		mTotalPageSize = marketHomePage.getPageCount();
+		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
+		mMarketHomeItems.addAll(marketHomeItems);
+		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems);
+		if(mItemList == null) return;
+		mItemList.setAdapter(mMarketItemListAdapter);
 	}
 	
 	@Override

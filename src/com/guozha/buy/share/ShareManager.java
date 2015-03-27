@@ -39,8 +39,8 @@ public class ShareManager{
 	private static final String QQ_APPID = "100424468";
 	private static final String QQ_APPKEY = "c7394704798a158208a74ab60104f0ba";
 	
-	private static final String WX_APPID = "wx967daebe835fbeac";
-	private static final String WX_SECRET = "5bb696d9ccd75a38c8a0bfe0675559b3";
+	private static final String WX_APPID = "wxc17fccd72a2dbea7";
+	private static final String WX_SECRET = "6f913bd53fdfd3529c98a7ae84df4d73";
 
 	private final UMSocialService mController = UMServiceFactory
             .getUMSocialService(DESCRIPTOR);
@@ -72,6 +72,8 @@ public class ShareManager{
 		//添加QQ支持
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity, QQ_APPID, QQ_APPKEY);
 		qqSsoHandler.setTargetUrl(COMMEN_TARGET_URL);
+
+		qqSsoHandler.setTitle("这里是");
 		qqSsoHandler.addToSocialSDK();
 		
 		//添加QZone支持
@@ -95,29 +97,23 @@ public class ShareManager{
 	}
 	
 	/**
-	 * 分享到新浪微博
-	 * @param context
+	 * 打开分享面板
 	 */
-	public void shareToSina(Context context){
-		shareToSina(context, COMMEN_TITILE, COMMEN_CONTENT);
+	public void showSharePlatform(Activity activity){
+		setQQContent(COMMEN_TITILE, COMMEN_CONTENT);
+		setQzoneContent(COMMEN_TITILE, COMMEN_CONTENT);
+		setWeixinContent(COMMEN_TITILE, COMMEN_CONTENT);
+		setWXFriendsContent(COMMEN_TITILE, COMMEN_CONTENT);
+		setSinaContent(COMMEN_TITILE, COMMEN_CONTENT);
+		mController.openShare(activity, false);
 	}
 	
 	/**
 	 * 分享到新浪微博
 	 * @param context
-	 * @param title 分享标题
-	 * @param content 分享内容
 	 */
-	public void shareToSina(Context context, String title, String content){
-		//设置分享内容
-		SinaShareContent sinaShareContent = new SinaShareContent();
-		sinaShareContent.setTitle(title);
-		sinaShareContent.setShareContent(content);
-		sinaShareContent.setTargetUrl(COMMEN_TARGET_URL);
-		sinaShareContent.setShareImage(mCommenShareImage);
-		mController.setShareMedia(sinaShareContent);
-		//分享
-		mController.postShare(context, SHARE_MEDIA.SINA, mShareResultListener);
+	public void shareToSina(Context context){
+		shareToSina(context, COMMEN_TITILE, COMMEN_CONTENT);
 	}
 	
 	/**
@@ -129,47 +125,11 @@ public class ShareManager{
 	}
 	
 	/**
-	 * 分享到QQ
-	 * @param context
-	 * @param title 分享标题
-	 * @param content 分享内容
-	 */
-	public void shareToQQ(Context context, String title, String content){
-		//设置分享内容
-		QQShareContent qqShareContent = new QQShareContent();
-		qqShareContent.setTitle(title);
-		qqShareContent.setShareContent(content);
-		qqShareContent.setTargetUrl(COMMEN_TARGET_URL);
-		qqShareContent.setShareImage(mCommenShareImage);
-		mController.setShareMedia(qqShareContent);
-		//分享
-		mController.postShare(context, SHARE_MEDIA.QQ, mShareResultListener);
-	}
-	
-	/**
 	 * 分享到QQ空间
 	 * @param context
 	 */
 	public void shareToQZone(Context context){
 		shareToQZone(context, COMMEN_TITILE, COMMEN_CONTENT);
-	}
-	
-	/**
-	 * 分享到QQ空间
-	 * @param context
-	 * @param title 分享标题
-	 * @param content 分享内容
-	 */
-	public void shareToQZone(Context context, String title, String content){
-		//设置分享内容
-		QZoneShareContent qzoneShareContent = new QZoneShareContent();
-		qzoneShareContent.setTitle(title);
-		qzoneShareContent.setShareContent(content);
-		qzoneShareContent.setTargetUrl(COMMEN_TARGET_URL);
-		qzoneShareContent.setShareImage(mCommenShareImage);
-		mController.setShareMedia(qzoneShareContent);
-		//分享
-		mController.postShare(context, SHARE_MEDIA.QZONE, mShareResultListener);
 	}
 	
 	/**
@@ -181,12 +141,112 @@ public class ShareManager{
 	}
 	
 	/**
+	 * 分享到微信朋友圈
+	 * @param context
+	 */
+	public void shareToWXFriends(Context context){
+		shareToWXFriends(context, COMMEN_TITILE, COMMEN_CONTENT);
+	}
+	
+	/**
+	 * 分享到新浪微博
+	 * @param context
+	 * @param title 分享标题
+	 * @param content 分享内容
+	 */
+	public void shareToSina(Context context, String title, String content){
+		setSinaContent(title, content);
+		//分享
+		mController.postShare(context, SHARE_MEDIA.SINA, mShareResultListener);
+	}
+
+	/**
+	 * 设置分享到新浪微博的内容
+	 * @param title
+	 * @param content
+	 */
+	private void setSinaContent(String title, String content) {
+		//设置分享内容
+		SinaShareContent sinaShareContent = new SinaShareContent();
+		sinaShareContent.setTitle(title);
+		sinaShareContent.setShareContent(content);
+		sinaShareContent.setTargetUrl(COMMEN_TARGET_URL);
+		sinaShareContent.setShareImage(mCommenShareImage);
+		mController.setShareMedia(sinaShareContent);
+	}
+	
+	/**
+	 * 分享到QQ
+	 * @param context
+	 * @param title 分享标题
+	 * @param content 分享内容
+	 */
+	public void shareToQQ(Context context, String title, String content){
+		setQQContent(title, content);
+		//分享
+		mController.postShare(context, SHARE_MEDIA.QQ, mShareResultListener);
+	}
+
+	/**
+	 * 设置分享到QQ的内容
+	 * @param title
+	 * @param content
+	 */
+	private void setQQContent(String title, String content) {
+		//设置分享内容
+		QQShareContent qqShareContent = new QQShareContent();
+		qqShareContent.setTitle(title);
+		qqShareContent.setShareContent(content);
+		qqShareContent.setTargetUrl(COMMEN_TARGET_URL);
+		qqShareContent.setShareImage(mCommenShareImage);
+		mController.setShareMedia(qqShareContent);
+	}
+	
+	/**
+	 * 分享到QQ空间
+	 * @param context
+	 * @param title 分享标题
+	 * @param content 分享内容
+	 */
+	public void shareToQZone(Context context, String title, String content){
+		setQzoneContent(title, content);
+		//分享
+		mController.postShare(context, SHARE_MEDIA.QZONE, mShareResultListener);
+	}
+
+	/**
+	 * 设置分享到QQ空间的内容
+	 * @param title
+	 * @param content
+	 */
+	private void setQzoneContent(String title, String content) {
+		//设置分享内容
+		QZoneShareContent qzoneShareContent = new QZoneShareContent();
+		qzoneShareContent.setTitle(title);
+		qzoneShareContent.setShareContent(content);
+		qzoneShareContent.setTargetUrl(COMMEN_TARGET_URL);
+		qzoneShareContent.setShareImage(mCommenShareImage);
+		mController.setShareMedia(qzoneShareContent);
+	}
+	
+	/**
 	 * 分享到微信
 	 * @param context
 	 * @param title 分享标题
 	 * @param content 分享内容
 	 */
 	public void shareToWeixin(Context context, String title, String content){
+		setWeixinContent(title, content);
+		//分享
+		mController.postShare(context, SHARE_MEDIA.WEIXIN, mShareResultListener);
+	}
+
+	/**
+	 * 设置分享到微信的内容
+	 * @param title
+	 * @param content
+	 */
+	private void setWeixinContent(String title, String content) {
 		//设置分享内容
 		WeiXinShareContent weixinShareContent = new WeiXinShareContent();
 		weixinShareContent.setTitle(title);
@@ -194,16 +254,6 @@ public class ShareManager{
 		weixinShareContent.setTargetUrl(COMMEN_TARGET_URL);
 		weixinShareContent.setShareImage(mCommenShareImage);
 		mController.setShareMedia(weixinShareContent);
-		//分享
-		mController.postShare(context, SHARE_MEDIA.WEIXIN, mShareResultListener);
-	}
-	
-	/**
-	 * 分享到微信朋友圈
-	 * @param context
-	 */
-	public void shareToWXFriends(Context context){
-		shareToWXFriends(context, COMMEN_TITILE, COMMEN_CONTENT);
 	}
 	
 	/**
@@ -213,6 +263,17 @@ public class ShareManager{
 	 * @param content 分享内容
 	 */
 	public void shareToWXFriends(Context context, String title, String content){
+		setWXFriendsContent(title, content);
+		//分享
+		mController.postShare(context, SHARE_MEDIA.WEIXIN_CIRCLE, mShareResultListener);
+	}
+
+	/**
+	 * 设置微信朋友圈分享的内容
+	 * @param title
+	 * @param content
+	 */
+	private void setWXFriendsContent(String title, String content) {
 		//设置分享内容
 		CircleShareContent circleShareContent = new CircleShareContent();
 		circleShareContent.setTitle(title);
@@ -220,8 +281,6 @@ public class ShareManager{
 		circleShareContent.setTargetUrl(COMMEN_TARGET_URL);
 		circleShareContent.setShareImage(mCommenShareImage);
 		mController.setShareMedia(circleShareContent);
-		//分享
-		mController.postShare(context, SHARE_MEDIA.WEIXIN_CIRCLE, mShareResultListener);
 	}
 	
 	/**

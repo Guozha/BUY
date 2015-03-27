@@ -38,7 +38,7 @@
 	                android:textColor="@color/color_app_base_4"
 	                android:textSize="@dimen/dimen_global_60sp"
 	                android:text="08"/>
-	            
+	            	
 	            <LinearLayout 
 	                android:layout_width="wrap_content"
 	                android:layout_height="match_parent"
@@ -149,6 +149,7 @@
 	            android:gravity="center">
 	            
 	            <TextView 
+	                android:id="@+id/mpage_quick_menu_1"
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:textSize="@dimen/dimen_global_14sp"
@@ -158,32 +159,7 @@
 	                android:text="水果"/>
 	            
 	            <TextView 
-	                android:layout_width="55dip"
-	                android:layout_height="30dip"
-	                android:layout_marginLeft="16dip"
-	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="@color/color_app_base_2"
-	                android:gravity="center"
-	                android:background="@drawable/main_tag_backgroung"
-	                android:text="水果"/>
-        	</LinearLayout>
-        	
-	        <LinearLayout 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="20dip"
-	            android:gravity="center">
-	            
-	            <TextView 
-	                android:layout_width="55dip"
-	                android:layout_height="30dip"
-	                android:textSize="@dimen/dimen_global_14sp"
-	                android:textColor="@color/color_app_base_2"
-	                android:gravity="center"
-	                android:background="@drawable/main_tag_backgroung"
-	                android:text="水果"/>
-	            
-	            <TextView 
+	                android:id="@+id/mpage_quick_menu_2"
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:layout_marginLeft="16dip"
@@ -201,6 +177,35 @@
 	            android:gravity="center">
 	            
 	            <TextView 
+	                android:id="@+id/mpage_quick_menu_3"
+	                android:layout_width="55dip"
+	                android:layout_height="30dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="@color/color_app_base_2"
+	                android:gravity="center"
+	                android:background="@drawable/main_tag_backgroung"
+	                android:text="水果"/>
+	            
+	            <TextView 
+	                android:id="@+id/mpage_quick_menu_4"
+	                android:layout_width="55dip"
+	                android:layout_height="30dip"
+	                android:layout_marginLeft="16dip"
+	                android:textSize="@dimen/dimen_global_14sp"
+	                android:textColor="@color/color_app_base_2"
+	                android:gravity="center"
+	                android:background="@drawable/main_tag_backgroung"
+	                android:text="水果"/>
+        	</LinearLayout>
+        	
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dip"
+	            android:gravity="center">
+	            
+	            <TextView 
+	                android:id="@+id/mpage_quick_menu_5"
 	                android:layout_width="55dip"
 	                android:layout_height="30dip"
 	                android:textSize="@dimen/dimen_global_14sp"

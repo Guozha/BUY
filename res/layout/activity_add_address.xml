@@ -64,7 +64,6 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="18423429323"
             android:drawableRight="@drawable/main_address_edit"
             android:background="@color/color_app_base_5"
             android:textColorHint="@color/color_app_base_8"

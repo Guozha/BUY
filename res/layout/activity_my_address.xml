@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
     android:orientation="vertical" >
     
 	<ListView 
 	    android:id="@+id/my_address_list"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="0dip"
+	    android:layout_weight="1"
 	    android:divider="@color/color_app_base_7"
-	    android:background="@color/color_app_base_5"
+	    android:background="@color/color_app_base_6"
 	    android:dividerHeight="1dip"/>
 	
 	<Button 
