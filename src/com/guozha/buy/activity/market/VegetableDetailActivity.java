@@ -13,6 +13,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.CookBookListAdapter;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -54,10 +55,11 @@ public class VegetableDetailActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + "", new Listener<String>() {
+		RequestParam paramPath = new RequestParam("");
+		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, 
+				new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				// TODO Auto-generated method stub
 				
 			}
 		});

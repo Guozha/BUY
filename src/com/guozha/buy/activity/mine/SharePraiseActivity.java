@@ -12,6 +12,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -76,8 +77,10 @@ public class SharePraiseActivity extends BaseActivity{
 	 */
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("account/invite/info")
+		.setParams("userId", userId);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + "account/invite/info?userId=" + userId, new Listener<JSONObject>() {
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {

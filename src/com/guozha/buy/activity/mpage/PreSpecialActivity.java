@@ -8,6 +8,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -31,7 +32,8 @@ public class PreSpecialActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		String paramPath = "goods/special?frontTypeId=";
+		RequestParam paramPath = new RequestParam("goods/special")
+		.setParams("frontTypeId", "");
 		HttpManager.getInstance(this).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 			@Override

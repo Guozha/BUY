@@ -16,6 +16,7 @@ import com.guozha.buy.adapter.TicketListAdapter;
 import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -66,9 +67,10 @@ public class MyTicketActivity extends BaseActivity{
 	 */
 	private void setTicketData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		LogUtil.e("userId = " + userId);
+		RequestParam paramPath = new RequestParam("account/ticket/list")
+		.setParams("userId", userId);
 		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + "account/ticket/list?userId=" + userId, new Listener<String>() {
+				HttpManager.URL + paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  

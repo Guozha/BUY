@@ -126,7 +126,9 @@ public class HttpManager {
 		ImageListener listener = 
 				ImageLoader.getImageListener(
 						imageview, defaultImageResId, errorImageResId);
+		//这里的第三个和第四个参数是图片允许的最大宽度和高度
 		//imageLoader.get(url, listener, 0, 0);
+		if(url == null) return;
 		imageLoader.get(url, listener);
 	}
 	

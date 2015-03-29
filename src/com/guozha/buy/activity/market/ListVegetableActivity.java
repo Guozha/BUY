@@ -26,6 +26,7 @@ import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.ItemSaleInfoPage;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -158,14 +159,11 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	}
 	
 	private void initData(){
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("frontTypeId", "1");
-		params.put("addressId", "");
-		params.put("pageNum", String.valueOf(1));
-		params.put("pageSize", String.valueOf(24));
-		paramPath = "goods/general/typeList" + HttpUtil.generatedAddress(params);
+		RequestParam paramPath = new RequestParam("goods/general/typeList")
+		.setParams("frontTypeId", "1")
+		.setParams("addressId", "")
+		.setParams("pageNum", String.valueOf(1))
+		.setParams("pageSize", String.valueOf(24));
 		
 		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
 
@@ -176,8 +174,6 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 				
 			}
 		});
-		
-		
 		
 		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
 		

@@ -32,6 +32,8 @@ import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -135,13 +137,11 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 		
 		int userId = ConfigManager.getInstance().getUserId();
 		if(userId == -1) return;
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("userId", String.valueOf(userId));
-		params.put("searchType", "1"); //"1"表示进行中订单
-		//TODO 这里是分页加载的
-		params.put("pageNum", String.valueOf(mCurrentPage + 1));
-		params.put("pageSize", PAGE_SIZE);
-		String paramPath = "order/list" + HttpUtil.generatedAddress(params);
+		RequestParam paramPath = new RequestParam("order/list")
+		.setParams("userId", String.valueOf(userId))
+		.setParams("searchType", "1")
+		.setParams("pageNum", String.valueOf(mCurrentPage + 1))
+		.setParams("pageSize", PAGE_SIZE);
 		HttpManager.getInstance(getActivity()).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override

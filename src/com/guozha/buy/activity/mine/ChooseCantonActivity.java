@@ -21,6 +21,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -88,8 +89,10 @@ public class ChooseCantonActivity extends BaseActivity{
 	 * 请求区列表
 	 */
 	private void requestCountryList(){
+		RequestParam paramPath = new RequestParam("account/address/listArea")
+		.setParams("parentAreaId", 2);
 		HttpManager.getInstance(ChooseCantonActivity.this).volleyRequestByPost(
-			HttpManager.URL + "account/address/listArea?parentAreaId=2" , 
+			HttpManager.URL + paramPath, 
 			new Listener<String>() {
 				@Override
 				public void onResponse(String response) {

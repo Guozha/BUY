@@ -32,6 +32,7 @@ import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
@@ -142,10 +143,11 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void requestAddressBuilding(){
 		String token = ConfigManager.getInstance().getUserToken();
-		LogUtil.e("countyId = " + mCountryId);
-		LogUtil.e("token = " + token);
+		RequestParam paramPath = new RequestParam("account/address/listBuilding")
+		.setParams("token", token)
+		.setParams("countyId", mCountryId);
 		HttpManager.getInstance(AddAddressActivity.this).volleyRequestByPost(
-			HttpManager.URL + "account/address/listBuilding?token=" + token + "&&countyId=" + mCountryId , 
+			HttpManager.URL + paramPath, 
 			new Listener<String>() {
 				@Override
 				public void onResponse(String response) {

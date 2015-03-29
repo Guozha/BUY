@@ -18,6 +18,8 @@ import com.guozha.buy.R;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
+import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
 
 /**
@@ -92,19 +94,25 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		    	holderEntry.price = (TextView) cells.get(i).findViewById(R.id.vegetable_cell_price);
 		    	holder.cells.add(holderEntry);
 		    }
+		    holder.typeName = (TextView) convertView.findViewById(R.id.item_type_name);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
 		MarketHomeItem marketHomeItem = mMarketHomeItems.get(position);
+		holder.typeName.setText(marketHomeItem.getTypeName());
 		List<ItemSaleInfo> itemSaleInfos = marketHomeItem.getGoodsList();
 		for(int i = 0; i < itemSaleInfos.size(); i++){
 			HolderEntry holderEntry = holder.cells.get(i);
+			ItemSaleInfo itemSaleInfo = itemSaleInfos.get(i);
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
-			holderEntry.productName.setText(itemSaleInfos.get(i).getGoodsName());
-			holderEntry.price.setText(itemSaleInfos.get(i).getUnitPrice()
-					+ itemSaleInfos.get(i).getUnit());
+			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
+			holderEntry.price.setText(itemSaleInfo.getUnitPrice()
+					+ itemSaleInfo.getUnit());
+			HttpManager.getInstance(CustomApplication.getContext()).volleyImageRequest(
+					HttpManager.URL + itemSaleInfo.getGoodsImg(), 
+					holderEntry.image, R.drawable.ic_launcher, R.drawable.ic_launcher);
 		}
 		
 		return convertView;
@@ -118,7 +126,8 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	
 	
 	static class ViewHolder{
-		List<HolderEntry> cells;
+		private TextView typeName;
+		private List<HolderEntry> cells;
 	}
 	
 	static class HolderEntry{

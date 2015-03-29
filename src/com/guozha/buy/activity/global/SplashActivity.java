@@ -19,6 +19,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.NetManager;
@@ -127,7 +128,7 @@ public class SplashActivity extends Activity{
 		//获取菜单信息
 		initDataManager.getGoodsItemType(null);
 		//获取逛菜场首页数据
-		initDataManager.getMarketHomePage(null, 1, 6);
+		initDataManager.getMarketHomePage(null, 1, 4);
 	}
 	
 	/**
@@ -136,12 +137,9 @@ public class SplashActivity extends Activity{
 	 * @param pwd
 	 */
 	private void requestLogin(String phoneNum, String pwd) {
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("mobileNo", phoneNum);
-		params.put("passwd", pwd);
-		paramPath = "account/login" + HttpUtil.generatedAddress(params);
+		RequestParam paramPath = new RequestParam("account/login")
+		.setParams("mobileNo", phoneNum)
+		.setParams("passwd", pwd);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

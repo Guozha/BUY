@@ -23,6 +23,7 @@ import com.guozha.buy.adapter.SettingListAdapter;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -136,8 +137,10 @@ public class SettingActivity extends BaseActivity{
 			ToastUtil.showToast(SettingActivity.this, "难道出错了？我好像还没登录呦……");
 			return;
 		}
+		RequestParam paramPath = new RequestParam("account/logout")
+		.setParams("token", token);
 		HttpManager.getInstance(SettingActivity.this)
-			.volleyJsonRequestByPost(HttpManager.URL + "account/logout?token=" + token, 
+			.volleyJsonRequestByPost(HttpManager.URL + paramPath,
 				new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {

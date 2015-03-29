@@ -11,7 +11,7 @@ public class ItemSaleInfo implements Serializable{
 	private String goodsName;	//商品名称
 	private int unitPrice;		//单价
 	private String unit;		//计量单位
-	private byte[] goodsImg;	//商品图片
+	private String goodsImg;	//商品图片
 	private String goodsProp;	//商品性质
 	
 	public int getGoodsId() {
@@ -38,10 +38,10 @@ public class ItemSaleInfo implements Serializable{
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 	public String getGoodsProp() {

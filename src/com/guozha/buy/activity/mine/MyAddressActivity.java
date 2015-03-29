@@ -21,6 +21,7 @@ import com.guozha.buy.adapter.MyAdressListAdapter;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -102,8 +103,10 @@ public class MyAddressActivity extends BaseActivity{
 		if(userId == -1){
 			ToastUtil.showToast(MyAddressActivity.this, "您的身份验证存在问题");
 		}
+		RequestParam paramPath = new RequestParam("account/address/list")
+		.setParams("userId", userId);
 		HttpManager.getInstance(MyAddressActivity.this).volleyRequestByPost(
-			HttpManager.URL + "account/address/list?userId=" + userId, new Listener<String>() {
+			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  

@@ -2,8 +2,13 @@ package com.guozha.buy.activity.global;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -23,6 +28,25 @@ public class SearchActivity extends BaseActivity{
 		
 		initActionBar(getActionBar());
 		
+		initView();
+	}
+	
+	private void initView(){
+		findViewById(R.id.search_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RequestParam paramPath = new RequestParam("/search")
+				.setParams("word", "中文问题")
+				.setParams("addressId", "");
+				HttpManager.getInstance(SearchActivity.this).volleyRequestByPost(HttpManager.URL + paramPath, 
+					new Listener<String>() {
+						@Override
+						public void onResponse(String response) {
+							
+						}
+				});
+			}
+		});
 	}
 	
 	/**

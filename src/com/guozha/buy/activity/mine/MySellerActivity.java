@@ -16,6 +16,7 @@ import com.guozha.buy.adapter.MySellerListAdapter;
 import com.guozha.buy.entry.mine.seller.Seller;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -58,8 +59,10 @@ public class MySellerActivity extends BaseActivity{
 	
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("account/myseller/list")
+		.setParams("userId", userId);
 		HttpManager.getInstance(MySellerActivity.this).volleyRequestByPost(
-			HttpManager.URL + "account/myseller/list?userId=" + userId, new Listener<String>() {
+			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  

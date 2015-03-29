@@ -1,5 +1,6 @@
 package com.guozha.buy.global.net;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,12 @@ public class RequestParam {
 	@Override
 	public String toString() {
 		mParamsPath = mUri + HttpUtil.generatedAddress(mParams);
-		return mParamsPath;
+		String resultPath = "";
+		try {
+			resultPath = new String(mParamsPath.getBytes("UTF-8"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return resultPath;
 	}
 }
