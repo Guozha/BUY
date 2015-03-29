@@ -16,11 +16,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
+import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
 import com.guozha.buy.entry.market.GoodsItemType;
@@ -106,6 +108,19 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
             
         });
 		
+		mMenuList.setOnChildClickListener(new OnChildClickListener() {
+			
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				//TODO 暂时这样写着，为了测试接口
+				Intent intent = new Intent(getActivity(), ListVegetableActivity.class);
+				startActivity(intent);
+				
+				return false;
+			}
+		});
+		
 		
 		setGoodsItemTypeData();
 		
@@ -117,6 +132,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mItemList.addHeaderView(header);
 		
 		mItemList.setOnScrollListener(this);
+		
+		setMarketHomeData();
 		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
@@ -166,6 +183,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mMenuList.setAdapter(mMenuExpandListAapter);
 	}
 	
+	/**
+	 * 设置逛菜场首页数据
+	 */
 	private void setMarketHomeData(){
 		if(mDataManager == null){
 			return;
@@ -175,7 +195,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mTotalPageSize = marketHomePage.getPageCount();
 		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 		mMarketHomeItems.addAll(marketHomeItems);
-		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems);
+		mMarketItemListAdapter = new MarketItemListAdapter(getActivity(), mMarketHomeItems);
 		if(mItemList == null) return;
 		mItemList.setAdapter(mMarketItemListAdapter);
 	}

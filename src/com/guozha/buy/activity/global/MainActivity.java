@@ -67,8 +67,14 @@ public class MainActivity extends FragmentActivity{
 			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
 				fragment = mFragments.get(1);
 				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
+				fragment = mFragments.get(1);
+				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
 				fragment = mFragments.get(3);
+				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
+				fragment = mFragments.get(0);
 				break;
 			default:
 				break;
@@ -127,6 +133,8 @@ public class MainActivity extends FragmentActivity{
 				MainPageInitDataManager.getInstance(CustomApplication.getContext());
 		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
 		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
+		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
+		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
 	}
 	
 	/**

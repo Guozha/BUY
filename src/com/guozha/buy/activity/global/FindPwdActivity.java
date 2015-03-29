@@ -19,6 +19,7 @@ import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -153,11 +154,10 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void requestFindPwd(String phoneNum, String pwd, String validNum) {
 		//可以提交修改了
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("mobileNo", phoneNum);
-		params.put("passwd", pwd);
-		params.put("checkCode", validNum);
-		String paramPath = "account/updatePasswd" + HttpUtil.generatedAddress(params);
+		RequestParam paramPath = new RequestParam("account/updatePasswd")
+		.setParams("mobileNo", phoneNum)
+		.setParams("passwd", pwd)
+		.setParams("checkCode", validNum);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override
@@ -184,7 +184,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 	 * @param phoneNum
 	 */
 	private void requestValidateNum(String phoneNum) {
-		String paramPath = "account/checkCodeForResetPasswd?mobileNo=" + phoneNum;
+		RequestParam paramPath = new RequestParam("account/checkCodeForResetPasswd")
+		.setParams("mobileNo", phoneNum);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

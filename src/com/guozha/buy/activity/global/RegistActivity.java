@@ -20,6 +20,7 @@ import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
@@ -143,14 +144,11 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	 * @param pwd
 	 * @param validNum
 	 */
-	private void requestRegist(String phoneNum, String pwd, String validNum) {
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("mobileNo", phoneNum);
-		params.put("passwd", pwd);
-		params.put("checkCode", validNum);
-		paramPath = "account/register" + HttpUtil.generatedAddress(params);
+	private void requestRegist(String phoneNum, String pwd, String validNum) {		
+		RequestParam paramPath = new RequestParam("account/register")
+		.setParams("mobileNo", phoneNum)
+		.setParams("passwd", pwd)
+		.setParams("checkCode", validNum);
 		//TODO 可以登录了
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
@@ -178,11 +176,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	 * @param phoneNum
 	 */
 	private void obtainPoneValidate(String phoneNum) {
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("mobileNo", phoneNum);
-		paramPath = "account/checkCodeForRegister" + HttpUtil.generatedAddress(params);
+		RequestParam paramPath = new RequestParam("account/checkCodeForRegister")
+		.setParams("mobileNo", phoneNum);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

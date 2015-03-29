@@ -120,10 +120,14 @@ public class SplashActivity extends Activity{
 		if(mobileNum != null && pwd != null){
 			requestLogin(mobileNum, pwd);
 		}
+		//获取一级类目
+		initDataManager.getQuickMenus(null);
 		//获取账户信息
 		initDataManager.getAccountInfo(null);
 		//获取菜单信息
 		initDataManager.getGoodsItemType(null);
+		//获取逛菜场首页数据
+		initDataManager.getMarketHomePage(null, 1, 6);
 	}
 	
 	/**

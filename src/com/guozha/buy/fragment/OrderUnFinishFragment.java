@@ -137,7 +137,7 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 		if(userId == -1) return;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userId", String.valueOf(userId));
-		params.put("searchType", "1");
+		params.put("searchType", "1"); //"1"表示进行中订单
 		//TODO 这里是分页加载的
 		params.put("pageNum", String.valueOf(mCurrentPage + 1));
 		params.put("pageSize", PAGE_SIZE);

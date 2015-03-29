@@ -22,6 +22,7 @@ import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -124,8 +125,19 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	
 	@Override
 	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		// TODO Auto-generated method stub
-		
+		mDataManager = dataManager;
+		switch (handlerType) {
+		case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:  //一级菜单
+			List<QuickMenu> quickMenu = mDataManager.getQuickMenus(null);
+			if(quickMenu == null) return;
+			List<QuickMenu> defaultQuickMenu = new ArrayList<QuickMenu>();
+			for(int i =0; i < quickMenu.size(); i++){
+				if(i >= 5) return;
+				defaultQuickMenu.add(quickMenu.get(i));
+			}
+			ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
+			break;
+		}
 	}
 	
 	@Override

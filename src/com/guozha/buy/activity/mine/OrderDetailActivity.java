@@ -50,26 +50,7 @@ public class OrderDetailActivity extends BaseActivity{
 	private void initData(){
 		mOrderItems = new ArrayList<CartBaseItem>();
 		
-		//添加5个菜谱
-		for(int i = 0; i < 5; i++){
-			List<CartCookMaterial> cookMaterials = new ArrayList<CartCookMaterial>();
-			for(int j = 0; j < 5; j++){
-				CartCookMaterial cookMaterial = new CartCookMaterial(j + "", "西红柿", "3", "两");
-				cookMaterials.add(cookMaterial);
-			}
-			CartCookItem cartCookItem = new CartCookItem(
-					i + "", "西红柿炒鸡蛋", 1, "份", "5.7", cookMaterials);
-			mOrderItems.add(cartCookItem);
-		}
-		
-		//添加标题
-		mOrderItems.add(new CartBaseItem(null, "逛菜场", -1, null, null, CartItemType.undefine));
-		
-		//添加10个逛菜场
-		for(int i = 0; i < 10; i++){
-			CartMarketItem cartMarketItem = new CartMarketItem(i + "", "新鲜猪肉", 14, "斤", "45.9");
-			mOrderItems.add(cartMarketItem);
-		}
+		//TODO 参考购物车显示
 	}
 	
 	@Override

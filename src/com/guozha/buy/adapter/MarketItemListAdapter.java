@@ -18,6 +18,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 逛菜场主界面条目列表
@@ -32,6 +33,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	private LayoutInflater mInflater;
 	
 	public MarketItemListAdapter(Context context, List<MarketHomeItem> marketHomeItems){
+		if(context == null) return;
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mMarketHomeItems = marketHomeItems;
@@ -80,6 +82,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		    cells.add(cell6);
 		 
 		    HolderEntry holderEntry;
+		    holder.cells = new ArrayList<MarketItemListAdapter.HolderEntry>();
 		    for(int i = 0; i < 6; i++){
 		    	cells.get(i).setOnClickListener(this);
 		    	holderEntry = new HolderEntry();
@@ -124,10 +127,5 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		private TextView productName;
 		private TextView price;
 	}
-
-
-
-
-
 
 }

@@ -1,11 +1,15 @@
 package com.guozha.buy.entry.cart;
 
+import java.io.Serializable;
+
 /**
  * 购物车列表的基类
  * @author PeggyTong
  *
  */
-public class CartBaseItem {
+public class CartBaseItem implements Serializable{
+	
+	private static final long serialVersionUID = -8805063937649000000L;
 	
 	public enum CartItemType{
 		CookBook,
@@ -13,63 +17,78 @@ public class CartBaseItem {
 		undefine
 	}
 
-	private String itemId;
-	private String itemName;  //材料名称
-	private int itemCount;     //重量
-	private String itemUnit; //质量单位
-	private String itemPrice; //价格
+	private int cartId;    		//明细id
+	private String goodsName;  	//商品名称
+	private int amount;			//份量
+	private String unit;		//计量单位
+	private int unitPrice;		//单价
+	private int price;			//价格
+	//TODO 该参数有可能变化
+	private String cartStatus;	//状态 0失效、1可用
 	private CartItemType itemType;
 	
+	public CartBaseItem(){ }
 	
-	
-	public CartBaseItem(String itemId, String itemName, int itemCount,
-			String itemUnit, String itemPrice, CartItemType itemType) {
+	public CartBaseItem(int cartId, String goodsName, int amount, String unit,
+			int unitPrice, int price, String cartStatus, CartItemType itemType) {
 		super();
-		this.itemId = itemId;
-		this.itemName = itemName;
-		this.itemCount = itemCount;
-		this.itemUnit = itemUnit;
-		this.itemPrice = itemPrice;
-		this.itemType = itemType;
+		this.cartId = cartId;
+		this.goodsName = goodsName;
+		this.amount = amount;
+		this.unit = unit;
+		this.unitPrice = unitPrice;
+		this.price = price;
+		this.cartStatus = cartStatus;
 	}
 	
-	public String getItemId() {
-		return itemId;
+	public int getCartId() {
+		return cartId;
 	}
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
 	}
-	public String getItemName() {
-		return itemName;
-	}
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-	public int getItemCount() {
-		return itemCount;
-	}
-	public void setItemCount(int itemCount) {
-		this.itemCount = itemCount;
-	}
-	public String getItemUnit() {
-		return itemUnit;
-	}
-	public void setItemUnit(String itemUnit) {
-		this.itemUnit = itemUnit;
+	
+	public String getGoodsName() {
+		return goodsName;
 	}
 
-	public String getItemPrice() {
-		return itemPrice;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
 
-	public void setItemPrice(String itemPrice) {
-		this.itemPrice = itemPrice;
+	public int getAmount() {
+		return amount;
 	}
-
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public int getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getCartStatus() {
+		return cartStatus;
+	}
+	public void setCartStatus(String cartStatus) {
+		this.cartStatus = cartStatus;
+	}
 	public CartItemType getItemType() {
 		return itemType;
 	}
-
 	public void setItemType(CartItemType itemType) {
 		this.itemType = itemType;
 	}

@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.android.volley.Response.Listener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.ChooseQuickMenuListAdapter;
 import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -25,23 +31,34 @@ public class ChooseMenuActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "ChooseMenuPage";
 	
+	private static final int HAND_DATA_COMPLETED = 0x0001;
+	
 	private GridView mChooseList;
 	
-	private List<QuickMenu> mQuickMenus;
+	private List<QuickMenu> mQuickMenus = new ArrayList<QuickMenu>();
 	
 	private List<String> mChoosedMenusId = new ArrayList<String>();
 	
 	private ChooseQuickMenuListAdapter mChooseMenuListAdapter;
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_DATA_COMPLETED:
+				initQuickMenuData();
+				break;
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_menu);
 		customActionBarStyle();
-		initQuickMenuData();
 		initView();
+		initData();
 		setResult(0);
-		//initData();
 	}
 	
 	/**
@@ -66,24 +83,39 @@ public class ChooseMenuActivity extends BaseActivity{
 				mChoosedMenusId.add(String.valueOf(choosedQuickMenus.get(i).getMenuId()));
 			}
 		}
-		
-	    mQuickMenus = new ArrayList<QuickMenu>();
-		QuickMenu quickMenu;
-		for(int i = 0; i < 15; i++){
-			quickMenu = new QuickMenu(i, "水果" + i);
-			mQuickMenus.add(quickMenu);
-		}
+		mChooseMenuListAdapter = new ChooseQuickMenuListAdapter(this, mQuickMenus, mChoosedMenusId);
+		mChooseList.setAdapter(mChooseMenuListAdapter);
 	}
-
-
 	
 	/**
 	 * 初始化UI
 	 */
 	private void initView(){
 		mChooseList = (GridView) findViewById(R.id.choose_menu_list);
-		mChooseMenuListAdapter = new ChooseQuickMenuListAdapter(this, mQuickMenus, mChoosedMenusId);
-		mChooseList.setAdapter(mChooseMenuListAdapter);
+	}
+	
+	/**
+	 * 初始化数据
+	 */
+	private void initData(){
+		String paramsPath = "goods/frontType/typeList?frontTypeId=";
+		HttpManager.getInstance(this).volleyRequestByPost(
+				HttpManager.URL + paramsPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				List<GoodsItemType> goodsItemTypes = 
+						gson.fromJson(response, new TypeToken<List<GoodsItemType>>() { }.getType());
+				QuickMenu quickMenu;
+				for(int i = 0; i < goodsItemTypes.size(); i++){
+					int id = goodsItemTypes.get(i).getFrontTypeId();
+					String shortName = goodsItemTypes.get(i).getShortName();
+					quickMenu = new QuickMenu(id, shortName);
+					mQuickMenus.add(quickMenu);
+				}
+				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+			}
+		});
 	}
 	
 	@Override

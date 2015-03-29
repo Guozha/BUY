@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.CookBookListAdapter;
+import com.guozha.buy.global.net.HttpManager;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -32,8 +34,13 @@ public class VegetableDetailActivity extends BaseActivity{
 		setContentView(R.layout.activity_vegetable_detail);
 		
 		initView();
+		
+		initData();
 	}
 	
+	/**
+	 * 初始化View
+	 */
 	private void initView(){
 		mConnCookBookList = (ListView) 
 				findViewById(R.id.vegetable_connect_cookbook_list);
@@ -44,6 +51,16 @@ public class VegetableDetailActivity extends BaseActivity{
 		mItemPrice = (TextView) findViewById(R.id.vegetable_detail_item_price);
 		
 		setTextColor();
+	}
+	
+	private void initData(){
+		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + "", new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	/**

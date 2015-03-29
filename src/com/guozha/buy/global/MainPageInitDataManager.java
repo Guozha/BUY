@@ -1,6 +1,7 @@
 package com.guozha.buy.global;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,10 +10,12 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 
 /**
@@ -25,6 +28,8 @@ public class MainPageInitDataManager {
 	public static final int HAND_INITDATA_MSG_ACCOUNTINFO = 0x0001;  //账户信息
 	public static final int HAND_INITDATA_MSG_ITEMTYPE = 0x0002;  	 //菜单
 	public static final int HAND_INITDATA_MSG_MARKETHOME = 0x0003;	 //逛菜场的主页数据
+	public static final int HAND_INITDATA_MSG_FIRST_CATEGORY = 0x004;//一级类目
+	public static final int HAND_INITDATA_MSG_CART_ITEM = 0x0005;	 //购物车
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -33,6 +38,7 @@ public class MainPageInitDataManager {
 	private AccountInfo mAccountInfo;
 	private ArrayList<GoodsItemType> mGoodsItemTypes;
 	private MarketHomePage mMarketHomePage;
+	private List<QuickMenu> mQuickMenus = new ArrayList<QuickMenu>();
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -96,6 +102,22 @@ public class MainPageInitDataManager {
 	}
 	
 	/**
+	 * 获取一级类目
+	 * @param handler
+	 * @return
+	 */
+	public List<QuickMenu> getQuickMenus(Handler handler){
+		if(mQuickMenus == null){
+			requestFirstItemClass(handler);
+		}else{
+			if(handler != null){
+				handler.sendEmptyMessage(HAND_INITDATA_MSG_FIRST_CATEGORY);
+			}
+		}
+		return mQuickMenus;
+	}
+	
+	/**
 	 * 获取逛菜场首页的列表数据
 	 * @param handler
 	 * @param pageNum
@@ -127,7 +149,9 @@ public class MainPageInitDataManager {
 		String token = configManager.getUserToken();
 		int userId = configManager.getUserId();
 		if(token == null || userId == -1) return;
-	    String paramPath = "account/info?token=" + token + "&&userId=" + userId;
+	    RequestParam paramPath = new RequestParam("account/info")
+	    .setParams("token", token)
+	    .setParams("userId", userId);
 		httpManager.volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
@@ -144,7 +168,7 @@ public class MainPageInitDataManager {
 	 */
 	private void requestGoodsItemTypedData(final Handler handler){
 		HttpManager.getInstance(mContext).volleyRequestByPost(
-				HttpManager.URL + "goods/frontTypes", new Listener<String>() {
+				HttpManager.URL + "goods/frontType/list", new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -157,13 +181,51 @@ public class MainPageInitDataManager {
 	}
 	
 	/**
+	 * 获取一级类目
+	 */
+	private void requestFirstItemClass(final Handler handler){
+		String paramsPath = "goods/frontType/typeList?frontTypeId=";
+		HttpManager.getInstance(mContext).volleyRequestByPost(
+				HttpManager.URL + paramsPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				List<GoodsItemType> goodsItemTypes = 
+						gson.fromJson(response, new TypeToken<List<GoodsItemType>>() { }.getType());
+				QuickMenu quickMenu;
+				if(goodsItemTypes == null) return;
+				for(int i = 0; i < goodsItemTypes.size(); i++){
+					int id = goodsItemTypes.get(i).getFrontTypeId();
+					String shortName = goodsItemTypes.get(i).getShortName();
+					quickMenu = new QuickMenu(id, shortName);
+					mQuickMenus.add(quickMenu);
+				}
+				if(mQuickMenus == null) return;
+				List<QuickMenu> defaultQuickMenu = new ArrayList<QuickMenu>();
+				for(int i = 0; i < mQuickMenus.size(); i++){
+					if(i >= 5) break;
+					LogUtil.e("QuickName = " + mQuickMenus.get(i).getName());
+					defaultQuickMenu.add(mQuickMenus.get(i));
+				}
+				ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
+				if(handler != null){
+					handler.sendEmptyMessage(HAND_INITDATA_MSG_FIRST_CATEGORY);
+				}
+			}
+		});
+	}
+	
+	/**
 	 * 获取(简要：6条）菜品信息
 	 * @param handler
 	 */
 	private void requestGoodsBriefItemData(final Handler handler, int pageNum, int pageSize){
-		String addressId = "";;
-		String paramsPath = "generalList?addressId=" + addressId + "&&pageNum=" + pageNum + "&&pageSize=" + pageSize;
-		HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL + paramsPath, 
+		String addressId = "";
+		RequestParam paramPath = new RequestParam("goods/general/list")
+		.setParams("addressId", addressId)
+		.setParams("pageNum", pageNum)
+		.setParams("pageSize", pageSize);
+		HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL + paramPath, 
 			new Listener<String>() {
 				@Override
 				public void onResponse(String response) {

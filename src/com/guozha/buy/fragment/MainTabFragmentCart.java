@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -15,14 +16,20 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.android.volley.Response.Listener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CartItemListAdapter;
 import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
-import com.guozha.buy.entry.cart.CartCookMaterial;
 import com.guozha.buy.entry.cart.CartMarketItem;
+import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.HttpManager;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -33,48 +40,85 @@ import com.umeng.analytics.MobclickAgent;
 public class MainTabFragmentCart extends MainTabBaseFragment{
 	
 	private static final String PAGE_NAME = "CartPage";
+	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private ExpandableListView mCartList;
-	
 	private TextView mMesgTotal;
 	private TextView mMesgServerMoney;
 	private TextView mMesgFreeGap;
 	private List<CartBaseItem> mCartItems;
+	
+	private int mQuantity;		//总商品个数
+	private int mTotalPrice;	//总额
+	private int mServiceFree;	//服务费
+	private int mFreeGap;		//还差多少免服务费
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_DATA_COMPLETED:
+				updateViewData();
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
-		initData();
 		initView(view);
+		initData();
 		return view;
 	}
 	
 	private void initData(){
-		mCartItems = new ArrayList<CartBaseItem>();
-		
-		//添加5个菜谱
-		for(int i = 0; i < 5; i++){
-			List<CartCookMaterial> cookMaterials = new ArrayList<CartCookMaterial>();
-			for(int j = 0; j < 5; j++){
-				CartCookMaterial cookMaterial = new CartCookMaterial(j + "", "西红柿", "3", "两");
-				cookMaterials.add(cookMaterial);
+		int userId = ConfigManager.getInstance().getUserId();
+		String paramsPath = "cart/list?userId=" + userId;
+		HttpManager.getInstance(getActivity()).volleyRequestByPost(
+				HttpManager.URL + paramsPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				CartTotalData cartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
+				exchangeDataFormat(cartTotalData);
 			}
-			CartCookItem cartCookItem = new CartCookItem(
-					i + "", "西红柿炒鸡蛋", 1, "份", "5.7", cookMaterials);
-			mCartItems.add(cartCookItem);
-		}
-		
-		//添加标题
-		mCartItems.add(new CartBaseItem(null, "逛菜场", -1, null, null, CartItemType.undefine));
-		
-		//添加10个逛菜场
-		for(int i = 0; i < 10; i++){
-			CartMarketItem cartMarketItem = new CartMarketItem(i + "", "新鲜猪肉", 14, "斤", "45.9");
-			mCartItems.add(cartMarketItem);
-		}
+		});
 	}
-	
+
+	/**
+	 * 改变数据格式
+	 * @param cartTotalData
+	 */
+	private void exchangeDataFormat(CartTotalData cartTotalData) {
+		//数量
+		mQuantity = cartTotalData.getQuantity();
+		//总额
+		mServiceFree = cartTotalData.getTotalPrice();
+		//服务费
+		mServiceFree = cartTotalData.getServiceFee();
+		//距离免服务费还剩多少
+		mFreeGap = cartTotalData.getServiceFee() - cartTotalData.getTotalPrice();
+		
+		mCartItems = new ArrayList<CartBaseItem>();
+		List<CartCookItem> cartCookItem = cartTotalData.getMenuList();
+		List<CartMarketItem> cartMarketItem = cartTotalData.getGoodsList();
+		if(cartCookItem != null && !cartCookItem.isEmpty()){
+			mCartItems.add(new CartBaseItem(-1, "菜谱", -1, 
+					null, -1, -1, null, CartItemType.undefine));
+		}
+		mCartItems.addAll(cartCookItem);
+		//添加标题
+		if(cartMarketItem != null && !cartMarketItem.isEmpty()){
+			mCartItems.add(new CartBaseItem(-1, "逛菜场", -1, 
+					null, -1, -1, null, CartItemType.undefine));
+		}
+		mCartItems.addAll(cartMarketItem);
+		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+	}
 	
 	/**
 	 * 初始化界面
@@ -82,18 +126,26 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	 */
 	private void initView(View view){
 		if(view == null) return;
-		mCartList = (ExpandableListView) view.findViewById(R.id.expandable_cart_list);
+		mCartList = (ExpandableListView) view.findViewById(R.id.expandable_cart_list);	
+		mMesgTotal = (TextView) view.findViewById(R.id.cart_total_message);
+		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);
+		mMesgFreeGap = (TextView) view.findViewById(R.id.cart_free_money_gap);
+	}
+	
+	/**
+	 * 给视图添加数据
+	 */
+	private void updateViewData(){
+		if(mCartList == null || mCartItems == null) return;
 		mCartList.setAdapter(new CartItemListAdapter(getActivity(), mCartItems));
 		//首次全部展开
 		for (int i = 0; i < mCartItems.size(); i++) {
 		    mCartList.expandGroup(i);
 		}
-		
-		mMesgTotal = (TextView) view.findViewById(R.id.cart_total_message);
-		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);
-		mMesgFreeGap = (TextView) view.findViewById(R.id.cart_free_money_gap);
+		mMesgTotal.setText("共计" + mQuantity + "件 合计￥" + mTotalPrice);
+		mMesgServerMoney.setText("预计服务费" + mServiceFree);
+		mMesgFreeGap.setText("离免服务费还差" + mFreeGap + "元");
 		setTextColor();
-		
 	}
 	
 	@Override

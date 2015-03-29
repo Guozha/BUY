@@ -12,21 +12,15 @@ public class GoodsItemType implements Serializable{
 
 	private static final long serialVersionUID = 2292788298656313732L;
 	
-	private String frontTypeId;  	//商品ID
+	private int frontTypeId;  	//商品ID
 	private String shortName;       //类目简称
+	private String typeName;		//类目名称
 	private List<GoodsSecondItemType> frontTypeList;  //二级类目
 	
-	public GoodsItemType(String frontTypeId, String shortName,
-			List<GoodsSecondItemType> frontTypeList) {
-		super();
-		this.frontTypeId = frontTypeId;
-		this.shortName = shortName;
-		this.frontTypeList = frontTypeList;
-	}
-	public String getFrontTypeId() {
+	public int getFrontTypeId() {
 		return frontTypeId;
 	}
-	public void setFrontTypeId(String frontTypeId) {
+	public void setFrontTypeId(int frontTypeId) {
 		this.frontTypeId = frontTypeId;
 	}
 	public String getShortName() {
@@ -41,4 +35,11 @@ public class GoodsItemType implements Serializable{
 	public void setFrontTypeList(List<GoodsSecondItemType> frontTypeList) {
 		this.frontTypeList = frontTypeList;
 	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	
 }

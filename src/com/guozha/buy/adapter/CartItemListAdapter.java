@@ -16,6 +16,7 @@ import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartCookMaterial;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 购物车列表适配器
@@ -45,7 +46,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 		CartBaseItem cartBaseItem = mCartItems.get(groupPosition);
 		if(cartBaseItem.getItemType() == CartItemType.CookBook && groupPosition != 0){
 			CartCookItem cookItem = (CartCookItem) cartBaseItem;
-			return cookItem.getCookMaterials().size();
+			
+			return cookItem.getGoodsList().size();
 		}else{
 			return 0;
 		}
@@ -61,7 +63,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 		CartBaseItem cartBaseItem = mCartItems.get(groupPosition);
 		if(cartBaseItem.getItemType() == CartItemType.CookBook){
 			CartCookItem cookItem = (CartCookItem) cartBaseItem;
-			return cookItem.getCookMaterials().get(childPosition);
+			return cookItem.getGoodsList().get(childPosition);
 		}else{
 			return null;
 		}
@@ -104,7 +106,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
 		
 		
-		if(groupPosition == 0 || baseItem.getItemId() == null){
+		if(groupPosition == 0 || baseItem.getCartId() == -1){
 			holder.minus.setVisibility(View.INVISIBLE);
 			holder.num.setVisibility(View.INVISIBLE);
 			holder.plus.setVisibility(View.INVISIBLE);
@@ -113,7 +115,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_1));
 			if(groupPosition == 0){
 				holder.title.setText("菜谱");
-				
 			}else{
 				holder.title.setText("逛菜场");
 			}
@@ -124,8 +125,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 			holder.price.setVisibility(View.VISIBLE);
 			holder.close.setVisibility(View.VISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_4));
-			
-			holder.title.setText(baseItem.getItemName());
+			holder.title.setText(baseItem.getGoodsName());
 		}
 		
 		return convertView;
@@ -148,8 +148,9 @@ public class CartItemListAdapter extends BaseExpandableListAdapter{
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
 		if(baseItem.getItemType() == CartItemType.CookBook){
 			CartCookItem cartCookItem = (CartCookItem) baseItem;
-			CartCookMaterial material = cartCookItem.getCookMaterials().get(childPosition);
-			holder.title.setText(material.getMaterialName() + "  1斤");
+			CartCookMaterial material = cartCookItem.getGoodsList().get(childPosition);
+			holder.title.setText(material.getGoodsName() + "  " 
+			+ material.getAmount() + material.getUnit());
 		}
 		return convertView;
 	}

@@ -1,6 +1,9 @@
 package com.guozha.buy.entry.cart;
 
+import java.io.Serializable;
 import java.util.List;
+
+import com.guozha.buy.util.LogUtil;
 
 
 /**
@@ -8,22 +11,28 @@ import java.util.List;
  * @author PeggyTong
  *
  */
-public class CartCookItem extends CartBaseItem{
+public class CartCookItem extends CartBaseItem implements Serializable{
 
-	private List<CartCookMaterial> cookMaterials; //菜谱的材料
+	private static final long serialVersionUID = 298821125292832999L;
 	
-	public CartCookItem(String itemId, String itemName, int itemCount,
-			String itemUnit, String itemPrice, List<CartCookMaterial> cookMaterials) {
-		super(itemId, itemName, itemCount, itemUnit, itemPrice, CartBaseItem.CartItemType.CookBook);
-		this.cookMaterials = cookMaterials;
+	private List<CartCookMaterial> goodsList; //菜谱的材料
+	
+	public CartCookItem(){
+		super();
+		setItemType(CartItemType.CookBook);
+	}
+	
+	public CartCookItem(int cartId, String menuName, int amount, String unit,
+			int unitPrice, int price, String status) {
+		super(cartId, menuName, amount, unit, unitPrice, price, status, CartItemType.CookBook);
 	}
 
-	public List<CartCookMaterial> getCookMaterials() {
-		return cookMaterials;
+	public List<CartCookMaterial> getGoodsList() {
+		return goodsList;
 	}
 
-	public void setCookMaterials(List<CartCookMaterial> cookMaterials) {
-		this.cookMaterials = cookMaterials;
+	public void setGoodsList(List<CartCookMaterial> goodsList) {
+		this.goodsList = goodsList;
 	}
 }
 

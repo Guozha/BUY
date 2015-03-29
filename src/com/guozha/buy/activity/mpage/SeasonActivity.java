@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewConfiguration;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -25,7 +23,6 @@ import com.guozha.buy.entry.mpage.season.Season;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.AutoViewFlipper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -37,6 +34,10 @@ import com.umeng.analytics.MobclickAgent;
 public class SeasonActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SeasonPage";
+	
+	private static final int SEASON_PRE = 0;    //上一个季节
+	private static final int SEASON_CURRENT = 1;//当前季节
+	private static final int SEASON_NEXT = 2;	//下一个季节
 	
 	private static final int HAND_REQUEST_SEASON_COMPLETED = 0x0001; //请求时令信息完成
 	private static final int HAND_UPDATE_SEASON_PIC = 0X0002;  //更新时令图片
@@ -54,7 +55,7 @@ public class SeasonActivity extends BaseActivity{
 			switch (msg.what) {
 			case HAND_REQUEST_SEASON_COMPLETED:
 				requestSeasonImage();
-				updateSeasonAdviceList(1);
+				updateSeasonAdviceList(SEASON_CURRENT);
 				break;
 			case HAND_UPDATE_SEASON_PIC:
 				updateSeasonImage();
@@ -147,6 +148,10 @@ public class SeasonActivity extends BaseActivity{
 		Season season = mSeasonsList.get(index);
 		if(season == null) return;
 		mAdviceItem = season.getGoodsList();
+		for(int i = 0; i < mAdviceItem.size(); i++){
+			SeasonAdviceItem adviceItem = mAdviceItem.get(i);
+			LogUtil.e(adviceItem.getGoodsName());
+		}
 		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
 	}
 	

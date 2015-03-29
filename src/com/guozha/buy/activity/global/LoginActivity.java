@@ -1,8 +1,5 @@
 package com.guozha.buy.activity.global;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +17,7 @@ import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -128,14 +125,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * @param pwd
 	 */
 	private void requestLogin(String phoneNum, String pwd) {
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("mobileNo", phoneNum);
-		params.put("passwd", pwd);
-		paramPath = "account/login" + HttpUtil.generatedAddress(params);
+		RequestParam paramPaht = new RequestParam("account/login")
+		.setParams("mobileNo", phoneNum)
+		.setParams("passwd", pwd);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			HttpManager.URL + paramPaht, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {

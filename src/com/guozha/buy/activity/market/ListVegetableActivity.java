@@ -1,7 +1,9 @@
 package com.guozha.buy.activity.market;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,10 +15,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response.Listener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.VegetableListAdapter;
+import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.ItemSaleInfo;
+import com.guozha.buy.entry.market.ItemSaleInfoPage;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -48,6 +59,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_vegetable);
+		
+		customActionBarStyle("详细列表");
 		
 		mMaxDateNum = MAX_DATA_NUM;
 		
@@ -145,6 +158,27 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	}
 	
 	private void initData(){
+		Map<String, String> params;
+		String paramPath;
+		params = new HashMap<String, String>();
+		params.put("frontTypeId", "1");
+		params.put("addressId", "");
+		params.put("pageNum", String.valueOf(1));
+		params.put("pageSize", String.valueOf(24));
+		paramPath = "goods/general/typeList" + HttpUtil.generatedAddress(params);
+		
+		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
+
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				ItemSaleInfoPage itemSaleInfoPage = gson.fromJson(response, new TypeToken<ItemSaleInfoPage>() { }.getType());
+				
+			}
+		});
+		
+		
+		
 		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
 		
 		ItemSaleInfo info;

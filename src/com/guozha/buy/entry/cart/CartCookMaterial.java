@@ -1,48 +1,36 @@
 package com.guozha.buy.entry.cart;
 
+import java.io.Serializable;
+
 /**
  * 菜谱的材料
  * @author PeggyTong
  *
  */
-public class CartCookMaterial{
+public class CartCookMaterial implements Serializable{
 
-	private String materialId;   
-	private String materialName;  //材料名称
-	private String materialCount;  //材料数量
-	private String materialUnit;   //材料单位
+	private static final long serialVersionUID = 2164297757732551580L;
 	
-	public CartCookMaterial(String materialId, String materialName,
-			String materialCount, String materialUnit) {
-		super();
-		this.materialId = materialId;
-		this.materialName = materialName;
-		this.materialCount = materialCount;
-		this.materialUnit = materialUnit;
-	}
+	private String goodsName;  //材料名称
+	private String amount;  //材料数量
+	private String unit;   //材料单位
 	
-	public String getMaterialId() {
-		return materialId;
+	public String getGoodsName() {
+		return goodsName;
 	}
-	public void setMaterialId(String materialId) {
-		this.materialId = materialId;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
-	public String getMaterialName() {
-		return materialName;
+	public String getAmount() {
+		return amount;
 	}
-	public void setMaterialName(String materialName) {
-		this.materialName = materialName;
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
-	public String getMaterialCount() {
-		return materialCount;
+	public String getUnit() {
+		return unit;
 	}
-	public void setMaterialCount(String materialCount) {
-		this.materialCount = materialCount;
-	}
-	public String getMaterialUnit() {
-		return materialUnit;
-	}
-	public void setMaterialUnit(String materialUnit) {
-		this.materialUnit = materialUnit;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 }

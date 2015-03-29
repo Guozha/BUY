@@ -25,9 +25,9 @@ public class ConfigManager{
 	private static final ConfigManager instance = new ConfigManager();
 	private SharedPreferences sharedPreference;
 	
-	private Map<String, Map<String, String>> mConstantXML;
+	private Map<String, Map<String, String>> mConstantXML; //常量配置文件
 	
-	private List<QuickMenu> mQuickMenus;
+	private List<QuickMenu> mQuickMenus;				   //快捷菜单列表
 	
 	private int mUserId;
 	private String mUserToken;
