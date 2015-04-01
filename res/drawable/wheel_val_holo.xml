@@ -27,11 +27,9 @@
         <shape android:shape="rectangle" >
             <stroke
                 android:width="1dp"
-                android:color="@color/scroll_wheel_line_color" />
-            <solid 
-                android:color="#33df3411"
-                
-                />
+                android:color="#33df3411" />
+            	<solid 
+               	 	android:color="#33df3411"/>
         </shape>
     </item>
 

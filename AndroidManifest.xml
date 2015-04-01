@@ -40,7 +40,7 @@
 	    
     <application
         android:allowBackup="true"
-        android:name="com.guozha.buy.global.CustomApplication"
+        android:name="com.guozha.buy.activity.CustomApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -191,6 +191,11 @@
             android:name="com.guozha.buy.activity.mine.MyAddressActivity"
             android:screenOrientation="portrait"/>
         
+        <!-- 下单界面 -->
+        <activity 
+            android:name="com.guozha.buy.activity.cart.PlanceOrderActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 我的卖家 -->
         <activity 
             android:name="com.guozha.buy.activity.mine.MySellerActivity"
@@ -200,9 +205,7 @@
         <activity
             android:name="com.guozha.buy.debug.DebugActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            
-        </activity>
+            android:screenOrientation="portrait"></activity>
         
         <!-- 添加新地址 -->
         <activity 
@@ -222,6 +225,26 @@
         <!-- 关于我们 -->
         <activity 
             android:name="com.guozha.buy.activity.mine.AboutOurActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 特供预售的支付界面 -->
+        <activity 
+            android:name="com.guozha.buy.activity.cart.PreSpecialPayActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 支付界面 -->
+        <activity 
+            android:name="com.guozha.buy.activity.cart.PayActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 选择有效菜票-->
+        <activity 
+            android:name="com.guozha.buy.activity.cart.ChooseTicketActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 特供（预售）详情 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mpage.PreSpecialDetail"
             android:screenOrientation="portrait"></activity>
         
         <!-- *****************对话框**************** -->
@@ -251,6 +274,12 @@
             android:theme="@style/Theme.CommenDialog"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        
+        <!-- 选择地址对话框 -->
+        <activity 
+            android:name="com.guozha.buy.dialog.ChooseAddressDialog"
+            android:theme="@style/Theme.CommenDialog"
+            android:screenOrientation="portrait"></activity>
         
         <receiver android:name=".alarm.AlarmReceiver" android:process=":remote"/>
         

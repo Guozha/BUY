@@ -90,7 +90,8 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
 		
-		holder.menuText.setText(mGoodsItemType.get(groupPosition).getShortName());
+		GoodsItemType itemType = mGoodsItemType.get(groupPosition);
+		holder.menuText.setText(itemType.getTypeName());
 		
 		if(isExpanded){ //展开了
 			//holder.arrowIcon.setImageResource(R.drawable.main_menu_up);
@@ -115,9 +116,11 @@ public class MenuExpandListAapter extends AnimatedExpandableListAdapter{
 		}else{
 			holder = (ChildViewHolder) convertView.getTag();
 		}
+		
 		GoodsSecondItemType goodsSecondItemType = 
 				mGoodsItemType.get(groupPosition).getFrontTypeList().get(childPosition);
-		holder.menuText.setText(goodsSecondItemType.getShortName());
+		holder.menuText.setTag(goodsSecondItemType.getFrontTypeId() + ":" + goodsSecondItemType.getShortName());
+		holder.menuText.setText(goodsSecondItemType.getTypeName());
 		
 		return convertView;
 	}

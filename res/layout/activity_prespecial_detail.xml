@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
+    android:orientation="vertical">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<ImageView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/sale_details_img_01"
+	    android:scaleType="fitXY"/>
+	
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/color_app_base_5"
+	   	android:paddingLeft="12dip"
+    	android:paddingRight="12dip"
+	    android:orientation="vertical">
+	<TextView 
+	    android:id="@+id/prespecial_title"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/color_app_base_5"
+	    android:text="特供新鲜山东大樱桃，车厘子新鲜山东大樱桃，折子里新鲜杭州小殷桃新鲜山东大樱桃，车厘子新鲜山东大樱桃，折子里新鲜杭州小殷桃"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:paddingTop="20dip"
+	    android:paddingBottom="20dip"
+	    android:textColor="@color/color_app_base_4"/>
+	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@drawable/line_dashed"/>
+	
+	<!-- 抢购价 -->
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:gravity="center_vertical"
+	    android:orientation="horizontal">
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="抢购价:"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"/>
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="￥59.00"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/color_app_base_1"/>
+	    <Space 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"/>
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="免服务费"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"/>
+	</LinearLayout>
+	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@drawable/line_dashed"/>
+	
+	<!-- 距离结束 -->
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:background="@color/color_app_base_5"
+	    android:text="距结束：15天"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:gravity="center_vertical"
+	    android:layout_marginTop="5dip"
+	    android:textColor="@color/color_app_base_4"/>
+	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@drawable/line_dashed"/>
+	
+	<!-- 预计送达 -->
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:background="@color/color_app_base_5"
+	    android:text="预计送达：4月20日"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:gravity="center_vertical"
+	    android:textColor="@color/color_app_base_4"/>
+	</LinearLayout>
+	
+	<!-- 商品详情 -->
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:background="@color/color_app_base_5"
+	    android:text="商品详情"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:gravity="center_vertical"
+	    android:layout_marginTop="5dip"
+	    android:textColor="@color/color_app_base_4"/>
+	
+	<WebView 
+	    android:layout_width="match_parent"
+	    android:background="@color/color_app_base_6"
+	    android:layout_height="match_parent"/>
+</LinearLayout>
+</ScrollView>
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="50dip"
+    android:background="@color/color_app_base_5"
+    android:paddingLeft="40dip"
+    android:paddingRight="40dip"
+    android:paddingTop="8dip"
+    android:paddingBottom="8dip"
+    android:orientation="horizontal">
+    
+    <Button 
+        android:id="@+id/prespecial_buy_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/nomal_button_nomal_bg"
+        android:text="立即购买"
+        android:textColor="@color/color_app_base_5"
+        android:textSize="@dimen/dimen_global_16sp"/>
+</LinearLayout>
+</LinearLayout>

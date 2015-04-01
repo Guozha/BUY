@@ -47,6 +47,14 @@ public class SearchActivity extends BaseActivity{
 				});
 			}
 		});
+		
+		findViewById(R.id.cancel_button).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SearchActivity.this.finish();
+			}
+		});
 	}
 	
 	/**

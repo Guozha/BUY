@@ -19,7 +19,6 @@ import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -58,7 +57,6 @@ public class ChooseMenuActivity extends BaseActivity{
 		customActionBarStyle();
 		initView();
 		initData();
-		setResult(0);
 	}
 	
 	/**
@@ -148,7 +146,6 @@ public class ChooseMenuActivity extends BaseActivity{
 	private void setQuickMenuConfig() {
 		List<Integer> choosedMenusId = mChooseMenuListAdapter.getChoosedMenusPosition();
 		if(choosedMenusId == null) return;
-		LogUtil.e("chosedMenusId = " + choosedMenusId);
 		
 		List<QuickMenu> choosedQuickMenus = new ArrayList<QuickMenu>();
 		for(int i = 0; i < choosedMenusId.size(); i++){
@@ -176,6 +173,5 @@ public class ChooseMenuActivity extends BaseActivity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.e("onDestroy");
 	}
 }

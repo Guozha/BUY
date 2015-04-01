@@ -1,10 +1,9 @@
 package com.guozha.buy.activity.market;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,12 +21,10 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.VegetableListAdapter;
-import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.ItemSaleInfoPage;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,8 +37,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	
 	private static final String PAGE_NAME = "ListVegetable";
 	
-	private static final int MAX_DATA_NUM = 100;
-	private static final int LOADING_ITEM_COUNT = 18;
+	private static final int PAGE_ITEM_COUNT = 24;
+	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private int mMaxDateNum; //最大数据数
 	
@@ -54,16 +51,41 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	private List<ItemSaleInfo[]> mAdapterData;
 	private VegetableListAdapter mVegetableAdapter;
 	
-	private int mLastVisibleIndex;
+	private int mLastVisibleIndex;		//最后一个可见列表的下标
+	
+	private String mFrontTypeId;		//菜谱类别id
+	private String mFrontTypeName;		//菜谱类别名称
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_DATA_COMPLETED:
+				LogUtil.e("Vegetable_List_update");
+				LogUtil.e("mAdapterData = " + mAdapterData.size());
+				mVegetableAdapter.notifyDataSetChanged();
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_vegetable);
 		
-		customActionBarStyle("详细列表");
-		
-		mMaxDateNum = MAX_DATA_NUM;
+		//获取商品类别
+		Intent intent = getIntent();
+		if(intent != null){
+			Bundle bundle = intent.getExtras();
+			if(bundle != null){
+				mFrontTypeId = bundle.getString("frontTypeId");
+				mFrontTypeName = bundle.getString("frontTypeName");
+			}
+		}
+		customActionBarStyle(mFrontTypeName);
 		
 		mListView = (ListView) findViewById(R.id.list_vegetable);
 		mBottomLoadingView = getLayoutInflater().inflate(R.layout.list_paging_bottom, null);
@@ -71,13 +93,13 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		mLoadText = (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		
-		initData();
-		mVegetableAdapter = new VegetableListAdapter(this, mAdapterData);
+		mAdapterData = new ArrayList<ItemSaleInfo[]>();
+		mVegetableAdapter = new VegetableListAdapter(this, mAdapterData, mListView);
 		mListView.addFooterView(mBottomLoadingView);
 		mListView.setAdapter(mVegetableAdapter);
-		
 		mListView.setOnScrollListener(this);
 		
+		requestNewData();
 	}
 	
 	/**
@@ -86,49 +108,15 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	private void loadNewDataAndUpdate() {
 		mLoadProgressBar.setVisibility(View.VISIBLE);
 		mLoadText.setVisibility(View.GONE);
-		
-		new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				loadMoreData();  //加载更多的数据
-				mLoadText.setVisibility(View.VISIBLE);
-				mLoadProgressBar.setVisibility(View.GONE);
-				mVegetableAdapter.notifyDataSetChanged();
-			}
-		}, 2000);
+		requestNewData();
 	}
-	
-	private void loadMoreData(){
-		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
-		int count = mVegetableAdapter.getCount() * 3;
-		ItemSaleInfo info;
-		if(count + LOADING_ITEM_COUNT < mMaxDateNum){
-			for(int i = 0; i < LOADING_ITEM_COUNT; i++){
-				info = new ItemSaleInfo();
-				//info.setImageId(R.drawable.vegetable_image);
-				//info.setVegetableName("产品名称" + (count + i));
-				listData.add(info);
-			}
-		}else{
-			for (int i = count; i < mMaxDateNum; i++) {
-				info = new ItemSaleInfo();
-				//info.setImageId(R.drawable.vegetable_image);
-				//info.setVegetableName("产品名称" + i);
-				listData.add(info);
-            }
-		}
-		addFormatData(listData);
-	}
+
 	
 	/**
 	 * 适配数据
 	 */
 	private void addFormatData(List<ItemSaleInfo> vegetables){
 		ItemSaleInfo[] infos;
-		if(mAdapterData == null){
-			mAdapterData = new ArrayList<ItemSaleInfo[]>();
-		}
 		int count = vegetables.size() / 3;
 
 		for(int i = 0; i < count; i++){
@@ -141,7 +129,10 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		
 		int remain = vegetables.size() % 3;
 		
-		if(remain == 0) return;
+		if(remain == 0){
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+			return;
+		}
 		infos = new ItemSaleInfo[3];
 		ItemSaleInfo info1;
 		ItemSaleInfo info2;
@@ -156,14 +147,19 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		infos[1] = info2;
 		infos[2] = null;
 		mAdapterData.add(infos);
+		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 	}
 	
-	private void initData(){
+	/**
+	 * 向服务器请求数据
+	 */
+	private void requestNewData(){
 		RequestParam paramPath = new RequestParam("goods/general/typeList")
+		//TODO 这里的地址和类型写死了
 		.setParams("frontTypeId", "1")
-		.setParams("addressId", "")
-		.setParams("pageNum", String.valueOf(1))
-		.setParams("pageSize", String.valueOf(24));
+		.setParams("addressId", "0")
+		.setParams("pageNum", mCurrentPage + 1)
+		.setParams("pageSize", PAGE_ITEM_COUNT);
 		
 		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
 
@@ -171,21 +167,18 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				ItemSaleInfoPage itemSaleInfoPage = gson.fromJson(response, new TypeToken<ItemSaleInfoPage>() { }.getType());
-				
+				mMaxDateNum = itemSaleInfoPage.getTotalCount();
+				if(itemSaleInfoPage == null) return;
+				itemSaleInfoPage.getPageCount();
+				List<ItemSaleInfo> vegetables = itemSaleInfoPage.getGoodsList();
+				if(vegetables == null) return;
+				mCurrentPage++;
+				addFormatData(vegetables);
 			}
 		});
-		
-		List<ItemSaleInfo> listData = new ArrayList<ItemSaleInfo>();
-		
-		ItemSaleInfo info;
-		for(int i = 0; i < LOADING_ITEM_COUNT; i++){
-			info = new ItemSaleInfo();
-			//info.setImageId(R.drawable.vegetable_image);
-			//info.setVegetableName("产品名称" + i);
-			listData.add(info);
-		}
-		addFormatData(listData);
 	}
+	
+	private int mCurrentPage = 0;
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, 

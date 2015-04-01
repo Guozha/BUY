@@ -18,6 +18,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 	<TextView 
+	    android:id="@+id/actionbar_address"
 	    android:layout_width="wrap_content"
 	    android:layout_height="match_parent"
 	    android:drawableLeft="@drawable/action_bar_location"
@@ -29,6 +30,6 @@
 	    android:ellipsize="end"
 	    android:maxWidth="120dip"
 	    android:singleLine="true"
-	    android:text="金地自在城……"/>
+	    android:text="添加地址"/>
 	
 </LinearLayout>

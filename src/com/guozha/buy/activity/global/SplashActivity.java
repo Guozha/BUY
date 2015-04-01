@@ -1,8 +1,5 @@
 package com.guozha.buy.activity.global;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,12 +12,11 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
@@ -123,6 +119,8 @@ public class SplashActivity extends Activity{
 		}
 		//获取一级类目
 		initDataManager.getQuickMenus(null);
+		//获取地址列表
+		initDataManager.getAddressInfos(null);
 		//获取账户信息
 		initDataManager.getAccountInfo(null);
 		//获取菜单信息

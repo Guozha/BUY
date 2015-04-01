@@ -4,14 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     
-    <EditText 
+    <LinearLayout 
         android:layout_width="0dip"
         android:layout_weight="1"
-        android:layout_height="match_parent"/>
+        android:layout_marginLeft="8dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_dialog_background"
+        android:orientation="horizontal">
+        <ImageButton 
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:background="@null"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="10dip"
+            android:src="@drawable/dialogue_search_icon"/>
+        <EditText 
+	        android:layout_width="match_parent"
+	        android:background="@null"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColorHint="@color/color_app_base_8"
+	        android:textColor="@color/color_app_base_2"
+	        android:hint="搜索蔬菜、菜谱"
+	        android:layout_height="match_parent"/>
+    </LinearLayout>
+    
+
 
     <Button 
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/cancel_button"
+        android:layout_width="60dip"
         android:layout_height="wrap_content"
-        android:text="查找"/>
+        android:textSize="@dimen/dimen_global_16sp"
+        android:textColor="@color/color_app_base_2"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:gravity="center"
+        android:text="取消"/>
 </LinearLayout>

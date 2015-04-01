@@ -2,7 +2,6 @@ package com.guozha.buy.global;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.entry.mine.address.AddressInfo;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -34,12 +36,14 @@ public class ConfigManager{
 	private String mUserPwd;
 	private String mMobileNumber;
 	private String mWarnTime;
+	private int mChoosedAddressId;					   //用户当前选择的地址Id
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
 	private static final String USER_PWD = "user_pwd";      		//用户密码
 	private static final String MOBILE_NUMBER = "mobile_number"; 	//账号（手机号)
 	private static final String WARN_TIME = "warn_time";			//提醒时间
+	private static final String CHOOSED_ADDRESS_ID = "choosed_address_id";//用户选择的地址Id
 	
 	/**
 	 * 获取配置管理对象
@@ -57,6 +61,7 @@ public class ConfigManager{
 		mUserPwd = sharedPreference.getString(USER_PWD, null);
 		mMobileNumber = sharedPreference.getString(MOBILE_NUMBER, null);
 		mWarnTime = sharedPreference.getString(WARN_TIME, "16:00");
+		mChoosedAddressId = sharedPreference.getInt(CHOOSED_ADDRESS_ID, -1);
 		initConfigXML();
 	}
 	
@@ -172,6 +177,24 @@ public class ConfigManager{
 	}
 	
 	/**
+	 * 获取选择的地址ID
+	 * @return
+	 */
+	public int getChoosedAddressId(){
+		return mChoosedAddressId;
+	}
+	
+	/**
+	 * 设置选择的地址ID
+	 * @param choosedId
+	 */
+	public void setChoosedAddressId(int choosedId){
+		if(mChoosedAddressId == choosedId) return;
+		mChoosedAddressId = choosedId;
+		setConfig(CHOOSED_ADDRESS_ID, choosedId);
+	}
+	
+	/**
 	 * 获取用户Token
 	 * @return
 	 */
@@ -203,6 +226,7 @@ public class ConfigManager{
 	 */
 	public void setUserPwd(String pwd){
 		if(mUserPwd != null && mUserPwd.equals(pwd)) return;
+		LogUtil.e("setUserPwd");
 		mUserPwd = pwd;
 		setConfig(USER_PWD, pwd);
 	}

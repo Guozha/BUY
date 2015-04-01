@@ -14,6 +14,7 @@
             android:scaleType="centerInside"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
             android:src="@drawable/main_add_in"/>
         <ImageView 
             android:id="@+id/vegetable_cell_image"
@@ -21,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dip"
             android:scaleType="centerInside"
-            android:src="@drawable/main_vegetable_img_01"/>
+            android:src="@drawable/default_icon"/>
         
         <TextView
             android:id="@+id/vegetable_cell_name"
@@ -30,6 +31,10 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/color_app_base_4"
+            android:maxLines="2"
+            android:gravity="bottom"
+            android:lines="2"
+            android:ellipsize="end"
             android:text="产品名称"/>
         <TextView
             android:id="@+id/vegetable_cell_price"
@@ -37,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/color_app_base_4"
-            android:text="￥35/斤"/>
+            android:text="重量"/>
     </RelativeLayout>

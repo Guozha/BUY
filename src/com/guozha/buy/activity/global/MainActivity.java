@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.mine.SettingActivity;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.fragment.MainTabBaseFragment;
@@ -29,10 +29,9 @@ import com.guozha.buy.fragment.MainTabFragmentMPage.ClickMarketMenuListener;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.CustomApplication;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.weak.WeakReferenceHandler;
 import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
@@ -75,6 +74,9 @@ public class MainActivity extends FragmentActivity{
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
 				fragment = mFragments.get(0);
+				break;
+			case MainPageInitDataManager.HAND_INTTDATA_MSG_ADDRESS_LIST:
+				fragment = mFragments.get(1);
 				break;
 			default:
 				break;
@@ -135,6 +137,7 @@ public class MainActivity extends FragmentActivity{
 		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
 		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
 		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
+		mInitDataManager.getAddressInfos(handler);  //获取地址列表
 	}
 	
 	/**
@@ -145,6 +148,14 @@ public class MainActivity extends FragmentActivity{
 		UmengUpdateAgent.update(this);
 		//友盟静默更新
 		//UmengUpdateAgent.silentUpdate(this);
+	}
+	
+	/**
+	 * 获取Handler
+	 * @return
+	 */
+	public Handler getHandler(){
+		return handler;
 	}
 
 	/**
@@ -462,4 +473,13 @@ public class MainActivity extends FragmentActivity{
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == MainTabFragmentMarket.REQUEST_CODE){
+			mInitDataManager.getAddressInfos(handler);  //获取地址列表
+		}
+	}
+	
 }

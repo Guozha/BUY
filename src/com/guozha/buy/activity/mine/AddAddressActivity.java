@@ -1,10 +1,7 @@
 package com.guozha.buy.activity.mine;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -31,9 +29,9 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -88,6 +86,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				deleteOldAddress();
 				break;
 			case HAND_FINISH_WINDOW:
+				MainPageInitDataManager.mAddressUpdated = true; //设置地址列表发生了变化
 				setResult(0);
 				AddAddressActivity.this.finish();
 				break;
@@ -124,7 +123,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mMobileNum.setText(mAddressInfo.getMobileNo());
 			mAddressCity.setText(mAddressInfo.getCityName());
 			mAddressCountry.setText(mAddressInfo.getCountyName());
-			mAddressDetai.setText(mAddressInfo.getDetailAddr());
+			mAddressDetai.setText(mAddressInfo.getBuildingName());
+			mAddressDetaiNum.setText(mAddressInfo.getDetailAddr());
 			mRequestAddButton.setText("删除");
 		}else{
 			mRequestAddButton.setText("添加");
@@ -194,13 +194,14 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.add_address_request_button:
 			if(mAddressInfo != null){
-				CustomDialog dialog = 
+				final CustomDialog dialog = 
 						new CustomDialog(AddAddressActivity.this, R.layout.dialog_delete_notify);
 				dialog.setDismissButtonId(R.id.cancel_button);
 				dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
+						dialog.dismiss();
 					}
 				});
 				return;
@@ -222,23 +223,17 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(AddAddressActivity.this, "你的用户信息不正确，提交失败");
 			return;
 		}
-		Map<String, String> params;
-		String paramPath;
-		params = new HashMap<String, String>();
-		params.put("token", userToken);
-		params.put("userId", String.valueOf(userId));
-		params.put("receiveName", mReceiveName.getText().toString());
-		params.put("mobileNo", mMobileNum.getText().toString());
-		params.put("provinceId", "1");
-		params.put("cityId", "2");
-		params.put("countyId", String.valueOf(mCountryId));
-		params.put("buildingid", "0");
-		params.put("buildingName", mAddressCountry.getText().toString());
-		params.put("detailAddr", mAddressDetai.getText().toString()
-				+ mAddressDetaiNum.getText().toString());
-		params.put("defaultFlag", String.valueOf(defaultFlag));
-		paramPath = "account/address/insert" + HttpUtil.generatedAddress(params);
-
+		RequestParam paramPath = new RequestParam("account/address/insert")
+		.setParams("token", userToken)
+		.setParams("userId", String.valueOf(userId))
+		.setParams("receiveName", mReceiveName.getText().toString())
+		.setParams("mobileNo", mMobileNum.getText().toString())
+		.setParams("provinceId", "1")
+		.setParams("cityId", "2")
+		.setParams("countyId", String.valueOf(mCountryId))
+		.setParams("buildingName", mAddressDetai.getText().toString())
+		.setParams("detailAddr", mAddressDetaiNum.getText().toString())
+		.setParams("defaultFlag", String.valueOf(defaultFlag));
 		HttpManager.getInstance(
 			AddAddressActivity.this).volleyJsonRequestByGet(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
@@ -269,15 +264,28 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void deleteOldAddress(){
 		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null) return;
+		int userId = ConfigManager.getInstance().getUserId();
+		if(token == null || userId == -1) return;
+		RequestParam paramPath = new RequestParam("account/address/delete")
+		.setParams("userId", userId)
+		.setParams("token", token)
+		.setParams("addressId", mAddressInfo.getAddressId());
 		HttpManager.getInstance(AddAddressActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + "account/address/delete?token=" + token + "&&addressId=" + mAddressInfo.getAddressId(), 
+			HttpManager.URL + paramPath, 
 			new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					//相当于修改，没有判断的必要
-					//String returnCode = response.getString("returnCode");
-					handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+						}else{
+							ToastUtil.showToast(AddAddressActivity.this, "删除失败");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 	}
@@ -332,10 +340,12 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(AddAddressActivity.this, "修改失败，你的登录过期了");
 			return;
 		}
+		RequestParam paramPath = new RequestParam("account/address/default")
+		.setParams("token", token)
+		.setParams("addressId", mAddressInfo.getAddressId())
+		.setParams("userId", userId);
 		HttpManager.getInstance(AddAddressActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + "account/address/default?token="
-				+ token + "&&addressId=" + mAddressInfo.getAddressId()
-				+ "&&userId=" + userId, new Listener<JSONObject>() {
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {

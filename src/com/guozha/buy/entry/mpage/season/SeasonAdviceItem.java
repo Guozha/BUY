@@ -14,11 +14,11 @@ public class SeasonAdviceItem implements Serializable{
 	private int goodsId;  		//商品ID
 	private String goodsName;  	//商品名称
 	private String memo;   		//商品描述
-	private byte[] goodsImg;   	//商品图标
+	private String goodsImg;   	//商品图标
 	
 	
 	public SeasonAdviceItem(int goodsId, String goodsName, String memo,
-			byte[] goodsImg) {
+			String goodsImg) {
 		super();
 		this.goodsId = goodsId;
 		this.goodsName = goodsName;
@@ -44,10 +44,10 @@ public class SeasonAdviceItem implements Serializable{
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public byte[] getGoodsImg() {
+	public String getGoodsImg() {
 		return goodsImg;
 	}
-	public void setGoodsImg(byte[] goodsImg) {
+	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
 }

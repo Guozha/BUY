@@ -12,8 +12,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
+import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -30,6 +32,9 @@ public class MainPageInitDataManager {
 	public static final int HAND_INITDATA_MSG_MARKETHOME = 0x0003;	 //逛菜场的主页数据
 	public static final int HAND_INITDATA_MSG_FIRST_CATEGORY = 0x004;//一级类目
 	public static final int HAND_INITDATA_MSG_CART_ITEM = 0x0005;	 //购物车
+	public static final int HAND_INTTDATA_MSG_ADDRESS_LIST = 0x0006; //地址列表
+	
+	public static boolean mAddressUpdated = false; 	//地址信息是否发生了变化
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -38,7 +43,8 @@ public class MainPageInitDataManager {
 	private AccountInfo mAccountInfo;
 	private ArrayList<GoodsItemType> mGoodsItemTypes;
 	private MarketHomePage mMarketHomePage;
-	private List<QuickMenu> mQuickMenus = new ArrayList<QuickMenu>();
+	private List<QuickMenu> mQuickMenus;
+	private List<AddressInfo> mAddressInfos;
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -135,6 +141,23 @@ public class MainPageInitDataManager {
 		return mMarketHomePage;
 	}
 	
+	/**
+	 * 获取用户添加的地址
+	 * @param handler
+	 * @return
+	 */
+	public List<AddressInfo> getAddressInfos(Handler handler){
+		if(mAddressInfos == null || mAddressUpdated){
+			requestAdressInfoListData(handler);
+			mAddressUpdated = false;
+		}else{
+			if(handler != null){
+				handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
+			}
+		}
+		return mAddressInfos;
+	}
+	
 	//////////////////////////////HTTP-请求////////////////////////////////
 	
 	/**
@@ -173,11 +196,27 @@ public class MainPageInitDataManager {
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				mGoodsItemTypes = gson.fromJson(response, new TypeToken<ArrayList<GoodsItemType>>() { }.getType());
+				if(mGoodsItemTypes != null){
+					formatGoodsItemTypes();
+				}
 				if(handler != null && mGoodsItemTypes != null){
 					handler.sendEmptyMessage(HAND_INITDATA_MSG_ITEMTYPE);
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 转换格式
+	 */
+	private void formatGoodsItemTypes(){
+		for(int i = 0; i < mGoodsItemTypes.size(); i++){
+			GoodsItemType itemType = mGoodsItemTypes.get(i);
+			GoodsSecondItemType secondItemType = new GoodsSecondItemType(
+					itemType.getFrontTypeId(), itemType.getShortName(), "查看全部...");
+			List<GoodsSecondItemType> secondItemList = itemType.getFrontTypeList();
+			secondItemList.add(0, secondItemType);
+		}
 	}
 	
 	/**
@@ -194,6 +233,7 @@ public class MainPageInitDataManager {
 						gson.fromJson(response, new TypeToken<List<GoodsItemType>>() { }.getType());
 				QuickMenu quickMenu;
 				if(goodsItemTypes == null) return;
+				mQuickMenus = new ArrayList<QuickMenu>();
 				for(int i = 0; i < goodsItemTypes.size(); i++){
 					int id = goodsItemTypes.get(i).getFrontTypeId();
 					String shortName = goodsItemTypes.get(i).getShortName();
@@ -236,6 +276,43 @@ public class MainPageInitDataManager {
 					}
 				}
 			});
+	}
+	
+	/**
+	 * 请求地址信息列表
+	 * @param handler
+	 */
+	private void requestAdressInfoListData(final Handler handler){
+		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("account/address/list")
+		.setParams("userId", userId);
+		HttpManager.getInstance(mContext).volleyRequestByPost(
+			HttpManager.URL + paramPath, new Listener<String>() {
+				@Override
+				public void onResponse(String response) {
+					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+					mAddressInfos = gson.fromJson(response, 
+							new TypeToken<List<AddressInfo>>() { }.getType());
+					setDefaultAddressChoosed();
+					if(handler != null && mAddressInfos != null){
+						handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
+					}
+				}
+
+				
+		});
+	}
+	
+	/**
+	 * 设置默认的地址被自动选中
+	 */
+	private void setDefaultAddressChoosed() {
+		for(int i = 0; i < mAddressInfos.size(); i++){
+			AddressInfo addressInfo = mAddressInfos.get(i);
+			if("1".equals(addressInfo.getDefaultFlag())){
+				ConfigManager.getInstance().setChoosedAddressId(addressInfo.getAddressId());
+			}
+		}
 	}
 	
 }

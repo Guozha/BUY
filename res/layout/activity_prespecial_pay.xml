@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
+    android:orientation="vertical" >
+    
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+    <!-- 地址信息 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@color/color_app_base_5"
+        android:gravity="center_vertical"
+        android:paddingLeft="18dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="@dimen/dimen_global_14sp"
+		    android:textColor="@color/color_app_base_4"
+		    android:text="笑笑笑"/>
+        
+        <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="@dimen/dimen_global_14sp"
+		    android:textColor="@color/color_app_base_4"
+		    android:text="18401237432"/>
+        
+        <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="@dimen/dimen_global_14sp"
+		    android:textColor="@color/color_app_base_4"
+		    android:singleLine="true"
+		    android:ellipsize="end"
+		    android:text="杭州市西湖区及定时小区某某幢"/>
+    </LinearLayout>
+	
+    <!-- 商品信息 -->
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:orientation="horizontal"
+	    android:background="@color/color_app_base_5"
+	    android:gravity="center_vertical">
+	    <TextView 
+	        android:id="@+id/cart_list_cell_title"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="西红柿炒鸡蛋"
+	        android:gravity="center_vertical|left"
+	        android:layout_marginLeft="18dip"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:singleLine="true"
+	        android:layout_marginRight="10dip"
+	        android:ellipsize="end"/>
+	    
+	    <ImageView 
+	        android:id="@+id/cart_list_cell_minus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/main_minus"/>
+	    
+	    <TextView 
+	        android:id="@+id/cart_list_cell_num"
+	        android:layout_width="64dip"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:singleLine="true"
+	        android:ellipsize="end"
+	        android:gravity="center"
+	        android:text="1份"/>
+	    
+	    <ImageView 
+	        android:id="@+id/cart_list_cell_plus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/main_plus"/>
+	    
+	    <TextView 
+	        android:id="@+id/cart_list_cell_price"
+	        android:layout_width="64dip"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:singleLine="true"
+	        android:ellipsize="end"
+	        android:gravity="center_vertical|right"
+	        android:text="￥13.00"/>
+    </LinearLayout>
+    
+    <!-- 留言 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="18dip"
+        android:paddingRight="18dip"
+        android:layout_marginTop="1dip"
+        android:paddingTop="8dip"
+        android:paddingBottom="8dip"
+        android:background="@color/color_app_base_5"
+        android:orientation="horizontal">
+        
+        <EditText 
+            android:layout_width="match_parent"
+            android:layout_height="32dip"
+            android:hint="给小菜留言"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:textColorHint="@color/color_app_base_8"
+            android:background="@drawable/gray_edit_bg"/>
+    </LinearLayout>
+    
+        <!-- 商品金额 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="商品金额"/>
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_9"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dip"
+            android:text="￥59.80"/>
+    </RelativeLayout>
+    <!-- 服务费 -->
+    <RelativeLayout 
+        android:id="@+id/pay_server_fee_rule"
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:id="@+id/server_pice_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="服务费"/>
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/note_icon"
+            android:layout_toRightOf="@id/server_pice_title"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_9"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dip"
+            android:text="5元"/>
+    </RelativeLayout>
+    
+    <!-- 账户余额 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="可用账户余额12元"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    
+    <!-- 菜豆 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="可用35个菜豆抵0.35元"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    
+    <!-- 菜票 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="菜票"/>
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_9"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dip"
+            android:text="￥12.00"/>
+    </RelativeLayout>
+    
+    <!-- 还需支付 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dip"
+            android:text="还需支付"/>
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_9"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dip"
+            android:text="￥49.8"/>
+    </RelativeLayout>
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:text="请选择支付方式"
+        android:gravity="center_vertical"
+        android:paddingLeft="18dip"
+        android:textColor="@color/color_app_base_4"
+        android:textSize="@dimen/dimen_global_16sp"/>
+    
+    <!-- 支付宝支付 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:drawableLeft="@drawable/pay_zhifubao_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="10dip"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="18dip"
+            android:text="支付宝支付"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    
+    <!-- 微信支付 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:drawableLeft="@drawable/pay_weixin_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="10dip"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="18dip"
+            android:text="微信支付"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    
+    <!-- 网银支付 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:drawableLeft="@drawable/pay_union_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="10dip"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="18dip"
+            android:text="网银支付"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    
+    <!-- 货到付款 -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="43dip"
+        android:background="@color/color_app_base_5"
+        android:layout_marginTop="1dip"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:drawableLeft="@drawable/pay_on_delivery_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:drawablePadding="10dip"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="18dip"
+            android:text="货到付款"/>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/pay_selectbox_normal"
+            android:layout_marginRight="18dip"/>
+    </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+    
+    <!-- 支付按钮 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/color_app_base_5"
+        android:paddingLeft="40dip"
+        android:paddingRight="40dip"
+        android:paddingTop="8dip"
+        android:paddingBottom="8dip"
+        android:orientation="horizontal">
+        
+        <Button 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/nomal_button_nomal_bg"
+            android:text="支付"
+            android:textColor="@color/color_app_base_5"
+            android:textSize="@dimen/dimen_global_16sp"/>
+    </LinearLayout>
+</LinearLayout>

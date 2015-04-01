@@ -63,6 +63,7 @@ public class CustomDialog{
      */  
     public void setDismissButtonId(int id){  
         View view = getViewById(id);  
+        if(view == null) return;
         view.setOnClickListener(new OnClickListener() {  
             @Override  
             public void onClick(View v) {  

@@ -1,6 +1,10 @@
 package com.guozha.buy.activity.mpage;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.android.volley.Response.Listener;
@@ -49,6 +53,15 @@ public class PreSpecialActivity extends BaseActivity{
 		mGridView = (GridView) findViewById(R.id.pre_special_gridlist);
 		
 		mGridView.setAdapter(new PreSpecialGridAdapter(this));
+		
+		mGridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(PreSpecialActivity.this, PreSpecialDetail.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	@Override

@@ -17,15 +17,17 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="10dip"
 	        android:textColor="@color/color_app_base_1"
-	        android:text="肉制品"
+	        android:text="产品类别"
 	        android:textSize="16sp"/>
     	<Space 
     	    android:layout_width="0dip"
     	    android:layout_weight="1"
     	    android:layout_height="match_parent"/>
 	    <ImageView 
+	        android:id="@+id/item_more"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_height="match_parent"
+	        android:paddingLeft="20dip"
 	        android:scaleType="centerInside"
 	        android:layout_marginRight="10dip"
 	        android:src="@drawable/main_more"/>

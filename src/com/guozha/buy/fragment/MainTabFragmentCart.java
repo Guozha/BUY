@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.cart.PlanceOrderActivity;
 import com.guozha.buy.adapter.CartItemListAdapter;
 import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
@@ -48,6 +51,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private TextView mMesgServerMoney;
 	private TextView mMesgFreeGap;
 	private List<CartBaseItem> mCartItems;
+	private View mCartEmptyBg;
 	
 	private int mQuantity;		//总商品个数
 	private int mTotalPrice;	//总额
@@ -132,13 +136,28 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mMesgTotal = (TextView) view.findViewById(R.id.cart_total_message);
 		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);
 		mMesgFreeGap = (TextView) view.findViewById(R.id.cart_free_money_gap);
+		view.findViewById(R.id.cart_to_order_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), PlanceOrderActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		mCartEmptyBg = view.findViewById(R.id.cart_empty_bg);
 	}
 	
 	/**
 	 * 给视图添加数据
 	 */
 	private void updateViewData(){
-		if(mCartList == null || mCartItems == null) return;
+		if(mCartList == null || mCartItems == null || mCartItems.isEmpty()) {
+			mCartEmptyBg.setVisibility(View.VISIBLE);
+			mCartList.setVisibility(View.GONE);
+			return;
+		}
+		mCartEmptyBg.setVisibility(View.GONE);
+		mCartList.setVisibility(View.VISIBLE);
 		mCartList.setAdapter(new CartItemListAdapter(getActivity(), mCartItems));
 		//首次全部展开
 		for (int i = 0; i < mCartItems.size(); i++) {

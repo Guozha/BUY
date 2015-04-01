@@ -1,4 +1,4 @@
-package com.guozha.buy.global;
+package com.guozha.buy.activity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +12,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
 import com.guozha.buy.R;
+import com.guozha.buy.global.CrashHandler;
 
 /**
  * 全局的Application

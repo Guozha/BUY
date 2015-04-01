@@ -137,6 +137,68 @@ com.alimama.mobile.csdk.umupdate.models.e: com.alimama.mobile.csdk.umupdate.mode
 com.alimama.mobile.csdk.umupdate.models.e: com.alimama.mobile.csdk.umupdate.models.e valueOf(java.lang.String)
 com.alimama.mobile.csdk.umupdate.models.f: com.alimama.mobile.csdk.umupdate.models.f[] values()
 com.alimama.mobile.csdk.umupdate.models.f: com.alimama.mobile.csdk.umupdate.models.f valueOf(java.lang.String)
+com.alipay.android.app.IAlixPay
+com.alipay.android.app.IAlixPay: java.lang.String Pay(java.lang.String)
+com.alipay.android.app.IAlixPay: java.lang.String test()
+com.alipay.android.app.IAlixPay: void registerCallback(com.alipay.android.app.IRemoteServiceCallback)
+com.alipay.android.app.IAlixPay: void unregisterCallback(com.alipay.android.app.IRemoteServiceCallback)
+com.alipay.android.app.IAlixPay: java.lang.String prePay(java.lang.String)
+com.alipay.android.app.IAlixPay$Stub
+com.alipay.android.app.IAlixPay$Stub: java.lang.String DESCRIPTOR
+com.alipay.android.app.IAlixPay$Stub: int TRANSACTION_Pay
+com.alipay.android.app.IAlixPay$Stub: int TRANSACTION_test
+com.alipay.android.app.IAlixPay$Stub: int TRANSACTION_registerCallback
+com.alipay.android.app.IAlixPay$Stub: int TRANSACTION_unregisterCallback
+com.alipay.android.app.IAlixPay$Stub: int TRANSACTION_prePay
+com.alipay.android.app.IAlixPay$Stub: IAlixPay$Stub()
+com.alipay.android.app.IAlixPay$Stub: com.alipay.android.app.IAlixPay asInterface(android.os.IBinder)
+com.alipay.android.app.IAlixPay$Stub: android.os.IBinder asBinder()
+com.alipay.android.app.IAlixPay$Stub: boolean onTransact(int,android.os.Parcel,android.os.Parcel,int)
+com.alipay.android.app.IRemoteServiceCallback
+com.alipay.android.app.IRemoteServiceCallback: void startActivity(java.lang.String,java.lang.String,int,android.os.Bundle)
+com.alipay.android.app.IRemoteServiceCallback: void payEnd(boolean,java.lang.String)
+com.alipay.android.app.IRemoteServiceCallback: boolean isHideLoadingScreen()
+com.alipay.android.app.IRemoteServiceCallback$Stub
+com.alipay.android.app.IRemoteServiceCallback$Stub: java.lang.String DESCRIPTOR
+com.alipay.android.app.IRemoteServiceCallback$Stub: int TRANSACTION_startActivity
+com.alipay.android.app.IRemoteServiceCallback$Stub: int TRANSACTION_payEnd
+com.alipay.android.app.IRemoteServiceCallback$Stub: int TRANSACTION_isHideLoadingScreen
+com.alipay.android.app.IRemoteServiceCallback$Stub: IRemoteServiceCallback$Stub()
+com.alipay.android.app.IRemoteServiceCallback$Stub: com.alipay.android.app.IRemoteServiceCallback asInterface(android.os.IBinder)
+com.alipay.android.app.IRemoteServiceCallback$Stub: android.os.IBinder asBinder()
+com.alipay.android.app.IRemoteServiceCallback$Stub: boolean onTransact(int,android.os.Parcel,android.os.Parcel,int)
+com.alipay.mobilesecuritysdk.MainHandler
+com.alipay.mobilesecuritysdk.constant.ConfigNameEnum: com.alipay.mobilesecuritysdk.constant.ConfigNameEnum[] values()
+com.alipay.mobilesecuritysdk.constant.ConfigNameEnum: com.alipay.mobilesecuritysdk.constant.ConfigNameEnum valueOf(java.lang.String)
+com.alipay.mobilesecuritysdk.constant.LocationNameEnum: com.alipay.mobilesecuritysdk.constant.LocationNameEnum[] values()
+com.alipay.mobilesecuritysdk.constant.LocationNameEnum: com.alipay.mobilesecuritysdk.constant.LocationNameEnum valueOf(java.lang.String)
+com.alipay.sdk.app.AuthTask
+com.alipay.sdk.app.AuthTask: AuthTask(android.app.Activity)
+com.alipay.sdk.app.AuthTask: java.lang.String auth(java.lang.String)
+com.alipay.sdk.app.H5AuthActivity
+com.alipay.sdk.app.H5AuthActivity: H5AuthActivity()
+com.alipay.sdk.app.PayTask
+com.alipay.sdk.app.PayTask: PayTask(android.app.Activity)
+com.alipay.sdk.app.PayTask: java.lang.String pay(java.lang.String)
+com.alipay.sdk.app.PayTask: java.lang.String getVersion()
+com.alipay.sdk.app.PayTask: boolean checkAccountIfExist()
+com.alipay.sdk.app.ResultStatus: com.alipay.sdk.app.ResultStatus[] values()
+com.alipay.sdk.app.ResultStatus: com.alipay.sdk.app.ResultStatus valueOf(java.lang.String)
+com.alipay.sdk.auth.AuthActivity
+com.alipay.sdk.auth.AuthActivity: AuthActivity()
+com.alipay.sdk.authjs.CallInfo$CallError: com.alipay.sdk.authjs.CallInfo$CallError[] values()
+com.alipay.sdk.authjs.CallInfo$CallError: com.alipay.sdk.authjs.CallInfo$CallError valueOf(java.lang.String)
+com.alipay.sdk.exception.AppErrorException: long serialVersionUID
+com.alipay.sdk.exception.FailOperatingException: long serialVersionUID
+com.alipay.sdk.exception.NetErrorException: long serialVersionUID
+com.alipay.sdk.exception.UnZipException: long serialVersionUID
+com.alipay.sdk.exception.ValifyException: long serialVersionUID
+com.alipay.sdk.protocol.ActionType: com.alipay.sdk.protocol.ActionType[] values()
+com.alipay.sdk.protocol.ActionType: com.alipay.sdk.protocol.ActionType valueOf(java.lang.String)
+com.alipay.sdk.protocol.MiniStatus: com.alipay.sdk.protocol.MiniStatus[] values()
+com.alipay.sdk.protocol.MiniStatus: com.alipay.sdk.protocol.MiniStatus valueOf(java.lang.String)
+com.alipay.sdk.util.NetConnectionType: com.alipay.sdk.util.NetConnectionType[] values()
+com.alipay.sdk.util.NetConnectionType: com.alipay.sdk.util.NetConnectionType valueOf(java.lang.String)
 com.android.volley.Request$Priority: com.android.volley.Request$Priority[] values()
 com.android.volley.Request$Priority: com.android.volley.Request$Priority valueOf(java.lang.String)
 com.android.volley.toolbox.NetworkImageView: void setDefaultImageResId(int)
@@ -244,10 +306,13 @@ com.guozha.buy.R$drawable: int dialogue_background
 com.guozha.buy.R$drawable: int dialogue_icon_01
 com.guozha.buy.R$drawable: int dialogue_icon_02
 com.guozha.buy.R$drawable: int dialogue_icon_03
+com.guozha.buy.R$drawable: int dialogue_search_icon
+com.guozha.buy.R$drawable: int gray_edit_bg
 com.guozha.buy.R$drawable: int grey_button_nomal_bg
 com.guozha.buy.R$drawable: int ic_launcher
 com.guozha.buy.R$drawable: int login_right_state
 com.guozha.buy.R$drawable: int login_wrong_state
+com.guozha.buy.R$drawable: int logo_icon
 com.guozha.buy.R$drawable: int main_add_in
 com.guozha.buy.R$drawable: int main_address_edit
 com.guozha.buy.R$drawable: int main_address_icon
@@ -259,7 +324,9 @@ com.guozha.buy.R$drawable: int main_close
 com.guozha.buy.R$drawable: int main_collect_button
 com.guozha.buy.R$drawable: int main_collect_icon
 com.guozha.buy.R$drawable: int main_commonly_seller_icon
+com.guozha.buy.R$drawable: int main_coupon_background
 com.guozha.buy.R$drawable: int main_coupon_icon
+com.guozha.buy.R$drawable: int main_coupon_stamp
 com.guozha.buy.R$drawable: int main_dialog_background
 com.guozha.buy.R$drawable: int main_dialog_left_background
 com.guozha.buy.R$drawable: int main_dialog_right_background
@@ -268,6 +335,7 @@ com.guozha.buy.R$drawable: int main_favorite_close
 com.guozha.buy.R$drawable: int main_favorite_edit
 com.guozha.buy.R$drawable: int main_folder
 com.guozha.buy.R$drawable: int main_folder_add
+com.guozha.buy.R$drawable: int main_invitation_ad
 com.guozha.buy.R$drawable: int main_invited_icon
 com.guozha.buy.R$drawable: int main_line
 com.guozha.buy.R$drawable: int main_market_add
@@ -323,6 +391,7 @@ com.guozha.buy.R$drawable: int main_vegetable_img_02
 com.guozha.buy.R$drawable: int main_vegetable_img_03
 com.guozha.buy.R$drawable: int main_vegetable_img_04
 com.guozha.buy.R$drawable: int market_tag_background
+com.guozha.buy.R$drawable: int mian_coupon_decorate
 com.guozha.buy.R$drawable: int nomal_button_nomal_bg
 com.guozha.buy.R$drawable: int plan_menu_week_list_bg
 com.guozha.buy.R$drawable: int recipe_step_01
@@ -450,9 +519,23 @@ com.guozha.buy.R$id: int action_search
 com.guozha.buy.R$id: int action_setting
 com.guozha.buy.R$id: int action_share
 com.guozha.buy.R$id: int ad_image
+com.guozha.buy.R$id: int add_address_city
+com.guozha.buy.R$id: int add_address_country
+com.guozha.buy.R$id: int add_address_detail_number
+com.guozha.buy.R$id: int add_address_detailaddr
+com.guozha.buy.R$id: int add_address_mobileno
+com.guozha.buy.R$id: int add_address_receivename
+com.guozha.buy.R$id: int add_address_request_button
+com.guozha.buy.R$id: int add_address_setting_default
 com.guozha.buy.R$id: int add_canton_button
+com.guozha.buy.R$id: int add_city_button
+com.guozha.buy.R$id: int address_default
+com.guozha.buy.R$id: int address_detail
+com.guozha.buy.R$id: int address_mobileno
+com.guozha.buy.R$id: int address_receivename
 com.guozha.buy.R$id: int agree_button
 com.guozha.buy.R$id: int album_button
+com.guozha.buy.R$id: int alipay_confirm_button
 com.guozha.buy.R$id: int cancel_button
 com.guozha.buy.R$id: int canton_item_list
 com.guozha.buy.R$id: int cart_free_money_gap
@@ -464,12 +547,12 @@ com.guozha.buy.R$id: int cart_list_cell_plus
 com.guozha.buy.R$id: int cart_list_cell_price
 com.guozha.buy.R$id: int cart_list_cell_title
 com.guozha.buy.R$id: int cart_server_money
+com.guozha.buy.R$id: int cart_to_order_button
 com.guozha.buy.R$id: int cart_total_message
 com.guozha.buy.R$id: int choose_menu_custom
-com.guozha.buy.R$id: int choose_menu_lis_cell2
 com.guozha.buy.R$id: int choose_menu_list
 com.guozha.buy.R$id: int choose_menu_list_cell1
-com.guozha.buy.R$id: int choose_menu_list_cell3
+com.guozha.buy.R$id: int choosed_icon
 com.guozha.buy.R$id: int choosed_week_day
 com.guozha.buy.R$id: int city_name
 com.guozha.buy.R$id: int collection_recipe_delete_button
@@ -489,6 +572,7 @@ com.guozha.buy.R$id: int cookbook_name
 com.guozha.buy.R$id: int create_new_class
 com.guozha.buy.R$id: int custom_weight_area
 com.guozha.buy.R$id: int delete_button
+com.guozha.buy.R$id: int dial_tel_button
 com.guozha.buy.R$id: int expandable_cart_list
 com.guozha.buy.R$id: int expandable_order_detail_list
 com.guozha.buy.R$id: int findpwd_obtain_validenum
@@ -509,6 +593,7 @@ com.guozha.buy.R$id: int id_indicator_four
 com.guozha.buy.R$id: int id_indicator_one
 com.guozha.buy.R$id: int id_indicator_three
 com.guozha.buy.R$id: int id_indicator_two
+com.guozha.buy.R$id: int item_type_name
 com.guozha.buy.R$id: int listView
 com.guozha.buy.R$id: int list_item_cell_line1
 com.guozha.buy.R$id: int list_item_cell_line2
@@ -550,17 +635,28 @@ com.guozha.buy.R$id: int mine_msg_tickes
 com.guozha.buy.R$id: int mine_orderform
 com.guozha.buy.R$id: int mine_ticket
 com.guozha.buy.R$id: int mine_top_account_message_area
-com.guozha.buy.R$id: int modify_choose_canton
 com.guozha.buy.R$id: int mpage_choose_menu_custom
 com.guozha.buy.R$id: int mpage_market_menu
 com.guozha.buy.R$id: int mpage_pre_special_menu
+com.guozha.buy.R$id: int mpage_quick_menu_1
+com.guozha.buy.R$id: int mpage_quick_menu_2
+com.guozha.buy.R$id: int mpage_quick_menu_3
+com.guozha.buy.R$id: int mpage_quick_menu_4
+com.guozha.buy.R$id: int mpage_quick_menu_5
 com.guozha.buy.R$id: int mpage_season_menu
 com.guozha.buy.R$id: int my_address_list
 com.guozha.buy.R$id: int my_collection_frag1_tab
 com.guozha.buy.R$id: int my_collection_frag2_tab
 com.guozha.buy.R$id: int my_seller_list
+com.guozha.buy.R$id: int my_ticket
 com.guozha.buy.R$id: int myaddress_add_button
+com.guozha.buy.R$id: int order_address
 com.guozha.buy.R$id: int order_finished_list
+com.guozha.buy.R$id: int order_name
+com.guozha.buy.R$id: int order_phone
+com.guozha.buy.R$id: int order_product_count
+com.guozha.buy.R$id: int order_status
+com.guozha.buy.R$id: int order_time
 com.guozha.buy.R$id: int order_unfinished_list
 com.guozha.buy.R$id: int photograph_button
 com.guozha.buy.R$id: int planmenu_area1
@@ -601,16 +697,22 @@ com.guozha.buy.R$id: int regist_pwd_input_area
 com.guozha.buy.R$id: int regist_validenum
 com.guozha.buy.R$id: int regist_validenum_input_area
 com.guozha.buy.R$id: int scrollview
+com.guozha.buy.R$id: int search_button
 com.guozha.buy.R$id: int search_text
 com.guozha.buy.R$id: int season_auto_flipper_view
+com.guozha.buy.R$id: int season_list_item_description
+com.guozha.buy.R$id: int season_list_item_icon
 com.guozha.buy.R$id: int season_vegetable_list
 com.guozha.buy.R$id: int section
 com.guozha.buy.R$id: int select_custom_weight_text
+com.guozha.buy.R$id: int select_time_wheelview
 com.guozha.buy.R$id: int select_weight_bottom_layout
 com.guozha.buy.R$id: int select_weight_confirm
 com.guozha.buy.R$id: int select_weight_free_layout
 com.guozha.buy.R$id: int select_weight_to_details
 com.guozha.buy.R$id: int select_weight_wheelview
+com.guozha.buy.R$id: int seller_descript
+com.guozha.buy.R$id: int seller_visit_count
 com.guozha.buy.R$id: int set_alarm_button
 com.guozha.buy.R$id: int set_alarm_hour
 com.guozha.buy.R$id: int set_alarm_minute
@@ -618,11 +720,20 @@ com.guozha.buy.R$id: int set_warn_list
 com.guozha.buy.R$id: int setting_item_text
 com.guozha.buy.R$id: int setting_list
 com.guozha.buy.R$id: int setting_login_out_button
+com.guozha.buy.R$id: int setting_warn_time
 com.guozha.buy.R$id: int setwarn_top_left
 com.guozha.buy.R$id: int share_to_qq
 com.guozha.buy.R$id: int slideBar
 com.guozha.buy.R$id: int status_msg
+com.guozha.buy.R$id: int switch_warn
+com.guozha.buy.R$id: int ticket_effective
+com.guozha.buy.R$id: int ticket_for_price
+com.guozha.buy.R$id: int ticket_par_value
+com.guozha.buy.R$id: int ticket_type
+com.guozha.buy.R$id: int ticket_valid_date
 com.guozha.buy.R$id: int title
+com.guozha.buy.R$id: int total_amount
+com.guozha.buy.R$id: int total_money
 com.guozha.buy.R$id: int umeng_common_icon_view
 com.guozha.buy.R$id: int umeng_common_notification
 com.guozha.buy.R$id: int umeng_common_notification_controller
@@ -700,6 +811,7 @@ com.guozha.buy.R$id: int umeng_update_id_ignore
 com.guozha.buy.R$id: int umeng_update_id_ok
 com.guozha.buy.R$id: int umeng_update_wifi_indicator
 com.guozha.buy.R$id: int umeng_xp_ScrollView
+com.guozha.buy.R$id: int used_amount
 com.guozha.buy.R$id: int vegetable_cell_icon
 com.guozha.buy.R$id: int vegetable_cell_image
 com.guozha.buy.R$id: int vegetable_cell_item1
@@ -710,30 +822,36 @@ com.guozha.buy.R$id: int vegetable_description
 com.guozha.buy.R$id: int vegetable_detail_item_price
 com.guozha.buy.R$id: int viewpager
 com.guozha.buy.R$id: int viewpager_tab
+com.guozha.buy.R$id: int warn_time_text
 com.guozha.buy.R$id: int webView
+com.guozha.buy.R$id: int webview
 com.guozha.buy.R$id: int weight_selected_dialog_test
 com.guozha.buy.R$id: int youmeng_phoneid_test
 com.guozha.buy.R$layout
 com.guozha.buy.R$layout: int actionbar_base_view
 com.guozha.buy.R$layout: int actionbar_market_custom_view
 com.guozha.buy.R$layout: int actionbar_search_custom_view
+com.guozha.buy.R$layout: int activity_about_our
 com.guozha.buy.R$layout: int activity_add_address
 com.guozha.buy.R$layout: int activity_advice_praise
+com.guozha.buy.R$layout: int activity_alipay
 com.guozha.buy.R$layout: int activity_choose_canton
 com.guozha.buy.R$layout: int activity_choose_menu
 com.guozha.buy.R$layout: int activity_cookbook_detail
 com.guozha.buy.R$layout: int activity_debug
+com.guozha.buy.R$layout: int activity_feadback
 com.guozha.buy.R$layout: int activity_findpwd
+com.guozha.buy.R$layout: int activity_licence
 com.guozha.buy.R$layout: int activity_list_vegetable
 com.guozha.buy.R$layout: int activity_login
 com.guozha.buy.R$layout: int activity_main
-com.guozha.buy.R$layout: int activity_modify_address
 com.guozha.buy.R$layout: int activity_my_address
 com.guozha.buy.R$layout: int activity_my_collection
 com.guozha.buy.R$layout: int activity_my_order
 com.guozha.buy.R$layout: int activity_my_seller
 com.guozha.buy.R$layout: int activity_my_ticket
 com.guozha.buy.R$layout: int activity_order_detail
+com.guozha.buy.R$layout: int activity_plance_order
 com.guozha.buy.R$layout: int activity_planmenu
 com.guozha.buy.R$layout: int activity_pre_special
 com.guozha.buy.R$layout: int activity_regist
@@ -749,8 +867,10 @@ com.guozha.buy.R$layout: int detail_step_list_item_cell
 com.guozha.buy.R$layout: int dialog_collection_recipe_modify
 com.guozha.buy.R$layout: int dialog_create_newfolder
 com.guozha.buy.R$layout: int dialog_delete_notify
+com.guozha.buy.R$layout: int dialog_dial_telephone
 com.guozha.buy.R$layout: int dialog_remind_login
 com.guozha.buy.R$layout: int dialog_set_head
+com.guozha.buy.R$layout: int dialog_version_update
 com.guozha.buy.R$layout: int dialog_weight_select
 com.guozha.buy.R$layout: int fragment_collection_recipe
 com.guozha.buy.R$layout: int fragment_collection_vegetable
@@ -771,15 +891,17 @@ com.guozha.buy.R$layout: int list_item_cell_cart_list
 com.guozha.buy.R$layout: int list_item_cell_cart_material_list
 com.guozha.buy.R$layout: int list_item_cell_maintab_market
 com.guozha.buy.R$layout: int list_item_cell_market
-com.guozha.buy.R$layout: int list_item_choose_menu_cell
 com.guozha.buy.R$layout: int list_item_cook_book_list_cell
 com.guozha.buy.R$layout: int list_item_setting_cell
 com.guozha.buy.R$layout: int list_item_small_cell
+com.guozha.buy.R$layout: int list_keyword_item_cell
 com.guozha.buy.R$layout: int list_my_address_item_cell
 com.guozha.buy.R$layout: int list_my_seller_item_cell
 com.guozha.buy.R$layout: int list_order_item_cell
 com.guozha.buy.R$layout: int list_paging_bottom
+com.guozha.buy.R$layout: int list_quick_menu_cell_item
 com.guozha.buy.R$layout: int list_season_item_cell
+com.guozha.buy.R$layout: int list_ticket_item_cell
 com.guozha.buy.R$layout: int list_warntime_item_cell
 com.guozha.buy.R$layout: int market_list_item_header
 com.guozha.buy.R$layout: int menu_list_child_cell
@@ -961,6 +1083,9 @@ com.guozha.buy.R$styleable: int ChangeColorIconWithText_icon
 com.guozha.buy.R$styleable: int ChangeColorIconWithText_lighticon
 com.guozha.buy.R$styleable: int ChangeColorIconWithText_text
 com.guozha.buy.R$styleable: int ChangeColorIconWithText_text_size
+com.guozha.buy.activity.cart.AlipayActivity: void onClick(android.view.View)
+com.guozha.buy.activity.cart.PlanceOrderActivity
+com.guozha.buy.activity.cart.PlanceOrderActivity: PlanceOrderActivity()
 com.guozha.buy.activity.global.BaseActivity: BaseActivity()
 com.guozha.buy.activity.global.ChooseMenuActivity
 com.guozha.buy.activity.global.ChooseMenuActivity: ChooseMenuActivity()
@@ -985,14 +1110,17 @@ com.guozha.buy.activity.market.SetWarnTimeActivity
 com.guozha.buy.activity.market.SetWarnTimeActivity: SetWarnTimeActivity()
 com.guozha.buy.activity.market.VegetableDetailActivity
 com.guozha.buy.activity.market.VegetableDetailActivity: VegetableDetailActivity()
+com.guozha.buy.activity.mine.AboutOurActivity
+com.guozha.buy.activity.mine.AboutOurActivity: AboutOurActivity()
 com.guozha.buy.activity.mine.AddAddressActivity
 com.guozha.buy.activity.mine.AddAddressActivity: AddAddressActivity()
-com.guozha.buy.activity.mine.AdvicePraiseActivity
-com.guozha.buy.activity.mine.AdvicePraiseActivity: AdvicePraiseActivity()
+com.guozha.buy.activity.mine.AddAddressActivity: void onClick(android.view.View)
+com.guozha.buy.activity.mine.AnswerQuestionActivity
+com.guozha.buy.activity.mine.AnswerQuestionActivity: AnswerQuestionActivity()
 com.guozha.buy.activity.mine.ChooseCantonActivity
 com.guozha.buy.activity.mine.ChooseCantonActivity: ChooseCantonActivity()
-com.guozha.buy.activity.mine.ModifyAddressActivity
-com.guozha.buy.activity.mine.ModifyAddressActivity: ModifyAddressActivity()
+com.guozha.buy.activity.mine.FeadbackActivity
+com.guozha.buy.activity.mine.FeadbackActivity: FeadbackActivity()
 com.guozha.buy.activity.mine.MyAddressActivity
 com.guozha.buy.activity.mine.MyAddressActivity: MyAddressActivity()
 com.guozha.buy.activity.mine.MyCollectionActivity
@@ -1007,6 +1135,8 @@ com.guozha.buy.activity.mine.OrderDetailActivity
 com.guozha.buy.activity.mine.OrderDetailActivity: OrderDetailActivity()
 com.guozha.buy.activity.mine.SettingActivity
 com.guozha.buy.activity.mine.SettingActivity: SettingActivity()
+com.guozha.buy.activity.mine.SharePraiseActivity
+com.guozha.buy.activity.mine.SharePraiseActivity: SharePraiseActivity()
 com.guozha.buy.activity.mpage.CookBookDetailActivity
 com.guozha.buy.activity.mpage.CookBookDetailActivity: CookBookDetailActivity()
 com.guozha.buy.activity.mpage.PlanMenuActivity
@@ -1029,52 +1159,32 @@ com.guozha.buy.dialog.RemindLoginDialog: RemindLoginDialog()
 com.guozha.buy.dialog.WeightSelectDialog
 com.guozha.buy.dialog.WeightSelectDialog: WeightSelectDialog()
 com.guozha.buy.dialog.WeightSelectDialog: void onClick(android.view.View)
-com.guozha.buy.entry.PreSpecialItem
-com.guozha.buy.entry.PreSpecialItem: java.lang.String goodsId
-com.guozha.buy.entry.PreSpecialItem: java.lang.String goodsName
-com.guozha.buy.entry.PreSpecialItem: java.lang.Integer price
-com.guozha.buy.entry.PreSpecialItem: java.lang.String unit
-com.guozha.buy.entry.PreSpecialItem: PreSpecialItem()
-com.guozha.buy.entry.QuickMenus
-com.guozha.buy.entry.QuickMenus: java.lang.String id
-com.guozha.buy.entry.QuickMenus: java.lang.String showName
-com.guozha.buy.entry.QuickMenus: java.lang.String categoryId
-com.guozha.buy.entry.QuickMenus: boolean choosed
-com.guozha.buy.entry.QuickMenus: QuickMenus(java.lang.String,java.lang.String,java.lang.String,boolean)
-com.guozha.buy.entry.QuickMenus: java.lang.String getId()
-com.guozha.buy.entry.QuickMenus: void setId(java.lang.String)
-com.guozha.buy.entry.QuickMenus: java.lang.String getShowName()
-com.guozha.buy.entry.QuickMenus: void setShowName(java.lang.String)
-com.guozha.buy.entry.QuickMenus: java.lang.String getCategoryId()
-com.guozha.buy.entry.QuickMenus: void setCategoryId(java.lang.String)
-com.guozha.buy.entry.QuickMenus: boolean isChoosed()
-com.guozha.buy.entry.QuickMenus: void setChoosed(boolean)
-com.guozha.buy.entry.VegetableInfo
-com.guozha.buy.entry.VegetableInfo: int imageId
-com.guozha.buy.entry.VegetableInfo: java.lang.String vegetableName
-com.guozha.buy.entry.VegetableInfo: VegetableInfo()
-com.guozha.buy.entry.VegetableInfo: int getImageId()
-com.guozha.buy.entry.VegetableInfo: void setImageId(int)
-com.guozha.buy.entry.VegetableInfo: java.lang.String getVegetableName()
-com.guozha.buy.entry.VegetableInfo: void setVegetableName(java.lang.String)
 com.guozha.buy.entry.cart.CartBaseItem
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String itemId
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String itemName
-com.guozha.buy.entry.cart.CartBaseItem: int itemCount
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String itemUnit
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String itemPrice
+com.guozha.buy.entry.cart.CartBaseItem: long serialVersionUID
+com.guozha.buy.entry.cart.CartBaseItem: int cartId
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String goodsName
+com.guozha.buy.entry.cart.CartBaseItem: int amount
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String unit
+com.guozha.buy.entry.cart.CartBaseItem: int unitPrice
+com.guozha.buy.entry.cart.CartBaseItem: int price
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String cartStatus
 com.guozha.buy.entry.cart.CartBaseItem: com.guozha.buy.entry.cart.CartBaseItem$CartItemType itemType
-com.guozha.buy.entry.cart.CartBaseItem: CartBaseItem(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,com.guozha.buy.entry.cart.CartBaseItem$CartItemType)
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getItemId()
-com.guozha.buy.entry.cart.CartBaseItem: void setItemId(java.lang.String)
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getItemName()
-com.guozha.buy.entry.cart.CartBaseItem: void setItemName(java.lang.String)
-com.guozha.buy.entry.cart.CartBaseItem: int getItemCount()
-com.guozha.buy.entry.cart.CartBaseItem: void setItemCount(int)
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getItemUnit()
-com.guozha.buy.entry.cart.CartBaseItem: void setItemUnit(java.lang.String)
-com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getItemPrice()
-com.guozha.buy.entry.cart.CartBaseItem: void setItemPrice(java.lang.String)
+com.guozha.buy.entry.cart.CartBaseItem: CartBaseItem()
+com.guozha.buy.entry.cart.CartBaseItem: CartBaseItem(int,java.lang.String,int,java.lang.String,int,int,java.lang.String,com.guozha.buy.entry.cart.CartBaseItem$CartItemType)
+com.guozha.buy.entry.cart.CartBaseItem: int getCartId()
+com.guozha.buy.entry.cart.CartBaseItem: void setCartId(int)
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getGoodsName()
+com.guozha.buy.entry.cart.CartBaseItem: void setGoodsName(java.lang.String)
+com.guozha.buy.entry.cart.CartBaseItem: int getAmount()
+com.guozha.buy.entry.cart.CartBaseItem: void setAmount(int)
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getUnit()
+com.guozha.buy.entry.cart.CartBaseItem: void setUnit(java.lang.String)
+com.guozha.buy.entry.cart.CartBaseItem: int getUnitPrice()
+com.guozha.buy.entry.cart.CartBaseItem: void setUnitPrice(int)
+com.guozha.buy.entry.cart.CartBaseItem: int getPrice()
+com.guozha.buy.entry.cart.CartBaseItem: void setPrice(int)
+com.guozha.buy.entry.cart.CartBaseItem: java.lang.String getCartStatus()
+com.guozha.buy.entry.cart.CartBaseItem: void setCartStatus(java.lang.String)
 com.guozha.buy.entry.cart.CartBaseItem: com.guozha.buy.entry.cart.CartBaseItem$CartItemType getItemType()
 com.guozha.buy.entry.cart.CartBaseItem: void setItemType(com.guozha.buy.entry.cart.CartBaseItem$CartItemType)
 com.guozha.buy.entry.cart.CartBaseItem$CartItemType
@@ -1087,26 +1197,64 @@ com.guozha.buy.entry.cart.CartBaseItem$CartItemType: CartBaseItem$CartItemType(j
 com.guozha.buy.entry.cart.CartBaseItem$CartItemType: com.guozha.buy.entry.cart.CartBaseItem$CartItemType[] values()
 com.guozha.buy.entry.cart.CartBaseItem$CartItemType: com.guozha.buy.entry.cart.CartBaseItem$CartItemType valueOf(java.lang.String)
 com.guozha.buy.entry.cart.CartCookItem
-com.guozha.buy.entry.cart.CartCookItem: java.util.List cookMaterials
-com.guozha.buy.entry.cart.CartCookItem: CartCookItem(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.util.List)
-com.guozha.buy.entry.cart.CartCookItem: java.util.List getCookMaterials()
-com.guozha.buy.entry.cart.CartCookItem: void setCookMaterials(java.util.List)
+com.guozha.buy.entry.cart.CartCookItem: long serialVersionUID
+com.guozha.buy.entry.cart.CartCookItem: java.util.List goodsList
+com.guozha.buy.entry.cart.CartCookItem: CartCookItem()
+com.guozha.buy.entry.cart.CartCookItem: CartCookItem(int,java.lang.String,int,java.lang.String,int,int,java.lang.String)
+com.guozha.buy.entry.cart.CartCookItem: java.util.List getGoodsList()
+com.guozha.buy.entry.cart.CartCookItem: void setGoodsList(java.util.List)
 com.guozha.buy.entry.cart.CartCookMaterial
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String materialId
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String materialName
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String materialCount
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String materialUnit
-com.guozha.buy.entry.cart.CartCookMaterial: CartCookMaterial(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getMaterialId()
-com.guozha.buy.entry.cart.CartCookMaterial: void setMaterialId(java.lang.String)
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getMaterialName()
-com.guozha.buy.entry.cart.CartCookMaterial: void setMaterialName(java.lang.String)
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getMaterialCount()
-com.guozha.buy.entry.cart.CartCookMaterial: void setMaterialCount(java.lang.String)
-com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getMaterialUnit()
-com.guozha.buy.entry.cart.CartCookMaterial: void setMaterialUnit(java.lang.String)
+com.guozha.buy.entry.cart.CartCookMaterial: long serialVersionUID
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String goodsName
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String amount
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String unit
+com.guozha.buy.entry.cart.CartCookMaterial: CartCookMaterial()
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getGoodsName()
+com.guozha.buy.entry.cart.CartCookMaterial: void setGoodsName(java.lang.String)
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getAmount()
+com.guozha.buy.entry.cart.CartCookMaterial: void setAmount(java.lang.String)
+com.guozha.buy.entry.cart.CartCookMaterial: java.lang.String getUnit()
+com.guozha.buy.entry.cart.CartCookMaterial: void setUnit(java.lang.String)
 com.guozha.buy.entry.cart.CartMarketItem
-com.guozha.buy.entry.cart.CartMarketItem: CartMarketItem(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String)
+com.guozha.buy.entry.cart.CartMarketItem: long serialVersionUID
+com.guozha.buy.entry.cart.CartMarketItem: CartMarketItem()
+com.guozha.buy.entry.cart.CartMarketItem: CartMarketItem(int,java.lang.String,int,java.lang.String,int,int,java.lang.String)
+com.guozha.buy.entry.cart.CartTotalData
+com.guozha.buy.entry.cart.CartTotalData: long serialVersionUID
+com.guozha.buy.entry.cart.CartTotalData: int quantity
+com.guozha.buy.entry.cart.CartTotalData: int totalPrice
+com.guozha.buy.entry.cart.CartTotalData: int serviceFee
+com.guozha.buy.entry.cart.CartTotalData: int currServiceFee
+com.guozha.buy.entry.cart.CartTotalData: java.util.List menuList
+com.guozha.buy.entry.cart.CartTotalData: java.util.List goodsList
+com.guozha.buy.entry.cart.CartTotalData: CartTotalData()
+com.guozha.buy.entry.cart.CartTotalData: int getQuantity()
+com.guozha.buy.entry.cart.CartTotalData: void setQuantity(int)
+com.guozha.buy.entry.cart.CartTotalData: int getTotalPrice()
+com.guozha.buy.entry.cart.CartTotalData: void setTotalPrice(int)
+com.guozha.buy.entry.cart.CartTotalData: int getServiceFee()
+com.guozha.buy.entry.cart.CartTotalData: void setServiceFee(int)
+com.guozha.buy.entry.cart.CartTotalData: int getCurrServiceFee()
+com.guozha.buy.entry.cart.CartTotalData: void setCurrServiceFee(int)
+com.guozha.buy.entry.cart.CartTotalData: java.util.List getMenuList()
+com.guozha.buy.entry.cart.CartTotalData: void setMenuList(java.util.List)
+com.guozha.buy.entry.cart.CartTotalData: java.util.List getGoodsList()
+com.guozha.buy.entry.cart.CartTotalData: void setGoodsList(java.util.List)
+com.guozha.buy.entry.cart.PointTime
+com.guozha.buy.entry.cart.PointTime: long serialVersionUID
+com.guozha.buy.entry.cart.PointTime: java.lang.String upTime
+com.guozha.buy.entry.cart.PointTime: java.lang.String downTime
+com.guozha.buy.entry.cart.PointTime: java.lang.String dateTime
+com.guozha.buy.entry.cart.PointTime: java.lang.String timeTitle
+com.guozha.buy.entry.cart.PointTime: PointTime(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+com.guozha.buy.entry.cart.PointTime: java.lang.String getUpTime()
+com.guozha.buy.entry.cart.PointTime: void setUpTime(java.lang.String)
+com.guozha.buy.entry.cart.PointTime: java.lang.String getDownTime()
+com.guozha.buy.entry.cart.PointTime: void setDownTime(java.lang.String)
+com.guozha.buy.entry.cart.PointTime: java.lang.String getDateTime()
+com.guozha.buy.entry.cart.PointTime: void setDateTime(java.lang.String)
+com.guozha.buy.entry.cart.PointTime: java.lang.String getTimeTitle()
+com.guozha.buy.entry.cart.PointTime: void setTimeTitle(java.lang.String)
 com.guozha.buy.entry.global.ConfigXML
 com.guozha.buy.entry.global.ConfigXML: java.util.Map userStatus
 com.guozha.buy.entry.global.ConfigXML: java.util.Map sellerStatus
@@ -1193,18 +1341,49 @@ com.guozha.buy.entry.global.ConfigXML: java.util.Map getTimeScope()
 com.guozha.buy.entry.global.ConfigXML: void setTimeScope(java.util.Map)
 com.guozha.buy.entry.global.ConfigXML: java.util.Map getSmsType()
 com.guozha.buy.entry.global.ConfigXML: void setSmsType(java.util.Map)
+com.guozha.buy.entry.global.QuickMenu
+com.guozha.buy.entry.global.QuickMenu: long serialVersionUID
+com.guozha.buy.entry.global.QuickMenu: int menuId
+com.guozha.buy.entry.global.QuickMenu: java.lang.String name
+com.guozha.buy.entry.global.QuickMenu: QuickMenu()
+com.guozha.buy.entry.global.QuickMenu: QuickMenu(int,java.lang.String)
+com.guozha.buy.entry.global.QuickMenu: int getMenuId()
+com.guozha.buy.entry.global.QuickMenu: void setMenuId(int)
+com.guozha.buy.entry.global.QuickMenu: java.lang.String getName()
+com.guozha.buy.entry.global.QuickMenu: void setName(java.lang.String)
+com.guozha.buy.entry.global.WeightOption
+com.guozha.buy.entry.global.WeightOption: long serialVersionUID
+com.guozha.buy.entry.global.WeightOption: int goodsId
+com.guozha.buy.entry.global.WeightOption: int amount
+com.guozha.buy.entry.global.WeightOption: int unitPrice
+com.guozha.buy.entry.global.WeightOption: int price
+com.guozha.buy.entry.global.WeightOption: java.lang.String unit
+com.guozha.buy.entry.global.WeightOption: WeightOption()
+com.guozha.buy.entry.global.WeightOption: int getGoodsId()
+com.guozha.buy.entry.global.WeightOption: void setGoodsId(int)
+com.guozha.buy.entry.global.WeightOption: int getAmount()
+com.guozha.buy.entry.global.WeightOption: void setAmount(int)
+com.guozha.buy.entry.global.WeightOption: int getUnitPrice()
+com.guozha.buy.entry.global.WeightOption: void setUnitPrice(int)
+com.guozha.buy.entry.global.WeightOption: int getPrice()
+com.guozha.buy.entry.global.WeightOption: void setPrice(int)
+com.guozha.buy.entry.global.WeightOption: java.lang.String getUnit()
+com.guozha.buy.entry.global.WeightOption: void setUnit(java.lang.String)
 com.guozha.buy.entry.market.GoodsItemType
 com.guozha.buy.entry.market.GoodsItemType: long serialVersionUID
-com.guozha.buy.entry.market.GoodsItemType: java.lang.String frontTypeId
+com.guozha.buy.entry.market.GoodsItemType: int frontTypeId
 com.guozha.buy.entry.market.GoodsItemType: java.lang.String shortName
+com.guozha.buy.entry.market.GoodsItemType: java.lang.String typeName
 com.guozha.buy.entry.market.GoodsItemType: java.util.List frontTypeList
-com.guozha.buy.entry.market.GoodsItemType: GoodsItemType(java.lang.String,java.lang.String,java.util.List)
-com.guozha.buy.entry.market.GoodsItemType: java.lang.String getFrontTypeId()
-com.guozha.buy.entry.market.GoodsItemType: void setFrontTypeId(java.lang.String)
+com.guozha.buy.entry.market.GoodsItemType: GoodsItemType()
+com.guozha.buy.entry.market.GoodsItemType: int getFrontTypeId()
+com.guozha.buy.entry.market.GoodsItemType: void setFrontTypeId(int)
 com.guozha.buy.entry.market.GoodsItemType: java.lang.String getShortName()
 com.guozha.buy.entry.market.GoodsItemType: void setShortName(java.lang.String)
 com.guozha.buy.entry.market.GoodsItemType: java.util.List getFrontTypeList()
 com.guozha.buy.entry.market.GoodsItemType: void setFrontTypeList(java.util.List)
+com.guozha.buy.entry.market.GoodsItemType: java.lang.String getTypeName()
+com.guozha.buy.entry.market.GoodsItemType: void setTypeName(java.lang.String)
 com.guozha.buy.entry.market.GoodsSecondItemType
 com.guozha.buy.entry.market.GoodsSecondItemType: long serialVersionUID
 com.guozha.buy.entry.market.GoodsSecondItemType: java.lang.String frontTypeId
@@ -1215,45 +1394,86 @@ com.guozha.buy.entry.market.GoodsSecondItemType: void setFrontTypeId(java.lang.S
 com.guozha.buy.entry.market.GoodsSecondItemType: java.lang.String getShortName()
 com.guozha.buy.entry.market.GoodsSecondItemType: void setShortName(java.lang.String)
 com.guozha.buy.entry.market.ItemSaleInfo
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String itemId
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String skuId
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String itemImage
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String itemName
-com.guozha.buy.entry.market.ItemSaleInfo: float skuPrice
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String itemUnit
-com.guozha.buy.entry.market.ItemSaleInfo: int defaultWeight
-com.guozha.buy.entry.market.ItemSaleInfo: java.util.List weightOption
+com.guozha.buy.entry.market.ItemSaleInfo: long serialVersionUID
+com.guozha.buy.entry.market.ItemSaleInfo: int goodsId
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String goodsName
+com.guozha.buy.entry.market.ItemSaleInfo: int unitPrice
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String unit
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String goodsImg
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String goodsProp
 com.guozha.buy.entry.market.ItemSaleInfo: ItemSaleInfo()
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getItemId()
-com.guozha.buy.entry.market.ItemSaleInfo: void setItemId(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getSkuId()
-com.guozha.buy.entry.market.ItemSaleInfo: void setSkuId(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getItemImage()
-com.guozha.buy.entry.market.ItemSaleInfo: void setItemImage(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getItemName()
-com.guozha.buy.entry.market.ItemSaleInfo: void setItemName(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo: float getSkuPrice()
-com.guozha.buy.entry.market.ItemSaleInfo: void setSkuPrice(float)
-com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getItemUnit()
-com.guozha.buy.entry.market.ItemSaleInfo: void setItemUnit(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo: int getDefaultWeight()
-com.guozha.buy.entry.market.ItemSaleInfo: void setDefaultWeight(int)
-com.guozha.buy.entry.market.ItemSaleInfo: java.util.List getWeightOption()
-com.guozha.buy.entry.market.ItemSaleInfo: void setWeightOption(java.util.List)
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: int quantity
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: float amount
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: java.lang.String unit
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: java.lang.String moneyUnit
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: ItemSaleInfo$WeightOption()
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: java.lang.String getUnit()
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: void setUnit(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: java.lang.String getMoneyUnit()
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: void setMoneyUnit(java.lang.String)
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: int getQuantity()
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: void setQuantity(int)
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: float getAmount()
-com.guozha.buy.entry.market.ItemSaleInfo$WeightOption: void setAmount(float)
+com.guozha.buy.entry.market.ItemSaleInfo: int getGoodsId()
+com.guozha.buy.entry.market.ItemSaleInfo: void setGoodsId(int)
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getGoodsName()
+com.guozha.buy.entry.market.ItemSaleInfo: void setGoodsName(java.lang.String)
+com.guozha.buy.entry.market.ItemSaleInfo: int getUnitPrice()
+com.guozha.buy.entry.market.ItemSaleInfo: void setUnitPrice(int)
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getUnit()
+com.guozha.buy.entry.market.ItemSaleInfo: void setUnit(java.lang.String)
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getGoodsImg()
+com.guozha.buy.entry.market.ItemSaleInfo: void setGoodsImg(java.lang.String)
+com.guozha.buy.entry.market.ItemSaleInfo: java.lang.String getGoodsProp()
+com.guozha.buy.entry.market.ItemSaleInfo: void setGoodsProp(java.lang.String)
+com.guozha.buy.entry.market.ItemSaleInfoPage
+com.guozha.buy.entry.market.ItemSaleInfoPage: long serialVersionUID
+com.guozha.buy.entry.market.ItemSaleInfoPage: int pageCount
+com.guozha.buy.entry.market.ItemSaleInfoPage: java.util.List goodsList
+com.guozha.buy.entry.market.ItemSaleInfoPage: ItemSaleInfoPage()
+com.guozha.buy.entry.market.ItemSaleInfoPage: int getPageCount()
+com.guozha.buy.entry.market.ItemSaleInfoPage: void setPageCount(int)
+com.guozha.buy.entry.market.ItemSaleInfoPage: java.util.List getGoodsList()
+com.guozha.buy.entry.market.ItemSaleInfoPage: void setGoodsList(java.util.List)
+com.guozha.buy.entry.market.MarketHomeItem
+com.guozha.buy.entry.market.MarketHomeItem: long serialVersionUID
+com.guozha.buy.entry.market.MarketHomeItem: int frontTypeId
+com.guozha.buy.entry.market.MarketHomeItem: java.lang.String typeName
+com.guozha.buy.entry.market.MarketHomeItem: java.lang.String shortName
+com.guozha.buy.entry.market.MarketHomeItem: java.util.List goodsList
+com.guozha.buy.entry.market.MarketHomeItem: MarketHomeItem()
+com.guozha.buy.entry.market.MarketHomeItem: int getFrontTypeId()
+com.guozha.buy.entry.market.MarketHomeItem: void setFrontTypeId(int)
+com.guozha.buy.entry.market.MarketHomeItem: java.lang.String getTypeName()
+com.guozha.buy.entry.market.MarketHomeItem: void setTypeName(java.lang.String)
+com.guozha.buy.entry.market.MarketHomeItem: java.lang.String getShortName()
+com.guozha.buy.entry.market.MarketHomeItem: void setShortName(java.lang.String)
+com.guozha.buy.entry.market.MarketHomeItem: java.util.List getGoodsList()
+com.guozha.buy.entry.market.MarketHomeItem: void setGoodsList(java.util.List)
+com.guozha.buy.entry.market.MarketHomePage
+com.guozha.buy.entry.market.MarketHomePage: long serialVersionUID
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer totalCount
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer pageSize
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer pageNum
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer pageCount
+com.guozha.buy.entry.market.MarketHomePage: java.util.List frontTypeList
+com.guozha.buy.entry.market.MarketHomePage: MarketHomePage()
+com.guozha.buy.entry.market.MarketHomePage: java.util.List getFrontTypeList()
+com.guozha.buy.entry.market.MarketHomePage: void setFrontTypeList(java.util.List)
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer getTotalCount()
+com.guozha.buy.entry.market.MarketHomePage: void setTotalCount(java.lang.Integer)
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer getPageSize()
+com.guozha.buy.entry.market.MarketHomePage: void setPageSize(java.lang.Integer)
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer getPageNum()
+com.guozha.buy.entry.market.MarketHomePage: void setPageNum(java.lang.Integer)
+com.guozha.buy.entry.market.MarketHomePage: java.lang.Integer getPageCount()
+com.guozha.buy.entry.market.MarketHomePage: void setPageCount(java.lang.Integer)
+com.guozha.buy.entry.mine.MarketTicket
+com.guozha.buy.entry.mine.MarketTicket: long serialVersionUID
+com.guozha.buy.entry.mine.MarketTicket: int myTicketId
+com.guozha.buy.entry.mine.MarketTicket: java.lang.String ticketType
+com.guozha.buy.entry.mine.MarketTicket: int parValue
+com.guozha.buy.entry.mine.MarketTicket: int forPrice
+com.guozha.buy.entry.mine.MarketTicket: java.lang.String validDate
+com.guozha.buy.entry.mine.MarketTicket: MarketTicket()
+com.guozha.buy.entry.mine.MarketTicket: int getMyTicketId()
+com.guozha.buy.entry.mine.MarketTicket: void setMyTicketId(int)
+com.guozha.buy.entry.mine.MarketTicket: java.lang.String getTicketType()
+com.guozha.buy.entry.mine.MarketTicket: void setTicketType(java.lang.String)
+com.guozha.buy.entry.mine.MarketTicket: int getParValue()
+com.guozha.buy.entry.mine.MarketTicket: void setParValue(int)
+com.guozha.buy.entry.mine.MarketTicket: int getForPrice()
+com.guozha.buy.entry.mine.MarketTicket: void setForPrice(int)
+com.guozha.buy.entry.mine.MarketTicket: java.lang.String getValidDate()
+com.guozha.buy.entry.mine.MarketTicket: void setValidDate(java.lang.String)
 com.guozha.buy.entry.mine.account.AccountInfo
 com.guozha.buy.entry.mine.account.AccountInfo: long serialVersionUID
 com.guozha.buy.entry.mine.account.AccountInfo: java.lang.String mobileNo
@@ -1272,6 +1492,116 @@ com.guozha.buy.entry.mine.account.AccountInfo: int getTicketAmount()
 com.guozha.buy.entry.mine.account.AccountInfo: void setTicketAmount(int)
 com.guozha.buy.entry.mine.account.AccountInfo: int getBeanAmount()
 com.guozha.buy.entry.mine.account.AccountInfo: void setBeanAmount(int)
+com.guozha.buy.entry.mine.address.AddressInfo
+com.guozha.buy.entry.mine.address.AddressInfo: long serialVersionUID
+com.guozha.buy.entry.mine.address.AddressInfo: int addressId
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String mobileNo
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String receiveName
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String provinceName
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String cityName
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String countyName
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String buildingName
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String detailAddr
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String defaultFlag
+com.guozha.buy.entry.mine.address.AddressInfo: AddressInfo()
+com.guozha.buy.entry.mine.address.AddressInfo: int getAddressId()
+com.guozha.buy.entry.mine.address.AddressInfo: void setAddressId(int)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getMobileNo()
+com.guozha.buy.entry.mine.address.AddressInfo: void setMobileNo(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getReceiveName()
+com.guozha.buy.entry.mine.address.AddressInfo: void setReceiveName(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getProvinceName()
+com.guozha.buy.entry.mine.address.AddressInfo: void setProvinceName(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getCityName()
+com.guozha.buy.entry.mine.address.AddressInfo: void setCityName(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getCountyName()
+com.guozha.buy.entry.mine.address.AddressInfo: void setCountyName(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getBuildingName()
+com.guozha.buy.entry.mine.address.AddressInfo: void setBuildingName(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getDetailAddr()
+com.guozha.buy.entry.mine.address.AddressInfo: void setDetailAddr(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getDefaultFlag()
+com.guozha.buy.entry.mine.address.AddressInfo: void setDefaultFlag(java.lang.String)
+com.guozha.buy.entry.mine.address.Country
+com.guozha.buy.entry.mine.address.Country: long serialVersionUID
+com.guozha.buy.entry.mine.address.Country: int areaId
+com.guozha.buy.entry.mine.address.Country: java.lang.String areaName
+com.guozha.buy.entry.mine.address.Country: Country()
+com.guozha.buy.entry.mine.address.Country: int getAreaId()
+com.guozha.buy.entry.mine.address.Country: void setAreaId(int)
+com.guozha.buy.entry.mine.address.Country: java.lang.String getAreaName()
+com.guozha.buy.entry.mine.address.Country: void setAreaName(java.lang.String)
+com.guozha.buy.entry.mine.address.KeyWord
+com.guozha.buy.entry.mine.address.KeyWord: long serialVersionUID
+com.guozha.buy.entry.mine.address.KeyWord: int buildingId
+com.guozha.buy.entry.mine.address.KeyWord: java.lang.String buildingName
+com.guozha.buy.entry.mine.address.KeyWord: KeyWord()
+com.guozha.buy.entry.mine.address.KeyWord: int getBuildingId()
+com.guozha.buy.entry.mine.address.KeyWord: void setBuildingId(int)
+com.guozha.buy.entry.mine.address.KeyWord: java.lang.String getBuildingName()
+com.guozha.buy.entry.mine.address.KeyWord: void setBuildingName(java.lang.String)
+com.guozha.buy.entry.mine.order.OrderSummary
+com.guozha.buy.entry.mine.order.OrderSummary: long serialVersionUID
+com.guozha.buy.entry.mine.order.OrderSummary: int orderId
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String orderNo
+com.guozha.buy.entry.mine.order.OrderSummary: java.util.Date createTime
+com.guozha.buy.entry.mine.order.OrderSummary: int quantity
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String totalPrice
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String status
+com.guozha.buy.entry.mine.order.OrderSummary: OrderSummary()
+com.guozha.buy.entry.mine.order.OrderSummary: int getOrderId()
+com.guozha.buy.entry.mine.order.OrderSummary: void setOrderId(int)
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String getOrderNo()
+com.guozha.buy.entry.mine.order.OrderSummary: void setOrderNo(java.lang.String)
+com.guozha.buy.entry.mine.order.OrderSummary: java.util.Date getCreateTime()
+com.guozha.buy.entry.mine.order.OrderSummary: void setCreateTime(java.util.Date)
+com.guozha.buy.entry.mine.order.OrderSummary: int getQuantity()
+com.guozha.buy.entry.mine.order.OrderSummary: void setQuantity(int)
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String getTotalPrice()
+com.guozha.buy.entry.mine.order.OrderSummary: void setTotalPrice(java.lang.String)
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String getStatus()
+com.guozha.buy.entry.mine.order.OrderSummary: void setStatus(java.lang.String)
+com.guozha.buy.entry.mine.order.OrderSummaryPage
+com.guozha.buy.entry.mine.order.OrderSummaryPage: long serialVersionUID
+com.guozha.buy.entry.mine.order.OrderSummaryPage: int totalCount
+com.guozha.buy.entry.mine.order.OrderSummaryPage: int pageSize
+com.guozha.buy.entry.mine.order.OrderSummaryPage: java.util.List orderList
+com.guozha.buy.entry.mine.order.OrderSummaryPage: OrderSummaryPage()
+com.guozha.buy.entry.mine.order.OrderSummaryPage: int getTotalCount()
+com.guozha.buy.entry.mine.order.OrderSummaryPage: void setTotalCount(int)
+com.guozha.buy.entry.mine.order.OrderSummaryPage: int getPageSize()
+com.guozha.buy.entry.mine.order.OrderSummaryPage: void setPageSize(int)
+com.guozha.buy.entry.mine.order.OrderSummaryPage: java.util.List getOrderList()
+com.guozha.buy.entry.mine.order.OrderSummaryPage: void setOrderList(java.util.List)
+com.guozha.buy.entry.mine.seller.Seller
+com.guozha.buy.entry.mine.seller.Seller: int mySellerId
+com.guozha.buy.entry.mine.seller.Seller: int sellerId
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String sellerName
+com.guozha.buy.entry.mine.seller.Seller: byte[] logo
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String mainBusi
+com.guozha.buy.entry.mine.seller.Seller: int transCount
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String sellerTag
+com.guozha.buy.entry.mine.seller.Seller: Seller()
+com.guozha.buy.entry.mine.seller.Seller: int getMySellerId()
+com.guozha.buy.entry.mine.seller.Seller: void setMySellerId(int)
+com.guozha.buy.entry.mine.seller.Seller: int getSellerId()
+com.guozha.buy.entry.mine.seller.Seller: void setSellerId(int)
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String getSellerName()
+com.guozha.buy.entry.mine.seller.Seller: void setSellerName(java.lang.String)
+com.guozha.buy.entry.mine.seller.Seller: byte[] getLogo()
+com.guozha.buy.entry.mine.seller.Seller: void setLogo(byte[])
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String getMainBusi()
+com.guozha.buy.entry.mine.seller.Seller: void setMainBusi(java.lang.String)
+com.guozha.buy.entry.mine.seller.Seller: int getTransCount()
+com.guozha.buy.entry.mine.seller.Seller: void setTransCount(int)
+com.guozha.buy.entry.mine.seller.Seller: java.lang.String getSellerTag()
+com.guozha.buy.entry.mine.seller.Seller: void setSellerTag(java.lang.String)
+com.guozha.buy.entry.mpage.PreSpecialItem
+com.guozha.buy.entry.mpage.PreSpecialItem: java.lang.String goodsId
+com.guozha.buy.entry.mpage.PreSpecialItem: java.lang.String goodsName
+com.guozha.buy.entry.mpage.PreSpecialItem: java.lang.Integer price
+com.guozha.buy.entry.mpage.PreSpecialItem: java.lang.String unit
+com.guozha.buy.entry.mpage.PreSpecialItem: PreSpecialItem()
 com.guozha.buy.entry.mpage.season.Season
 com.guozha.buy.entry.mpage.season.Season: long serialVersionUID
 com.guozha.buy.entry.mpage.season.Season: java.lang.String season
@@ -1289,16 +1619,16 @@ com.guozha.buy.entry.mpage.season.SeasonAdviceItem: long serialVersionUID
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: int goodsId
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String goodsName
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String memo
-com.guozha.buy.entry.mpage.season.SeasonAdviceItem: byte[] goodsImg
-com.guozha.buy.entry.mpage.season.SeasonAdviceItem: SeasonAdviceItem(int,java.lang.String,java.lang.String,byte[])
+com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String goodsImg
+com.guozha.buy.entry.mpage.season.SeasonAdviceItem: SeasonAdviceItem(int,java.lang.String,java.lang.String,java.lang.String)
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: int getGoodsId()
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setGoodsId(int)
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String getGoodsName()
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setGoodsName(java.lang.String)
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String getMemo()
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setMemo(java.lang.String)
-com.guozha.buy.entry.mpage.season.SeasonAdviceItem: byte[] getGoodsImg()
-com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setGoodsImg(byte[])
+com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String getGoodsImg()
+com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setGoodsImg(java.lang.String)
 com.guozha.buy.global.CustomApplication
 com.guozha.buy.global.CustomApplication: CustomApplication()
 com.guozha.buy.receiver.JPushMessageReceiver
@@ -1311,6 +1641,8 @@ com.guozha.buy.view.AnimatedExpandableListView: void setAdapter(android.widget.E
 com.guozha.buy.view.AnimatedExpandableListView: int getAnimationDuration()
 com.guozha.buy.view.AutoViewFlipper
 com.guozha.buy.view.AutoViewFlipper: AutoViewFlipper(android.content.Context,android.util.AttributeSet)
+com.guozha.buy.view.AutoViewFlipper: int getCurrentItemIndex()
+com.guozha.buy.view.AutoViewFlipper: java.util.List getImageViews()
 com.guozha.buy.view.AutoViewFlipper: void setImages(java.util.List)
 com.guozha.buy.view.AutoViewFlipper: java.util.List getBitmaps()
 com.guozha.buy.view.AutoViewFlipper: void setOnSlopTouchListener(com.guozha.buy.view.AutoViewFlipper$OnSlopTouchListener)

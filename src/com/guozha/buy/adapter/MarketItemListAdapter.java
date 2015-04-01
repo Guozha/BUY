@@ -5,22 +5,28 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.market.ListVegetableActivity;
+import com.guozha.buy.activity.mine.AddAddressActivity;
+import com.guozha.buy.dialog.CustomDialog;
+import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
-import com.guozha.buy.global.CustomApplication;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.UnitConvertUtil;
+import com.umeng.socialize.sso.CustomHandler;
 
 /**
  * 逛菜场主界面条目列表
@@ -33,12 +39,14 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	private Context mContext;
 	
 	private LayoutInflater mInflater;
+	private BitmapCache mBitmapCache;
 	
-	public MarketItemListAdapter(Context context, List<MarketHomeItem> marketHomeItems){
+	public MarketItemListAdapter(Context context, List<MarketHomeItem> marketHomeItems, ListView parentView){
 		if(context == null) return;
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mMarketHomeItems = marketHomeItems;
+		mBitmapCache = new BitmapCache(context, parentView);
 	}
 
 	@Override
@@ -85,16 +93,35 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		 
 		    HolderEntry holderEntry;
 		    holder.cells = new ArrayList<MarketItemListAdapter.HolderEntry>();
-		    for(int i = 0; i < 6; i++){
-		    	cells.get(i).setOnClickListener(this);
+		    for(int i = 0; i < cells.size(); i++){
+		    	View itemVegetable = cells.get(i);
+		    	itemVegetable.setOnClickListener(this);
 		    	holderEntry = new HolderEntry();
-		    	holderEntry.buyedIcon = cells.get(i).findViewById(R.id.vegetable_cell_icon);
-		    	holderEntry.image = (ImageView) cells.get(i).findViewById(R.id.vegetable_cell_image);
-		    	holderEntry.productName = (TextView) cells.get(i).findViewById(R.id.vegetable_cell_name);
-		    	holderEntry.price = (TextView) cells.get(i).findViewById(R.id.vegetable_cell_price);
+		    	holderEntry.itemVegetable = itemVegetable;
+		    	holderEntry.buyedIcon = itemVegetable.findViewById(R.id.vegetable_cell_icon);
+		    	holderEntry.image = (ImageView) itemVegetable.findViewById(R.id.vegetable_cell_image);
+		    	holderEntry.productName = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_name);
+		    	holderEntry.price = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_price);
 		    	holder.cells.add(holderEntry);
 		    }
 		    holder.typeName = (TextView) convertView.findViewById(R.id.item_type_name);
+		    holder.itemMore = (ImageView) convertView.findViewById(R.id.item_more);
+		    holder.itemMore.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View view) {
+					//TODO 暂时这样写着，为了测试接口
+					String tag = String.valueOf(view.getTag());
+					String[] itemType = tag.split(":");
+					Intent intent = new Intent(mContext, ListVegetableActivity.class);
+					//将商品类别传给列表
+					if(itemType.length == 2){
+						intent.putExtra("frontTypeId", itemType[0]);
+						intent.putExtra("frontTypeName", itemType[1]);
+					}
+					mContext.startActivity(intent);
+				}
+			});
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
@@ -102,17 +129,21 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		
 		MarketHomeItem marketHomeItem = mMarketHomeItems.get(position);
 		holder.typeName.setText(marketHomeItem.getTypeName());
+		holder.itemMore.setTag(marketHomeItem.getFrontTypeId() + ":" + marketHomeItem.getTypeName());
 		List<ItemSaleInfo> itemSaleInfos = marketHomeItem.getGoodsList();
 		for(int i = 0; i < itemSaleInfos.size(); i++){
 			HolderEntry holderEntry = holder.cells.get(i);
 			ItemSaleInfo itemSaleInfo = itemSaleInfos.get(i);
+			//设置TAG
+			holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId());
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
 			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
-			holderEntry.price.setText(itemSaleInfo.getUnitPrice()
-					+ itemSaleInfo.getUnit());
-			HttpManager.getInstance(CustomApplication.getContext()).volleyImageRequest(
-					HttpManager.URL + itemSaleInfo.getGoodsImg(), 
-					holderEntry.image, R.drawable.ic_launcher, R.drawable.ic_launcher);
+			holderEntry.price.setText(
+					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "/" +
+					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
+			String imgUrl = HttpManager.URL + itemSaleInfo.getGoodsImg();
+			holderEntry.image.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 		}
 		
 		return convertView;
@@ -120,17 +151,43 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	
 	@Override
 	public void onClick(View view) {
-		Intent intent = new Intent(mContext, WeightSelectDialog.class);
+		Intent intent;
+		//先判断用户是否登录了
+		if(ConfigManager.getInstance().getUserToken() == null){
+			intent = new Intent(mContext, RemindLoginDialog.class);
+			mContext.startActivity(intent);
+			return;
+		}
+		//TODO 再判断当前选择的地址是否为NULL
+		if(ConfigManager.getInstance().getChoosedAddressId() == -1){
+			CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
+			addAddressDialog.setDismissButtonId(R.id.cancel_button);
+			addAddressDialog.getViewById(R.id.agree_button)
+				.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, AddAddressActivity.class);
+					mContext.startActivity(intent);
+				}
+			});
+			return;
+		}
+		
+		String goodsId = String.valueOf(view.getTag());
+		intent = new Intent(mContext, WeightSelectDialog.class);
+		intent.putExtra("goodsId", goodsId);
 		mContext.startActivity(intent);
 	}
 	
 	
 	static class ViewHolder{
 		private TextView typeName;
+		private ImageView itemMore;
 		private List<HolderEntry> cells;
 	}
 	
 	static class HolderEntry{
+		private View itemVegetable;
 		private View buyedIcon;
 		private ImageView image;
 		private TextView productName;
