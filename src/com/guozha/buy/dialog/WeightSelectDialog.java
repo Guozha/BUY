@@ -2,6 +2,9 @@ package com.guozha.buy.dialog;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -22,9 +24,12 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.market.VegetableDetailActivity;
 import com.guozha.buy.entry.global.WeightOption;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.RegularUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
@@ -75,6 +80,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 				mGoodsId = bundle.getString("goodsId");
 			}
 		}
+		setResult(0);
 		
 		mWheelView = (WheelView) findViewById(R.id.select_weight_wheelview);
 		mWheelView.setVisibleItems(5); // Number of items
@@ -129,21 +135,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			this.finish();
 			break;
 		case R.id.select_weight_confirm:
-			int currentItem = mWheelView.getCurrentItem();
-			int quantity = -1;
-			if(currentItem == options.size() - 1){
-				//自定义的
-				String quntityStr = mCustomWeight.getText().toString().trim();
-				if(RegularUtil.regularNumber(quntityStr)){
-					quantity = Integer.parseInt(quntityStr);
-				}
-			}else{
-				quantity = options.get(currentItem).getAmount();
-			}
-			
-			Toast.makeText(this, "选择的重量是 = " + quantity, Toast.LENGTH_SHORT).show();
-			
-
+			int quantity = obtainQuantity();
+			if(quantity == -1) return;
+			requestAddCart(quantity);
 			break;
 		case R.id.select_weight_free_layout:
 			WeightSelectDialog.this.finish();
@@ -152,11 +146,73 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			break;
 		}
 	}
+
+	/**
+	 * 获取数量
+	 * @return
+	 */
+	private int obtainQuantity() {
+		int currentItem = mWheelView.getCurrentItem();
+		int quantity = -1;
+		if(options == null) return -1;
+		if(currentItem == options.size() - 1){
+			//自定义的
+			String quntityStr = mCustomWeight.getText().toString().trim();
+			if(RegularUtil.regularNumber(quntityStr)){
+				quantity = Integer.parseInt(quntityStr);
+				quantity = UnitConvertUtil.getCommitWeight(
+						quantity, mCustomWeightUnit.getText().toString());
+			}else{
+				ToastUtil.showToast(this, "只允许填写数字");
+				return -1;
+			}
+		}else{
+			quantity = options.get(currentItem).getAmount();
+		}
+		return quantity;
+	}
+
+	/**
+	 * 请求添加到购物车
+	 * @param quantity
+	 */
+	private void requestAddCart(int quantity) {
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		
+		RequestParam paramPath = new RequestParam("cart/insert")
+		.setParams("userId", userId)
+		.setParams("id", mGoodsId)
+		.setParams("productType", "02")  //02是商品
+		.setParams("amount", quantity)
+		.setParams("token", token)
+		.setParams("addressId", addressId);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode)){
+						ToastUtil.showToast(WeightSelectDialog.this, "已添加到购物车");
+						MainPageInitDataManager.mCartItemsUpdated = true;
+						WeightSelectDialog.this.finish();
+					}else{
+						ToastUtil.showToast(WeightSelectDialog.this, response.getString("msg"));
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	private void requestWeightData(){
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/price")
 		.setParams("goodsId", mGoodsId)
-		.setParams("addressId", 0);
+		.setParams("addressId", addressId);
 		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
 
 			@Override
@@ -168,9 +224,6 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 				}
 			}
 		});
-		
-		
-		
 	}
 	
 	private class WeightOptionAdapter extends AbstractWheelTextAdapter {

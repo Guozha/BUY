@@ -10,6 +10,11 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.guozha.buy.entry.cart.CartBaseItem;
+import com.guozha.buy.entry.cart.CartCookItem;
+import com.guozha.buy.entry.cart.CartMarketItem;
+import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.GoodsSecondItemType;
@@ -35,6 +40,7 @@ public class MainPageInitDataManager {
 	public static final int HAND_INTTDATA_MSG_ADDRESS_LIST = 0x0006; //地址列表
 	
 	public static boolean mAddressUpdated = false; 	//地址信息是否发生了变化
+	public static boolean mCartItemsUpdated = false; //购物车是否发生了变化
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -45,6 +51,7 @@ public class MainPageInitDataManager {
 	private MarketHomePage mMarketHomePage;
 	private List<QuickMenu> mQuickMenus;
 	private List<AddressInfo> mAddressInfos;
+	private CartTotalData mCartTotalData;
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -158,7 +165,47 @@ public class MainPageInitDataManager {
 		return mAddressInfos;
 	}
 	
+	/**
+	 * 获取购物车数据
+	 * @param handler
+	 * @return
+	 */
+	public CartTotalData getCartItems(Handler handler){
+		if(mCartTotalData == null || mCartItemsUpdated){
+			requestCartItemsData(handler);
+			mCartItemsUpdated = false;
+		}else{
+			if(handler != null){
+				handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
+			}
+		}
+		return mCartTotalData;
+	}
+	
 	//////////////////////////////HTTP-请求////////////////////////////////
+	
+	/**
+	 * 请求购物车数据
+	 * @param handler
+	 */
+	private void requestCartItemsData(final Handler handler){
+		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("cart/list")
+		.setParams("userId", userId);
+		HttpManager.getInstance(mContext).volleyRequestByPost(
+				HttpManager.URL + paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				mCartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
+				if(handler != null && mCartTotalData != null){
+					handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
+				}
+			}
+		});
+	}
+	
+
 	
 	/**
 	 * 获取用户信息
@@ -166,7 +213,6 @@ public class MainPageInitDataManager {
 	 * @return 
 	 */
 	private void requestAccountInfo(final Handler handler) {
-		LogUtil.e("获取用户信息");
 		ConfigManager configManager = ConfigManager.getInstance();
 		HttpManager httpManager = HttpManager.getInstance(mContext);
 		String token = configManager.getUserToken();
@@ -307,6 +353,7 @@ public class MainPageInitDataManager {
 	 * 设置默认的地址被自动选中
 	 */
 	private void setDefaultAddressChoosed() {
+		if(mAddressInfos == null) return;
 		for(int i = 0; i < mAddressInfos.size(); i++){
 			AddressInfo addressInfo = mAddressInfos.get(i);
 			if("1".equals(addressInfo.getDefaultFlag())){

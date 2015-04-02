@@ -20,18 +20,17 @@ import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.mine.SettingActivity;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
-import com.guozha.buy.fragment.MainTabFragmentMPage.ClickMarketMenuListener;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.share.ShareManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
@@ -63,22 +62,19 @@ public class MainActivity extends FragmentActivity{
 		public void handleMessage(android.os.Message msg) {
 			MainTabBaseFragment fragment = null;
 			switch (msg.what) {
-			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
-				fragment = mFragments.get(1);
-				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
-				fragment = mFragments.get(1);
-				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
-				fragment = mFragments.get(3);
-				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
 				fragment = mFragments.get(0);
 				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
+			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
 			case MainPageInitDataManager.HAND_INTTDATA_MSG_ADDRESS_LIST:
 				fragment = mFragments.get(1);
 				break;
-			default:
+			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
+				fragment = mFragments.get(2);
+				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
+				fragment = mFragments.get(3);
 				break;
 			}
 			
@@ -138,6 +134,7 @@ public class MainActivity extends FragmentActivity{
 		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
 		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
 		mInitDataManager.getAddressInfos(handler);  //获取地址列表
+		mInitDataManager.getCartItems(handler);		//获取购物车数据
 	}
 	
 	/**
@@ -192,8 +189,7 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化Fragment
 	 */
 	private void initFragment(){
-		MainTabFragmentMPage mPage = new MainTabFragmentMPage();
-		mPage.setOnClickMarketMenuListener(new ClickMarketMenuListener() {
+		ClickMarketMenuListener clickMarketMenuListener = new ClickMarketMenuListener() {
 			
 			@Override
 			public void clickMarketMenu() {
@@ -202,12 +198,18 @@ public class MainActivity extends FragmentActivity{
 				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
 				mCustomViewPager.setCurrentItem(mCurrentItem, false);
 			}
-		});
+		};
+		MainTabFragmentMPage mPage = new MainTabFragmentMPage();
+		mPage.setOnClickMarketMenuListener(clickMarketMenuListener);
+		MainTabFragmentCart mCart = new MainTabFragmentCart();
+		mCart.setOnClickMarketMenuListener(clickMarketMenuListener);
 		mFragments.add(mPage);
 		mFragments.add(new MainTabFragmentMarket());
-		mFragments.add(new MainTabFragmentCart());
+		mFragments.add(mCart);
 		mFragments.add(new MainTabFragmentMine());
 	}
+	
+
 	
 	/**
 	 * 初始化Tab
@@ -477,9 +479,21 @@ public class MainActivity extends FragmentActivity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == MainTabFragmentMarket.REQUEST_CODE){
+		switch (requestCode) {
+		case MainTabFragmentMarket.REQUEST_CODE_ADDRESS:
 			mInitDataManager.getAddressInfos(handler);  //获取地址列表
+			break;
+		case MainTabFragmentMarket.REQUEST_CODE_CART:
+			updateCartItemData();
+			break;
 		}
+	}
+	
+	/**
+	 * 重新请求购物车数据
+	 */
+	public void updateCartItemData(){
+		mInitDataManager.getCartItems(handler);
 	}
 	
 }

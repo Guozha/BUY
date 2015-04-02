@@ -3,6 +3,7 @@ package com.guozha.buy.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
+import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
@@ -36,12 +38,12 @@ import com.umeng.socialize.sso.CustomHandler;
 public class MarketItemListAdapter extends BaseAdapter implements OnClickListener{
 	
 	private List<MarketHomeItem> mMarketHomeItems;
-	private Context mContext;
+	private Activity mContext;
 	
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
 	
-	public MarketItemListAdapter(Context context, List<MarketHomeItem> marketHomeItems, ListView parentView){
+	public MarketItemListAdapter(Activity context, List<MarketHomeItem> marketHomeItems, ListView parentView){
 		if(context == null) return;
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
@@ -176,7 +178,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		String goodsId = String.valueOf(view.getTag());
 		intent = new Intent(mContext, WeightSelectDialog.class);
 		intent.putExtra("goodsId", goodsId);
-		mContext.startActivity(intent);
+		mContext.startActivityForResult(intent, MainTabFragmentMarket.REQUEST_CODE_CART);
 	}
 	
 	

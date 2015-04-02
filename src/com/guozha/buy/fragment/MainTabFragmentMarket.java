@@ -59,7 +59,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private static final String PAGE_NAME = "MarketPage";
 	private static final int HANDLER_MENU_ITEM_MSG_WHAT = 0x0001;
 	private static final int HAND_DATA_COMPLETED = 0x0002; 
-	public static final int REQUEST_CODE = 10;
+	public static final int REQUEST_CODE_ADDRESS = 10;
+	public static final int REQUEST_CODE_CART = 11;
 	
 	private View mView;
 	
@@ -381,7 +382,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			break;
 		case R.id.actionbar_address: //点击ActionBar地址按钮
 			intent = new Intent(getActivity(), ChooseAddressDialog.class);
-			getActivity().startActivityForResult(intent, REQUEST_CODE);
+			getActivity().startActivityForResult(intent, REQUEST_CODE_ADDRESS);
 			break;
 		}
 	}

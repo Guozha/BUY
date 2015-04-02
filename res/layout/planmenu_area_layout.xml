@@ -24,9 +24,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
             <CheckBox 
+                android:id="@+id/planmenu_detial_line1_checkbox1"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="意大利炒面清香味更多十三点了"
@@ -54,9 +55,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
             <CheckBox 
+                android:id="@+id/planmenu_detial_line1_checkbox2"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="青菜炒香菇"
@@ -85,9 +87,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
             <CheckBox 
+                android:id="@+id/planmenu_detial_line1_checkbox3"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="青菜炒香菇"
@@ -123,9 +126,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
             <CheckBox 
+                android:id="@+id/planmenu_detial_line2_checkbox1"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="青菜炒香菇"
@@ -153,9 +157,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
             <CheckBox 
+                android:id="@+id/planmenu_detial_line2_checkbox2"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="青菜炒香菇"
@@ -184,9 +189,10 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_recipe_img_02"/>
+                android:src="@drawable/default_icon"/>
             
-            <CheckBox 
+            <CheckBox
+                android:id="@+id/planmenu_detial_line2_checkbox3" 
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:text="青菜炒香菇"

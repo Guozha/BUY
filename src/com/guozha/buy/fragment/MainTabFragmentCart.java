@@ -18,22 +18,17 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.cart.PlanceOrderActivity;
+import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.adapter.CartItemListAdapter;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -53,10 +48,10 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private List<CartBaseItem> mCartItems;
 	private View mCartEmptyBg;
 	
-	private int mQuantity;		//总商品个数
-	private int mTotalPrice;	//总额
-	private int mServiceFree;	//服务费
-	private int mFreeGap;		//还差多少免服务费
+	private int mQuantity = 0;		//总商品个数
+	private int mTotalPrice = 0;	//总额
+	private int mServiceFree = 0;	//服务费
+	private int mFreeGap = 0;		//还差多少免服务费
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -76,23 +71,8 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
 		initView(view);
-		initData();
+		setCartItemsData();
 		return view;
-	}
-	
-	private void initData(){
-		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("cart/list")
-		.setParams("userId", userId);
-		HttpManager.getInstance(getActivity()).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				CartTotalData cartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
-				exchangeDataFormat(cartTotalData);
-			}
-		});
 	}
 
 	/**
@@ -139,6 +119,21 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		view.findViewById(R.id.cart_to_order_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//TODO 判断
+				if(mCartList == null || mCartItems.isEmpty()){
+					final CustomDialog emptyNotify = new CustomDialog(MainTabFragmentCart.this.getActivity(), R.layout.dialog_cart_empty);
+					emptyNotify.setDismissButtonId(R.id.cancel_button);
+					emptyNotify.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							emptyNotify.dismiss();
+							if(mClickMarketMenuListener != null){
+								mClickMarketMenuListener.clickMarketMenu();
+							}
+						}
+					});
+					return;
+				}
 				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), PlanceOrderActivity.class);
 				startActivity(intent);
 			}
@@ -147,10 +142,18 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mCartEmptyBg = view.findViewById(R.id.cart_empty_bg);
 	}
 	
+	private ClickMarketMenuListener mClickMarketMenuListener;
+	
+	public void setOnClickMarketMenuListener(ClickMarketMenuListener clickMarketMenuListner){
+		this.mClickMarketMenuListener = clickMarketMenuListner;
+	}
+	
 	/**
 	 * 给视图添加数据
 	 */
 	private void updateViewData(){
+		if(mCartEmptyBg == null || mCartList == null || mMesgTotal == null 
+				|| mMesgServerMoney == null || mMesgFreeGap == null) return;
 		if(mCartList == null || mCartItems == null || mCartItems.isEmpty()) {
 			mCartEmptyBg.setVisibility(View.VISIBLE);
 			mCartList.setVisibility(View.GONE);
@@ -171,7 +174,24 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	
 	@Override
 	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		
+		mDataManager = dataManager;
+		switch (handlerType) {
+		case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:  //购物车数据
+			setCartItemsData();
+			break;
+		}
+	}
+	
+	/**
+	 * 设置购物车列表数据
+	 */
+	private void setCartItemsData(){
+		if(mDataManager == null) {
+			return;
+		}
+		CartTotalData cartTotalData = mDataManager.getCartItems(null);
+		if(cartTotalData == null) return;
+		exchangeDataFormat(cartTotalData);
 	}
 
 	/**

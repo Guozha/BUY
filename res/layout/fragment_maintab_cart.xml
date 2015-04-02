@@ -82,7 +82,7 @@
                 android:id="@+id/cart_total_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="共计4件  合计￥18.00"
+                android:text="共计0件  合计￥0.00"
                 android:textSize="@dimen/dimen_global_14sp"
                 android:textColor="@color/color_app_base_4"/>
             
@@ -90,7 +90,7 @@
                 android:id="@+id/cart_server_money" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="预计服务费5元"
+                android:text="预计服务费0元"
                 android:layout_marginTop="5dip"
                 android:textSize="@dimen/dimen_global_14sp"
                 android:textColor="@color/color_app_base_4"/>
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                android:text="离免服务费还差21元"
+                android:text="离免服务费还差0元"
                 android:textSize="@dimen/dimen_global_14sp"
                 android:textColor="@color/color_app_base_4"/>
         </LinearLayout>

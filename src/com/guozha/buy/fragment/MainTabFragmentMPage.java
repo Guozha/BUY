@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
+import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
@@ -194,10 +195,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			}
 			startActivity(intent);
 		}
-	}
-	
-	public interface ClickMarketMenuListener{
-		public void clickMarketMenu();
 	}
 	
 	private ClickMarketMenuListener mClickMarketMenuListener;

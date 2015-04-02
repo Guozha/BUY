@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,12 +16,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
+import com.android.volley.Response.Listener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.market.SetWarnTimeActivity;
+import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.entry.mpage.plan.PlanMenu;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -33,6 +45,7 @@ import com.umeng.analytics.MobclickAgent;
 public class PlanMenuActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "PlanMenuPage";
+	private static final int HAND_PLAN_MENU_DATA_COMPLETED = 0x0001;
 	
 	//7个选择按钮
 	private ImageView mButton1;
@@ -48,7 +61,23 @@ public class PlanMenuActivity extends BaseActivity{
 	
 	private int mCurrentIndex;
 	
+	private List<PlanMenu> mPlanMenus;
+	
+	private List<View> mAreas;
+	
 	private List<ImageView> points = new ArrayList<ImageView>();
+	
+	private BitmapCache mBitmapCache;
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_PLAN_MENU_DATA_COMPLETED:
+				initPlanMenuItem();
+				break;
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +86,7 @@ public class PlanMenuActivity extends BaseActivity{
 		mMenuFlipperClick = new MenuFlipperClick();
 		customActionBarStyle("菜谱计划");
 		initView();
+		initPlanMenuData();
 		getPointBar();
 		mCurrentIndex = 0;//开始默认选中第一个
 	}
@@ -91,10 +121,31 @@ public class PlanMenuActivity extends BaseActivity{
 		
 		mViewFlipper = (ViewFlipper) findViewById(R.id.planmenu_content_view);
 		
-		initPlanMenuItem();
+	}
+	
+	/**
+	 * 初始化计划菜谱数据
+	 */
+	private void initPlanMenuData(){
+		String token = ConfigManager.getInstance().getUserToken();
+		RequestParam paramPath = new RequestParam("menuplan/list")
+		.setParams("token", token);
+		HttpManager.getInstance(this).volleyRequestByPost(
+				HttpManager.URL + paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+			    mPlanMenus = gson.fromJson(response, new TypeToken<List<PlanMenu>>() { }.getType());
+			    if(mPlanMenus != null){
+			    	handler.sendEmptyMessage(HAND_PLAN_MENU_DATA_COMPLETED);
+			    }
+			}
+		});
 	}
 	
 	private void initPlanMenuItem(){
+		mBitmapCache = new BitmapCache(this, mViewFlipper);
+		
 		View area1 = findViewById(R.id.planmenu_area1);
 		View area2 = findViewById(R.id.planmenu_area2);
 		View area3 = findViewById(R.id.planmenu_area3);
@@ -110,6 +161,60 @@ public class PlanMenuActivity extends BaseActivity{
 		setChildItemTag(area5, 4);
 		setChildItemTag(area6, 5);
 		setChildItemTag(area7, 6);
+		
+		mAreas = new ArrayList<View>();
+		mAreas.add(area1);
+		mAreas.add(area2);
+		mAreas.add(area3);
+		mAreas.add(area4);
+		mAreas.add(area5);
+		mAreas.add(area6);
+		mAreas.add(area7);
+		
+		View areaView;
+		for(int i = 0; i < mPlanMenus.size(); i++){
+			areaView = mAreas.get(i);
+			ImageView image1 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item1);
+			ImageView image2 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item2);
+			ImageView image3 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item3);
+			ImageView image4 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line2_item1);
+			ImageView image5 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line2_item2);
+			ImageView image6 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line2_item3);
+			
+			CheckBox check1 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line1_checkbox1);
+			CheckBox check2 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line1_checkbox2);
+			CheckBox check3 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line1_checkbox3);
+			CheckBox check4 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line2_checkbox1);
+			CheckBox check5 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line2_checkbox2);
+			CheckBox check6 = (CheckBox) areaView.findViewById(R.id.planmenu_detial_line2_checkbox3);
+			
+			PlanMenu planMenu = mPlanMenus.get(i);
+			
+			if(planMenu == null) return;
+			String imgUrl = HttpManager.URL + planMenu.getFirstMenuImg();
+			image1.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image1, imgUrl);
+			
+			imgUrl = HttpManager.URL + planMenu.getSecondMenuImg();
+			image2.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image2, imgUrl);
+			
+			imgUrl = HttpManager.URL + planMenu.getThirdMenuImg();
+			image3.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image3, imgUrl);
+			
+			imgUrl = HttpManager.URL + planMenu.getFourtMenuImg();
+			image4.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image4, imgUrl);
+			
+			imgUrl = HttpManager.URL + planMenu.getFiveMenuImg();
+			image5.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image5, imgUrl);
+			
+			imgUrl = HttpManager.URL + planMenu.getSixMenuImg();
+			image6.setTag(imgUrl);
+			mBitmapCache.loadBitmaps(image6, imgUrl);
+		}
 	}
 	
 	private void setChildItemTag(View view, int group){
@@ -133,7 +238,7 @@ public class PlanMenuActivity extends BaseActivity{
 		public void onClick(View view) {
 			switch (groupId) {
 			case 0:
-				
+				on
 				break;
 			case 1:
 				
@@ -185,6 +290,31 @@ public class PlanMenuActivity extends BaseActivity{
 		
 			Intent intent = new Intent(PlanMenuActivity.this, CookBookDetailActivity.class);
 			startActivity(intent);
+		}
+		
+		public void onClickEvent(int groupId, int childId){
+			PlanMenu planMenu = mPlanMenus.get(groupId);
+			int menuId = -1;
+			switch (childId) {
+			case R.id.planmenu_detail_line1_item1:
+				menuId = planMenu.getFirstMenuId();
+				break;
+			case R.id.planmenu_detail_line1_item2:
+				menuId = planMenu.getSecondMenuId();
+				break;
+			case R.id.planmenu_detail_line1_item3:
+				menuId = planMenu.getThirdMenuId();
+				break;
+			case R.id.planmenu_detail_line2_item1:
+				menuId = planMenu.getFourMenuId();
+				break;
+			case R.id.planmenu_detail_line2_item2:
+				menuId = planMenu.getFiveMenuId();
+				break;
+			case R.id.planmenu_detail_line2_item3:
+				menuId = planMenu.getSixMenuId();
+				break;
+			}
 		}
 		
 	}
