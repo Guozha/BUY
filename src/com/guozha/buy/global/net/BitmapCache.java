@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.guozha.buy.R;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 实现图片的缓存
@@ -59,7 +61,7 @@ public class BitmapCache implements ImageCache{
 			}
 			// 创建DiskLruCache实例，初始化缓存数据
 			mDiskLruCache = DiskLruCache
-					.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
+					.open(cacheDir, getAppVersion(context), 1, 20 * 1024 * 1024);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,6 +111,8 @@ public class BitmapCache implements ImageCache{
 	 * 如果发现任何一个ImageView的Bitmap对象不在缓存中，就会开启异步线程去下载图片。
 	 */
 	public void loadBitmaps(ImageView imageView, String imageUrl) {
+		if(imageUrl == null) return;
+		imageUrl = HttpManager.URL + imageUrl;
 		try {
 			Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
 			if (bitmap == null) {

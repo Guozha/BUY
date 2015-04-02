@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class PlanMenu implements Serializable{
 
+	private static final long serialVersionUID = -2097126270148540306L;
+	
 	private int firstMenuId;
 	private String firstMenuName;
 	private String firstMenuImg;
@@ -32,6 +34,10 @@ public class PlanMenu implements Serializable{
 	private int sixMenuId;
 	private String sixMenuName;
 	private String sixMenuImg;
+	
+	private String planDate;
+	private int week;
+	
 	public int getFirstMenuId() {
 		return firstMenuId;
 	}
@@ -139,5 +145,17 @@ public class PlanMenu implements Serializable{
 	}
 	public void setSixMenuImg(String sixMenuImg) {
 		this.sixMenuImg = sixMenuImg;
+	}
+	public String getPlanDate() {
+		return planDate;
+	}
+	public void setPlanDate(String planDate) {
+		this.planDate = planDate;
+	}
+	public int getWeek() {
+		return week;
+	}
+	public void setWeek(int week) {
+		this.week = week;
 	}
 }

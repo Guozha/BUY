@@ -82,7 +82,7 @@ public class VegetableListAdapter extends BaseAdapter{
 			ItemSaleInfo saleInfo = itemSaleInfo[i];
 			if(saleInfo == null || holder.itemHolder == null) continue;
 			ViewItemHolder itemHolder = holder.itemHolder.get(i);
-			String imgUrl = HttpManager.URL + saleInfo.getGoodsImg();
+			String imgUrl = saleInfo.getGoodsImg();
 			itemHolder.vegetableIcon.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
 			itemHolder.vegetableName.setText(saleInfo.getGoodsName());

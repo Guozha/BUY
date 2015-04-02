@@ -143,7 +143,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			holderEntry.price.setText(
 					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "/" +
 					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
-			String imgUrl = HttpManager.URL + itemSaleInfo.getGoodsImg();
+			String imgUrl = itemSaleInfo.getGoodsImg();
 			holderEntry.image.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 		}

@@ -14,10 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.android.volley.Response.Listener;
@@ -27,14 +28,16 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.market.SetWarnTimeActivity;
-import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.entry.mpage.plan.CookBookDetail;
 import com.guozha.buy.entry.mpage.plan.PlanMenu;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -69,6 +72,10 @@ public class PlanMenuActivity extends BaseActivity{
 	
 	private BitmapCache mBitmapCache;
 	
+	private TextView mWeakDayText;
+	
+	private List<TextView> mWeakDays;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -87,14 +94,13 @@ public class PlanMenuActivity extends BaseActivity{
 		customActionBarStyle("菜谱计划");
 		initView();
 		initPlanMenuData();
-		getPointBar();
-		mCurrentIndex = 0;//开始默认选中第一个
 	}
 	
 	/**
 	 * 初始化View视图
 	 */
 	private void initView(){
+		mWeakDayText = (TextView) findViewById(R.id.choosed_week_day);
 		//设置Tag
 		mButton1 = (ImageView) findViewById(R.id.plantmenu_choose_button1);
 		mButton1.setTag(0);
@@ -121,6 +127,14 @@ public class PlanMenuActivity extends BaseActivity{
 		
 		mViewFlipper = (ViewFlipper) findViewById(R.id.planmenu_content_view);
 		
+		mWeakDays = new ArrayList<TextView>();
+		mWeakDays.add((TextView)findViewById(R.id.week_day1));
+		mWeakDays.add((TextView)findViewById(R.id.week_day2));
+		mWeakDays.add((TextView)findViewById(R.id.week_day3));
+		mWeakDays.add((TextView)findViewById(R.id.week_day4));
+		mWeakDays.add((TextView)findViewById(R.id.week_day5));
+		mWeakDays.add((TextView)findViewById(R.id.week_day6));
+		mWeakDays.add((TextView)findViewById(R.id.week_day7));
 	}
 	
 	/**
@@ -144,6 +158,10 @@ public class PlanMenuActivity extends BaseActivity{
 	}
 	
 	private void initPlanMenuItem(){
+		
+		getPointBar();
+		mCurrentIndex = 0;//开始默认选中第一个
+		
 		mBitmapCache = new BitmapCache(this, mViewFlipper);
 		
 		View area1 = findViewById(R.id.planmenu_area1);
@@ -174,6 +192,7 @@ public class PlanMenuActivity extends BaseActivity{
 		View areaView;
 		for(int i = 0; i < mPlanMenus.size(); i++){
 			areaView = mAreas.get(i);
+			
 			ImageView image1 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item1);
 			ImageView image2 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item2);
 			ImageView image3 = (ImageView) areaView.findViewById(R.id.planmenu_detail_line1_item3);
@@ -190,30 +209,39 @@ public class PlanMenuActivity extends BaseActivity{
 			
 			PlanMenu planMenu = mPlanMenus.get(i);
 			
+			mWeakDays.get(i).setText(UnitConvertUtil.getWeakString(planMenu.getWeek()));
+			
 			if(planMenu == null) return;
-			String imgUrl = HttpManager.URL + planMenu.getFirstMenuImg();
+			String imgUrl = planMenu.getFirstMenuImg();
 			image1.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image1, imgUrl);
+			check1.setText(planMenu.getFirstMenuName());
 			
-			imgUrl = HttpManager.URL + planMenu.getSecondMenuImg();
+			imgUrl = planMenu.getSecondMenuImg();
+			LogUtil.e("planmenu_img_url = " + imgUrl);
 			image2.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image2, imgUrl);
+			check2.setText(planMenu.getSecondMenuName());
 			
-			imgUrl = HttpManager.URL + planMenu.getThirdMenuImg();
+			imgUrl = planMenu.getThirdMenuImg();
 			image3.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image3, imgUrl);
+			check3.setText(planMenu.getThirdMenuName());
 			
-			imgUrl = HttpManager.URL + planMenu.getFourtMenuImg();
+			imgUrl = planMenu.getFourtMenuImg();
 			image4.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image4, imgUrl);
+			check4.setText(planMenu.getFourMenuName());
 			
-			imgUrl = HttpManager.URL + planMenu.getFiveMenuImg();
+			imgUrl = planMenu.getFiveMenuImg();
 			image5.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image5, imgUrl);
+			check5.setText(planMenu.getFiveMenuName());
 			
-			imgUrl = HttpManager.URL + planMenu.getSixMenuImg();
+			imgUrl = planMenu.getSixMenuImg();
 			image6.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(image6, imgUrl);
+			check6.setText(planMenu.getSixMenuName());
 		}
 	}
 	
@@ -236,60 +264,7 @@ public class PlanMenuActivity extends BaseActivity{
 
 		@Override
 		public void onClick(View view) {
-			switch (groupId) {
-			case 0:
-				on
-				break;
-			case 1:
-				
-				break;
-			case 2:
-				
-				break;
-			case 3:
-				
-				break;
-			case 4:
-				
-				break;
-			case 5:
-				
-				break;
-			case 6:
-				
-				break;
-			default:
-				break;
-			}
-			
-			int childId = -1;
-			switch (view.getId()) {
-			case R.id.planmenu_detail_line1_item1:
-				childId = 0;
-				break;
-			case R.id.planmenu_detail_line1_item2:
-				childId = 1;
-				break;
-			case R.id.planmenu_detail_line1_item3:
-				childId = 2;
-				break;
-			case R.id.planmenu_detail_line2_item1:
-				childId = 3;
-				break;
-			case R.id.planmenu_detail_line2_item2:
-				childId = 4;
-				break;
-			case R.id.planmenu_detail_line2_item3:
-				childId = 5;
-				break;
-			default:
-				break;
-			}
-
-			ToastUtil.showToast(PlanMenuActivity.this, "groupId = " + groupId + ",  childId = " + childId);
-		
-			Intent intent = new Intent(PlanMenuActivity.this, CookBookDetailActivity.class);
-			startActivity(intent);
+			onClickEvent(groupId, view.getId());
 		}
 		
 		public void onClickEvent(int groupId, int childId){
@@ -315,6 +290,20 @@ public class PlanMenuActivity extends BaseActivity{
 				menuId = planMenu.getSixMenuId();
 				break;
 			}
+			
+			Intent intent = new Intent(PlanMenuActivity.this, CookBookDetailActivity.class);
+			startActivity(intent);
+			
+			RequestParam paramPath = new RequestParam("menuplan/detail")
+			.setParams("menuId", menuId);
+			HttpManager.getInstance(PlanMenuActivity.this).volleyRequestByPost(
+				HttpManager.URL + paramPath, new Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+						gson.fromJson(response, new TypeToken<CookBookDetail>() { }.getType());
+					}
+				});
 		}
 		
 	}
@@ -361,8 +350,13 @@ public class PlanMenuActivity extends BaseActivity{
 		Bitmap lightPointBitmap = getLightPointBitmap(this);
 		ImageView imageView;
 		for(int i = 0; i < points.size(); i++){
+			
 			imageView = points.get(i);
 			if(mCurrentIndex == i){
+				PlanMenu planMenu = mPlanMenus.get(i);
+				if(planMenu != null){
+					mWeakDayText.setText(UnitConvertUtil.getWeakString(planMenu.getWeek()));
+				}
 				imageView.setImageBitmap(lightPointBitmap);
 			}else{
 				imageView.setImageBitmap(grayPointBitmap);
