@@ -10,6 +10,7 @@
 	    android:orientation="horizontal">
 	    
 	    <TextView 
+	        android:id="@+id/step_num"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="1."
@@ -17,6 +18,7 @@
 	        android:textColor="@color/color_app_base_4"/>
 	    
 	    <TextView 
+	        android:id="@+id/step_descrip"
 	        android:layout_width="0dip"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -29,10 +31,11 @@
 	        android:text="原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。原料图，逐鹿重工业，原料图啊，好长的文字啊。"/>
 	    
 	    <ImageView 
+	        android:id="@+id/step_img"
 	        android:layout_width="100dip"
 	        android:layout_height="70dip"
 	        android:scaleType="centerInside"
 	        android:layout_gravity="center_vertical"
-	        android:src="@drawable/recipe_step_01"/>
+	        android:src="@drawable/default_icon"/>
 	</LinearLayout>
 </LinearLayout>

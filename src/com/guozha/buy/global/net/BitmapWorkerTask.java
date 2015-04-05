@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 图片异步下载任务
@@ -38,17 +39,17 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
 	 */
 	private Set<BitmapWorkerTask> mTaskCollection;
 	
-	private View mParentView;
+	private ImageView mImageView;
 	
 	public BitmapWorkerTask(
 			LruCache<String, Bitmap> mLruCache,
 			DiskLruCache diskLruCache, 
 			Set<BitmapWorkerTask> taskCollection,
-			View parentView){
+			ImageView imageView){
 		mDiskLruCache = diskLruCache;
 		mMemoryCache = mLruCache;
 		mTaskCollection = taskCollection;
-		mParentView = parentView;
+		mImageView = imageView;
 	}
 
 	/**
@@ -66,6 +67,7 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
 			// 生成图片URL对应的key
 			final String key = HttpUtil.hashKeyForDisk(imageUrl);
 			// 查找key对应的缓存
+			if(mDiskLruCache == null) return null;
 			snapShot = mDiskLruCache.get(key);
 			if (snapShot == null) {
 				// 如果没有找到对应的缓存，则准备从网络上请求数据，并写入缓存
@@ -113,9 +115,9 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
 		super.onPostExecute(bitmap);
 		// 根据Tag找到相应的ImageView控件，将下载好的图片显示出来。
 		//TODO
-		ImageView imageView = (ImageView) mParentView.findViewWithTag(imageUrl);
-		if (imageView != null && bitmap != null) {
-			imageView.setImageBitmap(bitmap);
+		//ImageView imageView = (ImageView) mParentView.findViewWithTag(imageUrl);
+		if(mImageView != null && bitmap != null){
+			mImageView.setImageBitmap(bitmap);
 		}
 		mTaskCollection.remove(this);
 	}

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -189,7 +190,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		mItemList.addFooterView(mBottomLoadingView);
 		mItemList.setOnScrollListener(this);
-		mMarketItemListAdapter = new MarketItemListAdapter(getActivity(), mMarketHomeItems, mItemList);
+		if(mMarketItemListAdapter == null){
+			mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems);
+		}else{
+			mMarketItemListAdapter.notifyDataSetChanged();
+		}
 		mItemList.setAdapter(mMarketItemListAdapter);
 		setMarketHomeData();
 		
@@ -273,7 +278,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
-		LogUtil.e("setAddressInfoData...");
 		if(mDataManager == null){
 			return;
 		}
@@ -281,9 +285,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		//TODO 设置ActionBar上面的显示
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
-		if(mActionBarAddress == null){
-			LogUtil.e("mActionBarAddress == null");
-		}
 		if(mActionBarAddress != null && mAddressInfos != null){
 			for(int i = 0; i < mAddressInfos.size(); i++){
 				AddressInfo addressInfo = mAddressInfos.get(i);
@@ -317,7 +318,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mDataManager == null){
 			return;
 		}
-		if(currentPage == 1) return;
+		if(currentPage >= 1) return;
 		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(null, 1, 4);
 		if(marketHomePage == null) return;
 		mTotalPageSize = marketHomePage.getPageCount();
@@ -328,7 +329,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 	}
 	
-	private int currentPage = 0;
+	private static int currentPage = 0;
 	private static final int PAGE_SIZE = 4;
 	private void loadNewDataAndUpdate(){
 		String addressId = "";
@@ -440,7 +441,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
 			//View不可见
-			LogUtil.e("Goods_inVisible");
 			
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
@@ -472,12 +472,15 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mQuickInView.setVisibility(View.VISIBLE);
 		}
 		
-		LogUtil.e("currentPage = " + currentPage);
-		LogUtil.e("totalPage = " + mTotalPageSize);
+		LogUtil.e("mLastVisibleIndex == " + mLastVisibleIndex);
+		LogUtil.e("item_count == " + (mMarketItemListAdapter.getCount() + 1));
+		LogUtil.e("currentPage == " + currentPage);
+		LogUtil.e("mTotalPageSize == " + mTotalPageSize);
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
 				&& mLastVisibleIndex == mMarketItemListAdapter.getCount() + 1 //加了viewHead
 				&& currentPage < mTotalPageSize){
-			ToastUtil.showToast(getActivity(), "加载下一页");
+			mLoadText.setVisibility(View.GONE);
+			mLoadProgressBar.setVisibility(View.VISIBLE);
 			loadNewDataAndUpdate();
 		}
 		
@@ -490,11 +493,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;  
 		//所有的条目已经和最大数相等，则移除底部的view
-		LogUtil.e("totalItemCount = " + totalItemCount);
-		LogUtil.e("mMaxDataNum = " + mMaxDateNum);
 		if(totalItemCount >= mMaxDateNum + 2){	//加了viewHead和viewFooter
-			mItemList.removeFooterView(mBottomLoadingView);
-			ToastUtil.showToast(getActivity(), "数据全部加载完毕，没有更多数据");
+			//mItemList.removeFooterView(mBottomLoadingView);
+			mLoadProgressBar.setVisibility(View.GONE);
+			mLoadText.setVisibility(View.VISIBLE);
 		}
 	}
 	

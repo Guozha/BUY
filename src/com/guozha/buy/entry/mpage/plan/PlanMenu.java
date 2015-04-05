@@ -14,26 +14,32 @@ public class PlanMenu implements Serializable{
 	private int firstMenuId;
 	private String firstMenuName;
 	private String firstMenuImg;
+	private int firstMenuCheck;
 	
 	private int secondMenuId;
 	private String secondMenuName;
 	private String secondMenuImg;
+	private int secondMenuCheck;
 
 	private int thirdMenuId;
 	private String thirdMenuName;
 	private String thirdMenuImg;
+	private int thirdMenuCheck;
 	
 	private int fourMenuId;
 	private String fourMenuName;
-	private String fourtMenuImg;
+	private String fourMenuImg;
+	private int fourMenuCheck;
 	
 	private int fiveMenuId;
 	private String fiveMenuName;
 	private String fiveMenuImg;
+	private int fiveMenuCheck;
 	
 	private int sixMenuId;
 	private String sixMenuName;
 	private String sixMenuImg;
+	private int sixMenuCheck;
 	
 	private String planDate;
 	private int week;
@@ -104,11 +110,11 @@ public class PlanMenu implements Serializable{
 	public void setFourMenuName(String fourMenuName) {
 		this.fourMenuName = fourMenuName;
 	}
-	public String getFourtMenuImg() {
-		return fourtMenuImg;
+	public String getFourMenuImg() {
+		return fourMenuImg;
 	}
-	public void setFourtMenuImg(String fourtMenuImg) {
-		this.fourtMenuImg = fourtMenuImg;
+	public void setFourMenuImg(String fourMenuImg) {
+		this.fourMenuImg = fourMenuImg;
 	}
 	public int getFiveMenuId() {
 		return fiveMenuId;
@@ -157,5 +163,41 @@ public class PlanMenu implements Serializable{
 	}
 	public void setWeek(int week) {
 		this.week = week;
+	}
+	public int getFirstMenuCheck() {
+		return firstMenuCheck;
+	}
+	public void setFirstMenuCheck(int firstMenuCheck) {
+		this.firstMenuCheck = firstMenuCheck;
+	}
+	public int getSecondMenuCheck() {
+		return secondMenuCheck;
+	}
+	public void setSecondMenuCheck(int secondMenuCheck) {
+		this.secondMenuCheck = secondMenuCheck;
+	}
+	public int getThirdMenuCheck() {
+		return thirdMenuCheck;
+	}
+	public void setThirdMenuCheck(int thirdMenuCheck) {
+		this.thirdMenuCheck = thirdMenuCheck;
+	}
+	public int getFourMenuCheck() {
+		return fourMenuCheck;
+	}
+	public void setFourMenuCheck(int fourMenuCheck) {
+		this.fourMenuCheck = fourMenuCheck;
+	}
+	public int getFiveMenuCheck() {
+		return fiveMenuCheck;
+	}
+	public void setFiveMenuCheck(int fiveMenuCheck) {
+		this.fiveMenuCheck = fiveMenuCheck;
+	}
+	public int getSixMenuCheck() {
+		return sixMenuCheck;
+	}
+	public void setSixMenuCheck(int sixMenuCheck) {
+		this.sixMenuCheck = sixMenuCheck;
 	}
 }

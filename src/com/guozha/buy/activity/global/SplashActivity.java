@@ -151,10 +151,8 @@ public class SplashActivity extends Activity{
 						ConfigManager.getInstance().setUserId(userId);
 						ConfigManager.getInstance().setUserToken(userToken);
 						ConfigManager.getInstance().setMobileNum(mobileNum);
-						LogUtil.e("自动登录成功！");
 					}else{
 						String msg = response.getString("msg");
-						LogUtil.e("自动登录失败：" + msg);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

@@ -30,7 +30,7 @@ public class HttpManager {
 	 * 服务器路径
 	 */
 	//public static final String URL = "http://192.168.2.117:8080/BUY_SERVER/";
-	public static final String URL = "http://120.24.220.86:8080/BUY_SERVER/";
+	public static final String URL = "http://120.24.220.86:80/BUY_SERVER/";
 	
 	private RequestQueue mQueue;	//请求队列
 	private Response.ErrorListener errorListener;  //错误消息监听
@@ -140,7 +140,6 @@ public class HttpManager {
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			LogUtil.e(error.getMessage());
 			if(!NetManager.isNetConnection(CustomApplication.getContext())){
 				ToastUtil.showToast(CustomApplication.getContext(), "你的网络已经断开");
 			}else{

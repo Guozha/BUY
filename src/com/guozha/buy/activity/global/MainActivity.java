@@ -63,6 +63,7 @@ public class MainActivity extends FragmentActivity{
 			MainTabBaseFragment fragment = null;
 			switch (msg.what) {
 			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
+			case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:
 				fragment = mFragments.get(0);
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
@@ -121,6 +122,8 @@ public class MainActivity extends FragmentActivity{
 	protected void onRestart() {
 		super.onRestart();
 		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
+		mInitDataManager.getAddressInfos(handler);  //获取地址列表
+		mInitDataManager.getCartItems(handler);		//获取购物车信息
 	}
 	
 	/**
@@ -135,6 +138,7 @@ public class MainActivity extends FragmentActivity{
 		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
 		mInitDataManager.getAddressInfos(handler);  //获取地址列表
 		mInitDataManager.getCartItems(handler);		//获取购物车数据
+		mInitDataManager.getTodayInfo(handler);		//获取今日信息
 	}
 	
 	/**
@@ -483,7 +487,7 @@ public class MainActivity extends FragmentActivity{
 		case MainTabFragmentMarket.REQUEST_CODE_ADDRESS:
 			mInitDataManager.getAddressInfos(handler);  //获取地址列表
 			break;
-		case MainTabFragmentMarket.REQUEST_CODE_CART:
+		case MainTabFragmentMarket.REQUEST_CODE_CART:   //购物车
 			updateCartItemData();
 			break;
 		}

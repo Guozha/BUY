@@ -27,6 +27,7 @@ import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.socialize.sso.CustomHandler;
 
@@ -43,12 +44,12 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
 	
-	public MarketItemListAdapter(Activity context, List<MarketHomeItem> marketHomeItems, ListView parentView){
+	public MarketItemListAdapter(Activity context, List<MarketHomeItem> marketHomeItems){
 		if(context == null) return;
-		mInflater = LayoutInflater.from(context);
 		mContext = context;
+		mInflater = LayoutInflater.from(mContext);
 		mMarketHomeItems = marketHomeItems;
-		mBitmapCache = new BitmapCache(context, parentView);
+		mBitmapCache = new BitmapCache(mContext);
 	}
 
 	@Override
@@ -144,7 +145,6 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "/" +
 					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 			String imgUrl = itemSaleInfo.getGoodsImg();
-			holderEntry.image.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 		}
 		

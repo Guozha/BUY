@@ -51,15 +51,16 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 
 	@Override
 	public int getGroupCount() {
+		if(mCartItems == null) return 0;
 		return mCartItems.size();
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
+		if(mCartItems == null || mCartItems.isEmpty()) return 0;
 		CartBaseItem cartBaseItem = mCartItems.get(groupPosition);
 		if(cartBaseItem.getItemType() == CartItemType.CookBook && groupPosition != 0){
 			CartCookItem cookItem = (CartCookItem) cartBaseItem;
-			
 			return cookItem.getGoodsList().size();
 		}else{
 			return 0;
@@ -110,6 +111,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.plus = (ImageView) convertView.findViewById(R.id.cart_list_cell_plus);
 			holder.price = (TextView) convertView.findViewById(R.id.cart_list_cell_price);
 			holder.close = (ImageView) convertView.findViewById(R.id.cart_list_cell_close);
+			holder.minus.setOnClickListener(this);
+			holder.plus.setOnClickListener(this);
 			holder.close.setOnClickListener(this);
 			convertView.setTag(holder);
 		}else{
@@ -117,7 +120,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		}
 		
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
-		
 		
 		if(groupPosition == 0 || baseItem.getCartId() == -1){
 			holder.minus.setVisibility(View.INVISIBLE);
@@ -139,7 +141,11 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.close.setVisibility(View.VISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_4));
 			holder.title.setText(baseItem.getGoodsName());
-			holder.close.setTag(baseItem.getCartId());
+			
+			holder.close.setTag(groupPosition);
+			String tag = baseItem.getCartId() + ":" + baseItem.getAmount();
+			holder.minus.setTag(tag);
+			holder.plus.setTag(tag);
 		}
 		
 		return convertView;
@@ -190,6 +196,79 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 
 	@Override
 	public void onClick(final View view) {
+		switch (view.getId()) {
+		case R.id.cart_list_cell_close:
+			clickDeleteButton(view);
+			break;
+		case R.id.cart_list_cell_minus:
+			clickMinusButton(view);
+			break;
+		case R.id.cart_list_cell_plus:
+			clickPlusButton(view);
+			break;
+		}
+	}
+	
+	/**
+	 * 点击减少按钮
+	 * @param view
+	 */
+	private void clickMinusButton(final View view){
+		updateCartItemAmount(view, false);
+	}
+	
+	/**
+	 * 点击增加按钮
+	 * @param view
+	 */
+	private void clickPlusButton(final View view){
+		updateCartItemAmount(view, true);
+	}
+
+	/**
+	 * 更新购物车数据数量
+	 * @param view
+	 * @param plus
+	 */
+	private void updateCartItemAmount(final View view, boolean plus) {
+		String tag  = String.valueOf(view.getTag());
+		String[] param = tag.split(":");
+		if(param.length != 2) return;
+		int amount = Integer.parseInt(param[1]);
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
+		RequestParam paramPath = new RequestParam("cart/insert")
+		.setParams("cartId", param[0])
+		.setParams("userId", userId)
+		.setParams("token", token);
+		if(plus){
+			paramPath.setParams("amount", amount + 1);
+		}else{
+			paramPath.setParams("amount", amount - 1);
+		}
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							refreshCartItem();
+						}else{
+							ToastUtil.showToast(mContext, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+	}
+
+	/**
+	 * 点击删除按钮
+	 * @param view
+	 */
+	private void clickDeleteButton(final View view) {
 		final CustomDialog deleteDialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
 		deleteDialog.setDismissButtonId(R.id.cancel_button);
 		deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
@@ -206,11 +285,11 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	 * @param view
 	 */
 	private void requestDeleteCartItem(final View view) {
-		String cartId = String.valueOf(view.getTag());
+		int groupId = (Integer)view.getTag();
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
 		RequestParam paramPath = new RequestParam("cart/delete")
-		.setParams("cartId", cartId)
+		.setParams("cartId", mCartItems.get(groupId).getCartId())
 		.setParams("userId", userId)
 		.setParams("token", token);
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
@@ -221,11 +300,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 					String returnCode = response.getString("returnCode");
 					if("1".equals(returnCode)){
 						//TODO 让购物车数据刷新
-						MainPageInitDataManager.mCartItemsUpdated = true;
-						if(mContext instanceof MainActivity){
-							MainActivity mainActivity = (MainActivity) mContext;
-							mainActivity.updateCartItemData();
-						}
+						refreshCartItem();
 					}else{
 						ToastUtil.showToast(mContext, response.getString("msg"));
 					}
@@ -234,6 +309,17 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 刷新购物车数据
+	 */
+	private void refreshCartItem() {
+		MainPageInitDataManager.mCartItemsUpdated = true;
+		if(mContext instanceof MainActivity){
+			MainActivity mainActivity = (MainActivity) mContext;
+			mainActivity.updateCartItemData();
+		}
 	}
 
 }

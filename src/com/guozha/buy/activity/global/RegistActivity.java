@@ -1,11 +1,9 @@
 package com.guozha.buy.activity.global;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,8 +19,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -73,6 +69,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		mRegistButton = (Button) findViewById(R.id.regist_button);
 		
 		mProtocalAffirmCheckBox = (CheckBox) findViewById(R.id.regist_protocal_affirm);
+		
+		findViewById(R.id.regist_licence).setOnClickListener(this);
 		
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
@@ -132,6 +130,10 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 			}
 			//请求注册
 			requestRegist(phoneNum, pwd, validNum);
+			break;
+		case R.id.regist_licence:
+			Intent intent = new Intent(RegistActivity.this, LicenceActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

@@ -16,7 +16,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -32,7 +31,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -86,7 +84,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				deleteOldAddress();
 				break;
 			case HAND_FINISH_WINDOW:
-				MainPageInitDataManager.mAddressUpdated = true; //设置地址列表发生了变化
 				setResult(0);
 				AddAddressActivity.this.finish();
 				break;
@@ -105,6 +102,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 					(AddressInfo) bundle.getSerializable("addressInfo");
 		}
 		initView();
+		MainPageInitDataManager.mAddressUpdated = true; //设置地址列表发生了变化
 	}
 
 	/**
@@ -153,7 +151,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mKeyWords = gson.fromJson(response, new TypeToken<List<KeyWord>>() { }.getType());
-					LogUtil.e("keyWords = " + mKeyWords.toString());
 					handler.sendEmptyMessage(HAND_KEYWORD_COMPLETED);
 				}
 			});

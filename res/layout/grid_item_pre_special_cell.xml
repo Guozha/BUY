@@ -13,12 +13,14 @@
         android:orientation="vertical">
         
         <ImageView 
+            android:id="@+id/prespecial_image"
             android:layout_width="wrap_content"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/main_sale_img_01"/>
+            android:src="@drawable/default_icon"/>
         <TextView
+            android:id="@+id/prespecial_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -33,6 +35,7 @@
             android:layout_height="wrap_content">
             
             <TextView 
+                android:id="@+id/prespecial_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="￥248.00"
@@ -41,6 +44,7 @@
                 android:textSize="@dimen/dimen_global_14sp"/>
             
             <TextView
+                android:id="@+id/prespecial_sell_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

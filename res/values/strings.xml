@@ -8,7 +8,7 @@
     <string name="activity_main_tab3_title">购物车</string>
     <string name="activity_main_tab4_title">我的</string>
     
-    <string name="list_paging_bottom_text">加载更多数据</string>
+    <string name="list_paging_bottom_text">数据全部加载完毕</string>
     
     <!-- activity_login -->
     <string name="activity_login_phonenum_hint">输入手机号码</string>

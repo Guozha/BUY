@@ -139,6 +139,7 @@
             android:layout_height="wrap_content"
            	android:checked="true"/>
         <TextView 
+            android:id="@+id/regist_licence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"

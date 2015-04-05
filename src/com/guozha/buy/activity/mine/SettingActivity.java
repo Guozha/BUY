@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.global.LicenceActivity;
 import com.guozha.buy.activity.global.LoginActivity;
 import com.guozha.buy.adapter.SettingListAdapter;
 import com.guozha.buy.dialog.CustomDialog;
@@ -117,8 +118,9 @@ public class SettingActivity extends BaseActivity{
 					intent = new Intent(SettingActivity.this, AboutOurActivity.class);
 					startActivity(intent);
 					break;
-				case 4:
-					
+				case 4:		//服务协议
+					intent = new Intent(SettingActivity.this, LicenceActivity.class);
+					startActivity(intent);
 					break;
 
 				default:

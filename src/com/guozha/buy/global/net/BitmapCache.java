@@ -12,11 +12,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.LruCache;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
-import com.guozha.buy.R;
 import com.guozha.buy.util.LogUtil;
 
 /**
@@ -38,14 +36,11 @@ public class BitmapCache implements ImageCache{
 	
 	private LruCache<String, Bitmap> mLruCache;
 	
-	private View mParentView;
-
-	public BitmapCache(Context context, View parentView){
-		mParentView = parentView;
+	public BitmapCache(Context context){
 		// 获取应用程序最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
 		// 使用内存的1/8缓存图片
-		int cacheSize = maxMemory / 8;  
+		int cacheSize = maxMemory / 10;  
 		mLruCache = new LruCache<String, Bitmap>(cacheSize) {  
             @Override  
             protected int sizeOf(String key, Bitmap bitmap) {  
@@ -55,13 +50,13 @@ public class BitmapCache implements ImageCache{
         
 		try {
 			// 获取图片缓存路径
-			File cacheDir = getDiskCacheDir(context, "thumb");
+			File cacheDir = getDiskCacheDir(context, "guozha");
 			if (!cacheDir.exists()) {
 				cacheDir.mkdirs();
 			}
 			// 创建DiskLruCache实例，初始化缓存数据
 			mDiskLruCache = DiskLruCache
-					.open(cacheDir, getAppVersion(context), 1, 20 * 1024 * 1024);
+					.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +70,12 @@ public class BitmapCache implements ImageCache{
 		String cachePath;
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
 				|| !Environment.isExternalStorageRemovable()) {
-			cachePath = context.getExternalCacheDir().getPath();
+			File cacheDir = context.getExternalCacheDir();
+			if(cacheDir == null){
+				cachePath = context.getCacheDir().getPath();
+			}else{
+				cachePath = cacheDir.getPath();
+			}
 		} else {
 			cachePath = context.getCacheDir().getPath();
 		}
@@ -117,7 +117,7 @@ public class BitmapCache implements ImageCache{
 			Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
 			if (bitmap == null) {
 				BitmapWorkerTask task = new BitmapWorkerTask(
-						mLruCache, mDiskLruCache, taskCollection, mParentView);
+						mLruCache, mDiskLruCache, taskCollection, imageView);
 				taskCollection.add(task);
 				task.execute(imageUrl);
 			} else {

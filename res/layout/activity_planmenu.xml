@@ -95,6 +95,7 @@
             android:text="收藏菜单" />
 
         <Button
+            android:id="@+id/addcart_menu_button"
             android:layout_width="100dip"
             android:layout_height="32dip"
             android:layout_alignParentRight="true"

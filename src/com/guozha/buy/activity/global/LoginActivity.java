@@ -15,7 +15,10 @@ import android.widget.ImageView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -142,9 +145,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						ConfigManager.getInstance().setUserToken(userToken);
 						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 						ConfigManager.getInstance().setMobileNum(mobileNum);
-						LogUtil.e("登录成功");
 						ToastUtil.showToast(LoginActivity.this, "登录成功");
-						
+						//请求地址数据
+						MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAddressInfos(null);
 						if(mSuccessIntent != null){
 							try {
 								Intent intent = new Intent(LoginActivity.this, Class.forName(mSuccessIntent));
@@ -153,10 +156,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 								e.printStackTrace();
 							}
 						}
+						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
+						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
 						LoginActivity.this.finish();
 					}else{
 						String msg = response.getString("msg");
-						LogUtil.e("登录失败：" + msg);
 						ToastUtil.showToast(LoginActivity.this, msg);
 					}
 				} catch (JSONException e) {

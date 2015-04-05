@@ -14,7 +14,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.WarnTimeListAdapter;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.Switch;
 import com.guozha.buy.view.Switch.OnChangedListener;
 import com.umeng.analytics.MobclickAgent;
@@ -66,7 +65,6 @@ public class SetWarnTimeActivity extends BaseActivity{
 			@Override
 			public void onCheckedChanged(Switch checkSwitch, boolean CheckState) {
 				//TODO 
-				ToastUtil.showToast(SetWarnTimeActivity.this, "CheckeState = " + CheckState);
 			}
 		});
 	}

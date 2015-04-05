@@ -23,7 +23,6 @@ public class CartBaseItem implements Serializable{
 	private String unit;		//计量单位
 	private int unitPrice;		//单价
 	private int price;			//价格
-	//TODO 该参数有可能变化
 	private String cartStatus;	//状态 0失效、1可用
 	private CartItemType itemType;
 	

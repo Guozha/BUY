@@ -3,6 +3,9 @@ package com.guozha.buy.global;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.os.Handler;
 
@@ -21,6 +24,7 @@ import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
+import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -38,6 +42,7 @@ public class MainPageInitDataManager {
 	public static final int HAND_INITDATA_MSG_FIRST_CATEGORY = 0x004;//一级类目
 	public static final int HAND_INITDATA_MSG_CART_ITEM = 0x0005;	 //购物车
 	public static final int HAND_INTTDATA_MSG_ADDRESS_LIST = 0x0006; //地址列表
+	public static final int HAND_INITDATA_MSG_TODAY_INFO = 0x0007;	 //今日时间
 	
 	public static boolean mAddressUpdated = false; 	//地址信息是否发生了变化
 	public static boolean mCartItemsUpdated = false; //购物车是否发生了变化
@@ -182,6 +187,24 @@ public class MainPageInitDataManager {
 		return mCartTotalData;
 	}
 	
+	private TodayInfo mTodayInfo = null;
+	
+	/**
+	 * 获取今日信息
+	 * @param handler
+	 * @return
+	 */
+	public TodayInfo getTodayInfo(Handler handler){
+		if(mTodayInfo == null){
+			requestMPageTodayMessage(handler);
+		}else{
+			if(handler != null){
+				handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
+			}
+		}
+		return mTodayInfo;
+	}
+	
 	//////////////////////////////HTTP-请求////////////////////////////////
 	
 	/**
@@ -290,7 +313,6 @@ public class MainPageInitDataManager {
 				List<QuickMenu> defaultQuickMenu = new ArrayList<QuickMenu>();
 				for(int i = 0; i < mQuickMenus.size(); i++){
 					if(i >= 5) break;
-					LogUtil.e("QuickName = " + mQuickMenus.get(i).getName());
 					defaultQuickMenu.add(mQuickMenus.get(i));
 				}
 				ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
@@ -362,4 +384,27 @@ public class MainPageInitDataManager {
 		}
 	}
 	
+	/**
+	 * 请求MPage的当日信息
+	 */
+	private void requestMPageTodayMessage(final Handler handler){
+		RequestParam paramPath = new RequestParam("menuplan/todayInfo");
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String calendarSolar = response.getString("today");
+						String calendarLunar = response.getString("lunarToday");
+						String todayDescript = response.getString("dayDesc");
+						mTodayInfo = new TodayInfo(calendarSolar, calendarLunar, todayDescript);
+						if(handler != null && mTodayInfo != null){
+							handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
+	}
 }

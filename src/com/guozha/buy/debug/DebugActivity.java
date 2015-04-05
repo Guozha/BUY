@@ -47,7 +47,6 @@ public class DebugActivity extends Activity implements OnClickListener{
 		switch (view.getId()) {
 		case R.id.youmeng_phoneid_test: //友盟获取测试手机ID
 			String deviceId = YoumengDeviceManager.getDeviceInfo(DebugActivity.this);
-			LogUtil.e(deviceId);
 			Toast.makeText(DebugActivity.this, 
 					"deviceId = " + deviceId, Toast.LENGTH_SHORT).show();
 			break;

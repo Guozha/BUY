@@ -18,7 +18,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.fragment.CollectionRecipeFragment;
 import com.guozha.buy.fragment.CollectionVegetableFragment;
 import com.guozha.buy.view.ViewPagerTab;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 我的收藏

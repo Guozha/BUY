@@ -237,6 +237,11 @@
             android:name="com.guozha.buy.activity.cart.PayActivity"
             android:screenOrientation="portrait"></activity>
         
+        <!-- 服务协议 -->
+        <activity 
+            android:name="com.guozha.buy.activity.global.LicenceActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 选择有效菜票-->
         <activity 
             android:name="com.guozha.buy.activity.cart.ChooseTicketActivity"

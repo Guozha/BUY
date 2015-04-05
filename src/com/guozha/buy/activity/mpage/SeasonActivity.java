@@ -119,7 +119,6 @@ public class SeasonActivity extends BaseActivity{
 				if(season == null) continue;
 				String imageUrl = season.getSeasonPicUrl();
 				if(imageUrl == null) continue;
-				LogUtil.e("imageUrl = " + imageUrl);
 				HttpManager.getInstance(this).volleyImageRequest(
 					HttpManager.URL + imageUrl.substring(1, imageUrl.length()), new Listener<Bitmap>() {
 						@Override
@@ -150,7 +149,6 @@ public class SeasonActivity extends BaseActivity{
 		mAdviceItem = season.getGoodsList();
 		for(int i = 0; i < mAdviceItem.size(); i++){
 			SeasonAdviceItem adviceItem = mAdviceItem.get(i);
-			LogUtil.e(adviceItem.getGoodsName());
 		}
 		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
 	}

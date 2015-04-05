@@ -17,6 +17,7 @@
 	    android:text="新建收藏夹"/>
 	
 	<EditText 
+	    android:id="@+id/create_newfolder_name"
 	    android:layout_marginTop="14dip"
 	    android:layout_width="match_parent"
 	    android:layout_marginLeft="20dip"

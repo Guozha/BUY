@@ -226,7 +226,6 @@ public class ConfigManager{
 	 */
 	public void setUserPwd(String pwd){
 		if(mUserPwd != null && mUserPwd.equals(pwd)) return;
-		LogUtil.e("setUserPwd");
 		mUserPwd = pwd;
 		setConfig(USER_PWD, pwd);
 	}

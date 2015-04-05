@@ -6,14 +6,18 @@
     
 	<TextView    
       android:id="@+id/list_paging_bottom_text"    
-      android:layout_width="fill_parent"    
+      android:layout_width="wrap_content"    
       android:layout_height="wrap_content"  
+      android:visibility="gone"
+      android:layout_gravity="center_horizontal"
+      android:textSize="@dimen/dimen_global_14sp"
+      android:textColor="@color/color_app_base_4"
       android:text="@string/list_paging_bottom_text" /> 
+      
   	<ProgressBar
       android:id="@+id/list_paging_bottom_progressbar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:visibility="gone"/>
+      android:layout_width="30dip"
+      android:layout_height="30dip"
+      android:layout_gravity="center_horizontal"/>
   	
 </LinearLayout>

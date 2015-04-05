@@ -8,6 +8,8 @@ import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -42,5 +44,15 @@ public class PreSpecialDetail extends BaseActivity{
 		builder.setSpan(  
 	            new ImageSpan(this, R.drawable.sale_tag_02, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mPreSpecialTitle.setText(builder);
+		
+		WebView webView = (WebView) findViewById(R.id.prespecail_detail_webview);
+		webView.setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
+		webView.loadUrl("http://www.baidu.com");
 	}
 }

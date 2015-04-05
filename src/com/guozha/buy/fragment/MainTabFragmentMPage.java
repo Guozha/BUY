@@ -23,9 +23,9 @@ import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
 import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
@@ -36,6 +36,11 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	private List<TextView> mQuickMenus;
 	
 	private ImageView mSeasonImage;
+	
+	private TextView mCalendarDay;
+	private TextView mCalendarSolar;
+	private TextView mCalendarLunar;
+	private TextView mTodayDescript;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -72,6 +77,13 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		mSeasonImage.setOnClickListener(this);
 		
 		setSeasonImageByMonth();
+		
+		mCalendarDay = (TextView) view.findViewById(R.id.calendar_day);
+		mCalendarSolar = (TextView) view.findViewById(R.id.calendar_solar);
+		mCalendarLunar = (TextView) view.findViewById(R.id.calendar_lunar);
+		mTodayDescript = (TextView) view.findViewById(R.id.today_descript);
+		
+		setTodyInfo();
 	}
 	
 	/**
@@ -89,7 +101,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			}
 			return;
 		}
-		ToastUtil.showToast(getActivity(), "quickMenusSize = " + quickMenus.size());
 		for(int i = 0; i < quickMenus.size(); i++){
 			mQuickMenus.get(i).setText(quickMenus.get(i).getName());
 			mQuickMenus.get(i).setTag(quickMenus.get(i).getMenuId() + ":" + quickMenus.get(i).getName());
@@ -111,7 +122,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		Time time = new Time();
 		time.setToNow();
 		int month = time.month + 1;
-		ToastUtil.showToast(getActivity(), "month = " + month);
 		if(month >= 2 && month < 5){  //2,3,4月份
 			mSeasonImage.setImageResource(R.drawable.main_season_img_spring);
 		}else if(month >= 5 && month < 8){ //5,6,7月份
@@ -128,6 +138,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		mDataManager = dataManager;
 		switch (handlerType) {
 		case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:  //一级菜单
+			if(mDataManager == null) return;
 			List<QuickMenu> quickMenu = mDataManager.getQuickMenus(null);
 			if(quickMenu == null) return;
 			List<QuickMenu> defaultQuickMenu = new ArrayList<QuickMenu>();
@@ -137,7 +148,30 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			}
 			ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
 			break;
+		case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:		//今日信息
+			setTodyInfo();
+			break;
 		}
+	}
+
+	/**
+	 * 设置今日信息
+	 */
+	private void setTodyInfo() {
+		if(mDataManager == null) return;
+		TodayInfo todayInfo = mDataManager.getTodayInfo(null);
+		if(todayInfo == null) return;
+		if(mCalendarSolar == null || mCalendarLunar == null || mTodayDescript == null) return;
+		String calendarSolar = todayInfo.getCalendarSolar();
+		String day = calendarSolar.substring(calendarSolar.indexOf("月") + 1, calendarSolar.indexOf("日"));
+		if(day.length() == 1){
+			day = "0" + day;
+		}
+		String solar = calendarSolar.substring(0, calendarSolar.indexOf("月") + 1);
+		mCalendarDay.setText(day);
+		mCalendarSolar.setText(solar);
+		mCalendarLunar.setText(todayInfo.getCalendarLunar());
+		mTodayDescript.setText(todayInfo.getTodayDescript());
 	}
 	
 	@Override

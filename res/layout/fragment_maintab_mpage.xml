@@ -33,6 +33,7 @@
 	            android:orientation="horizontal">
 	            
 	            <TextView 
+	                android:id="@+id/calendar_day"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/color_app_base_4"
@@ -47,14 +48,16 @@
 	                android:orientation="vertical">
 	                
 	                <TextView 
-			            android:layout_width="match_parent"
+	                    android:id="@+id/calendar_solar"
+			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:text="3月1日"
+			            android:text="3月 2015"
 			            android:gravity="center"
 			            android:textColor="@color/color_app_base_4"
 			            android:textSize="@dimen/dimen_global_16sp"/>
 	                
 		            <TextView 
+		                android:id="@+id/calendar_lunar"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:text="正月十一"
@@ -65,12 +68,13 @@
 	        </LinearLayout>
 	        
 	        <TextView 
+	            android:id="@+id/today_descript"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="@color/color_app_base_2"
 	            android:maxLines="2"
-	            android:maxWidth="150dp"
+	            android:maxWidth="160dp"
 	            android:text="食清淡 饮菊花茶护肝"/>
 	    </LinearLayout>
 	    

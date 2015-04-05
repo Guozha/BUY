@@ -69,8 +69,6 @@ public class MySellerActivity extends BaseActivity{
 					mSellers = gson.fromJson(response, new TypeToken<List<Seller>>() { }.getType());
 					for(int i = 0; i < mSellers.size(); i++){
 						Seller seller = mSellers.get(i);
-						LogUtil.e("sellerName = " + seller.getSellerName());
-						LogUtil.e("transCount = " + seller.getTransCount());
 					}
 					handler.sendEmptyMessage(HAND_SELLER_LIST_COMPLETED);
 				}

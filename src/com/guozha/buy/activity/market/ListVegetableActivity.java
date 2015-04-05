@@ -60,12 +60,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
-				LogUtil.e("Vegetable_List_update");
-				LogUtil.e("mAdapterData = " + mAdapterData.size());
 				mVegetableAdapter.notifyDataSetChanged();
-				break;
-
-			default:
 				break;
 			}
 		};
@@ -189,8 +184,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		//所有的条目已经和最大数相等，则移除底部的View
 		int maxList = (mMaxDateNum + 2) / 3;
 		if(totalItemCount == maxList + 1){
-			mListView.removeFooterView(mBottomLoadingView);
-			Toast.makeText(this, "数据全部加载完毕，没有更多数据!", Toast.LENGTH_SHORT).show();
+			mLoadText.setVisibility(View.VISIBLE);
+			mLoadProgressBar.setVisibility(View.GONE);
 		}
 		
 	}
@@ -201,6 +196,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		//当滑动到底部后自动加载
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
 				&& mLastVisibleIndex == mVegetableAdapter.getCount()){
+			mLoadText.setVisibility(View.GONE);
+			mLoadProgressBar.setVisibility(View.VISIBLE);
 			loadNewDataAndUpdate();
 		}
 	}

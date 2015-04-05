@@ -4,15 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.mine.AddAddressActivity;
+import com.guozha.buy.dialog.CustomDialog;
+import com.guozha.buy.dialog.RemindLoginDialog;
+import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
+import com.guozha.buy.fragment.MainTabFragmentMarket;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
@@ -24,16 +32,18 @@ import com.guozha.buy.util.UnitConvertUtil;
  * @author PeggyTong
  *
  */
-public class VegetableListAdapter extends BaseAdapter{
+public class VegetableListAdapter extends BaseAdapter implements OnClickListener{
 	
 	private List<ItemSaleInfo[]> mVegetables;
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
+	private Context mContext;
 	
 	public VegetableListAdapter(Context context, List<ItemSaleInfo[]> vegetables, View parentView){
-		mInflater = LayoutInflater.from(context);
-		this.mVegetables = vegetables;
-		mBitmapCache = new BitmapCache(context, parentView);
+		mContext = context;
+		mInflater = LayoutInflater.from(mContext);
+		mVegetables = vegetables;
+		mBitmapCache = new BitmapCache(mContext);
 	}
 	
 	@Override
@@ -65,6 +75,7 @@ public class VegetableListAdapter extends BaseAdapter{
 			for(int i = 0; i < holder.items.size(); i++){
 				itemHolder = new ViewItemHolder();
 				View view = holder.items.get(i);
+				view.setOnClickListener(this);
 				itemHolder.chooseIcon = (ImageView) view.findViewById(R.id.vegetable_cell_icon);
 				itemHolder.vegetableIcon = (ImageView) view.findViewById(R.id.vegetable_cell_image);
 				itemHolder.vegetableName = (TextView) view.findViewById(R.id.vegetable_cell_name);
@@ -77,13 +88,12 @@ public class VegetableListAdapter extends BaseAdapter{
 		}
 		
 		ItemSaleInfo[] itemSaleInfo = mVegetables.get(position);
-		LogUtil.e("itemSaleInfo.length = " + itemSaleInfo.length);
 		for(int i = 0; i < itemSaleInfo.length; i++){
 			ItemSaleInfo saleInfo = itemSaleInfo[i];
 			if(saleInfo == null || holder.itemHolder == null) continue;
 			ViewItemHolder itemHolder = holder.itemHolder.get(i);
+			holder.items.get(i).setTag(saleInfo.getGoodsId());
 			String imgUrl = saleInfo.getGoodsImg();
-			itemHolder.vegetableIcon.setTag(imgUrl);
 			mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
 			itemHolder.vegetableName.setText(saleInfo.getGoodsName());
 			itemHolder.vegetablePrice.setText(
@@ -93,7 +103,36 @@ public class VegetableListAdapter extends BaseAdapter{
 		
 		return convertView;
 	}
-
+	
+	@Override
+	public void onClick(View view) {
+		Intent intent;
+		//先判断用户是否登录了
+		if(ConfigManager.getInstance().getUserToken() == null){
+			intent = new Intent(mContext, RemindLoginDialog.class);
+			mContext.startActivity(intent);
+			return;
+		}
+		//TODO 再判断当前选择的地址是否为NULL
+		if(ConfigManager.getInstance().getChoosedAddressId() == -1){
+			CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
+			addAddressDialog.setDismissButtonId(R.id.cancel_button);
+			addAddressDialog.getViewById(R.id.agree_button)
+				.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, AddAddressActivity.class);
+					mContext.startActivity(intent);
+				}
+			});
+			return;
+		}
+		
+		String goodsId = String.valueOf(view.getTag());
+		intent = new Intent(mContext, WeightSelectDialog.class);
+		intent.putExtra("goodsId", goodsId);
+		mContext.startActivity(intent);
+	}
 	
 	static class ViewHolder{	
 		private List<View> items = new ArrayList<View>();

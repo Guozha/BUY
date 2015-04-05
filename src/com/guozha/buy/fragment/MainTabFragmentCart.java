@@ -29,6 +29,7 @@ import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -46,6 +47,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private TextView mMesgServerMoney;
 	private TextView mMesgFreeGap;
 	private List<CartBaseItem> mCartItems;
+	private CartItemListAdapter mCartItemListAdapter;
 	private View mCartEmptyBg;
 	
 	private int mQuantity = 0;		//总商品个数
@@ -89,7 +91,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		//距离免服务费还剩多少
 		mFreeGap = cartTotalData.getServiceFee() - cartTotalData.getTotalPrice();
 		
-		mCartItems = new ArrayList<CartBaseItem>();
+		if(mCartItems == null){
+			mCartItems = new ArrayList<CartBaseItem>();
+		}else{
+			mCartItems.clear();
+		}
+		
 		List<CartCookItem> cartCookItem = cartTotalData.getMenuList();
 		List<CartMarketItem> cartMarketItem = cartTotalData.getGoodsList();
 		if(cartCookItem != null && !cartCookItem.isEmpty()){
@@ -140,6 +147,9 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		});
 		
 		mCartEmptyBg = view.findViewById(R.id.cart_empty_bg);
+		mCartItems = new ArrayList<CartBaseItem>();
+		mCartItemListAdapter = new CartItemListAdapter(getActivity(), mCartItems);
+		mCartList.setAdapter(mCartItemListAdapter);
 	}
 	
 	private ClickMarketMenuListener mClickMarketMenuListener;
@@ -161,7 +171,14 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		}
 		mCartEmptyBg.setVisibility(View.GONE);
 		mCartList.setVisibility(View.VISIBLE);
-		mCartList.setAdapter(new CartItemListAdapter(getActivity(), mCartItems));
+		
+		//TODO
+		if(mCartItemListAdapter == null){
+			mCartItemListAdapter = new CartItemListAdapter(getActivity(), mCartItems);
+			mCartList.setAdapter(mCartItemListAdapter);
+		}else{
+			mCartItemListAdapter.notifyDataSetChanged();
+		}
 		//首次全部展开
 		for (int i = 0; i < mCartItems.size(); i++) {
 		    mCartList.expandGroup(i);
@@ -191,6 +208,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		}
 		CartTotalData cartTotalData = mDataManager.getCartItems(null);
 		if(cartTotalData == null) return;
+		LogUtil.e("exchangeDataFormat");
 		exchangeDataFormat(cartTotalData);
 	}
 
@@ -211,7 +229,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		String msgServerMoney = mMesgServerMoney.getText().toString();
 		builder.clear();
 		builder.append(msgServerMoney);
-		builder.setSpan(redSpan, 5, msgServerMoney.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(redSpan, 5, msgServerMoney.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mMesgServerMoney.setText(builder);
 		
 		String msgFreeGap = mMesgFreeGap.getText().toString();
