@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialItem;
 import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
 /**
@@ -71,14 +72,14 @@ public class PreSpecialGridAdapter extends BaseAdapter{
 		holder.price.setText(UnitConvertUtil.getSwitchedMoney(preSpecialItem.getUnitPrice()) 
 				+ "/" + UnitConvertUtil.getSwichedUnit(1000, preSpecialItem.getUnit()));
 		int iconId = -1;
-		if("2".equals(preSpecialItem.getGoodsProp())){
+		if("02".equals(preSpecialItem.getGoodsProp())){
 			iconId = R.drawable.sale_tag_01;
-		}else if("3".equals(preSpecialItem.getGoodsProp())){
+		}else if("03".equals(preSpecialItem.getGoodsProp())){
 			iconId = R.drawable.sale_tag_02;
 		}
 		if(iconId != -1){
 			Drawable drawable = mContext.getResources().getDrawable(iconId);
-			holder.name.setCompoundDrawables(drawable, null, null, null);
+			holder.name.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
 		}else{
 			holder.name.setCompoundDrawables(null, null, null, null);
 		}

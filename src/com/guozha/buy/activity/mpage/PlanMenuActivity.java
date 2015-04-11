@@ -33,13 +33,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.activity.market.SetWarnTimeActivity;
+import com.guozha.buy.activity.global.SetWarnTimeActivity;
+import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.mpage.plan.PlanMenu;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -62,6 +64,8 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	private ImageView mButton5;
 	private ImageView mButton6;
 	private ImageView mButton7;
+	
+	private List<ImageView> mButtons;
 	
 	private ViewFlipper mViewFlipper;
 	private MenuFlipperClick mMenuFlipperClick;
@@ -100,7 +104,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_planmenu);
 		mMenuFlipperClick = new MenuFlipperClick();
-		customActionBarStyle("菜谱计划");
+		customActionBarStyle("饮食管家");
 		initView();
 		initPlanMenuData();
 	}
@@ -120,27 +124,26 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		mWeakDayText = (TextView) findViewById(R.id.choosed_week_day);
 		//设置Tag
 		mButton1 = (ImageView) findViewById(R.id.plantmenu_choose_button1);
-		mButton1.setTag(0);
 		mButton2 = (ImageView) findViewById(R.id.plantmenu_choose_button2);
-		mButton2.setTag(1);
 		mButton3 = (ImageView) findViewById(R.id.plantmenu_choose_button3);
-		mButton3.setTag(2);
 		mButton4 = (ImageView) findViewById(R.id.plantmenu_choose_button4);
-		mButton4.setTag(3);
 		mButton5 = (ImageView) findViewById(R.id.plantmenu_choose_button5);
-		mButton5.setTag(4);
 		mButton6 = (ImageView) findViewById(R.id.plantmenu_choose_button6);
-		mButton6.setTag(5);
 		mButton7 = (ImageView) findViewById(R.id.plantmenu_choose_button7);
-		mButton7.setTag(6);
-		//设置监听事件
-		mButton1.setOnClickListener(mMenuFlipperClick);
-		mButton2.setOnClickListener(mMenuFlipperClick);
-		mButton3.setOnClickListener(mMenuFlipperClick);
-		mButton4.setOnClickListener(mMenuFlipperClick);
-		mButton5.setOnClickListener(mMenuFlipperClick);
-		mButton6.setOnClickListener(mMenuFlipperClick);
-		mButton7.setOnClickListener(mMenuFlipperClick);
+		
+		mButtons = new ArrayList<ImageView>();
+		mButtons.add(mButton1);
+		mButtons.add(mButton2);
+		mButtons.add(mButton3);
+		mButtons.add(mButton4);
+		mButtons.add(mButton5);
+		mButtons.add(mButton6);
+		mButtons.add(mButton7);
+		
+		for(int i = 0; i < mButtons.size(); i++){
+			mButtons.get(i).setTag(i);
+			mButtons.get(i).setOnClickListener(mMenuFlipperClick);
+		}
 		
 		mWeakDays = new ArrayList<TextView>();
 		mWeakDays.add((TextView)findViewById(R.id.week_day1));
@@ -157,9 +160,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	 */
 	private void initPlanMenuData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
 		RequestParam paramPath = new RequestParam("menuplan/list")
-		.setParams("token", token)
 		.setParams("userId", userId);
 		HttpManager.getInstance(this).volleyRequestByPost(
 				HttpManager.URL + paramPath, new Listener<String>() {
@@ -167,7 +168,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 			    mPlanMenus = gson.fromJson(response, new TypeToken<List<PlanMenu>>() { }.getType());
-			    if(mPlanMenus != null){
+			    if(mPlanMenus != null && mPlanMenus.size() == 7){
 			    	handler.sendEmptyMessage(HAND_PLAN_MENU_DATA_COMPLETED);
 			    }
 			}
@@ -190,15 +191,54 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	 * 请求添加多个菜谱到购物车
 	 */
 	private void requestAddCartRecipeList(){
-		//TODO
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken(PlanMenuActivity.this);
+		if(token == null) return;
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		List<CheckBox> checkBoxs = mCheckBoxs.get(mCurrentIndex);
+		for(int i = 0; i < checkBoxs.size(); i++){
+			CheckBox checkbox = checkBoxs.get(i);
+			if(!checkbox.isChecked()) continue;
+			requestAddCart(userId, token, addressId,
+					checkbox);
+		}
 	}
+
+	private void requestAddCart(int userId, String token,
+			int addressId, CheckBox checkbox) {
+		RequestParam paramPath = new RequestParam("cart/insert")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("addressId", addressId)
+		.setParams("id", String.valueOf(checkbox.getTag()))
+		.setParams("productType", "01")
+		.setParams("amount", "1");
+		HttpManager.getInstance(PlanMenuActivity.this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							ToastUtil.showToast(PlanMenuActivity.this, "添加成功");
+						}else{
+							ToastUtil.showToast(PlanMenuActivity.this, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+	}
+	
 
 	/**
 	 * 请求收藏多个菜谱
 	 */
 	private void requestCollectRecipeList() {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(PlanMenuActivity.this);
+		if(token == null) return;
 		StringBuffer menuIds = new StringBuffer();
 		List<CheckBox> checkBoxs = mCheckBoxs.get(mCurrentIndex);
 		for(int i = 0; i < checkBoxs.size(); i++){
@@ -207,7 +247,13 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			menuIds.append(String.valueOf(checkbox.getTag()));
 			menuIds.append(",");
 		}
-		String menus = menuIds.substring(1, menuIds.length());
+		String menus = "";
+		if(menuIds.length() > 1){
+			 menus = menuIds.substring(1, menuIds.length());
+		}else{
+			ToastUtil.showToast(PlanMenuActivity.this, "请先选择菜谱");
+			return;
+		}
 		
 		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
 		.setParams("token", token)
@@ -313,37 +359,51 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			mBitmapCache.loadBitmaps(image1, imgUrl);
 			check1.setText(planMenu.getFirstMenuName());
 			check1.setTag(planMenu.getFirstMenuId());
-			check1.setChecked(1 == planMenu.getFirstMenuCheck() ? true : false);
+			boolean isCheck1 = (1 == planMenu.getFirstMenuCheck() ? true : false);
+			check1.setChecked(isCheck1);
 			
 			imgUrl = planMenu.getSecondMenuImg();
 			mBitmapCache.loadBitmaps(image2, imgUrl);
 			check2.setText(planMenu.getSecondMenuName());
 			check2.setTag(planMenu.getSecondMenuId());
-			check2.setChecked(1 == planMenu.getSecondMenuCheck() ? true : false);
+			boolean isCheck2 = (1== planMenu.getSecondMenuCheck() ? true : false);
+			check2.setChecked(isCheck2);
 			
 			imgUrl = planMenu.getThirdMenuImg();
 			mBitmapCache.loadBitmaps(image3, imgUrl);
 			check3.setText(planMenu.getThirdMenuName());
 			check3.setTag(planMenu.getThirdMenuId());
-			check3.setChecked(1 == planMenu.getThirdMenuCheck() ? true : false);
+			boolean isCheck3 = (1 == planMenu.getThirdMenuCheck() ? true : false);
+			check3.setChecked(isCheck3);
 			
 			imgUrl = planMenu.getFourMenuImg();
 			mBitmapCache.loadBitmaps(image4, imgUrl);
 			check4.setText(planMenu.getFourMenuName());
 			check4.setTag(planMenu.getFourMenuId());
-			check4.setChecked(1 == planMenu.getFourMenuCheck() ? true : false);
+			boolean isCheck4 = (1 == planMenu.getFourMenuCheck() ? true : false);
+			check4.setChecked(isCheck4);
 			
 			imgUrl = planMenu.getFiveMenuImg();
 			mBitmapCache.loadBitmaps(image5, imgUrl);
 			check5.setText(planMenu.getFiveMenuName());
 			check5.setTag(planMenu.getFiveMenuId());
-			check5.setChecked(1 == planMenu.getFiveMenuCheck() ? true : false);
+			boolean isCheck5 = (1 == planMenu.getFiveMenuCheck() ? true : false);
+			check5.setChecked(isCheck5);
 			
 			imgUrl = planMenu.getSixMenuImg();
 			mBitmapCache.loadBitmaps(image6, imgUrl);
 			check6.setText(planMenu.getSixMenuName());
 			check6.setTag(planMenu.getSixMenuId());
-			check6.setChecked(1 == planMenu.getSixMenuCheck() ? true : false);
+			boolean isCheck6 = (1 == planMenu.getSixMenuCheck() ? true : false);
+			check6.setChecked(isCheck6);
+			
+			
+			if(isCheck1 || isCheck2 || isCheck3 || isCheck4 || isCheck5 || isCheck6){
+				mButtons.get(i).setImageResource(R.drawable.main_plan_days_added);
+			}else{
+				mButtons.get(i).setImageResource(R.drawable.main_plan_days_normal);
+			}
+			
 			isInitStatus = false;
 		}
 	}
@@ -561,7 +621,8 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		PlanMenu planMenu = mPlanMenus.get(mCurrentIndex);
 		
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(PlanMenuActivity.this);
+		if(token == null) return;
 		
 		RequestParam paramPath = new RequestParam("menuplan/insert")
 		.setParams("token", token)
@@ -621,5 +682,22 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 				}
 			}
 		});
+		
+		updateChooseImageButton();
+	}
+	
+	
+	private void updateChooseImageButton(){
+		List<CheckBox> checkBoxs = mCheckBoxs.get(mCurrentIndex);
+		boolean isChoosedDay = false;
+		for(int i = 0; i < checkBoxs.size(); i++){
+			if(checkBoxs.get(i).isChecked()) isChoosedDay = true;
+		}
+		
+		if(isChoosedDay){
+			mButtons.get(mCurrentIndex).setImageResource(R.drawable.main_plan_days_added);
+		}else{
+			mButtons.get(mCurrentIndex).setImageResource(R.drawable.main_plan_days_normal);
+		}
 	}
 }

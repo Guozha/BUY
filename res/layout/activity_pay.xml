@@ -32,6 +32,7 @@
             android:text="商品金额"/>
         
         <TextView 
+            android:id="@+id/pay_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -67,6 +68,7 @@
             android:src="@drawable/note_icon"
             android:layout_toRightOf="@id/server_pice_title"/>
         <TextView 
+            android:id="@+id/pay_server_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -79,13 +81,15 @@
     
     <!-- 账户余额 -->
     <RelativeLayout 
+        android:id="@+id/pay_can_use_money"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:background="@drawable/white_list_selector_bg"
         android:layout_marginTop="1dip"
         android:orientation="horizontal">
         
         <TextView 
+            android:id="@+id/pay_can_use_money_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -96,6 +100,7 @@
             android:text="可用账户余额12元"/>
         
         <ImageView 
+            android:id="@+id/pay_can_use_money_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -106,13 +111,15 @@
     
     <!-- 菜豆 -->
     <RelativeLayout 
+        android:id="@+id/pay_can_use_bean"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:background="@drawable/white_list_selector_bg"
         android:layout_marginTop="1dip"
         android:orientation="horizontal">
         
         <TextView 
+            android:id="@+id/pay_can_user_bean_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -123,6 +130,7 @@
             android:text="可用35个菜豆抵0.35元"/>
         
         <ImageView 
+            android:id="@+id/pay_can_use_bean_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -151,6 +159,7 @@
             android:text="菜票"/>
         
         <TextView 
+            android:id="@+id/pay_ticket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -158,7 +167,17 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dip"
+            android:visibility="gone"
             android:text="￥12.00"/>
+        
+         <ImageView 
+             android:id="@+id/pay_ticket_icon"
+             android:layout_centerVertical="true"
+             android:layout_alignParentRight="true"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginRight="18dip"
+             android:src="@drawable/main_right_arrow"/>
     </RelativeLayout>
     
     <!-- 还需支付 -->
@@ -180,6 +199,7 @@
             android:text="还需支付"/>
         
         <TextView 
+            android:id="@+id/pay_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_global_14sp"
@@ -201,9 +221,11 @@
     
     <!-- 支付宝支付 -->
     <RelativeLayout 
+        android:id="@+id/pay_way_zhifubao"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:background="@drawable/white_list_selector_bg"
+        android:visibility="gone"
         android:layout_marginTop="1dip"
         android:orientation="horizontal">
         
@@ -221,6 +243,7 @@
             android:text="支付宝支付"/>
         
         <ImageView 
+            android:id="@+id/pay_way_zhifubao_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -231,9 +254,11 @@
     
     <!-- 微信支付 -->
     <RelativeLayout 
+        android:id="@+id/pay_way_weixin"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:visibility="gone"
+        android:background="@drawable/white_list_selector_bg"
         android:layout_marginTop="1dip"
         android:orientation="horizontal">
         
@@ -251,6 +276,7 @@
             android:text="微信支付"/>
         
         <ImageView 
+            android:id="@+id/pay_way_weixin_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -261,10 +287,12 @@
     
     <!-- 网银支付 -->
     <RelativeLayout 
+        android:id="@+id/pay_way_wangying"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:background="@drawable/white_list_selector_bg"
         android:layout_marginTop="1dip"
+        android:visibility="gone"
         android:orientation="horizontal">
         
         <TextView 
@@ -281,6 +309,7 @@
             android:text="网银支付"/>
         
         <ImageView 
+            android:id="@+id/pay_way_wangying_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -291,10 +320,12 @@
     
     <!-- 货到付款 -->
     <RelativeLayout 
+        android:id="@+id/pay_way_huodaofukuan"
         android:layout_width="match_parent"
         android:layout_height="43dip"
-        android:background="@color/color_app_base_5"
+        android:background="@drawable/white_list_selector_bg"
         android:layout_marginTop="1dip"
+        android:visibility="gone"
         android:orientation="horizontal">
         
         <TextView 
@@ -311,6 +342,7 @@
             android:text="货到付款"/>
         
         <ImageView 
+            android:id="@+id/pay_way_huodaofukuan_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -334,6 +366,7 @@
         android:orientation="horizontal">
         
         <Button 
+            android:id="@+id/pay_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/nomal_button_nomal_bg"

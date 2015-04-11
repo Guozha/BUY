@@ -132,7 +132,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void requestAddCartMenu(){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(CookBookDetailActivity.this);
+		if(token == null) return;
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		
 		RequestParam paramPath = new RequestParam("cart/insert")
@@ -168,7 +169,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	 */
 	private void requestCollectionMenu() {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(CookBookDetailActivity.this);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
 		.setParams("token", token)
 		.setParams("userId", userId)

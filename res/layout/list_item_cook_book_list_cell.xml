@@ -25,6 +25,7 @@
 	        android:orientation="vertical">
 	        
 	        <TextView 
+	            android:id="@+id/cooke_book_name"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="青椒炒猪肚"
@@ -34,6 +35,7 @@
 	            android:textColor="@color/color_app_base_4"/>
 	        
 	        <TextView 
+	            android:id="@+id/cook_book_material"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="16dip"
@@ -45,6 +47,7 @@
 	    </LinearLayout>
 	    
 	    <ImageView 
+	        android:id="@+id/cook_book_collection"
 	        android:layout_height="match_parent"
 	        android:layout_width="wrap_content"
 	        android:paddingLeft="18dip"

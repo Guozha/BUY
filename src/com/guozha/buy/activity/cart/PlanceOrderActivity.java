@@ -1,7 +1,9 @@
 package com.guozha.buy.activity.cart;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -11,6 +13,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
@@ -20,14 +24,17 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.entry.cart.PointTime;
+import com.guozha.buy.entry.cart.ShowTime;
+import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
-import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
 
 /**
@@ -40,19 +47,33 @@ public class PlanceOrderActivity extends BaseActivity{
 	private WheelView mWheelView;
 	
 	private static final int HAND_TIMES_DATA_COMPLETED = 0x0001;
+	private static final int HAND_CHANGE_QUICK_MENU = 0x0002;
 	
-	private List<PointTime> options;
+	private List<ShowTime> mShowTimes = new ArrayList<ShowTime>();
+	
+	private int mTotalPrice = -1;
+	private int mServicePrice = -1;
+	private TextView mTotalPriceText;
 	
 	private TextView mOrderName;
 	private TextView mOrderPhone;
 	private TextView mOrderAddress;
+	private EditText mLeaveMessage;
+	private ImageView mQuickTimeChooseIcon;
+	private TextView mQuickTimeChooseText;
+	private View mQuickTimeChoose;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_TIMES_DATA_COMPLETED:
-				if(mWheelView == null) return;
-				mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this, options));
+				//if(mWheelView == null) return;
+				//mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this));
+				break;
+			case HAND_CHANGE_QUICK_MENU:
+				if(mQuickTimeChoose != null){
+					mQuickTimeChoose.setVisibility(View.GONE);
+				}
 				break;
 			}
 		};
@@ -63,7 +84,14 @@ public class PlanceOrderActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plance_order);
 		customActionBarStyle("下单");
-		
+		Intent intent = getIntent();
+		if(intent != null){
+			Bundle bundle = intent.getExtras();
+			if(bundle != null){
+				mTotalPrice = bundle.getInt("totalPrice");
+				mServicePrice = bundle.getInt("serverPrice");
+			}
+		}
 		initView();
 	}
 	
@@ -77,41 +105,15 @@ public class PlanceOrderActivity extends BaseActivity{
 		mWheelView.setWheelBackground(R.drawable.wheel_bg_white);
 		mWheelView.setWheelForeground(R.drawable.wheel_val_white);
 		mWheelView.setShadowColor(0x00000000, 0x00000000, 0x00000000);
-		mWheelView.setLastItemListener(new ItemChangeListener() {
-			
-			@Override
-			public void itemChanged(int index) {
-				
-			}
-		});
-		
+		mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this));
 		addData();
 		
 		findViewById(R.id.plance_order_button).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				//TODO 提交菜场订单
-				int userId = ConfigManager.getInstance().getUserId();
-				String token = ConfigManager.getInstance().getUserToken();
-				int addressId = ConfigManager.getInstance().getChoosedAddressId();
-				RequestParam paramPath = new RequestParam("order/insert")
-				.setParams("token", token)
-				.setParams("userId", userId);
-				//.setParams("addressId", addressId)
-				//.setParams("wantUpTime", value)
-				//.setParams("wantDownTime", )
-				//.setParams("memo", );
-				HttpManager.getInstance(PlanceOrderActivity.this).volleyJsonRequestByPost(
-						HttpManager.URL + paramPath, new Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-					
-						//String returnCode = response.getString("returnCode");
-					}
-				});
-				Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
-				startActivity(intent);
+				//提交菜场订单
+				requestSubmitOrder();
 			}
 		});
 		
@@ -132,8 +134,93 @@ public class PlanceOrderActivity extends BaseActivity{
 				}
 			}
 		}
+		
+		mLeaveMessage = (EditText) findViewById(R.id.leave_message);
+		mQuickTimeChooseIcon = (ImageView) findViewById(R.id.quick_time_choose_icon);
+		mQuickTimeChooseText = (TextView) findViewById(R.id.quick_time_choose_text);
+		mQuickTimeChoose = findViewById(R.id.quick_time_choose);
+		mQuickTimeChoose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				String tag = String.valueOf(mQuickTimeChooseIcon.getTag());
+				if(tag == null || "null".equals(tag) ||  "0".equals(tag)){
+					mQuickTimeChooseIcon.setTag("1");
+					mQuickTimeChooseIcon.setImageResource(R.drawable.truck);
+					mQuickTimeChooseText.setText("1小时之内给您送到");
+					mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_1));
+				}else{
+					mQuickTimeChooseIcon.setTag("0");
+					mQuickTimeChooseIcon.setImageResource(R.drawable.truck_unselected);
+					mQuickTimeChooseText.setText("1小时速达");
+					mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_4));
+				}
+			}
+		});
+		
+		mTotalPriceText = (TextView) findViewById(R.id.plance_order_total_price);
+		mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
 	}
 	
+	/**
+	 * 请求提交订单
+	 */
+	private void requestSubmitOrder() {
+		String tag = String.valueOf(mQuickTimeChooseIcon.getTag());
+		int chooseItem;
+		if("1".equals(tag)){
+			chooseItem = 0;
+		}else{
+			chooseItem = mWheelView.getCurrentItem();
+		}
+		if(mShowTimes == null || mShowTimes.isEmpty()) {
+			ToastUtil.showToast(PlanceOrderActivity.this, "请选择时间段");
+			return;
+		}
+		ShowTime pointTime = mShowTimes.get(chooseItem);
+		if(pointTime == null) {
+			ToastUtil.showToast(PlanceOrderActivity.this, "请选择时间段");
+			return;
+		}
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken(PlanceOrderActivity.this);
+		if(token == null) return;
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		RequestParam paramPath = new RequestParam("order/insert")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("addressId", addressId)
+		.setParams("wantUpTime", pointTime.getFromTime())
+		.setParams("wantDownTime", pointTime.getToTime())
+		.setParams("memo", mLeaveMessage.getText().toString());
+		
+		HttpManager.getInstance(PlanceOrderActivity.this).volleyJsonRequestByPost(
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode)){
+						Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
+						LogUtil.e("orderId=" + response.getInt("orderId"));
+						intent.putExtra("orderId", response.getInt("orderId"));
+						intent.putExtra("serverPrice", mServicePrice);
+						startActivity(intent);
+						MainPageInitDataManager.mCartItemsUpdated = true;
+						PlanceOrderActivity.this.finish();
+					}else{
+						ToastUtil.showToast(PlanceOrderActivity.this, response.getString("msg"));
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+	
+	/**
+	 * 添加数据
+	 */
 	private void addData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("order/times")
@@ -143,8 +230,22 @@ public class PlanceOrderActivity extends BaseActivity{
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				options = gson.fromJson(response, new TypeToken<List<PointTime>>() { }.getType());
-				if(options != null){
+				TimeList timeList = gson.fromJson(response, new TypeToken<TimeList>() { }.getType());
+				if(timeList != null){
+					List<PointTime> todayPointTime = timeList.getTodayTimeList();
+					if(todayPointTime == null || todayPointTime.isEmpty()){
+						handler.sendEmptyMessage(HAND_CHANGE_QUICK_MENU);
+					}else{
+					for(int i = 0; i < todayPointTime.size(); i++){
+							mShowTimes.add(new ShowTime("今天", 
+									todayPointTime.get(i).getFromTime(), todayPointTime.get(i).getToTime()));
+						}
+					}
+					List<PointTime> tomorrowPointTime = timeList.getTomorrowTimeList();
+					for(int i = 0; i < tomorrowPointTime.size(); i++){
+						mShowTimes.add(new ShowTime("明天", 
+								tomorrowPointTime.get(i).getFromTime(), tomorrowPointTime.get(i).getToTime()));
+					}
 					handler.sendEmptyMessage(HAND_TIMES_DATA_COMPLETED);
 				}
 			}
@@ -152,12 +253,9 @@ public class PlanceOrderActivity extends BaseActivity{
 	}
 	
 	private class TimeOptionAdapter extends AbstractWheelTextAdapter{
-		private List<PointTime> options;
-
-		protected TimeOptionAdapter(Context context,
-				List<PointTime> options) {
+		
+		protected TimeOptionAdapter(Context context) {
 			super(context, R.layout.item_select_weight, NO_RESOURCE);
-			this.options = options;
 			setItemTextResource(R.id.city_name);
 		}
 		
@@ -169,13 +267,16 @@ public class PlanceOrderActivity extends BaseActivity{
 
 		@Override
 		public int getItemsCount() {
-			return options.size();
+			if(mShowTimes == null) return 0;
+			LogUtil.e("mShowTimes ..... " + mShowTimes.size());
+			return mShowTimes.size();
 		}
 
 		@Override
 		protected CharSequence getItemText(int index) {
-			PointTime option = options.get(index);
-			return "今天       " + option.getFromTime() + "-" + option.getToTime();
+			ShowTime showTime = mShowTimes.get(index);
+			return showTime.getDayname() + "    " + 
+					showTime.getFromTime() + "-" + showTime.getToTime();
 		}
 	}
 }

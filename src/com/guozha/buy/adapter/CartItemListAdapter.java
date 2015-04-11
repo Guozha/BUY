@@ -28,6 +28,7 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 
 /**
  * 购物车列表适配器
@@ -141,11 +142,15 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.close.setVisibility(View.VISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_4));
 			holder.title.setText(baseItem.getGoodsName());
-			
+			holder.num.setText(UnitConvertUtil.getSwitchedWeight(baseItem.getAmount(), baseItem.getUnit()));
+			if("1".equals(baseItem.getCartStatus())){
+				holder.price.setText(UnitConvertUtil.getSwitchedMoney(baseItem.getPrice()) + "元");
+			}else{
+				holder.price.setText("已下架");
+			}
 			holder.close.setTag(groupPosition);
-			String tag = baseItem.getCartId() + ":" + baseItem.getAmount();
-			holder.minus.setTag(tag);
-			holder.plus.setTag(tag);
+			holder.minus.setTag(groupPosition);
+			holder.plus.setTag(groupPosition);
 		}
 		
 		return convertView;
@@ -231,20 +236,26 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	 * @param plus
 	 */
 	private void updateCartItemAmount(final View view, boolean plus) {
-		String tag  = String.valueOf(view.getTag());
-		String[] param = tag.split(":");
-		if(param.length != 2) return;
-		int amount = Integer.parseInt(param[1]);
+		int position  = (Integer) view.getTag();
+		CartBaseItem cartBaseItem = mCartItems.get(position);
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("cart/insert")
-		.setParams("cartId", param[0])
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
+		RequestParam paramPath = new RequestParam("cart/update")
+		.setParams("cartId", cartBaseItem.getCartId())
 		.setParams("userId", userId)
 		.setParams("token", token);
+		int gap = 1;
+		if("01".equals(cartBaseItem.getUnit())){
+			gap = (int)(cartBaseItem.getAmount() * 0.2);
+		}
 		if(plus){
-			paramPath.setParams("amount", amount + 1);
+			paramPath.setParams("amount", cartBaseItem.getAmount() + gap);
 		}else{
-			paramPath.setParams("amount", amount - 1);
+			int minAmount = cartBaseItem.getAmount() - gap;
+			if(minAmount < cartBaseItem.getMinAmount())
+				minAmount = cartBaseItem.getMinAmount();
+			paramPath.setParams("amount", minAmount);
 		}
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
@@ -287,7 +298,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	private void requestDeleteCartItem(final View view) {
 		int groupId = (Integer)view.getTag();
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("cart/delete")
 		.setParams("cartId", mCartItems.get(groupId).getCartId())
 		.setParams("userId", userId)

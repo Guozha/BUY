@@ -267,7 +267,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		actionbar.setDisplayShowCustomEnabled(true);
 		actionbar.setCustomView(R.layout.actionbar_base_view);
 		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
-		title.setText("我要买菜");
+		title.setText("爱掌勺");
 	}
 	
 	@Override

@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.mine.SharePraiseActivity;
+import com.guozha.buy.activity.mpage.PlanMenuActivity;
+import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.global.QuickMenu;
-import com.guozha.buy.entry.mine.address.AddressInfo;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -37,6 +39,9 @@ public class ConfigManager{
 	private String mMobileNumber;
 	private String mWarnTime;
 	private int mChoosedAddressId;					   //用户当前选择的地址Id
+	private int mVersionCode;						   //当前版本号
+	private String mVersionName;					   //版本名称
+	private boolean mWarnTimeOpend;					   //提醒开关是否打开
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
@@ -44,6 +49,9 @@ public class ConfigManager{
 	private static final String MOBILE_NUMBER = "mobile_number"; 	//账号（手机号)
 	private static final String WARN_TIME = "warn_time";			//提醒时间
 	private static final String CHOOSED_ADDRESS_ID = "choosed_address_id";//用户选择的地址Id
+	private static final String VERSION_CODE = "version_code";		//当前版本号
+	private static final String VERSION_NAME = "version_name";		//当前版本名称
+	private static final String WARN_TIME_OPEND = "warn_time_opend";//提醒开关是否打开
 	
 	/**
 	 * 获取配置管理对象
@@ -60,8 +68,11 @@ public class ConfigManager{
 		mUserToken = sharedPreference.getString(USER_TOKEN, null);
 		mUserPwd = sharedPreference.getString(USER_PWD, null);
 		mMobileNumber = sharedPreference.getString(MOBILE_NUMBER, null);
-		mWarnTime = sharedPreference.getString(WARN_TIME, "16:00");
+		mWarnTime = sharedPreference.getString(WARN_TIME, "1600");
 		mChoosedAddressId = sharedPreference.getInt(CHOOSED_ADDRESS_ID, -1);
+		mVersionCode = sharedPreference.getInt(VERSION_CODE, -1);
+		mVersionName = sharedPreference.getString(VERSION_NAME, null);
+		mWarnTimeOpend = sharedPreference.getBoolean(WARN_TIME_OPEND, false);
 		initConfigXML();
 	}
 	
@@ -160,6 +171,17 @@ public class ConfigManager{
 	}
 	
 	/**
+	 * 设置配置
+	 * @param configType
+	 * @param changeData
+	 */
+	private void setConfig(String configType, boolean changeData){
+		Editor editor = sharedPreference.edit();
+		editor.putBoolean(configType, changeData);
+		editor.commit();
+	}
+	
+	/**
 	 * 获取用户ID
 	 * @return
 	 */
@@ -194,12 +216,21 @@ public class ConfigManager{
 		setConfig(CHOOSED_ADDRESS_ID, choosedId);
 	}
 	
+	public String getUserToken(){
+		return mUserToken;
+	}
+	
 	/**
 	 * 获取用户Token
 	 * @return
 	 */
-	public String getUserToken(){
-		return mUserToken;
+	public String getUserToken(Context context){
+		//如果是Null提醒登录
+		if(mUserToken == null){
+			Intent intent = new Intent(context, RemindLoginDialog.class);
+			context.startActivity(intent);
+		}
+		return getUserToken();
 	}
 	
 	/**
@@ -296,6 +327,60 @@ public class ConfigManager{
 		return map.get(key);
 	}
 	
+	/**
+	 * 设置版本号
+	 * @param versionCode
+	 */
+	public void setVersionCode(int versionCode){
+		if(mVersionCode == versionCode) return;
+		mVersionCode = versionCode;
+		setConfig(VERSION_CODE, versionCode);
+	}
+	
+	/**
+	 * 获取版本号
+	 * @return
+	 */
+	public int getVersionCode(){
+		return mVersionCode;
+	}
+	
+	/**
+	 * 设置版本名称
+	 * @param versionName
+	 */
+	public void setVersionName(String versionName){
+		if(mVersionName != null && mVersionName.equals(versionName)) return;
+		mVersionName = versionName;
+		setConfig(VERSION_NAME, versionName);
+	}
+	
+	/**
+	 * 获取版本名称
+	 * @return
+	 */
+	public String getVersionName(){
+		return mVersionName;
+	}
+	
+	/**
+	 * 设置提醒开关
+	 * @param warnTimeOpend
+	 */
+	public void setWarnTimeOpend(boolean warnTimeOpend){
+		if(warnTimeOpend == mWarnTimeOpend) return;
+		mWarnTimeOpend = warnTimeOpend;
+		setConfig(WARN_TIME_OPEND, warnTimeOpend);
+	}
+	
+	/**
+	 * 获取提醒开关状态
+	 * @return
+	 */
+	public boolean getWarnTimeOpend(){
+		return mWarnTimeOpend;
+	}
+	
 	////////////////////////////////逻辑相关//////////////////////////////////
 	
 	/**
@@ -305,7 +390,8 @@ public class ConfigManager{
 		setUserId(-1);
 		setUserPwd(null);
 		setUserToken(null);
-		setMobileNum(null);
+		//setMobileNum(null);
+		setChoosedAddressId(-1);
 	}
 
 }

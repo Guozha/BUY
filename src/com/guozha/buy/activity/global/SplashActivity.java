@@ -1,14 +1,22 @@
 package com.guozha.buy.activity.global;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
@@ -47,13 +55,13 @@ public class SplashActivity extends Activity{
 				int remainDelay =(int)(SPLASH_TIME - 
 						(SystemClock.elapsedRealtime() - mInitStartTime));
 				if(remainDelay <= 0){
-					turnMainActivity();
+					turnOtherActivity();
 				}else{
 					handler.sendEmptyMessageDelayed(MSG_TURN_MAIN, remainDelay);
 				}
 				break;
 			case MSG_TURN_MAIN:
-				turnMainActivity();
+				turnOtherActivity();
 				break;
 			}
 		};
@@ -65,12 +73,33 @@ public class SplashActivity extends Activity{
 		setContentView(R.layout.activity_splash);
 		
 		mHasInit = false;
-		
+		initJPush();
 		//友盟统计设置为debug模式
 		//TODO 在发布的时候注意修改
 		MobclickAgent.setDebugMode(true);
 		//禁止默认的页面统计方式
 		MobclickAgent.openActivityDurationTrack(false);
+	}
+	
+	/**
+	 * 初始化极光推送相关
+	 */
+	private void initJPush(){
+		//极光推送相关
+		//TODO 注意发布的时候修改Debug模式
+		JPushInterface.setDebugMode(true); //设置为Debug模式
+		JPushInterface.init(this); //初始化极光SDK
+		
+		//自定义Notification样式
+		BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(this);
+		builder.statusBarDrawable = R.drawable.ic_launcher;
+		builder.notificationFlags = Notification.FLAG_AUTO_CANCEL; //设置为自动消失
+		builder.notificationDefaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE
+				| Notification.DEFAULT_LIGHTS; //设置为铃声和振动都要
+		
+		//设置默认样式
+		JPushInterface.setPushNotificationBuilder(1, builder);
+		JPushInterface.setDefaultPushNotificationBuilder(builder);
 	}
 	
 	@Override
@@ -84,10 +113,24 @@ public class SplashActivity extends Activity{
 	/**
 	 * 跳转到主界面
 	 */
-	private void turnMainActivity(){
-
-		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-		//Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+	private void turnOtherActivity(){
+		Intent intent;
+		try {
+			PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			int currentVersionCode = packageInfo.versionCode;
+			String currentVersionName = packageInfo.versionName;
+			//如果版本号大于旧版本号则去引导页
+			if(currentVersionCode > ConfigManager.getInstance().getVersionCode()){
+				intent = new Intent(SplashActivity.this, GuideActivity.class);
+				ConfigManager.getInstance().setVersionCode(currentVersionCode);
+				ConfigManager.getInstance().setVersionName(currentVersionName);
+			}else{
+				intent = new Intent(SplashActivity.this, MainActivity.class);
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+			intent = new Intent(SplashActivity.this, MainActivity.class);
+		}
 		startActivity(intent);
 		SplashActivity.this.finish();
 	}
@@ -127,6 +170,16 @@ public class SplashActivity extends Activity{
 		initDataManager.getGoodsItemType(null);
 		//获取逛菜场首页数据
 		initDataManager.getMarketHomePage(null, 1, 4);
+		//设置别名和标签
+		//Set<String> tags = new HashSet<String>();
+		int userId = ConfigManager.getInstance().getUserId();
+		JPushInterface.setAliasAndTags(this, String.valueOf(userId), 
+				null, new TagAliasCallback() {
+			@Override
+			public void gotResult(int responseCode, String alias, Set<String> tags) {
+				LogUtil.e("responseCode = " +responseCode);
+			}
+		});
 	}
 	
 	/**

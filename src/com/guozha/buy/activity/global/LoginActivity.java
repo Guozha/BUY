@@ -34,6 +34,7 @@ import com.umeng.analytics.MobclickAgent;
 public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String PAGE_NAME = "LoginPage";
+	private static final int REQUEST_CODE = 0;		//请求状态码		
 	
 	//登录成功后 跳转控制器的 路径
 	public static final String SUCCESS_TURN_INTENT = "success_turn_intent";
@@ -77,6 +78,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
 		mLoginButton.setOnClickListener(this);
+		
+		String mobileNum = ConfigManager.getInstance().getMobileNum();
+		mEditPhoneNum.setText(mobileNum);
 	}
 	
 	@Override
@@ -111,7 +115,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.login_toregist_tv:
 			intent = new Intent(LoginActivity.this, RegistActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.login_tofindpwd_tv:
 			intent = new Intent(LoginActivity.this, FindPwdActivity.class);
@@ -127,7 +131,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	 * @param phoneNum
 	 * @param pwd
 	 */
-	private void requestLogin(String phoneNum, String pwd) {
+	private void requestLogin(String phoneNum, final String pwd) {
 		RequestParam paramPaht = new RequestParam("account/login")
 		.setParams("mobileNo", phoneNum)
 		.setParams("passwd", pwd);
@@ -143,7 +147,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						String mobileNum = response.getString("mobileNo");
 						ConfigManager.getInstance().setUserId(userId);
 						ConfigManager.getInstance().setUserToken(userToken);
-						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+						ConfigManager.getInstance().setUserPwd(pwd);
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 						ToastUtil.showToast(LoginActivity.this, "登录成功");
 						//请求地址数据
@@ -274,5 +278,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQUEST_CODE){
+			if(data != null){
+				Bundle bundle = data.getExtras();
+				if(bundle != null){
+					if(bundle.getBoolean("successed")){
+						LoginActivity.this.finish();
+					}
+				}
+			}
+		}
 	}
 }

@@ -75,6 +75,7 @@ public class MyTicketActivity extends BaseActivity{
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				mMarketTickets = gson.fromJson(response, new TypeToken<List<MarketTicket>>() { }.getType());
+				LogUtil.e("mMarketTicket.size  == " + mMarketTickets.size());
 				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 			}
 		});

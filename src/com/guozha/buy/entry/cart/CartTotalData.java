@@ -12,10 +12,11 @@ public class CartTotalData implements Serializable{
 	
 	private static final long serialVersionUID = -8960765511016236411L;
 	
-	private int quantity;
-	private int totalPrice;
-	private int serviceFee;
-	private int currServiceFee;
+	private int quantity;				//总商品个数
+	private int totalPrice;				//总价格
+	private int serviceFee;				//系统配置的服务费
+	private int currServiceFee;			//当前服务费
+	private int serviceFeePrice;		//免服务费额
 	private List<CartCookItem> menuList;
 	private List<CartMarketItem> goodsList;
 	
@@ -54,5 +55,11 @@ public class CartTotalData implements Serializable{
 	}
 	public void setGoodsList(List<CartMarketItem> goodsList) {
 		this.goodsList = goodsList;
+	}
+	public int getServiceFeePrice() {
+		return serviceFeePrice;
+	}
+	public void setServiceFeePrice(int serviceFeePrice) {
+		this.serviceFeePrice = serviceFeePrice;
 	}
 }

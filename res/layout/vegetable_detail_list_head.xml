@@ -13,12 +13,14 @@
 	    android:orientation="vertical">
 	    
 	    <ImageView 
+	        android:id="@+id/detail_image"
 	        android:layout_width="wrap_content"
 	        android:layout_height="180dip"
 	        android:scaleType="centerInside"
 	        android:src="@drawable/main_vegetable_details_img_01"/>
 	    
 	    <TextView
+	        android:id="@+id/detail_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="青椒"
@@ -79,6 +81,7 @@
 	    </LinearLayout>
 	   
 	    <LinearLayout 
+	        android:id="@+id/cookbook_collection_button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/vegetable_description"

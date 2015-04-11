@@ -1,8 +1,5 @@
 package com.guozha.buy.activity.global;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +17,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -168,6 +164,7 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 					if("1".equals(returnCode)){
 						ToastUtil.showToast(FindPwdActivity.this, "密码修改成功");
 						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+						FindPwdActivity.this.finish();
 					}else{
 						String msg = response.getString("msg");
 						ToastUtil.showToast(FindPwdActivity.this, msg);

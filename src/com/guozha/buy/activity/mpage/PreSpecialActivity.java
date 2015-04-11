@@ -111,8 +111,14 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(PreSpecialActivity.this, PreSpecialDetail.class);
-				startActivity(intent);
+				String prop = mPreSpecialItems.get(position).getGoodsProp();
+				if("02".equals(prop) || "03".equals(prop)){
+					Intent intent = new Intent(PreSpecialActivity.this, PreSpecialDetail.class);
+					intent.putExtra("goodsId", mPreSpecialItems.get(position).getGoodsId());
+					startActivity(intent);
+				}else{
+					ToastUtil.showToast(PreSpecialActivity.this, "非特供预售商品");
+				}
 			}
 		});
 		mGridView.setOnScrollListener(this);

@@ -54,7 +54,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	
 	private List<WeightOption> options;
 	
-	private String mGoodsId;
+	private String mGoodsId = null;
+	private String mUnitPrice = null;
+	private String mUnit = null;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -78,6 +80,8 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mGoodsId = bundle.getString("goodsId");
+				mUnitPrice = bundle.getString("unitPrice");
+				mUnit = bundle.getString("unit");
 			}
 		}
 		setResult(0);
@@ -122,7 +126,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			WeightOption weightOption = options.get(0);
 			mCustomWeightUnit.setText(
 					UnitConvertUtil.getSwichedUnit(
-							weightOption.getAmount(), weightOption.getUnit()));
+							weightOption.getAmount(), mUnit));
 		}
 	};
 	
@@ -131,6 +135,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		switch (view.getId()) {
 		case R.id.select_weight_to_details:
 			Intent intent = new Intent(this, VegetableDetailActivity.class);
+			intent.putExtra("goodsId", mGoodsId);
 			startActivity(intent);
 			this.finish();
 			break;
@@ -162,6 +167,10 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 				quantity = Integer.parseInt(quntityStr);
 				quantity = UnitConvertUtil.getCommitWeight(
 						quantity, mCustomWeightUnit.getText().toString());
+				if(quantity < options.get(0).getAmount()){
+					ToastUtil.showToast(this, "不能小于最小起送量");
+					return -1;
+				}
 			}else{
 				ToastUtil.showToast(this, "只允许填写数字");
 				return -1;
@@ -178,7 +187,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	 */
 	private void requestAddCart(int quantity) {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(WeightSelectDialog.this);
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		
 		RequestParam paramPath = new RequestParam("cart/insert")
@@ -209,12 +218,10 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	}
 	
 	private void requestWeightData(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("goods/price")
-		.setParams("goodsId", mGoodsId)
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
-
+		RequestParam paramPath = new RequestParam("goods/amount")
+		.setParams("goodsId", mGoodsId);
+		HttpManager.getInstance(this).volleyRequestByPost(
+				HttpManager.URL + paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -253,8 +260,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			if(index >= getItemsCount() - 1){
 				return "自定义重量";
 			}else{
-				return UnitConvertUtil.getSwitchedWeight(option.getAmount(), 
-						option.getUnit()) + "-" + UnitConvertUtil.getSwitchedMoney(option.getPrice());
+				return UnitConvertUtil.getSwitchedWeight(option.getAmount(), mUnit) 
+						+ "-" + UnitConvertUtil.getPriceByAmount(option.getAmount(), Integer.parseInt(mUnitPrice), mUnit)
+						+ "元";
 			}
 		}
 	}

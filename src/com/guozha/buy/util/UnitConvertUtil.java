@@ -16,6 +16,15 @@ public class UnitConvertUtil {
 	private static final int UNIT_LAN = 7;  //蓝
 	private static final int UNIT_FEN = 8;  //份
 	
+	public static int getAmountByUnit(String unittext){
+		if("两".equals(unittext)){
+			return 50;
+		}else if("斤".equals(unittext)){
+			return 500;
+		}else{
+			return 1;
+		}
+	}
 	
 	/**
 	 * 获取转换后的单位
@@ -69,9 +78,9 @@ public class UnitConvertUtil {
 				if(amount < 50){
 					return amount + "克";
 				}else if(amount < 500){
-					return (amount / 50) + "两";
+					return (Math.round((float)amount / 5)) / 10.0 + "两";
 				}else{
-					return (amount / 500) + "斤";
+					return (Math.round((float)amount / 5)) / 100.0 + "斤";
 				}
 			case UNIT_HE:
 				unit = "盒";
@@ -106,8 +115,12 @@ public class UnitConvertUtil {
 	 * @param price
 	 * @return
 	 */
-	public static String getSwitchedMoney(int price){
-		return (price / 100) + "元";
+	public static double getSwitchedMoney(int price){
+		return price / 100.0;
+	}
+	
+	public static double getSwitchedMoney(float price){
+		return price / 100.0;
 	}
 	
 	/**
@@ -154,5 +167,36 @@ public class UnitConvertUtil {
 			return "星期日";
 		}
 		return "";
+	}
+	
+	/**
+	 * 获取菜豆对应的人民币
+	 * @param beanNum
+	 * @return
+	 */
+	public static double getBeanMoney(int beanNum){
+		return getSwitchedMoney(beanNum);
+	}
+	
+	/**
+	 * 获取价格更加数量和单价
+	 * @param amount
+	 * @param unitPrice
+	 * @param unit
+	 * @return
+	 */
+	public static double getPriceByAmount(int amount, int unitPrice, String unit){
+		LogUtil.e("getPrice___amount = " + amount);
+		LogUtil.e("getPrice___unitPrice = " + unitPrice);
+		LogUtil.e("getPrice___unit = " + unit);
+		try{
+			int unitId = Integer.parseInt(unit);
+			if(UNIT_KE == unitId){
+				return getSwitchedMoney((float)amount * unitPrice / 500);
+			}
+			return getSwitchedMoney(amount * unitPrice);
+		}catch(Exception e){
+			return 0.0;
+		}
 	}
 }

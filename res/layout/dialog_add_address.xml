@@ -25,7 +25,7 @@
 	    android:textColor="@color/color_app_base_4"
 	    android:paddingLeft="20dip"
 	    android:paddingRight="20dip"
-	    android:text="您还没有添加配送地址"/>
+	    android:text="没有地址，小菜没法送"/>
 	
     <LinearLayout 
         android:layout_width="match_parent"

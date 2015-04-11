@@ -13,11 +13,7 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.entry.cart.CartBaseItem;
-import com.guozha.buy.entry.cart.CartCookItem;
-import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
-import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.GoodsSecondItemType;
@@ -27,7 +23,6 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 主界面数据管理类
@@ -213,6 +208,8 @@ public class MainPageInitDataManager {
 	 */
 	private void requestCartItemsData(final Handler handler){
 		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("cart/list")
 		.setParams("userId", userId);
 		HttpManager.getInstance(mContext).volleyRequestByPost(

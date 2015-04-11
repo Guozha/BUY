@@ -29,7 +29,7 @@ import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -126,23 +126,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		view.findViewById(R.id.cart_to_order_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO 判断
-				if(mCartList == null || mCartItems.isEmpty()){
-					final CustomDialog emptyNotify = new CustomDialog(MainTabFragmentCart.this.getActivity(), R.layout.dialog_cart_empty);
-					emptyNotify.setDismissButtonId(R.id.cancel_button);
-					emptyNotify.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View arg0) {
-							emptyNotify.dismiss();
-							if(mClickMarketMenuListener != null){
-								mClickMarketMenuListener.clickMarketMenu();
-							}
-						}
-					});
-					return;
-				}
-				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), PlanceOrderActivity.class);
-				startActivity(intent);
+				requestTurnChooseTime();
 			}
 		});
 		
@@ -150,6 +134,31 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mCartItems = new ArrayList<CartBaseItem>();
 		mCartItemListAdapter = new CartItemListAdapter(getActivity(), mCartItems);
 		mCartList.setAdapter(mCartItemListAdapter);
+	}
+
+	/**
+	 * 请求提交订单
+	 */
+	private void requestTurnChooseTime() {
+		//TODO 判断
+		if(mCartList == null || mCartItems.isEmpty()){
+			final CustomDialog emptyNotify = new CustomDialog(MainTabFragmentCart.this.getActivity(), R.layout.dialog_cart_empty);
+			emptyNotify.setDismissButtonId(R.id.cancel_button);
+			emptyNotify.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					emptyNotify.dismiss();
+					if(mClickMarketMenuListener != null){
+						mClickMarketMenuListener.clickMarketMenu();
+					}
+				}
+			});
+			return;
+		}
+		Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), PlanceOrderActivity.class);
+		intent.putExtra("totalPrice", mTotalPrice);
+		intent.putExtra("serverPrice", mServiceFree);
+		startActivity(intent);
 	}
 	
 	private ClickMarketMenuListener mClickMarketMenuListener;
@@ -167,6 +176,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		if(mCartList == null || mCartItems == null || mCartItems.isEmpty()) {
 			mCartEmptyBg.setVisibility(View.VISIBLE);
 			mCartList.setVisibility(View.GONE);
+			setBottomMessageText(0, 0, 0, 0);
 			return;
 		}
 		mCartEmptyBg.setVisibility(View.GONE);
@@ -183,9 +193,13 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		for (int i = 0; i < mCartItems.size(); i++) {
 		    mCartList.expandGroup(i);
 		}
-		mMesgTotal.setText("共计" + mQuantity + "件 合计￥" + mTotalPrice);
-		mMesgServerMoney.setText("预计服务费" + mServiceFree);
-		mMesgFreeGap.setText("离免服务费还差" + mFreeGap + "元");
+		setBottomMessageText(mQuantity, mTotalPrice, mServiceFree, mFreeGap);
+	}
+
+	private void setBottomMessageText(int quantity, int totalPrice, int serverFee, int gapFreeFee) {
+		mMesgTotal.setText("共计" + mQuantity + "件 合计￥" + UnitConvertUtil.getSwitchedMoney(totalPrice));
+		mMesgServerMoney.setText("预计服务费￥" + UnitConvertUtil.getSwitchedMoney(serverFee));
+		mMesgFreeGap.setText("离免服务费还差￥" + UnitConvertUtil.getSwitchedMoney(gapFreeFee));
 		setTextColor();
 	}
 	
@@ -208,7 +222,11 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		}
 		CartTotalData cartTotalData = mDataManager.getCartItems(null);
 		if(cartTotalData == null) return;
-		LogUtil.e("exchangeDataFormat");
+		int totalPrice = cartTotalData.getTotalPrice();
+		int freePrice = cartTotalData.getServiceFeePrice();
+		mTotalPrice = cartTotalData.getTotalPrice();
+		mServiceFree = cartTotalData.getCurrServiceFee();
+		mFreeGap = freePrice > totalPrice ? freePrice - totalPrice : 0;
 		exchangeDataFormat(cartTotalData);
 	}
 
@@ -235,7 +253,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		String msgFreeGap = mMesgFreeGap.getText().toString();
 		builder.clear();
 		builder.append(msgFreeGap);
-		builder.setSpan(redSpan, 7,msgFreeGap.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(redSpan, 7,msgFreeGap.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mMesgFreeGap.setText(builder);
 	}
 	

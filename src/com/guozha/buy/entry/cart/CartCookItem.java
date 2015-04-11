@@ -3,8 +3,6 @@ package com.guozha.buy.entry.cart;
 import java.io.Serializable;
 import java.util.List;
 
-import com.guozha.buy.util.LogUtil;
-
 
 /**
  * 购物车菜谱列表

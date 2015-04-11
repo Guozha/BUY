@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guozha.buy"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="10"
+    android:versionName="3.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -138,7 +138,7 @@
         
         <!-- 设置提醒 -->
         <activity
-            android:name="com.guozha.buy.activity.market.SetWarnTimeActivity"
+            android:name="com.guozha.buy.activity.global.SetWarnTimeActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 特供/预售 -->
@@ -176,9 +176,14 @@
             android:name="com.guozha.buy.activity.mine.MyTicketActivity"
             android:screenOrientation="portrait"></activity>
         
-        <!-- 订单详情 -->
+        <!-- 支付或货到付款，订单详情 -->
         <activity 
-            android:name="com.guozha.buy.activity.mine.OrderDetailActivity"
+            android:name="com.guozha.buy.activity.mine.OrderPayedDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 未支付订单详情 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.OrderUnPayDetailActivity"
             android:screenOrientation="portrait"></activity>
         
         <!-- 行政区选择 -->
@@ -217,6 +222,11 @@
             android:name="com.guozha.buy.activity.mine.FeadbackActivity"
             android:screenOrientation="portrait"></activity>
         
+        <!-- 查询结果展示 -->
+        <activity 
+            android:name="com.guozha.buy.activity.global.SearchResultActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 常见问题 -->
         <activity 
             android:name="com.guozha.buy.activity.mine.AnswerQuestionActivity"
@@ -251,6 +261,12 @@
         <activity 
             android:name="com.guozha.buy.activity.mpage.PreSpecialDetail"
             android:screenOrientation="portrait"></activity>
+        
+        <!-- 引导页 -->
+        <activity 
+            android:name="com.guozha.buy.activity.global.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         
         <!-- *****************对话框**************** -->
         <!-- 重量选择对话框 -->
@@ -313,7 +329,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
-                <data android:scheme="tencent100424468" /> 
+                <data android:scheme="tencent1103475446" /> 
             </intent-filter>
         </activity>
         
@@ -412,7 +428,7 @@
         
         <!-- 自定义接受极光推送的消息 -->
         <receiver 
-            android:name=".receiver.JPushMessageReceiver"
+            android:name="com.guozha.buy.receiver.JPushMessageReceiver"
             android:enabled="true">
 		 	<intent-filter>
 		        <action android:name="cn.jpush.android.intent.REGISTRATION" />
@@ -437,17 +453,18 @@
 		<!-- *****************************   极光推送 END    **************************** -->
 		
 		<!-- *****************************   支付宝相关 BEGIN********************************* -->
-		<activity 
-		    android:name="com.alipay.sdk.app.H5AuthActivity"
-		    android:configChanges="orientation|keyboardHidden|navigation"
-		    android:exported="false"
-		    android:screenOrientation="behind"></activity>
-		
-		<activity 
-		    android:name="com.alipay.sdk.auth.AuthActivity"
-		    android:configChanges="orientation|keyboardHidden|navigation"
-		    android:exported="false"
-		    android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
 		<!-- ***************************** 	 支付宝相关 END -->
     </application>
 

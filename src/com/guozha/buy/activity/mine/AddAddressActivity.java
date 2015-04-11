@@ -140,7 +140,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 请求关键词
 	 */
 	private void requestAddressBuilding(){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("account/address/listBuilding")
 		.setParams("token", token)
 		.setParams("countyId", mCountryId);
@@ -215,9 +216,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void requestAddAddress() {
 		int userId = ConfigManager.getInstance().getUserId();
-		String userToken = ConfigManager.getInstance().getUserToken();
+		String userToken = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
 		if(userId == -1 || userToken == null){
-			ToastUtil.showToast(AddAddressActivity.this, "你的用户信息不正确，提交失败");
 			return;
 		}
 		RequestParam paramPath = new RequestParam("account/address/insert")
@@ -260,7 +260,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 删除旧的地址
 	 */
 	private void deleteOldAddress(){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
 		int userId = ConfigManager.getInstance().getUserId();
 		if(token == null || userId == -1) return;
 		RequestParam paramPath = new RequestParam("account/address/delete")
@@ -331,10 +331,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 请求设置为默认地址
 	 */
 	private void requestDefaultAddress(){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
 		int userId = ConfigManager.getInstance().getUserId();
 		if(token == null){
-			ToastUtil.showToast(AddAddressActivity.this, "修改失败，你的登录过期了");
 			return;
 		}
 		RequestParam paramPath = new RequestParam("account/address/default")

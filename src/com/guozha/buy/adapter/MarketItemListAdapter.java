@@ -137,8 +137,12 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		for(int i = 0; i < itemSaleInfos.size(); i++){
 			HolderEntry holderEntry = holder.cells.get(i);
 			ItemSaleInfo itemSaleInfo = itemSaleInfos.get(i);
+			holderEntry.productName.setVisibility(View.VISIBLE);
+			holderEntry.price.setVisibility(View.VISIBLE);
+			
 			//设置TAG
-			holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId());
+			holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
+					+ ":" + itemSaleInfo.getUnitPrice() + ":" + itemSaleInfo.getUnit());
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
 			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
 			holderEntry.price.setText(
@@ -148,6 +152,14 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 		}
 		
+		for(int i = itemSaleInfos.size(); i < 6; i++){
+			HolderEntry holderEntry = holder.cells.get(i);
+			holderEntry.itemVegetable.setTag("-1");
+			holderEntry.productName.setVisibility(View.INVISIBLE);
+			holderEntry.price.setVisibility(View.INVISIBLE);
+			holderEntry.image.setImageResource(R.drawable.default_icon);
+		}
+		
 		return convertView;
 	}
 	
@@ -155,9 +167,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken() == null){
-			intent = new Intent(mContext, RemindLoginDialog.class);
-			mContext.startActivity(intent);
+		if(ConfigManager.getInstance().getUserToken(mContext) == null){
 			return;
 		}
 		//TODO 再判断当前选择的地址是否为NULL
@@ -175,9 +185,18 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			return;
 		}
 		
-		String goodsId = String.valueOf(view.getTag());
+		String tag = String.valueOf(view.getTag());
+		String[] tags = tag.split(":");
+		if(tags.length != 3){
+			return;
+		}
+		if("-1".equals(tags[0])){
+			return;
+		}
 		intent = new Intent(mContext, WeightSelectDialog.class);
-		intent.putExtra("goodsId", goodsId);
+		intent.putExtra("goodsId", tags[0]);
+		intent.putExtra("unitPrice", tags[1]);
+		intent.putExtra("unit", tags[2]);
 		mContext.startActivityForResult(intent, MainTabFragmentMarket.REQUEST_CODE_CART);
 	}
 	

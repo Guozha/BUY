@@ -1,9 +1,7 @@
 package com.guozha.buy.fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,16 +24,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
-import com.guozha.buy.activity.mine.OrderDetailActivity;
+import com.guozha.buy.activity.mine.OrderPayedDetailActivity;
+import com.guozha.buy.activity.mine.OrderUnPayDetailActivity;
 import com.guozha.buy.adapter.OrderListAdapter;
 import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.HttpUtil;
-import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -48,6 +45,7 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	private static final String PAGE_NAME = "UnFinishedOrderPage";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;  //数据完成
+	private static final int REQUEST_CODE = 0x0001;			
 	
 	private ListView mOrderUnFinishList;
 	
@@ -86,16 +84,33 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	 */
 	private void initView(View view){
 		mOrderUnFinishList = (ListView) view.findViewById(R.id.order_unfinished_list);
-		
 		mOrderUnFinishList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(
-						OrderUnFinishFragment.this.getActivity(), OrderDetailActivity.class);
-				startActivity(intent);
+				OrderSummary orderSummary = mOrderList.get(position);
+				//如果是货到付款或者支付成功
+				Intent intent;
+				if("1".equals(orderSummary.getArrivalPayFlag())){
+					intent = new Intent(
+							OrderUnFinishFragment.this.getActivity(), OrderPayedDetailActivity.class);
+					intent.putExtra("orderDescript", "货到付款，正在配送");
+					intent.putExtra("orderId", orderSummary.getOrderId());
+					startActivity(intent);
+				}else if("1".equals(orderSummary.getFinishPayFlag())){
+					intent = new Intent(
+							OrderUnFinishFragment.this.getActivity(), OrderPayedDetailActivity.class);
+					intent.putExtra("orderDescript", "已支付，正在配送");
+					intent.putExtra("orderId", orderSummary.getOrderId());
+					startActivity(intent);
+				}else{
+					intent = new Intent(
+							OrderUnFinishFragment.this.getActivity(), OrderUnPayDetailActivity.class);
+					intent.putExtra("orderDescript", "未支付");
+					intent.putExtra("orderId", orderSummary.getOrderId());
+					startActivityForResult(intent, REQUEST_CODE);
+				}
 			}
-			
 		});
 		
 		mBottomLoadingView = getActivity().getLayoutInflater()
@@ -105,42 +120,43 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 				mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		mOrderUnFinishList.addFooterView(mBottomLoadingView);
 		mOrderUnFinishList.setOnScrollListener(this);
-		
-		mOrderListAdapter = new OrderListAdapter(getActivity(), mOrderList);
-		mOrderUnFinishList.setAdapter(mOrderListAdapter);
 	}
 	
 	/**
 	 * 更新listView数据
 	 */
 	private void updateListView(){
-		if(mOrderSummaryPage == null) return;
-		List<OrderSummary> orderSmmary = mOrderSummaryPage.getOrderList();
-		if(orderSmmary == null) return;
-		if(mOrderList == null){
-			mOrderList = new ArrayList<OrderSummary>();
+		LogUtil.e("mOrderList == " + mOrderList.size());
+		if(mOrderListAdapter == null){
+			mOrderListAdapter = new OrderListAdapter(getActivity(), mOrderList);
+			mOrderUnFinishList.setAdapter(mOrderListAdapter);
+		}else{
+			mOrderListAdapter.notifyDataSetChanged();
 		}
-		mOrderList.addAll(orderSmmary);
-		mOrderSummaryPage = null;
-		mOrderListAdapter.notifyDataSetChanged();
 	}
 	
 	
-	private static final String PAGE_SIZE = "20";
+	private static final String PAGE_SIZE = "10";
 	private int mMaxDateNum;   			//最大数据
+	private int mMaxPageSize;
 	private int mCurrentPage = 0;		//当前页
 	
 	/**
 	 * 从网络获取数据
 	 */
 	private void loadData(){
-		
+		mCurrentPage = 0;
+		mMaxDateNum = 0;
+		mMaxPageSize = 0;
+		if(mOrderList != null){
+			mOrderList.clear();
+		}
 		int userId = ConfigManager.getInstance().getUserId();
 		if(userId == -1) return;
 		RequestParam paramPath = new RequestParam("order/list")
-		.setParams("userId", String.valueOf(userId))
+		.setParams("userId", userId)
 		.setParams("searchType", "1")
-		.setParams("pageNum", String.valueOf(mCurrentPage + 1))
+		.setParams("pageNum", mCurrentPage + 1)
 		.setParams("pageSize", PAGE_SIZE);
 		HttpManager.getInstance(getActivity()).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
@@ -148,10 +164,16 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mOrderSummaryPage = gson.fromJson(response, new TypeToken<OrderSummaryPage>() { }.getType());
-					ToastUtil.showToast(OrderUnFinishFragment.this.getActivity(), "返回结果了");
 					mCurrentPage++;
 					//TODO 设置总页数
 					mMaxDateNum = mOrderSummaryPage.getTotalCount();
+					mMaxPageSize = mOrderSummaryPage.getPageCount();
+					List<OrderSummary> orderSummary = mOrderSummaryPage.getOrderList();
+					if(orderSummary == null)return;
+					if(mOrderList == null){
+						mOrderList = new ArrayList<OrderSummary>();
+					}
+					mOrderList.addAll(orderSummary);
 					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 				}
 			});
@@ -162,21 +184,23 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		//当滑动到底部后自动加载
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-				&& mLastVisibleIndex == mOrderListAdapter.getCount()){
+				&& mLastVisibleIndex == mOrderListAdapter.getCount() 
+				&& mCurrentPage < mMaxPageSize){
+			mLoadProgressBar.setVisibility(View.VISIBLE);
+			mLoadText.setVisibility(View.GONE);
 			loadData();
 		}
 	}
-
+	
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		//计算最后可见条目的索引
 		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
-		
 		//所有的条目已经和最大数相等，则移除底部的View
-		if(totalItemCount == mMaxDateNum){
-			mOrderUnFinishList.removeFooterView(mBottomLoadingView);
-			ToastUtil.showToast(getActivity(), "数据全部加载完毕，没有更多数据!");
+		if(totalItemCount == mMaxDateNum + 1){
+			mLoadProgressBar.setVisibility(View.GONE);
+			mLoadText.setVisibility(View.VISIBLE);
 		}
 	}
 	
@@ -192,6 +216,13 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 			
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQUEST_CODE){
+			loadData();
 		}
 	}
 }

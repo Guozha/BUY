@@ -36,6 +36,7 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.scroll.adapter.WheelViewAdapter;
 
 /**
@@ -383,8 +384,9 @@ public class WheelView extends View {
 
 				invalidate();
 			}
-			
-			mItemChangeListener.itemChanged(currentItem);
+			if(mItemChangeListener != null){
+				mItemChangeListener.itemChanged(currentItem);
+			}
 		}
 	}
 	

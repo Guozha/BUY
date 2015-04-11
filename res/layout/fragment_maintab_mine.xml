@@ -128,7 +128,7 @@
 	            android:textColor="@color/color_app_base_4"
 	            android:layout_marginTop="18dip"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:text="推荐有奖"/>
+	            android:text="我的收益"/>
 	    </LinearLayout>
 	    
 	    <LinearLayout 

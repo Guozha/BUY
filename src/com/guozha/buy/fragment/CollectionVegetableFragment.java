@@ -1,7 +1,10 @@
 package com.guozha.buy.fragment;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +14,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.android.volley.Response.Listener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CollectionVegetableListAdapter;
 import com.guozha.buy.dialog.WeightSelectDialog;
+import com.guozha.buy.entry.mine.collection.GoodsListItem;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -24,8 +35,23 @@ import com.umeng.analytics.MobclickAgent;
 public class CollectionVegetableFragment extends Fragment{
 	
 	private static final String PAGE_NAME = "CollectionVegetablePage";
+	
+	private static final int HAND_DATA_COMPLETED = 0x0001;
 
 	private ListView mCollectionVegetableList;
+	private CollectionVegetableListAdapter mCollectionVegetableAdapter;
+	
+	private List<GoodsListItem> mGoodsListItems;
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_DATA_COMPLETED:
+				updateView();
+				break;
+			}
+		};
+	};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -33,13 +59,16 @@ public class CollectionVegetableFragment extends Fragment{
 		
 		View view = inflater.inflate(R.layout.fragment_collection_vegetable, container, false);
 		initView(view);
+		initData();
 		return view;
 	}
 	
+	/**
+	 * 初始化View
+	 * @param view
+	 */
 	private void initView(View view){
 		mCollectionVegetableList = (ListView) view.findViewById(R.id.collection_vegetable_list);
-		mCollectionVegetableList.setAdapter(new CollectionVegetableListAdapter(getActivity()));
-		
 		mCollectionVegetableList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -47,9 +76,44 @@ public class CollectionVegetableFragment extends Fragment{
 					int position, long id) {
 				Intent intent = new Intent(
 						CollectionVegetableFragment.this.getActivity(), WeightSelectDialog.class);
+				//intent.putExtra("goodsId", value);
+				//intent.putExtra("unitPrice", value);
+				//intent.putExtra("unit", value);
 				startActivity(intent);
 			}
 		});
+	}
+	
+	/**
+	 * 初始化数据
+	 */
+	private void initData(){
+		int userId = ConfigManager.getInstance().getUserId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		RequestParam paramPath = new RequestParam("account/myfavo/listGoodsFavo")
+		.setParams("userId", userId)
+		.setParams("addressId", addressId);
+		HttpManager.getInstance(getActivity()).volleyRequestByPost(
+			HttpManager.URL + paramPath, new Listener<String>() {
+				@Override
+				public void onResponse(String response) {
+					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+					mGoodsListItems = gson.fromJson(response, new TypeToken<List<GoodsListItem>>() { }.getType());
+					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+				}
+			});
+	}
+	
+	/**
+	 * 更新界面
+	 */
+	private void updateView(){
+		if(mCollectionVegetableAdapter == null){
+			mCollectionVegetableAdapter = new CollectionVegetableListAdapter(getActivity(), mGoodsListItems);
+			mCollectionVegetableList.setAdapter(mCollectionVegetableAdapter);
+		}else{
+			mCollectionVegetableAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	@Override

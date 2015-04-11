@@ -3,12 +3,15 @@ package com.guozha.buy.activity.mpage;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -18,11 +21,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.global.SearchResultActivity;
 import com.guozha.buy.adapter.SeasonItemListAdapter;
 import com.guozha.buy.entry.mpage.season.Season;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AutoViewFlipper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -80,6 +83,18 @@ public class SeasonActivity extends BaseActivity{
 	private void initView(){
 		mSeasonItemList = (ListView) findViewById(R.id.season_vegetable_list);
 		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
+		mSeasonItemList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				SeasonAdviceItem item = mAdviceItem.get(position);
+				Intent intent = new Intent(SeasonActivity.this, SearchResultActivity.class);
+				if(item != null){
+					intent.putExtra("KeyWord", item.getGoodsName());
+				}
+				SeasonActivity.this.startActivity(intent);
+			}
+		});
 		
 		mAutoViewFilpper = 
 				(AutoViewFlipper) findViewById(R.id.season_auto_flipper_view);

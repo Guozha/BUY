@@ -22,7 +22,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.mine.SettingActivity;
-import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
@@ -439,11 +438,10 @@ public class MainActivity extends FragmentActivity{
 			shareManager.showSharePlatform(this);
 			break;
 		case R.id.action_setting: //设置
-			if(ConfigManager.getInstance().getUserToken() == null){
-				intent = new Intent(MainActivity.this, RemindLoginDialog.class);
-			}else{
-				intent = new Intent(MainActivity.this, SettingActivity.class);
+			if(ConfigManager.getInstance().getUserToken(MainActivity.this) == null){
+				return super.onMenuItemSelected(featureId, item);
 			}
+			intent = new Intent(MainActivity.this, SettingActivity.class);
 			startActivity(intent);
 			break;
 		default:
@@ -467,6 +465,13 @@ public class MainActivity extends FragmentActivity{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		//按下了物理返回键
 		if(KeyEvent.KEYCODE_BACK == keyCode){
+			if(mCurrentItem != 0){
+				resetOtherTabs();
+				mCurrentItem = 0;
+				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
+				mCustomViewPager.setCurrentItem(mCurrentItem, false);
+				return true;
+			}
 			long currentTimes = System.currentTimeMillis();
 			if((currentTimes - mTouchTime) >= mWaitTime){
 				mTouchTime = currentTimes;

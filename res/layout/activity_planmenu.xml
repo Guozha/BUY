@@ -89,10 +89,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="22dip"
             android:layout_marginLeft="35dip"
-            android:background="@drawable/main_background"
+            android:background="@drawable/main_background_selector"
             android:textColor="@color/color_app_base_2"
             android:textSize="@dimen/dimen_global_14sp"
-            android:text="收藏菜单" />
+            android:text="加入收藏" />
 
         <Button
             android:id="@+id/addcart_menu_button"
@@ -102,7 +102,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="35dip"
             android:layout_marginTop="22dip"
-            android:background="@drawable/main_background"
+            android:background="@drawable/main_background_selector"
             android:textSize="@dimen/dimen_global_14sp"
             android:textColor="@color/color_app_base_2"
             android:text="一键购买" />

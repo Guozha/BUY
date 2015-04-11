@@ -58,7 +58,7 @@ public class SharePraiseActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_advice_praise);
-		customActionBarStyle("推荐有奖");
+		customActionBarStyle("我的收益");
 		initView();
 		initData();
 	}

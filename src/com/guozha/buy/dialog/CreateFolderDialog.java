@@ -66,7 +66,8 @@ public class CreateFolderDialog extends Activity implements OnClickListener{
 	 */
 	private void requestAddNewFolder(String folderName){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(CreateFolderDialog.this);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("account/myfavo/insertDir")
 		.setParams("userId", userId)
 		.setParams("token", token)

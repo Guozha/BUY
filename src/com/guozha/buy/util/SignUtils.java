@@ -14,8 +14,7 @@ public class SignUtils {
 
 	public static String sign(String content, String privateKey) {
 		try {
-			PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(
-					Base64.decode(privateKey));
+			PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(privateKey.getBytes());
 			KeyFactory keyf = KeyFactory.getInstance(ALGORITHM);
 			PrivateKey priKey = keyf.generatePrivate(priPKCS8);
 
@@ -34,5 +33,4 @@ public class SignUtils {
 
 		return null;
 	}
-
 }

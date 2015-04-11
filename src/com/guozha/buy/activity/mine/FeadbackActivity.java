@@ -54,7 +54,8 @@ public class FeadbackActivity extends BaseActivity{
 	
 	private void requestFeadback(String feadback){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(FeadbackActivity.this);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("account/opinion/insert")
 		.setParams("token", token)
 		.setParams("userId", userId)

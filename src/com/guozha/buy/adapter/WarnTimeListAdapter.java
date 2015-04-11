@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.global.SetWarnTimeActivity;
+import com.guozha.buy.activity.global.SetWarnTimeActivity.WarnTime;
 
 /**
  * 提醒设置时间列表适配器
@@ -21,11 +23,11 @@ public class WarnTimeListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	
-	private List<String> mWarnTimes;
+	private List<SetWarnTimeActivity.WarnTime> mWarnTimes;
 	
 	private String mChoosedTime;
 	
-	public WarnTimeListAdapter(Context context, String choosedTime, List<String> warnTimes){
+	public WarnTimeListAdapter(Context context, String choosedTime, List<SetWarnTimeActivity.WarnTime> warnTimes){
 		mInflater = LayoutInflater.from(context);
 		mChoosedTime = choosedTime;
 		mWarnTimes = warnTimes;
@@ -53,11 +55,12 @@ public class WarnTimeListAdapter extends BaseAdapter{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_warntime_item_cell, null);
 		}
+		
 		TextView warnTimeText = (TextView) convertView.findViewById(R.id.warn_time_text);
 		ImageView choosedIcon = (ImageView) convertView.findViewById(R.id.choosed_icon);
-		String warnTime = mWarnTimes.get(position);
-		warnTimeText.setText(warnTime);
-		if(warnTime.equals(mChoosedTime)){
+		WarnTime warnTime = mWarnTimes.get(position);
+		warnTimeText.setText(warnTime.getShowTime());
+		if(warnTime.getValueTime().equals(mChoosedTime)){
 			choosedIcon.setImageResource(R.drawable.main_plan_selected);
 		}else{
 			choosedIcon.setImageResource(0);

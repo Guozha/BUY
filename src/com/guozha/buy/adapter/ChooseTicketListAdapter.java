@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mine.MarketTicket;
@@ -27,9 +28,8 @@ public class ChooseTicketListAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		//if(mMarketTickets == null) return 0;
-		//return mMarketTickets.size();
-		return 5;
+		if(mMarketTickets == null) return 0;
+		return mMarketTickets.size();
 	}
 
 	@Override
@@ -47,6 +47,15 @@ public class ChooseTicketListAdapter extends BaseAdapter{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_ticket_item_cell, null);
 		}
+		TextView ticketType = (TextView) convertView.findViewById(R.id.ticket_type);
+		TextView ticketPrice = (TextView) convertView.findViewById(R.id.ticket_for_price);
+		TextView ticketValidDate = (TextView) convertView.findViewById(R.id.ticket_valid_date);
+		
+		MarketTicket marketTicket = mMarketTickets.get(position);
+		ticketType.setText(marketTicket.getTicketType());
+		ticketPrice.setText(marketTicket.getForPrice());
+		ticketValidDate.setText(marketTicket.getValidDate());
+		
 		return convertView;
 	}
 

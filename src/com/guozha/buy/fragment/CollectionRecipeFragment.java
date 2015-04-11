@@ -26,7 +26,6 @@ import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 

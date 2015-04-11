@@ -3,114 +3,52 @@ package com.guozha.buy.activity.cart;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import android.os.Bundle;
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
+import android.text.format.Time;
 
 import com.alipay.sdk.app.PayTask;
-import com.guozha.buy.R;
-import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.util.PayResult;
-import com.guozha.buy.util.SignUtils;
+import com.guozha.buy.util.Keys;
+import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.Rsa;
 
 /**
  * 支付宝支付
  * @author PeggyTong
  *
  */
-public class AlipayActivity extends BaseActivity implements OnClickListener{
+public class AlipayManager{
 	
-	//商户PID
-	public static final String PARTNER = "2088611837939890";
-	//商户收款账号
-	public static final String SELLER = "1377178480@qq.com";
-	//商户私钥，pkcs8格式
-	public static final String RSA_PRIVATE = "";
-	//支付宝公钥
-	public static final String RSA_PUBLIC = "";
+	public static final int SDK_PAY_FLAG = 1;
+	public static final int SDK_CHECK_FLAG = 2;
+	private static final String NOTIFY_URL = "http://120.24.220.86/PAY_ALI/notify_url.jsp";
 	
-	private static final int SDK_PAY_FLAG = 1;
-
-	private static final int SDK_CHECK_FLAG = 2;
+	private String mOrderNum;
+	private String mSubject;
+	private String mBody;
+	private double mPrice;
 	
-	private Handler mHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case SDK_PAY_FLAG: {
-				PayResult payResult = new PayResult((String) msg.obj);
-				
-				// 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
-				String resultInfo = payResult.getResult();
-				
-				String resultStatus = payResult.getResultStatus();
-
-				// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-				if (TextUtils.equals(resultStatus, "9000")) {
-					Toast.makeText(AlipayActivity.this, "支付成功",
-							Toast.LENGTH_SHORT).show();
-				} else {
-					// 判断resultStatus 为非“9000”则代表可能支付失败
-					// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
-					if (TextUtils.equals(resultStatus, "8000")) {
-						Toast.makeText(AlipayActivity.this, "支付结果确认中",
-								Toast.LENGTH_SHORT).show();
-
-					} else {
-						// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-						Toast.makeText(AlipayActivity.this, "支付失败",
-								Toast.LENGTH_SHORT).show();
-
-					}
-				}
-				break;
-			}
-			case SDK_CHECK_FLAG: {
-				Toast.makeText(AlipayActivity.this, "检查结果为：" + msg.obj,
-						Toast.LENGTH_SHORT).show();
-				break;
-			}
-			default:
-				break;
-			}
-		};
-	};
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_alipay);
-		customActionBarStyle("支付");
-		
-		findViewById(R.id.alipay_confirm_button).setOnClickListener(this);
+	public AlipayManager(String orderNum, String subject, String body, double price){
+		mOrderNum = orderNum;
+		mSubject = subject;
+		mBody = body;
 	}
-
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.alipay_confirm_button:
-			
-			break;
-		}
-	}
-	
 	/**
 	 * 请求支付
 	 */
-	private void requestPay(){
+	public void requestPay(final Activity activity, final Handler handler){
 		//生成订单
-		String orderInfo = getOrderInfor("", "", "5.00");
+		String orderInfo = getOrderInfor(mSubject, mBody, String.valueOf(mPrice));
 		
 		// 对订单做RSA 签名
 		String sign = sign(orderInfo);
+		if(sign == null) return;
 		try {
 			// 仅需对sign 做URL编码
 			sign = URLEncoder.encode(sign, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		e.printStackTrace();
 		}
 
 		// 完整的符合支付宝参数规范的订单信息
@@ -121,15 +59,16 @@ public class AlipayActivity extends BaseActivity implements OnClickListener{
 
 			@Override
 			public void run() {
+				LogUtil.e("pay_str_result = " + payInfo);
 				// 构造PayTask 对象
-				PayTask alipay = new PayTask(AlipayActivity.this);
+				PayTask alipay = new PayTask(activity);
 				// 调用支付接口，获取支付结果
 				String result = alipay.pay(payInfo);
 
 				Message msg = new Message();
 				msg.what = SDK_PAY_FLAG;
 				msg.obj = result;
-				mHandler.sendMessage(msg);
+				handler.sendMessage(msg);
 			}
 		};
 
@@ -147,10 +86,10 @@ public class AlipayActivity extends BaseActivity implements OnClickListener{
 	 */
 	private String getOrderInfor(String subject, String body, String price){
 		// 签约合作者身份ID
-		String orderInfo = "partner=" + "\"" + PARTNER + "\"";
+		String orderInfo = "partner=" + "\"" + Keys.PARTNER + "\"";
 
 		// 签约卖家支付宝账号
-		orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
+		orderInfo += "&seller_id=" + "\"" + Keys.SELLER + "\"";
 
 		// 商户网站唯一订单号
 		orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
@@ -165,7 +104,7 @@ public class AlipayActivity extends BaseActivity implements OnClickListener{
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm"
+		orderInfo += "&notify_url=" + "\"" + NOTIFY_URL
 				+ "\"";
 
 		// 服务接口名称， 固定值
@@ -202,8 +141,7 @@ public class AlipayActivity extends BaseActivity implements OnClickListener{
 	 */
 	private String getOutTradeNo(){
 		//TODO 菜场编号 + 时间 + 单号
-		
-		return "";
+		return mOrderNum;
 	}
 	
 	/**
@@ -213,7 +151,8 @@ public class AlipayActivity extends BaseActivity implements OnClickListener{
 	 *            待签名订单信息
 	 */
 	public String sign(String content) {
-		return SignUtils.sign(content, RSA_PRIVATE);
+		//return SignUtils.sign(content, RSA_PRIVATE);
+		return Rsa.sign(content, Keys.RSA_PRIVATE);
 	}
 	
 	/**

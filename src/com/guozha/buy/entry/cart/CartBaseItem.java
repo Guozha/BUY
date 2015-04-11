@@ -24,6 +24,7 @@ public class CartBaseItem implements Serializable{
 	private int unitPrice;		//单价
 	private int price;			//价格
 	private String cartStatus;	//状态 0失效、1可用
+	private int minAmount;		//最小份量
 	private CartItemType itemType;
 	
 	public CartBaseItem(){ }
@@ -84,6 +85,12 @@ public class CartBaseItem implements Serializable{
 	}
 	public void setCartStatus(String cartStatus) {
 		this.cartStatus = cartStatus;
+	}
+	public int getMinAmount() {
+		return minAmount;
+	}
+	public void setMinAmount(int minAmount) {
+		this.minAmount = minAmount;
 	}
 	public CartItemType getItemType() {
 		return itemType;

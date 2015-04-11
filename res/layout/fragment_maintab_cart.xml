@@ -109,7 +109,7 @@
             android:id="@+id/cart_to_order_button"
             android:layout_width="112dip"
             android:layout_height="40dip"
-            android:text="立即下单"
+            android:text="选好了"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="31dip"

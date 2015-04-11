@@ -127,7 +127,8 @@ public class CollectionRecipeModifyDialog extends Activity{
 	 * @param dirId
 	 */
 	private void requestDeleteCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(CollectionRecipeModifyDialog.this);
+		if(token == null)return;
 		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyDir")
 		.setParams("token", token)
 		.setParams("myDirId", dirId);
@@ -154,7 +155,8 @@ public class CollectionRecipeModifyDialog extends Activity{
 	 * @param dirId
 	 */
 	private void requestModifyCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(CollectionRecipeModifyDialog.this);
+		if(token == null) return;
 		RequestParam paramPath = new RequestParam("account/myfavo/adjustMenuFavo")
 		.setParams("token", token)
 		.setParams("myMenuId", mMenuId)

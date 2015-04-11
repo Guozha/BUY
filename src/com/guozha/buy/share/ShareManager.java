@@ -27,8 +27,8 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
  *
  */
 public class ShareManager{
-	private static final String COMMEN_TITILE = "this is title";
-	private static final String COMMEN_CONTENT = "this is content";
+	private static final String COMMEN_TITILE = "这是分享标题";
+	private static final String COMMEN_CONTENT = "这是分享内容";
 	private static final String DESCRIPTOR = "com.umeng.share";
 	private static final String COMMEN_TARGET_URL = "http://www.wymc.com.cn";
 	
@@ -36,8 +36,8 @@ public class ShareManager{
 	
 	private SnsPostListener mShareResultListener;
 	
-	private static final String QQ_APPID = "100424468";
-	private static final String QQ_APPKEY = "c7394704798a158208a74ab60104f0ba";
+	private static final String QQ_APPID = "1103475446";
+	private static final String QQ_APPKEY = "HVh2KnfqqeHFuzCt";
 	
 	private static final String WX_APPID = "wxc17fccd72a2dbea7";
 	private static final String WX_SECRET = "6f913bd53fdfd3529c98a7ae84df4d73";

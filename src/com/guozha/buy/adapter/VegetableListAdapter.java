@@ -92,7 +92,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 			ItemSaleInfo saleInfo = itemSaleInfo[i];
 			if(saleInfo == null || holder.itemHolder == null) continue;
 			ViewItemHolder itemHolder = holder.itemHolder.get(i);
-			holder.items.get(i).setTag(saleInfo.getGoodsId());
+			holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());
 			String imgUrl = saleInfo.getGoodsImg();
 			mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
 			itemHolder.vegetableName.setText(saleInfo.getGoodsName());
@@ -108,7 +108,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken() == null){
+		if(ConfigManager.getInstance().getUserToken(mContext) == null){
 			intent = new Intent(mContext, RemindLoginDialog.class);
 			mContext.startActivity(intent);
 			return;
@@ -128,9 +128,13 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 			return;
 		}
 		
-		String goodsId = String.valueOf(view.getTag());
+		String tag= String.valueOf(view.getTag());
+		String[] tags = tag.split(":");
+		if(tags.length != 3) return;
 		intent = new Intent(mContext, WeightSelectDialog.class);
-		intent.putExtra("goodsId", goodsId);
+		intent.putExtra("goodsId", tags[0]);
+		intent.putExtra("unitPrice", tags[1]);
+		intent.putExtra("unit", tags[2]);
 		mContext.startActivity(intent);
 	}
 	

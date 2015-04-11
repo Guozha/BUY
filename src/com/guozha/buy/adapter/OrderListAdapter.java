@@ -28,7 +28,7 @@ public class OrderListAdapter extends BaseAdapter{
 	public OrderListAdapter(Context context, List<OrderSummary> orderSummary){
 		mInflater = LayoutInflater.from(context);
 		mOrderSummary = orderSummary;
-		mDateFormat = new SimpleDateFormat("MM月dd日 HH:mm");
+		mDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 	}
 
 	@Override
@@ -65,8 +65,27 @@ public class OrderListAdapter extends BaseAdapter{
 		Date date = orderSummary.getCreateTime();
 		holder.orderTime.setText(mDateFormat.format(date));
 		holder.orderCount.setText("共" + orderSummary.getQuantity() + "件商品，");
-		holder.orderStatus.setText(orderSummary.getStatus());
+		holder.orderStatus.setText(getOrderStatusString(orderSummary.getFinishPayFlag(), 
+				orderSummary.getArrivalPayFlag(), orderSummary.getCommentFlag()));
 		return convertView;
+	}
+	
+	/**
+	 * @param payStatus  支付状态
+	 * @param arriviPayStatus 是否货到付款
+ 	 * @param commentStatus 是否评价过
+	 * @return
+	 */
+	public String getOrderStatusString(String payStatus, String arriviPayStatus, String commentStatus){
+		StringBuffer orderStatu = new StringBuffer();
+		if("1".equals(arriviPayStatus)){
+			orderStatu.append("货到付款");
+		}else if("1".equals(payStatus)){
+			orderStatu.append("已支付");
+		}else{
+			orderStatu.append("未支付");
+		}
+		return orderStatu.toString();
 	}
 	
 	static class ViewHolder{

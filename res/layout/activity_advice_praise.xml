@@ -113,7 +113,7 @@
 	    android:layout_marginRight="18dip"
 	    android:layout_height="44dip"
 	    android:background="@drawable/nomal_button_nomal_bg"
-	    android:text="立即邀请"
+	    android:text="立即分享"
 	    android:textColor="@color/color_app_base_5"
 	    android:textSize="@dimen/dimen_global_16sp"/>
 	

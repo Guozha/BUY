@@ -12,7 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.mine.OrderDetailActivity;
+import com.guozha.buy.activity.mine.OrderPayedDetailActivity;
 import com.guozha.buy.adapter.OrderListAdapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -49,7 +49,7 @@ public class OrderFinishedFragment extends Fragment{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = new Intent(
-						OrderFinishedFragment.this.getActivity(), OrderDetailActivity.class);
+						OrderFinishedFragment.this.getActivity(), OrderPayedDetailActivity.class);
 				startActivity(intent);
 			}
 			

@@ -5,18 +5,20 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.widget.ImageView;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
 
@@ -31,6 +33,7 @@ public class HttpManager {
 	 */
 	//public static final String URL = "http://192.168.2.117:8080/BUY_SERVER/";
 	public static final String URL = "http://120.24.220.86:80/BUY_SERVER/";
+	public static String IMG_URL = URL;
 	
 	private RequestQueue mQueue;	//请求队列
 	private Response.ErrorListener errorListener;  //错误消息监听
@@ -117,7 +120,7 @@ public class HttpManager {
 	 * @param defaultImageResId
 	 * @param errorImageResId
 	 */
-	/*
+	
 	public void volleyImageRequest(String url, 
 			ImageView imageview, int defaultImageResId, int errorImageResId){
 		ImageLoader imageLoader = new ImageLoader(mQueue, new BitmapCache());
@@ -129,7 +132,7 @@ public class HttpManager {
 		if(url == null) return;
 		imageLoader.get(url, listener);
 	}
-	*/
+	
 	
 	/**
 	 * 错误结果

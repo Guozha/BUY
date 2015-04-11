@@ -16,7 +16,9 @@ import android.widget.ImageView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.RegularUtil;
@@ -48,6 +50,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_regist);
+		setResult(0);
+		
 		customActionBarStyle("注册");
 		initView();
 		textChangeWatch();
@@ -146,7 +150,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	 * @param pwd
 	 * @param validNum
 	 */
-	private void requestRegist(String phoneNum, String pwd, String validNum) {		
+	private void requestRegist(final String phoneNum, final String pwd, String validNum) {		
 		RequestParam paramPath = new RequestParam("account/register")
 		.setParams("mobileNo", phoneNum)
 		.setParams("passwd", pwd)
@@ -162,11 +166,57 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 						ToastUtil.showToast(RegistActivity.this, "注册成功");
 						//存储密码
 						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
+						requestLogin(phoneNum, pwd);
 					}else{
 						String msg = response.getString("msg").trim();
 						ToastUtil.showToast(RegistActivity.this, msg);
 					}
 				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 请求登录
+	 * @param phoneNum
+	 * @param pwd
+	 */
+	private void requestLogin(String phoneNum, final String pwd) {
+		RequestParam paramPaht = new RequestParam("account/login")
+		.setParams("mobileNo", phoneNum)
+		.setParams("passwd", pwd);
+		HttpManager.getInstance(this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPaht, new Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					String returnCode = response.getString("returnCode");
+					if("1".equals(returnCode.trim())){
+						Integer userId = response.getInt("userId");
+						String userToken = response.getString("token");
+						String mobileNum = response.getString("mobileNo");
+						ConfigManager.getInstance().setUserId(userId);
+						ConfigManager.getInstance().setUserToken(userToken);
+						ConfigManager.getInstance().setUserPwd(pwd);
+						ConfigManager.getInstance().setMobileNum(mobileNum);
+						//请求地址数据
+						MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAddressInfos(null);
+						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
+						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
+						Intent intent = getIntent();
+						if(intent != null){
+							intent.putExtra("successed", true);
+							setResult(0, intent);
+						}
+						RegistActivity.this.finish();
+					}else{
+						String msg = response.getString("msg");
+						ToastUtil.showToast(RegistActivity.this, msg);
+					}
+				} catch (JSONException e) {
+					ToastUtil.showToast(RegistActivity.this, "数据解析异常");
 					e.printStackTrace();
 				}
 			}

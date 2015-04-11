@@ -1,14 +1,13 @@
 package com.guozha.buy.activity.global;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -19,6 +18,7 @@ import com.umeng.analytics.MobclickAgent;
 public class SearchActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SearchPage";
+	private EditText mSearchKeyWord;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +32,20 @@ public class SearchActivity extends BaseActivity{
 	}
 	
 	private void initView(){
+		mSearchKeyWord = (EditText) findViewById(R.id.search_keyword);
 		findViewById(R.id.search_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				RequestParam paramPath = new RequestParam("/search")
-				.setParams("word", "中文问题")
-				.setParams("addressId", "");
-				HttpManager.getInstance(SearchActivity.this).volleyRequestByPost(HttpManager.URL + paramPath, 
-					new Listener<String>() {
-						@Override
-						public void onResponse(String response) {
-							
-						}
-				});
+				String keyWord = mSearchKeyWord.getText().toString();
+				if(!keyWord.isEmpty()){
+					Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+					intent.putExtra("KeyWord", keyWord);
+					startActivity(intent);
+				}
 			}
 		});
 		
 		findViewById(R.id.cancel_button).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				SearchActivity.this.finish();

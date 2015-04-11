@@ -155,8 +155,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	@Override
 	public void onClick(View view) {
 		//如果没有登录
-		if(ConfigManager.getInstance().getUserToken() == null){
-			outLoginStatuEvent(view);
+		if(ConfigManager.getInstance().getUserToken(getActivity()) == null){
 			return;
 		}
 		loginedStatuEvent(view);

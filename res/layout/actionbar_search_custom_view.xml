@@ -23,6 +23,7 @@
             android:layout_marginRight="10dip"
             android:src="@drawable/dialogue_search_icon"/>
         <EditText 
+            android:id="@+id/search_keyword"
 	        android:layout_width="match_parent"
 	        android:background="@null"
 	        android:textSize="@dimen/dimen_global_16sp"

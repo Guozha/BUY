@@ -45,7 +45,6 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.CustomListView;
 import com.umeng.analytics.MobclickAgent;
@@ -131,6 +130,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mActionBarView = LayoutInflater.from(getActivity())
 				.inflate(R.layout.actionbar_market_custom_view, null);
 		mActionBarAddress = (TextView) mActionBarView.findViewById(R.id.actionbar_address);
+		mActionBarAddress.setVisibility(View.GONE);
 		mActionBarAddress.setOnClickListener(this);
 		setAddressInfoData();
 		
@@ -285,16 +285,20 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		//TODO 设置ActionBar上面的显示
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
-		if(mActionBarAddress != null && mAddressInfos != null){
-			for(int i = 0; i < mAddressInfos.size(); i++){
-				AddressInfo addressInfo = mAddressInfos.get(i);
-				if(addressInfo.getAddressId() == choosedId){
-					addressName = addressInfo.getBuildingName();
+		if(mActionBarAddress != null){
+			if(mAddressInfos != null){
+				for(int i = 0; i < mAddressInfos.size(); i++){
+					AddressInfo addressInfo = mAddressInfos.get(i);
+					if(addressInfo.getAddressId() == choosedId){
+						addressName = addressInfo.getBuildingName();
+					}
 				}
+				mActionBarAddress.setVisibility(View.VISIBLE);
+				mActionBarAddress.setText(addressName);
+			}else{
+				mActionBarAddress.setVisibility(View.GONE);
 			}
-			mActionBarAddress.setText(addressName);
 		}
-		
 	}
 	
 	/**
@@ -325,6 +329,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		currentPage = 1;
 		mMaxDateNum = marketHomePage.getTotalCount();
 		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
+		for(int i = 0; i < marketHomeItems.size(); i++){
+			LogUtil.e("@@@@@@@@@@@@11marketHomeItems ==== size = " + marketHomeItems.get(i).getGoodsList().size());
+		}
 		mMarketHomeItems.addAll(marketHomeItems);
 		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 	}
@@ -350,6 +357,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 					List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 					if(marketHomeItems == null) return;
 					mMarketHomeItems.addAll(marketHomeItems);
+					
 					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 				}
 			});
@@ -472,10 +480,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mQuickInView.setVisibility(View.VISIBLE);
 		}
 		
-		LogUtil.e("mLastVisibleIndex == " + mLastVisibleIndex);
-		LogUtil.e("item_count == " + (mMarketItemListAdapter.getCount() + 1));
-		LogUtil.e("currentPage == " + currentPage);
-		LogUtil.e("mTotalPageSize == " + mTotalPageSize);
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
 				&& mLastVisibleIndex == mMarketItemListAdapter.getCount() + 1 //加了viewHead
 				&& currentPage < mTotalPageSize){
@@ -505,5 +509,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		super.onStart();
 		//更新快捷菜单
 		initQuickMenusData();
+		if(mMarketHomeItems == null || mMarketHomeItems.size() == 0){
+			setMarketHomeData();
+		}
 	}
 }

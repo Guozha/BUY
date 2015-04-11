@@ -13,9 +13,7 @@ public class WeightOption implements Serializable{
 
 	private int goodsId;
 	private int amount;
-	private int unitPrice;
-	private int price;
-	private String unit;
+	private int defaultFlag; 	//是否是默认重量
 	
 	public int getGoodsId() {
 		return goodsId;
@@ -29,24 +27,10 @@ public class WeightOption implements Serializable{
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public int getUnitPrice() {
-		return unitPrice;
+	public int getDefaultFlag() {
+		return defaultFlag;
 	}
-	public void setUnitPrice(int unitPrice) {
-		this.unitPrice = unitPrice;
+	public void setDefaultFlag(int defaultFlag) {
+		this.defaultFlag = defaultFlag;
 	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	public String getUnit() {
-		return unit;
-	}
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-	
-	
 }

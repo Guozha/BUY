@@ -134,9 +134,8 @@ public class SettingActivity extends BaseActivity{
 	 * 请求退出登录
 	 */
 	private void requestLoginOut() {
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(SettingActivity.this);
 		if(token == null){
-			ToastUtil.showToast(SettingActivity.this, "难道出错了？我好像还没登录呦……");
 			return;
 		}
 		RequestParam paramPath = new RequestParam("account/logout")
