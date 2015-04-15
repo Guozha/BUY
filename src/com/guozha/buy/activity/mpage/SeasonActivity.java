@@ -1,18 +1,15 @@
 package com.guozha.buy.activity.mpage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
+import android.os.Message;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.Response.Listener;
@@ -26,7 +23,9 @@ import com.guozha.buy.adapter.SeasonItemListAdapter;
 import com.guozha.buy.entry.mpage.season.Season;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AutoViewFlipper;
+import com.guozha.buy.view.AutoViewFlipper.OnSlopTouchListener;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -61,7 +60,9 @@ public class SeasonActivity extends BaseActivity{
 				updateSeasonAdviceList(SEASON_CURRENT);
 				break;
 			case HAND_UPDATE_SEASON_PIC:
-				updateSeasonImage();
+				int position = msg.arg1;
+				Bitmap bitmap = (Bitmap) msg.obj;
+				updateSeasonImage(bitmap, position);
 				break;
 			}
 		};
@@ -90,7 +91,7 @@ public class SeasonActivity extends BaseActivity{
 				SeasonAdviceItem item = mAdviceItem.get(position);
 				Intent intent = new Intent(SeasonActivity.this, SearchResultActivity.class);
 				if(item != null){
-					intent.putExtra("KeyWord", item.getGoodsName());
+					intent.putExtra("KeyWord", item.getWord());
 				}
 				SeasonActivity.this.startActivity(intent);
 			}
@@ -98,6 +99,17 @@ public class SeasonActivity extends BaseActivity{
 		
 		mAutoViewFilpper = 
 				(AutoViewFlipper) findViewById(R.id.season_auto_flipper_view);
+		mAutoViewFilpper.stopAutoPlay();
+		mAutoViewFilpper.slopToCenter();
+		mAutoViewFilpper.setOnSlopTouchListener(new OnSlopTouchListener() {
+			@Override
+			public void scrollChanged(int position) {
+				updateSeasonAdviceList(position);
+			}
+			@Override
+			public void onTouchedView() { }
+		});
+		/**
 		List<ImageView> imageViews = mAutoViewFilpper.getImageViews();
 		for(int i = 0; i < imageViews.size(); i++){
 			imageViews.get(i).setOnTouchListener(new OnTouchListener() {
@@ -109,6 +121,7 @@ public class SeasonActivity extends BaseActivity{
 				}
 			});
 		}
+		**/
 	}
 	
 	private void initData(){
@@ -127,19 +140,24 @@ public class SeasonActivity extends BaseActivity{
 	 * 更新顶部时令图片
 	 */
 	private void requestSeasonImage() {
-		seasonBitmaps = new ArrayList<Bitmap>();
 		if(mSeasonsList != null){
 			for(int i = 0; i < mSeasonsList.size(); i++){
+				final int position = i;
 				Season season = mSeasonsList.get(i);
 				if(season == null) continue;
 				String imageUrl = season.getSeasonPicUrl();
 				if(imageUrl == null) continue;
+				LogUtil.e("image_url = " + HttpManager.URL + imageUrl);
 				HttpManager.getInstance(this).volleyImageRequest(
-					HttpManager.URL + imageUrl.substring(1, imageUrl.length()), new Listener<Bitmap>() {
+					HttpManager.URL + imageUrl, new Listener<Bitmap>() {
 						@Override
 						public void onResponse(Bitmap response) {
-							seasonBitmaps.add(response);
-							handler.sendEmptyMessage(HAND_UPDATE_SEASON_PIC);
+							Message msg = new Message();
+							msg.what = HAND_UPDATE_SEASON_PIC;
+							msg.obj = response;
+							msg.arg1 = position;
+							handler.sendMessage(msg);
+							LogUtil.e("position = " + position +", ....");
 						}
 				});
 			}
@@ -149,8 +167,8 @@ public class SeasonActivity extends BaseActivity{
 	/**
 	 * 更新上面的图片
 	 */
-	private void updateSeasonImage(){
-		mAutoViewFilpper.setImages(seasonBitmaps);
+	private void updateSeasonImage(Bitmap bitmap, int position){
+		mAutoViewFilpper.setImage(bitmap, position);
 	}
 	
 	/**
@@ -162,9 +180,6 @@ public class SeasonActivity extends BaseActivity{
 		Season season = mSeasonsList.get(index);
 		if(season == null) return;
 		mAdviceItem = season.getGoodsList();
-		for(int i = 0; i < mAdviceItem.size(); i++){
-			SeasonAdviceItem adviceItem = mAdviceItem.get(i);
-		}
 		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
 	}
 	

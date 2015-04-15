@@ -33,5 +33,29 @@
     <string name="activity_findpwd_repeat_pwd_hint">确认密码</string>
     <string name="activity_findpwd_confirm_button_text">确认</string>
     
+    <!-- 列表刷新相关 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>  
+    <string name="release_to_refresh">释放立即刷新</string>  
+    <string name="refreshing">正在刷新…</string>  
+    <string name="not_updated_yet">暂未更新过</string>  
+    <string name="updated_at">上次更新于%1$s前</string>  
+    <string name="updated_just_now">刚刚更新</string>  
+    <string name="time_error">时间有问题</string>  
+    
+    <string name="active_rule_string">
+        <Data>
+		<![CDATA[ <html><body>
+				<font color="#8a8584" >1. 发放人应为已注册用户。<br/></font>
+				<font color="#8a8584" >2. 领用人应为未注册用户。<br/></font>
+				<font color="#8a8584" >3. 领用人收货地址不得与发放人收货地址为同一地址，否则果吒有权取消发放人发放”邀请菜票“资格，并收回已发放的奖励菜票。<br/></font>
+				<font color="#8a8584" >4. “邀请菜票”面值5元，订单金额满20元方可使用，长期有效。<br/></font>
+				<font color="#8a8584" >5. 发放人收益：<br/></font>
+				<font color="#8a8584" >a) 邀请收益：每邀请1人，且该人领取后，每5次领取，奖励5元菜票1张（订单金额满20元方可使用，有效期自奖励菜票发放日起1个月）。<br/></font>
+				<font color="#8a8584" >b) 使用收益：本人发出的“邀请菜票”由领用人使用后，奖励5元菜票1张（订单金额满20元方可使用，有效期自奖励菜票发放日起1个月）。<br/></font>
+				<font color="#8a8584" >6. 以上规则解释权归果吒所有。<br/></font>
+				</body>
+				</html> ]]>
+		</Data>
+    </string>
 </resources>
 

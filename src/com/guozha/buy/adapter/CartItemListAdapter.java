@@ -175,7 +175,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			CartCookItem cartCookItem = (CartCookItem) baseItem;
 			CartCookMaterial material = cartCookItem.getGoodsList().get(childPosition);
 			holder.title.setText(material.getGoodsName() + "  " 
-			+ material.getAmount() + material.getUnit());
+			+ UnitConvertUtil.getSwitchedWeight(material.getAmount(), material.getUnit()));
 		}
 		return convertView;
 	}
@@ -247,7 +247,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		.setParams("token", token);
 		int gap = 1;
 		if("01".equals(cartBaseItem.getUnit())){
-			gap = (int)(cartBaseItem.getAmount() * 0.2);
+			gap = UnitConvertUtil.getPlusAmount(cartBaseItem.getAmount(), 
+					UnitConvertUtil.getSwichedUnit(cartBaseItem.getAmount(), cartBaseItem.getUnit()));
 		}
 		if(plus){
 			paramPath.setParams("amount", cartBaseItem.getAmount() + gap);

@@ -28,6 +28,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -92,7 +93,6 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		mWheelView.setWheelForeground(R.drawable.wheel_val_holo);
 		mWheelView.setShadowColor(0x00000000, 0x00000000, 0x00000000);
 		mWheelView.setLastItemListener(new ItemChangeListener() {
-			
 			@Override
 			public void itemChanged(int index) {
 				if(index >= options.size() - 1){
@@ -120,13 +120,20 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	private void updateView() {
 		mWheelView.setViewAdapter(
 				new WeightOptionAdapter(WeightSelectDialog.this, options));
+		for(int i = 0; i < options.size(); i++){
+			if(1 == options.get(i).getDefaultFlag()){
+				mWheelView.setCurrentItem(i);
+			}
+		}
+		
 		if(options != null){
-			mCustomWeight.setText(
-					String.valueOf(10));
-			WeightOption weightOption = options.get(0);
+			if(options.isEmpty()) return;
+			WeightOption weightOption = options.get(options.size()-1);
+			String textUnit = UnitConvertUtil.getSwichedUnit(
+					weightOption.getAmount(), mUnit);
+			mCustomWeight.setText(UnitConvertUtil.getSwitchWeightNum(weightOption.getAmount(), mUnit));
 			mCustomWeightUnit.setText(
-					UnitConvertUtil.getSwichedUnit(
-							weightOption.getAmount(), mUnit));
+					textUnit);
 		}
 	};
 	

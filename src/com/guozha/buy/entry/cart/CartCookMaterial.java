@@ -12,7 +12,7 @@ public class CartCookMaterial implements Serializable{
 	private static final long serialVersionUID = 2164297757732551580L;
 	
 	private String goodsName;  //材料名称
-	private String amount;  //材料数量
+	private int amount;  //材料数量
 	private String unit;   //材料单位
 	
 	public String getGoodsName() {
@@ -21,10 +21,10 @@ public class CartCookMaterial implements Serializable{
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 	public String getUnit() {

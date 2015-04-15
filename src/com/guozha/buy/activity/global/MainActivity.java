@@ -22,6 +22,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.mine.SettingActivity;
+import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
@@ -63,6 +64,7 @@ public class MainActivity extends FragmentActivity{
 			switch (msg.what) {
 			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
 			case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:
+			case MainPageInitDataManager.HAND_INITDATA_MSG_PLAN_MENU_STATUS:
 				fragment = mFragments.get(0);
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
@@ -71,6 +73,9 @@ public class MainActivity extends FragmentActivity{
 				fragment = mFragments.get(1);
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
+				if(!mTabIndicators.isEmpty()){
+					mTabIndicators.get(2).setTextNum(mInitDataManager.getCartItemsNum());
+				}
 				fragment = mFragments.get(2);
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
@@ -123,6 +128,7 @@ public class MainActivity extends FragmentActivity{
 		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
 		mInitDataManager.getAddressInfos(handler);  //获取地址列表
 		mInitDataManager.getCartItems(handler);		//获取购物车信息
+		mInitDataManager.getMenuPlaneStatus(handler); //获取今日菜谱计划状态
 	}
 	
 	/**
@@ -138,6 +144,7 @@ public class MainActivity extends FragmentActivity{
 		mInitDataManager.getAddressInfos(handler);  //获取地址列表
 		mInitDataManager.getCartItems(handler);		//获取购物车数据
 		mInitDataManager.getTodayInfo(handler);		//获取今日信息
+		mInitDataManager.getMenuPlaneStatus(handler);	//获取今日菜谱计划状态
 	}
 	
 	/**
@@ -223,9 +230,11 @@ public class MainActivity extends FragmentActivity{
 		mTabIndicators.add(one);
 		ChangeColorIconWithText two = 
 				(ChangeColorIconWithText) findViewById(R.id.id_indicator_two);
+		
 		mTabIndicators.add(two);
 		ChangeColorIconWithText three = 
 				(ChangeColorIconWithText) findViewById(R.id.id_indicator_three);
+		three.setCloseDrawNum(false);
 		mTabIndicators.add(three);
 		ChangeColorIconWithText four = 
 				(ChangeColorIconWithText) findViewById(R.id.id_indicator_four);
@@ -339,7 +348,6 @@ public class MainActivity extends FragmentActivity{
 				mTabIndicators.get(i).setChoosed(false);
 			}
 			choosed.setChoosed(true);
-			
 			mCurrentItem = position;
 			invalidateOptionsMenu();
 		}
@@ -406,10 +414,9 @@ public class MainActivity extends FragmentActivity{
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuInflater inflater = this.getMenuInflater();
+		menu.clear();
 		switch (mCurrentItem) {
 		case 0:
-			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
-			break;
 		case 1:
 			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
 			break;

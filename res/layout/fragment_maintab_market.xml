@@ -44,17 +44,23 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent">
 	    
-	    <!-- 菜品展示 -->
-   		<com.guozha.buy.view.CustomListView 
-   		    android:id="@+id/market_itemlist"
-   		    android:footerDividersEnabled="false"
-   		    android:headerDividersEnabled="false"
-   		    android:divider="@null"
-   		    android:focusableInTouchMode="false"
-   		    android:listSelector="@color/transparent"
-   		    android:scrollbars="none"
-   		    android:layout_width="match_parent"
-   		    android:layout_height="match_parent"/>
+	    <!-- 下拉刷新 -->
+	    <com.guozha.buy.view.RefreshableView 
+	        android:id="@+id/market_refreshable_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent">
+		    <!-- 菜品展示 -->
+	   		<com.guozha.buy.view.CustomListView 
+	   		    android:id="@+id/market_itemlist"
+	   		    android:footerDividersEnabled="false"
+	   		    android:headerDividersEnabled="false"
+	   		    android:divider="@null"
+	   		    android:focusableInTouchMode="false"
+	   		    android:listSelector="@color/transparent"
+	   		    android:scrollbars="none"
+	   		    android:layout_width="match_parent"
+	   		    android:layout_height="match_parent"/>
+   		</com.guozha.buy.view.RefreshableView>
    		
    		<!-- 快捷入口 -->
    		<LinearLayout 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.Response.Listener;
@@ -17,7 +18,6 @@ import com.guozha.buy.entry.mine.seller.Seller;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -34,12 +34,20 @@ public class MySellerActivity extends BaseActivity{
 	private ListView mMySellerList;
 	
 	private List<Seller> mSellers;
+	private View mEmptyView;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_SELLER_LIST_COMPLETED:
-				if(mMySellerList == null) return;
+				if(mMySellerList == null || mEmptyView == null) return;
+				if(mSellers == null || mSellers.isEmpty()){
+					mMySellerList.setVisibility(View.GONE);
+					mEmptyView.setVisibility(View.VISIBLE);
+				}else{
+					mEmptyView.setVisibility(View.GONE);
+					mMySellerList.setVisibility(View.VISIBLE);
+				}
 				mMySellerList.setAdapter(new MySellerListAdapter(MySellerActivity.this, mSellers));
 				break;
 			}
@@ -52,6 +60,7 @@ public class MySellerActivity extends BaseActivity{
 		setContentView(R.layout.activity_my_seller);
 		customActionBarStyle("常用卖家");
 		
+		mEmptyView = findViewById(R.id.empty_view);
 		mMySellerList = (ListView) findViewById(R.id.my_seller_list);
 		
 		initData();

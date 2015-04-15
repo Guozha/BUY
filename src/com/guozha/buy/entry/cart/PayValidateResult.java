@@ -13,6 +13,7 @@ public class PayValidateResult implements Serializable{
 	
 	private String returnCode;
 	private String msg;
+	private String needPayFlag; //是否需要调用第三方支付
 	private PayOrderMesg order;
 	
 	public String getReturnCode() {
@@ -33,6 +34,10 @@ public class PayValidateResult implements Serializable{
 	public void setOrder(PayOrderMesg order) {
 		this.order = order;
 	}
-	
-	
+	public String getNeedPayFlag() {
+		return needPayFlag;
+	}
+	public void setNeedPayFlag(String needPayFlag) {
+		this.needPayFlag = needPayFlag;
+	}
 }

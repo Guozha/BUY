@@ -18,6 +18,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.DimenUtil;
 
 /**
  * 可改变颜色的文字按钮
@@ -25,11 +26,15 @@ import com.guozha.buy.R;
  *
  */
 public class ChangeColorIconWithText extends View {
+	private boolean mCloseDrawNum = true;
+	
 	private int mColor;
 	private Bitmap mIconBitmap;
 	private Bitmap mChoosedBitmap;
 	private String mText;
+	private String mTextNum = "0";
 	private int mTextSize;
+	private int mTextNumSize;
 	private Canvas mCanvas;
 	private Bitmap mBitmap;
 	private Paint mPaint;
@@ -37,7 +42,10 @@ public class ChangeColorIconWithText extends View {
 	private float mAlpha;
 	private Rect mIconRect;
 	private Rect mTextBound;
+	private Rect mTextNumBound;
 	private Paint mTextPaint;
+	private Paint mTextNumPaint;
+	private Paint mCirclePaint;
 	
 	private boolean isChoosed;
 
@@ -68,6 +76,8 @@ public class ChangeColorIconWithText extends View {
 		mIconRect = new Rect();
 		mTextSize = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
+		mTextNumSize = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics());
 		mColor = context.getResources().getColor(R.color.main_bottom_tab_item_bg_color);
 		mText = context.getResources().getString(R.string.activity_main_tab1_title);
 	}
@@ -118,11 +128,23 @@ public class ChangeColorIconWithText extends View {
 	 */
 	private void initView(){
 		mTextBound = new Rect();
+		mTextNumBound = new Rect();
+		
 		mTextPaint = new Paint();
+		
 		mTextPaint.setTextSize(mTextSize);
 		mTextPaint.setColor(0Xffffff);
 		mTextPaint.setAntiAlias(true);
 		mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
+		
+		mTextNumPaint = new Paint();
+		mTextNumPaint.setColor(0Xffffffff);
+		mTextNumPaint.setAntiAlias(true);
+		mTextNumPaint.setTextSize(mTextNumSize);
+		
+		mCirclePaint = new Paint();
+		mCirclePaint.setColor(0Xffdf3411);
+		mCirclePaint.setAntiAlias(true);
 	}
 
 	
@@ -157,8 +179,11 @@ public class ChangeColorIconWithText extends View {
 			canvas.drawBitmap(mChoosedBitmap, null, mIconRect, null);
 		}else{
 			canvas.drawBitmap(mIconBitmap, null, mIconRect, null);
+			if(!mCloseDrawNum && !"0".equals(mTextNum)){
+				drawNumText(canvas);
+			}
 		}
-
+		
 		int alpha = (int) Math.ceil(255 * mAlpha);
 
 		// 内存去准备mBitmap , setAlpha , 纯色 ，xfermode ， 图标
@@ -198,6 +223,15 @@ public class ChangeColorIconWithText extends View {
 		int x = getMeasuredWidth() / 2 - mTextBound.width() / 2;
 		int y = mIconRect.bottom + mTextBound.height();
 		canvas.drawText(mText, x, y, mTextPaint);
+	}
+	
+	private void drawNumText(Canvas canvas){
+		mTextNumPaint.getTextBounds(mTextNum, 0, mTextNum.length(), mTextNumBound);
+		int x = getMeasuredWidth() / 2 + mTextNumBound.width();
+		int y = mTextBound.height();
+		
+		canvas.drawCircle(x + mTextNumBound.width() / 2, y - mTextNumBound.height() / 2, mTextNumBound.height(), mCirclePaint);
+		canvas.drawText(mTextNum, x, y, mTextNumPaint);
 	}
 
 	/**
@@ -248,6 +282,23 @@ public class ChangeColorIconWithText extends View {
 	public void setChoosed(boolean choosed){
 		isChoosed = choosed;
 		invalidateView();
+	}
+	
+	/**
+	 * 设置数字
+	 * @param num
+	 */
+	public void setTextNum(int num){
+		mTextNum = String.valueOf(num);
+		invalidateView();
+	}
+	
+	/**
+	 * 是否关闭绘制数字
+	 * @param closeNum
+	 */
+	public void setCloseDrawNum(boolean closeNum){
+		mCloseDrawNum = closeNum;
 	}
 
 	/**

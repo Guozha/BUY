@@ -42,6 +42,7 @@ public class ConfigManager{
 	private int mVersionCode;						   //当前版本号
 	private String mVersionName;					   //版本名称
 	private boolean mWarnTimeOpend;					   //提醒开关是否打开
+	private long mTodayDate;						   //今天的日期 
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
@@ -52,6 +53,7 @@ public class ConfigManager{
 	private static final String VERSION_CODE = "version_code";		//当前版本号
 	private static final String VERSION_NAME = "version_name";		//当前版本名称
 	private static final String WARN_TIME_OPEND = "warn_time_opend";//提醒开关是否打开
+	private static final String TODAY_DATE = "today_date";			//今天的日期
 	
 	/**
 	 * 获取配置管理对象
@@ -73,6 +75,7 @@ public class ConfigManager{
 		mVersionCode = sharedPreference.getInt(VERSION_CODE, -1);
 		mVersionName = sharedPreference.getString(VERSION_NAME, null);
 		mWarnTimeOpend = sharedPreference.getBoolean(WARN_TIME_OPEND, false);
+		mTodayDate = sharedPreference.getLong(TODAY_DATE, -1);
 		initConfigXML();
 	}
 	
@@ -156,6 +159,17 @@ public class ConfigManager{
 	private void setConfig(String configType, int changedData){
 		Editor editor = sharedPreference.edit();	
 		editor.putInt(configType, changedData);
+		editor.commit();
+	}
+	
+	/**
+	 * 设置配置
+	 * @param configType
+	 * @param changedData
+	 */
+	private void setConfig(String configType, long changedData){
+		Editor editor = sharedPreference.edit();	
+		editor.putLong(configType, changedData);
 		editor.commit();
 	}
 	
@@ -379,6 +393,24 @@ public class ConfigManager{
 	 */
 	public boolean getWarnTimeOpend(){
 		return mWarnTimeOpend;
+	}
+	
+	/**
+	 * 设置今天的日期
+	 * @param todayDate
+	 */
+	public void setTodayDate(long todayDate){
+		if(mTodayDate != todayDate) return;
+		mTodayDate = todayDate;
+		setConfig(TODAY_DATE, todayDate);
+	}
+	
+	/**
+	 * 获取今天的日期
+	 * @return
+	 */
+	public long getTodayDate(){
+		return mTodayDate;
 	}
 	
 	////////////////////////////////逻辑相关//////////////////////////////////

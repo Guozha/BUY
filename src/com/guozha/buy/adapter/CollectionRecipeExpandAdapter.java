@@ -44,13 +44,13 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 	private List<CollectionDir> mCollectionDir;
 	private BitmapCache mBitmapCache;
 	
-	public CollectionRecipeExpandAdapter(Context context, List<CollectionDir> collectionDir){
+	public CollectionRecipeExpandAdapter(Context context, List<CollectionDir> collectionDir, BitmapCache bitmapCache){
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		mCollectionDir = collectionDir;
 		mModifyClickListener = new ModifyClickListener();
 		mDeleteClickListener = new DeleteClickListener();
-		mBitmapCache = new BitmapCache(context);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override

@@ -92,6 +92,7 @@
 	            android:src="@drawable/main_plan_add"/>
 	        
 	        <TextView 
+	            android:id="@+id/main_mpage_add_plan_text"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textSize="@dimen/dimen_global_14sp"

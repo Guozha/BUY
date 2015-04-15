@@ -42,6 +42,7 @@ public class MyAddressActivity extends BaseActivity{
 	private ListView mAddressList;
 	
 	private List<AddressInfo> mAdressInfos = null;
+	private View mEmptyView;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -70,6 +71,7 @@ public class MyAddressActivity extends BaseActivity{
 	 * 初始化View
 	 */
 	private void initView(){
+		mEmptyView = findViewById(R.id.empty_view);
 		mAddressList = (ListView) findViewById(R.id.my_address_list);
 		mAddressList.setAdapter(new MyAdressListAdapter(this, mAdressInfos));
 		
@@ -121,7 +123,14 @@ public class MyAddressActivity extends BaseActivity{
 	 * 更新地址列表
 	 */
 	private void updateAddressList(){
-		if(mAddressList == null) return;
+		if(mAddressList == null || mEmptyView == null) return;
+		if(mAdressInfos == null || mAdressInfos.isEmpty()){
+			mAddressList.setVisibility(View.GONE);
+			mEmptyView.setVisibility(View.VISIBLE);
+		}else{
+			mEmptyView.setVisibility(View.GONE);
+			mAddressList.setVisibility(View.VISIBLE);
+		}
 		mAddressList.setAdapter(new MyAdressListAdapter(this, mAdressInfos));
 	}
 	

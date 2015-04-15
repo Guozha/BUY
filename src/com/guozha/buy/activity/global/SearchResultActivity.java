@@ -5,6 +5,9 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,12 +17,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.mpage.CookBookDetailActivity;
 import com.guozha.buy.adapter.SearchRelateRecipeListAdapter;
 import com.guozha.buy.adapter.SearchResultListAdapter;
+import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.global.SearchRecipe;
 import com.guozha.buy.entry.global.SearchResult;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -38,6 +45,7 @@ public class SearchResultActivity extends BaseActivity{
 	
 	private GridView mSearchResult;
 	private ListView mSearchRelate;
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private List<ItemSaleInfo> mSearchResultList;		
 	private List<SearchRecipe> mSearchRelateList;
@@ -83,9 +91,9 @@ public class SearchResultActivity extends BaseActivity{
 	 */
 	private void updateSearchResultView(){
 		if(mSearchResult == null) return;
-		mSearchResultCount.setText("共搜索到" + mSearchRelateList.size() + "个结果");
+		mSearchResultCount.setText("共搜索到" + mSearchResultList.size() + "个结果");
 		mSearchResult.setAdapter(
-				new SearchResultListAdapter(this, mSearchResultList));
+				new SearchResultListAdapter(this, mSearchResultList, mBitmapCache));
 	}
 	
 	/**
@@ -94,7 +102,7 @@ public class SearchResultActivity extends BaseActivity{
 	private void updateSearchRelateView(){
 		if(mSearchRelate == null) return;
 		mSearchRelate.setAdapter(
-				new SearchRelateRecipeListAdapter(this, mSearchRelateList));
+				new SearchRelateRecipeListAdapter(this, mSearchRelateList, mBitmapCache));
 	}
 	
 	/**
@@ -104,6 +112,31 @@ public class SearchResultActivity extends BaseActivity{
 		mSearchResult = (GridView) findViewById(R.id.search_result_list);
 		mSearchRelate = (ListView) findViewById(R.id.search_relate_recipe_list);
 		mSearchResultCount = (TextView) findViewById(R.id.search_result_count);
+		
+		mSearchResult.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(SearchResultActivity.this, WeightSelectDialog.class);
+				ItemSaleInfo saleInfo = mSearchResultList.get(position);
+				if(saleInfo != null){
+					intent.putExtra("goodsId", String.valueOf(saleInfo.getGoodsId()));
+					intent.putExtra("unitPrice", String.valueOf(saleInfo.getUnitPrice()));
+					intent.putExtra("unit", saleInfo.getUnit());
+				}
+				startActivity(intent);
+			}
+		});
+		
+		mSearchRelate.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(SearchResultActivity.this, CookBookDetailActivity.class);
+				intent.putExtra("menuId", mSearchRelateList.get(position).getMenuId());
+				startActivity(intent);
+			}
+		});
 	}
 	
 	/**
@@ -138,5 +171,11 @@ public class SearchResultActivity extends BaseActivity{
 					}
 				}
 		});
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
 	}
 }

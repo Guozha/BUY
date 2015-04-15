@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +28,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
-import com.guozha.buy.activity.global.MainActivity;
 import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
@@ -42,11 +41,14 @@ import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.CustomListView;
+import com.guozha.buy.view.RefreshableView;
+import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -59,10 +61,14 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private static final String PAGE_NAME = "MarketPage";
 	private static final int HANDLER_MENU_ITEM_MSG_WHAT = 0x0001;
 	private static final int HAND_DATA_COMPLETED = 0x0002; 
+	private static final int HAND_BEGIN_REFRESH = 0x00010;	//开始刷新
+	private static final int HAND_END_REFRESH = 0x0004;		//刷新完成
 	public static final int REQUEST_CODE_ADDRESS = 10;
 	public static final int REQUEST_CODE_CART = 11;
 	
 	private View mView;
+	
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private View mTopExpandMenuButton;
 	private AnimatedExpandableListView mMenuList;
@@ -95,11 +101,27 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private TextView mActionBarAddress; 
 	private View mActionBarView;
 	
+	private View mItemHeaderView;
+	private RefreshableView mRefreshableView;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateItemList();
+				break;
+			case HAND_BEGIN_REFRESH:
+				if(mQuickInView == null) return;
+				mQuickInView.setVisibility(View.GONE);
+				mItemList.removeHeaderView(mItemHeaderView);
+				break;
+			case HAND_END_REFRESH:
+				if(mQuickInView == null) return;
+				mQuickInView.setVisibility(View.VISIBLE);
+				mItemList.addHeaderView(mItemHeaderView);
+				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
+				setMarketHomeData();
 				break;
 			}
 		};
@@ -179,19 +201,19 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		setGoodsItemTypeData();
 		
-		View header = LayoutInflater.from(this.getActivity())
+		mItemHeaderView = LayoutInflater.from(this.getActivity())
 				.inflate(R.layout.market_list_item_header, null);
 		//界面分类列表
 		mItemList = (CustomListView) view.findViewById(R.id.market_itemlist);
 		mItemList.setItemsCanFocus(true);
-		mItemList.addHeaderView(header);
+		mItemList.addHeaderView(mItemHeaderView);
 		mBottomLoadingView = getActivity().getLayoutInflater().inflate(R.layout.list_paging_bottom, null);
 		mLoadText = (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		mItemList.addFooterView(mBottomLoadingView);
 		mItemList.setOnScrollListener(this);
 		if(mMarketItemListAdapter == null){
-			mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems);
+			mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
 		}else{
 			mMarketItemListAdapter.notifyDataSetChanged();
 		}
@@ -228,6 +250,33 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		for(int i = 0; i < mQuickMenus.size(); i++){
 			mQuickMenus.get(i).setOnClickListener(this);
 		}
+		
+		/**
+		 * 刷新相关
+		 */
+		mRefreshableView = (RefreshableView) view.findViewById(R.id.market_refreshable_view);
+		mRefreshableView.setOnRefreshListener(new PullToRefreshListener() {
+			@Override
+			public void onRefresh() {
+				handler.sendEmptyMessage(HAND_BEGIN_REFRESH);
+				if(mDataManager == null){
+					mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+				}
+				//让全部更新
+				MainPageInitDataManager.mMarketItemUpdated = true;
+				MainPageInitDataManager.mAccountUpdated = true;
+				MainPageInitDataManager.mCartItemsUpdated = true;
+				MainPageInitDataManager.mAddressUpdated = true;
+				mDataManager.getMarketHomePage(handler, 1, 4);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				mRefreshableView.finishRefreshing();
+				handler.sendEmptyMessage(HAND_END_REFRESH);
+			}
+		}, 0);
 	}
 	
 	/**
@@ -322,16 +371,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mDataManager == null){
 			return;
 		}
-		if(currentPage >= 1) return;
 		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(null, 1, 4);
 		if(marketHomePage == null) return;
 		mTotalPageSize = marketHomePage.getPageCount();
 		currentPage = 1;
+		mMarketHomeItems.clear();
 		mMaxDateNum = marketHomePage.getTotalCount();
 		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
-		for(int i = 0; i < marketHomeItems.size(); i++){
-			LogUtil.e("@@@@@@@@@@@@11marketHomeItems ==== size = " + marketHomeItems.get(i).getGoodsList().size());
-		}
 		mMarketHomeItems.addAll(marketHomeItems);
 		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 	}
@@ -512,5 +558,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mMarketHomeItems == null || mMarketHomeItems.size() == 0){
 			setMarketHomeData();
 		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
 	}
 }

@@ -5,10 +5,11 @@ import java.util.List;
 public class ExpandListData {
 	
 	private int id;
-	private String type;
-	private String name;
-	private String amount;
-	private String price;
+	private int type;	//类型 0代表菜谱 1代表菜品
+	private String name;	//商品名称
+	private int amount;	//数量
+	private int price;	//价格
+	private String unit;	//单位
 	private List<OrderDetailGoods> menuslist;
 	
 	public int getId() {
@@ -17,10 +18,10 @@ public class ExpandListData {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getName() {
@@ -29,16 +30,16 @@ public class ExpandListData {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	public List<OrderDetailGoods> getMenuslist() {
@@ -46,5 +47,11 @@ public class ExpandListData {
 	}
 	public void setMenuslist(List<OrderDetailGoods> menuslist) {
 		this.menuslist = menuslist;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 }

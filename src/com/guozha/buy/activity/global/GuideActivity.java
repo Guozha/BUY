@@ -20,6 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.guozha.buy.R;
 
@@ -40,9 +41,9 @@ public class GuideActivity extends Activity{
     // 包裹小圆点的LinearLayout  
      private ViewGroup group;  
      //左箭头按钮  
-     private ImageView imageViewLeft;  
+     //private ImageView imageViewLeft;  
      //右箭头按钮  
-     private ImageView imageViewRight;  
+     //private ImageView imageViewRight;  
      //当前页码  
      private int currentIndex;  
        
@@ -71,22 +72,22 @@ public class GuideActivity extends Activity{
         //获取存放底部导航点ViewGroup  
         group = (ViewGroup)main.findViewById(R.id.guide_point_ll);    
         viewPager = (ViewPager)main.findViewById(R.id.guide_viewpager);    
-        imageViewLeft = (ImageView)main.findViewById(R.id.imageView1);  
-        imageViewRight = (ImageView)main.findViewById(R.id.imageView2);  
-        imageViewLeft.setAlpha(0);  
-        imageViewRight.setAlpha(0);  
+        //imageViewLeft = (ImageView)main.findViewById(R.id.imageView1);  
+        //imageViewRight = (ImageView)main.findViewById(R.id.imageView2);  
+        //imageViewLeft.setAlpha(0);  
+        //imageViewRight.setAlpha(0);  
           
         //将小圆点放到imageView数组当中  
         for (int i = 0; i < pageViews.size(); i++) {    
             imageView = new ImageView(GuideActivity.this);    
-            imageView.setLayoutParams(new LayoutParams(20,20));    
-            imageView.setPadding(20, 0, 20, 0);    
+            imageView.setLayoutParams(new LayoutParams(40, 40));    
+            imageView.setScaleType(ScaleType.CENTER_INSIDE);
             imageViews[i] = imageView;    
             if (i == 0) {    
              //默认选中第一张图片  
-                imageViews[i].setBackgroundResource(R.drawable.circle_selected);    
+                imageViews[i].setImageResource(R.drawable.circle_selected);    
             } else {    
-                imageViews[i].setBackgroundResource(R.drawable.circle_normal);    
+                imageViews[i].setImageResource(R.drawable.circle_normal);    
             }    
             group.addView(imageViews[i]);    
         }    
@@ -95,8 +96,8 @@ public class GuideActivity extends Activity{
           
         viewPager.setAdapter(new GuidePageAdapter());    
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());  
-        imageViewLeft.setOnClickListener(new ButtonListener());  
-        imageViewRight.setOnClickListener(new ButtonListener());  
+        //imageViewLeft.setOnClickListener(new ButtonListener());  
+        //imageViewRight.setOnClickListener(new ButtonListener());  
         
         itemView3.findViewById(R.id.come_in_button).setOnClickListener(new OnClickListener() {
 			@Override
@@ -108,6 +109,7 @@ public class GuideActivity extends Activity{
 		});
     }  
       
+	/*
     //左右切换屏幕的按钮监听器  
     class ButtonListener implements OnClickListener{  
    
@@ -134,8 +136,8 @@ public class GuideActivity extends Activity{
              System.out.println("当前页码："+showNext);  
            
      }  
-       
     }  
+    */
       
     /** 
      * 设置按钮渐显效果 
@@ -150,10 +152,10 @@ public class GuideActivity extends Activity{
                 if(mAlpha>255)  
                     mAlpha=255;  
                   
-                imageViewLeft.setAlpha(mAlpha);  
-                imageViewLeft.invalidate();  
-                imageViewRight.setAlpha(mAlpha);  
-                imageViewRight.invalidate();  
+                //imageViewLeft.setAlpha(mAlpha);  
+                //imageViewLeft.invalidate();  
+               // imageViewRight.setAlpha(mAlpha);  
+               // imageViewRight.invalidate();  
                   
                 if(!isHide && mAlpha<255)  
                     mHandler.sendEmptyMessageDelayed(1, 100);  
@@ -162,10 +164,10 @@ public class GuideActivity extends Activity{
                   
                 if(mAlpha<0)  
                     mAlpha=0;  
-                imageViewLeft.setAlpha(mAlpha);  
-                imageViewLeft.invalidate();  
-                imageViewRight.setAlpha(mAlpha);  
-                imageViewRight.invalidate();  
+               /// imageViewLeft.setAlpha(mAlpha);  
+               /// imageViewLeft.invalidate();  
+              //  imageViewRight.setAlpha(mAlpha);  
+               // imageViewRight.invalidate();  
                   
                 if(isHide && mAlpha>0)  
                     mHandler.sendEmptyMessageDelayed(0, 2);  
@@ -287,13 +289,18 @@ public class GuideActivity extends Activity{
     
         @Override    
         public void onPageSelected(int arg0) {    
-         currentIndex = arg0;  
-            for (int i = 0; i < imageViews.length; i++) {    
-                imageViews[arg0].setBackgroundResource(R.drawable.circle_selected);  
-                if (arg0 != i) {    
-                    imageViews[i].setBackgroundResource(R.drawable.circle_normal);    
-                }    
-            }  
+	         currentIndex = arg0;  
+	         if(currentIndex == pageViews.size() - 1){
+	        	 group.setVisibility(View.GONE);
+	         }else{
+	        	 group.setVisibility(View.VISIBLE);
+	            for (int i = 0; i < imageViews.length; i++) {    
+	                imageViews[arg0].setImageResource(R.drawable.circle_selected);  
+	                if (arg0 != i) {    
+	                    imageViews[i].setImageResource(R.drawable.circle_normal);    
+	                }    
+	            }  
+	         }
         }    
 	}
 }

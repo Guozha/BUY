@@ -176,6 +176,9 @@ public class AutoViewFlipper extends FrameLayout{
 			}
 
 		}
+		if(mOnSlopTouchListener != null){
+			mOnSlopTouchListener.scrollChanged(mCurrentItem);
+		}
 	}
 	
 	/**
@@ -217,11 +220,9 @@ public class AutoViewFlipper extends FrameLayout{
 	 * 设置图片资源
 	 * @param bitmaps
 	 */
-	public void setImages(List<Bitmap> bitmaps){
+	public void setImage(Bitmap bitmap, int position){
 		if(mImageViews == null) return;
-		for(int i = 0; i < bitmaps.size(); i++){
-			mImageViews.get(i).setImageBitmap(bitmaps.get(i));
-		}
+		mImageViews.get(position).setImageBitmap(bitmap);
 	}
 	
 	//13761015601
@@ -235,11 +236,11 @@ public class AutoViewFlipper extends FrameLayout{
 		List<Bitmap> bitmaps = new ArrayList<Bitmap>();	
 		
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_season_img_00));
+				getResources(), R.drawable.default_icon));
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_season_img_01));
+				getResources(), R.drawable.default_icon));
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.main_season_img_02));
+				getResources(), R.drawable.default_icon));
 		
 		return bitmaps;
 	}
@@ -312,6 +313,15 @@ public class AutoViewFlipper extends FrameLayout{
 		setPointColorByCurrentItem();
 	}
 	
+	public void slopToCenter(){
+		if(mCurrentItem == 0){
+			slopToLeft();
+		}
+		if(mCurrentItem == 2){
+			slopToRight();
+		}
+	}
+	
 	private OnSlopTouchListener mOnSlopTouchListener;
 	
 	/**
@@ -319,7 +329,9 @@ public class AutoViewFlipper extends FrameLayout{
 	 * @author Administrator
 	 *
 	 */
-	interface OnSlopTouchListener{
+	public interface OnSlopTouchListener{
+		
+		public void scrollChanged(int position);
 		
 		/**
 		 * touch事件响应

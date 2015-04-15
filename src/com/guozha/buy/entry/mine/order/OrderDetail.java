@@ -15,6 +15,7 @@ public class OrderDetail implements Serializable{
 	private String receiveMen;
 	private String receiveMobile;
 	private String receiveAddr;
+	private int serviceFee;
 	private int quantity;
 	private int totalPrice;
 	private String status;
@@ -92,5 +93,10 @@ public class OrderDetail implements Serializable{
 	public void setMenuInfoList(List<OrderDetailMenus> menuInfoList) {
 		this.menuInfoList = menuInfoList;
 	}
-	
+	public int getServiceFee() {
+		return serviceFee;
+	}
+	public void setServiceFee(int serviceFee) {
+		this.serviceFee = serviceFee;
+	}
 }

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/color_app_base_6"
+    android:paddingBottom="20dip"
     android:orientation="vertical" >
     
 	<TextView 
@@ -15,12 +19,14 @@
 	    android:layout_marginLeft="12dip"
 	    android:textColor="@color/color_app_base_4"/>
 	
-	<GridView 
+	<com.guozha.buy.view.MultiGridView
 	    android:id="@+id/search_result_list"
 	    android:layout_width="match_parent"
 	    android:numColumns="3"
 	    android:layout_marginLeft="8dip"
 	    android:layout_marginRight="8dip"
+	    android:horizontalSpacing="1dip"
+	    android:verticalSpacing="1dip"
 	    android:layout_height="wrap_content"/>
 	
 	<TextView 
@@ -32,8 +38,9 @@
 	    android:textColor="@color/color_app_base_4"
 	    android:layout_marginLeft="12dip"/>
 	
-	<ListView
+	<com.guozha.buy.view.MultiListView
 	    android:id="@+id/search_relate_recipe_list" 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"/>
 </LinearLayout>
+</ScrollView>

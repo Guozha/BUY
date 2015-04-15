@@ -32,6 +32,7 @@ import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ConstantUtil;
 import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -56,6 +57,7 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
 	private OrderListAdapter mOrderListAdapter;
+	private View mEmptyView;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -83,30 +85,36 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	 * @param view
 	 */
 	private void initView(View view){
+		mEmptyView = view.findViewById(R.id.empty_view);
 		mOrderUnFinishList = (ListView) view.findViewById(R.id.order_unfinished_list);
 		mOrderUnFinishList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				OrderSummary orderSummary = mOrderList.get(position);
+				
+				String orderDescript = ConstantUtil.getOrderStatusString(
+						orderSummary.getStatus(),
+						orderSummary.getArrivalPayFlag(), 
+						orderSummary.getCommentFlag());
 				//如果是货到付款或者支付成功
 				Intent intent;
 				if("1".equals(orderSummary.getArrivalPayFlag())){
 					intent = new Intent(
 							OrderUnFinishFragment.this.getActivity(), OrderPayedDetailActivity.class);
-					intent.putExtra("orderDescript", "货到付款，正在配送");
+					intent.putExtra("orderDescript", orderDescript);
 					intent.putExtra("orderId", orderSummary.getOrderId());
 					startActivity(intent);
 				}else if("1".equals(orderSummary.getFinishPayFlag())){
 					intent = new Intent(
 							OrderUnFinishFragment.this.getActivity(), OrderPayedDetailActivity.class);
-					intent.putExtra("orderDescript", "已支付，正在配送");
+					intent.putExtra("orderDescript", orderDescript);
 					intent.putExtra("orderId", orderSummary.getOrderId());
 					startActivity(intent);
 				}else{
 					intent = new Intent(
 							OrderUnFinishFragment.this.getActivity(), OrderUnPayDetailActivity.class);
-					intent.putExtra("orderDescript", "未支付");
+					intent.putExtra("orderDescript", orderDescript);
 					intent.putExtra("orderId", orderSummary.getOrderId());
 					startActivityForResult(intent, REQUEST_CODE);
 				}
@@ -115,6 +123,7 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 		
 		mBottomLoadingView = getActivity().getLayoutInflater()
 				.inflate(R.layout.list_paging_bottom, null);
+		mBottomLoadingView.setBackgroundColor(getActivity().getResources().getColor(R.color.color_app_base_6));
 		mLoadText = (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
 		mLoadProgressBar = (ProgressBar) 
 				mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
@@ -126,7 +135,13 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	 * 更新listView数据
 	 */
 	private void updateListView(){
-		LogUtil.e("mOrderList == " + mOrderList.size());
+		if(mOrderList.isEmpty()){
+			mOrderUnFinishList.setVisibility(View.GONE);
+			mEmptyView.setVisibility(View.VISIBLE);
+		}else{
+			mOrderUnFinishList.setVisibility(View.VISIBLE);
+			mEmptyView.setVisibility(View.GONE);
+		}
 		if(mOrderListAdapter == null){
 			mOrderListAdapter = new OrderListAdapter(getActivity(), mOrderList);
 			mOrderUnFinishList.setAdapter(mOrderListAdapter);
@@ -145,12 +160,6 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	 * 从网络获取数据
 	 */
 	private void loadData(){
-		mCurrentPage = 0;
-		mMaxDateNum = 0;
-		mMaxPageSize = 0;
-		if(mOrderList != null){
-			mOrderList.clear();
-		}
 		int userId = ConfigManager.getInstance().getUserId();
 		if(userId == -1) return;
 		RequestParam paramPath = new RequestParam("order/list")
@@ -184,7 +193,7 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		//当滑动到底部后自动加载
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-				&& mLastVisibleIndex == mOrderListAdapter.getCount() 
+				&& mLastVisibleIndex == mOrderListAdapter.getCount()
 				&& mCurrentPage < mMaxPageSize){
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			mLoadText.setVisibility(View.GONE);
@@ -222,6 +231,10 @@ public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == REQUEST_CODE){
+			if(mOrderList != null){
+				mOrderList.clear();
+			}
+			mCurrentPage = 0;
 			loadData();
 		}
 	}

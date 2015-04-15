@@ -13,7 +13,7 @@ public class OrderDetailMenus implements Serializable{
 	private int unitPrice;
 	private int amount;
 	private int price;
-	private List<OrderDetailGoods> goodsInfo;
+	private List<OrderDetailGoods> goodsInfoList;
 	public int getMenuId() {
 		return menuId;
 	}
@@ -50,10 +50,10 @@ public class OrderDetailMenus implements Serializable{
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public List<OrderDetailGoods> getGoodsInfo() {
-		return goodsInfo;
+	public List<OrderDetailGoods> getGoodsInfoList() {
+		return goodsInfoList;
 	}
-	public void setGoodsInfo(List<OrderDetailGoods> goodsInfo) {
-		this.goodsInfo = goodsInfo;
+	public void setGoodsInfoList(List<OrderDetailGoods> goodsInfoList) {
+		this.goodsInfoList = goodsInfoList;
 	}
 }

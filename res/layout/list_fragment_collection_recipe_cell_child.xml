@@ -17,7 +17,7 @@
             android:layout_width="90dip"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/main_recipe_img_02"
+            android:src="@drawable/default_icon"
             android:layout_marginRight="12dip"/>
         
         <LinearLayout 

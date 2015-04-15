@@ -39,11 +39,11 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 	private BitmapCache mBitmapCache;
 	private Context mContext;
 	
-	public VegetableListAdapter(Context context, List<ItemSaleInfo[]> vegetables, View parentView){
+	public VegetableListAdapter(Context context, List<ItemSaleInfo[]> vegetables, View parentView, BitmapCache bitmapCache){
 		mContext = context;
 		mInflater = LayoutInflater.from(mContext);
 		mVegetables = vegetables;
-		mBitmapCache = new BitmapCache(mContext);
+		mBitmapCache = bitmapCache;
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 			mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
 			itemHolder.vegetableName.setText(saleInfo.getGoodsName());
 			itemHolder.vegetablePrice.setText(
-					UnitConvertUtil.getSwitchedMoney(saleInfo.getUnitPrice()) + "/" +
+					UnitConvertUtil.getSwitchedMoney(saleInfo.getUnitPrice()) + "元/" +
 					UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
 		}
 		
@@ -115,7 +115,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 		}
 		//TODO 再判断当前选择的地址是否为NULL
 		if(ConfigManager.getInstance().getChoosedAddressId() == -1){
-			CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
+			final CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
 			addAddressDialog.setDismissButtonId(R.id.cancel_button);
 			addAddressDialog.getViewById(R.id.agree_button)
 				.setOnClickListener(new OnClickListener() {
@@ -123,6 +123,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 				public void onClick(View v) {
 					Intent intent = new Intent(mContext, AddAddressActivity.class);
 					mContext.startActivity(intent);
+					addAddressDialog.dismiss();
 				}
 			});
 			return;

@@ -24,10 +24,10 @@ public class DetailStepListAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;
 	private List<MenuStep> mMenuStep;
 	private BitmapCache mBitmapCahe;
-	public DetailStepListAdapter(Context context, List<MenuStep> menuStep){
+	public DetailStepListAdapter(Context context, List<MenuStep> menuStep, BitmapCache bitmapCache){
 		mInflater = LayoutInflater.from(context);
 		mMenuStep = menuStep;
-		mBitmapCahe = new BitmapCache(context);
+		mBitmapCahe = bitmapCache;
 	}
 
 	@Override

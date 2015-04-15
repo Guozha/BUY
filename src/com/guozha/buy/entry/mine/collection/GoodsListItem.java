@@ -15,7 +15,7 @@ public class GoodsListItem implements Serializable{
 	private int goodsId;		//食材id
 	private String goodsName;	//食材名称
 	private String goodsImg;	//食材图片
-	private int price;			//价格
+	private int unitPrice;			//价格
 	private String unit;		//单位
 	private String activeFlag;	//激活标识
 	
@@ -43,11 +43,11 @@ public class GoodsListItem implements Serializable{
 	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
 	}
-	public int getPrice() {
-		return price;
+	public int getUnitPrice() {
+		return unitPrice;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 	public String getUnit() {
 		return unit;

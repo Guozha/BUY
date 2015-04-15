@@ -28,6 +28,7 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_7"/>
 	<TextView 
+	    android:id="@+id/about_our_website"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
 	    android:text="官方网站：http://www.aizhangshao.com"
@@ -41,12 +42,13 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_7"/>
 	<TextView 
+	     android:id="@+id/about_our_weixin"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
-	    android:text="微信公众号：aizhangshao"
+	    android:text="微信公众号：爱掌勺"
 	    android:textColor="@color/color_app_base_4"
 	    android:textSize="@dimen/dimen_global_14sp"
-	    android:background="@color/color_app_base_5"
+	    android:background="@drawable/white_list_selector_bg"
 	    android:gravity="center_vertical"
 	    android:paddingLeft="18dip"/>	
 	<View 
@@ -54,12 +56,13 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_7"/>
 	<TextView 
+	    android:id="@+id/about_our_weibo"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
 	    android:text="官方微博：爱掌勺"
 	    android:textColor="@color/color_app_base_4"
 	    android:textSize="@dimen/dimen_global_14sp"
-	    android:background="@color/color_app_base_5"
+	    android:background="@drawable/white_list_selector_bg"
 	    android:gravity="center_vertical"
 	    android:paddingLeft="18dip"/>			
 	<View 
@@ -67,12 +70,13 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_7"/>
 	<TextView 
+	    android:id="@+id/about_our_qq_group"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
-	    android:text="QQ粉丝群：812343434"
+	    android:text="QQ粉丝群：100179552"
 	    android:textColor="@color/color_app_base_4"
 	    android:textSize="@dimen/dimen_global_14sp"
-	    android:background="@color/color_app_base_5"
+	    android:background="@drawable/white_list_selector_bg"
 	    android:gravity="center_vertical"
 	    android:paddingLeft="18dip"/>	
 	<View 

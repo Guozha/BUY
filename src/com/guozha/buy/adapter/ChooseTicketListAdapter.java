@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mine.MarketTicket;
+import com.guozha.buy.util.ConstantUtil;
+import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 
 /**
  * 选择有效菜票列表适配器
@@ -50,13 +53,12 @@ public class ChooseTicketListAdapter extends BaseAdapter{
 		TextView ticketType = (TextView) convertView.findViewById(R.id.ticket_type);
 		TextView ticketPrice = (TextView) convertView.findViewById(R.id.ticket_for_price);
 		TextView ticketValidDate = (TextView) convertView.findViewById(R.id.ticket_valid_date);
+		convertView.findViewById(R.id.ticket_effective).setVisibility(View.GONE);
 		
 		MarketTicket marketTicket = mMarketTickets.get(position);
-		ticketType.setText(marketTicket.getTicketType());
-		ticketPrice.setText(marketTicket.getForPrice());
-		ticketValidDate.setText(marketTicket.getValidDate());
-		
+		ticketType.setText(ConstantUtil.getTicketType(marketTicket.getTicketType()));
+		ticketPrice.setText("订单满" + UnitConvertUtil.getSwitchedMoney(marketTicket.getForPrice()) + "元可用");
+		ticketValidDate.setText("菜票有效期 " + DimenUtil.getStringFormatDate(marketTicket.getValidDate()));
 		return convertView;
 	}
-
 }

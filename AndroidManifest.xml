@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guozha.buy"
-    android:versionCode="10"
+    android:versionCode="300000"
     android:versionName="3.0" >
 
     <uses-sdk
@@ -186,6 +186,11 @@
             android:name="com.guozha.buy.activity.mine.OrderUnPayDetailActivity"
             android:screenOrientation="portrait"></activity>
         
+        <!-- 已完成订单详情 -->
+        <activity
+            android:name="com.guozha.buy.activity.mine.OrderGradDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 行政区选择 -->
         <activity 
             android:name="com.guozha.buy.activity.mine.ChooseCantonActivity"
@@ -299,6 +304,12 @@
         <!-- 选择地址对话框 -->
         <activity 
             android:name="com.guozha.buy.dialog.ChooseAddressDialog"
+            android:theme="@style/Theme.CommenDialog"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 活动规则对话框 -->
+        <activity 
+            android:name="com.guozha.buy.dialog.ActiveRuleActivity"
             android:theme="@style/Theme.CommenDialog"
             android:screenOrientation="portrait"></activity>
         

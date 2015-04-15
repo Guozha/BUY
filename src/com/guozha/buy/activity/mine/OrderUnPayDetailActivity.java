@@ -29,6 +29,7 @@ import com.guozha.buy.entry.mine.order.OrderDetailMenus;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -42,6 +43,7 @@ import com.umeng.analytics.MobclickAgent;
 public class OrderUnPayDetailActivity extends BaseActivity{
 
 	private static final String PAGE_NAME = "OrderDetailPage";
+	private static final int REQUEST_CODE = 0x0001;
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
 	private ExpandableListView mExpandableListView;
@@ -56,6 +58,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 	private String mOrderAddressName;
 	private String mOrderAddressDetail;
 	private String mOrderTotalPrice;
+	private int mServiceFee = 0;
 	
 	private String mOrderStatus;
 	
@@ -114,7 +117,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 				.setParams("token", token)
 				.setParams("orderId", mOrderId)
 				.setParams("status", mOrderStatus);
-				
 				HttpManager.getInstance(OrderUnPayDetailActivity.this).volleyJsonRequestByPost(
 					HttpManager.URL + paramPath, new Listener<JSONObject>() {
 						@Override
@@ -138,14 +140,17 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
-				startActivity(intent);
+				intent.putExtra("orderId", mOrderId);
+				intent.putExtra("serverPrice", mServiceFee);
+				intent.putExtra("orderComeIn", true);
+				startActivityForResult(intent, REQUEST_CODE);
 			}
 		});
 	}
 	
 	private void updateView(){
 		if(mMenusAdapter == null){
-			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas);
+			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas, false);
 			mExpandableListView.setAdapter(mMenusAdapter);
 			//首次全部展开
 			for (int i = 0; i < mExpandListDatas.size(); i++) {
@@ -175,9 +180,10 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
 					if(orderDetail == null) return;
 					mOrderNum = "订单号：" + orderDetail.getOrderNo();
-					mOrderTime = "下单时间：" + orderDetail.getCreateTime().toString();
+					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 					mOrderAddressDetail = orderDetail.getReceiveAddr();
+					mServiceFee = orderDetail.getServiceFee();
 					mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
 					mOrderStatus = orderDetail.getStatus();
 					if(mExpandListDatas == null){
@@ -191,6 +197,9 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailGoods.getGoodsId());
 							expandListData.setName(orderDetailGoods.getGoodsName());
+							expandListData.setUnit(orderDetailGoods.getUnit());
+							expandListData.setAmount(orderDetailGoods.getAmount());
+							expandListData.setPrice(orderDetailGoods.getPrice());
 							//TODO 设置价格等
 							mExpandListDatas.add(expandListData);
 						}
@@ -203,7 +212,10 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailMenus.getMenuId());
 							expandListData.setName(orderDetailMenus.getMenuName());
-							expandListData.setMenuslist(orderDetailMenus.getGoodsInfo());
+							expandListData.setAmount(orderDetailMenus.getAmount());
+							expandListData.setUnit("8");
+							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setPrice(orderDetailMenus.getPrice());
 							mExpandListDatas.add(expandListData);
 						}
 					}
@@ -229,5 +241,21 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQUEST_CODE){
+			if(data != null){
+				Bundle bundle = data.getExtras();
+				if(bundle != null){
+					boolean paySuccess = bundle.getBoolean("paySuccess");
+					if(paySuccess){
+						OrderUnPayDetailActivity.this.finish();
+					}
+				}
+			}
+		}
 	}
 }

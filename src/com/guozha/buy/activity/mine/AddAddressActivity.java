@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
@@ -57,15 +58,18 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private AutoCompleteTextView mAddressDetai;  //详细地址
 	private EditText mAddressDetaiNum; //门牌号
 	
+	private ImageView mAddressCountryIcon;
+	private ImageView mAddressCityIcon;
+	
 	private int mCountryId;
 	
 	private int defaultFlag = 0;  //是否默认地址
 	
-	private List<Country> mCountrys = null;
 	private List<KeyWord> mKeyWords = null;
 	private AddressInfo mAddressInfo = null;
 	
 	private Button mRequestAddButton;
+	private Button mRequestSettingDefaultButton;
 	
 	private Handler handler = new Handler(){
 		
@@ -116,6 +120,11 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		mAddressDetai = (AutoCompleteTextView) findViewById(R.id.add_address_detailaddr);
 		mAddressDetaiNum = (EditText) findViewById(R.id.add_address_detail_number);
 		mRequestAddButton = (Button) findViewById(R.id.add_address_request_button);
+		mRequestSettingDefaultButton = (Button) findViewById(R.id.add_address_setting_default);
+		
+		mAddressCityIcon = (ImageView) findViewById(R.id.add_address_city_icon);
+		mAddressCountryIcon = (ImageView) findViewById(R.id.add_address_country_icon);
+		
 		if(mAddressInfo != null){
 			mReceiveName.setText(mAddressInfo.getReceiveName());
 			mMobileNum.setText(mAddressInfo.getMobileNo());
@@ -123,17 +132,29 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mAddressCountry.setText(mAddressInfo.getCountyName());
 			mAddressDetai.setText(mAddressInfo.getBuildingName());
 			mAddressDetaiNum.setText(mAddressInfo.getDetailAddr());
+			mReceiveName.setEnabled(false);
+			mMobileNum.setEnabled(false);
+			mAddressCity.setEnabled(false);
+			mAddressCountry.setEnabled(false);
+			mAddressDetai.setEnabled(false);
+			mAddressDetaiNum.setEnabled(false);
 			mRequestAddButton.setText("删除");
+			mRequestSettingDefaultButton.setVisibility(View.VISIBLE);
+			mAddressCityIcon.setVisibility(View.INVISIBLE);
+			mAddressCountryIcon.setVisibility(View.INVISIBLE);
+			mReceiveName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+			mMobileNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+			mAddressDetai.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+			mAddressDetaiNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 		}else{
+			findViewById(R.id.add_canton_button).setOnClickListener(this);
+			findViewById(R.id.add_city_button).setOnClickListener(this);
 			mRequestAddButton.setText("添加");
+			mRequestSettingDefaultButton.setVisibility(View.GONE);
 		}
 		
-		findViewById(R.id.add_canton_button).setOnClickListener(this);
-		findViewById(R.id.add_city_button).setOnClickListener(this);
-		
 		mRequestAddButton.setOnClickListener(this);
-		findViewById(R.id.add_address_setting_default).setOnClickListener(this);
-		
+		mRequestSettingDefaultButton.setOnClickListener(this);
 	}
 	
 	/**
@@ -239,13 +260,22 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 						try {
 							String returnCode = response.getString("returnCode");
 							if("1".equals(returnCode)){
-								ToastUtil.showToast(AddAddressActivity.this, "成功处理");
+								String buildingFlag = response.getString("buildingFlag");
+								
 								if(mAddressInfo != null){
 									//请求删除旧的（这个相当于修改）
 									//handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
+									ToastUtil.showToast(AddAddressActivity.this, "成功处理");
 								}else{
-									handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+									if("0".equals(buildingFlag)){//未覆盖
+										showNotCoveredDialog();
+									}else{
+										ToastUtil.showToast(AddAddressActivity.this, "成功添加");
+										handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+									}
 								}
+								
+								
 							}else{
 								ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
 							}
@@ -254,6 +284,27 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 						}
 					}
 				});
+	}
+	
+	/**
+	 * 显示没有覆盖提示框
+	 */
+	private void showNotCoveredDialog(){
+		final CustomDialog dialog = new CustomDialog(this, R.layout.dialog_not_covered);
+		dialog.getViewById(R.id.cancel_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+			}
+		});
+		dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+			}
+		});
 	}
 	
 	/**
@@ -307,8 +358,13 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		String detailAddr = mAddressDetai.getText().toString();
-		if(detailAddr.length() < 3){
-			ToastUtil.showToast(AddAddressActivity.this, "详细地址不能少于3个字");
+		if(detailAddr.isEmpty()){
+			ToastUtil.showToast(AddAddressActivity.this, "请填写详细地址");
+			return false;
+		}
+		String detailAddrNum = mAddressDetaiNum.getText().toString();
+		if(detailAddrNum.isEmpty()){
+			ToastUtil.showToast(AddAddressActivity.this, "请填写门牌号");
 			return false;
 		}
 		return true;

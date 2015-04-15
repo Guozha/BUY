@@ -7,14 +7,22 @@ package com.guozha.buy.util;
  */
 public class UnitConvertUtil {
 	
-	private static final int UNIT_KE = 1;  //克
-	private static final int UNIT_HE = 2;  //盒
-	private static final int UNIT_KUAI = 3;  //块
-	private static final int UNIT_DAI = 4;  //袋
-	private static final int UNIT_BAO = 5;  //包
-	private static final int UNIT_PIN = 6;  //瓶
-	private static final int UNIT_LAN = 7;  //蓝
-	private static final int UNIT_FEN = 8;  //份
+	private static final int UNIT1_KE = 1;  //克
+	private static final int UNIT2_HE = 2;  //盒
+	private static final int UNIT3_KUAI = 3;  //块
+	private static final int UNIT4_DAI = 4;  //袋
+	private static final int UNIT5_BAO = 5;  //包
+	private static final int UNIT6_PIN = 6;  //瓶
+	private static final int UNIT7_LAN = 7;  //蓝
+	private static final int UNIT8_FEN = 8;  //份
+	private static final int UNIT9_DUI = 9;  //对  
+	private static final int UNIT10_FU = 10;  //副
+	private static final int UNIT11_GE = 11;  //个
+	private static final int UNIT12_KAN = 12; //看
+	private static final int UNIT13_ZHI = 13; //只
+	private static final int UNIT14_ZHI2 = 14; //支
+	private static final int UNIT15_XIANG = 15; //箱
+	
 	
 	public static int getAmountByUnit(String unittext){
 		if("两".equals(unittext)){
@@ -35,7 +43,7 @@ public class UnitConvertUtil {
 		try{
 			int unitId = Integer.parseInt(unit);
 			switch (unitId) {
-			case UNIT_KE:
+			case UNIT1_KE:
 				if(amount < 50){
 					return "克";
 				}else if(amount < 500){
@@ -43,20 +51,34 @@ public class UnitConvertUtil {
 				}else{
 					return "斤";
 				}
-			case UNIT_HE:
+			case UNIT2_HE:
 				return "盒";
-			case UNIT_KUAI:
+			case UNIT3_KUAI:
 				return "块";
-			case UNIT_DAI:
+			case UNIT4_DAI:
 				return "袋";
-			case UNIT_BAO:
+			case UNIT5_BAO:
 				return "包";
-			case UNIT_PIN:
+			case UNIT6_PIN:
 				return "瓶";
-			case UNIT_LAN:
+			case UNIT7_LAN:
 				return "篮";
-			case UNIT_FEN:
+			case UNIT8_FEN:
 				return "份";
+			case UNIT9_DUI:
+				return "对";
+			case UNIT10_FU:
+				return "副";
+			case UNIT11_GE:
+				return "个";
+			case UNIT12_KAN:
+				return "看";
+			case UNIT13_ZHI:
+				return "只";
+			case UNIT14_ZHI2:
+				return "支";
+			case UNIT15_XIANG:
+				return "箱";
 			}
 			return "";
 		}catch(Exception e){
@@ -65,49 +87,43 @@ public class UnitConvertUtil {
 	}
 
 	/**
-	 * 获取转换后的数量单位
+	 * 获取转换后的数量及单位
 	 * @param amount
 	 * @param unit
 	 * @return
 	 */
 	public static String getSwitchedWeight(int amount, String unit){
+		String amountStr = getSwitchWeightNum(amount, unit);
+		return amountStr + getSwichedUnit(amount, unit);
+	}
+	
+	/**
+	 * 获取转换后的数量
+	 * @param amount
+	 * @param unit
+	 * @return
+	 */
+	public static String getSwitchWeightNum(int amount, String unit){
+		String amountStr = "";
 		try{
 			int unitId = Integer.parseInt(unit);
-			switch (unitId) {
-			case UNIT_KE:
+			if(unitId == UNIT1_KE){
+				double amountDouble = 0.0;
 				if(amount < 50){
-					return amount + "克";
+					amountDouble = amount;
 				}else if(amount < 500){
-					return (Math.round((float)amount / 5)) / 10.0 + "两";
+					amountDouble = (Math.round((float)amount / 5)) / 10.0;
 				}else{
-					return (Math.round((float)amount / 5)) / 100.0 + "斤";
+					amountDouble = (Math.round((float)amount / 5)) / 100.0;
 				}
-			case UNIT_HE:
-				unit = "盒";
-				return amount + unit;
-			case UNIT_KUAI:
-				unit = "块";
-				return amount + unit;
-			case UNIT_DAI:
-				unit = "袋";
-				return amount + unit;
-			case UNIT_BAO:
-				unit = "包";
-				return amount + unit;
-			case UNIT_PIN:
-				unit = "瓶";
-				return amount + unit;
-			case UNIT_LAN:
-				unit = "篮";
-				return amount + unit;
-			case UNIT_FEN:
-				unit = "份";
-				return amount + unit;
+				amountStr = String.valueOf(amountDouble);
+			}else{
+				amountStr = String.valueOf(amount);
 			}
-			return "";
+			return amountStr;
 		}catch(Exception e){
-			return "";
 		}
+		return amountStr;
 	}
 	
 	/**
@@ -116,11 +132,11 @@ public class UnitConvertUtil {
 	 * @return
 	 */
 	public static double getSwitchedMoney(int price){
-		return price / 100.0;
+		return price / 100.00;
 	}
 	
 	public static double getSwitchedMoney(float price){
-		return price / 100.0;
+		return price / 100.00;
 	}
 	
 	/**
@@ -136,6 +152,22 @@ public class UnitConvertUtil {
 			return amount * 50;
 		}else{
 			return amount;
+		}
+	}
+	
+	/**
+	 * 获取递增量
+	 * @param amount
+	 * @param unit
+	 * @return
+	 */
+	public static int getPlusAmount(int amount, String unit){
+		if("斤".equals(unit)){
+			return 50;
+		}else if("两".equals(unit)){
+			return 50;
+		}else{
+			return 1;
 		}
 	}
 	
@@ -191,7 +223,7 @@ public class UnitConvertUtil {
 		LogUtil.e("getPrice___unit = " + unit);
 		try{
 			int unitId = Integer.parseInt(unit);
-			if(UNIT_KE == unitId){
+			if(UNIT1_KE == unitId){
 				return getSwitchedMoney((float)amount * unitPrice / 500);
 			}
 			return getSwitchedMoney(amount * unitPrice);

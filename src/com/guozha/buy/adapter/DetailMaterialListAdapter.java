@@ -25,6 +25,7 @@ public class DetailMaterialListAdapter extends BaseAdapter{
 	
 	public DetailMaterialListAdapter(Context context, List<MenuGoods> menuGoods){
 		mInflater = LayoutInflater.from(context);
+		mMenuGoods = menuGoods;
 	}
 
 	@Override

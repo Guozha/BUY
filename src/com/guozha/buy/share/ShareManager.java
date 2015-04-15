@@ -141,6 +141,27 @@ public class ShareManager{
 	}
 	
 	/**
+	 * 自定义分享到微信朋友圈
+	 * @param context
+	 * @param image
+	 * @param title
+	 * @param content
+	 * @param url
+	 */
+	public void shareToWeixinFriends(Context context, UMImage image, String title, String content, String url){
+		//设置分享内容
+		CircleShareContent circleShareContent = new CircleShareContent();
+		
+		
+		circleShareContent.setTitle(title);
+		circleShareContent.setShareContent(content);
+		circleShareContent.setTargetUrl(url);
+		circleShareContent.setShareImage(image);
+		mController.setShareMedia(circleShareContent);
+		mController.postShare(context, SHARE_MEDIA.WEIXIN_CIRCLE, mShareResultListener);
+	}
+	
+	/**
 	 * 分享到微信朋友圈
 	 * @param context
 	 */

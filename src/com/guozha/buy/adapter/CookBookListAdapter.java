@@ -19,6 +19,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.market.RelationRecipeMaterial;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
@@ -109,16 +110,20 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 	}
 
 	/**
-	 * 请求收藏菜谱
+	 * 请求添加购物车
 	 * @param menuId
 	 */
 	private void requestCollectionRecipe(int menuId) {
 		String token = ConfigManager.getInstance().getUserToken(mContext);
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		RequestParam paramPath = new RequestParam("cart/insert")
 		.setParams("token", token)
 		.setParams("userId", userId)
-		.setParams("menuIds", menuId);
+		.setParams("id", menuId)
+		.setParams("addressId", addressId)
+		.setParams("amount", 1)
+		.setParams("productType", "02");
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
@@ -126,7 +131,8 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 					try {
 						String returnCode = response.getString("returnCode");
 						if("1".equals(returnCode)){
-							ToastUtil.showToast(mContext, "收藏成功");
+							ToastUtil.showToast(mContext, "添加成功");
+							MainPageInitDataManager.mCartItemsUpdated = true;
 						}else{
 							ToastUtil.showToast(mContext, response.getString("msg"));
 						}

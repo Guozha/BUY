@@ -138,7 +138,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"
 	        android:background="@color/color_app_base_7"/>
-	    <ListView 
+	    <com.guozha.buy.view.MultiListView 
 	        android:id="@+id/cookbook_detail_material"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
@@ -158,7 +158,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"
 	        android:background="@color/color_app_base_7"/>
-	    <ListView 
+	    <com.guozha.buy.view.MultiListView 
 	        android:id="@+id/cookbook_detail_seasoning"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
@@ -174,7 +174,7 @@
 	        android:text="做法"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_16sp"/>
-	    <ListView 
+	    <com.guozha.buy.view.MultiListView 
 	        android:id="@+id/cookbook_detail_step"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"

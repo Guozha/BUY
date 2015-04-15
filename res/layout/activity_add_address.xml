@@ -104,6 +104,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <ImageView 
+            android:id="@+id/add_address_city_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
@@ -143,6 +144,7 @@
             android:textSize="@dimen/dimen_global_16sp"/>
         
         <ImageView 
+            android:id="@+id/add_address_country_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
@@ -239,10 +241,8 @@
             android:gravity="center"
             android:background="@drawable/main_background"
             android:textColor="@color/color_app_base_2"
+            android:layout_marginRight="18dip"
             android:textSize="@dimen/dimen_global_16sp"/>
-       <Space 
-           android:layout_width="18dip"
-           android:layout_height="match_parent"/>
        <Button 
             android:id="@+id/add_address_request_button"
             android:layout_width="150dip"

@@ -1,5 +1,6 @@
 package com.guozha.buy.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -20,11 +21,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CollectionVegetableListAdapter;
+import com.guozha.buy.adapter.CollectionVegetableListAdapter.UpdateVegetableListener;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.mine.collection.GoodsListItem;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -41,7 +44,8 @@ public class CollectionVegetableFragment extends Fragment{
 	private ListView mCollectionVegetableList;
 	private CollectionVegetableListAdapter mCollectionVegetableAdapter;
 	
-	private List<GoodsListItem> mGoodsListItems;
+	private List<GoodsListItem> mGoodsListItems = new ArrayList<GoodsListItem>();
+	private View mEmptyView;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -68,17 +72,19 @@ public class CollectionVegetableFragment extends Fragment{
 	 * @param view
 	 */
 	private void initView(View view){
+		mEmptyView = view.findViewById(R.id.empty_view);
 		mCollectionVegetableList = (ListView) view.findViewById(R.id.collection_vegetable_list);
 		mCollectionVegetableList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				GoodsListItem goodsListItem = mGoodsListItems.get(position);
 				Intent intent = new Intent(
 						CollectionVegetableFragment.this.getActivity(), WeightSelectDialog.class);
-				//intent.putExtra("goodsId", value);
-				//intent.putExtra("unitPrice", value);
-				//intent.putExtra("unit", value);
+				intent.putExtra("goodsId", String.valueOf(goodsListItem.getGoodsId()));
+				intent.putExtra("unitPrice", String.valueOf(goodsListItem.getUnitPrice()));
+				intent.putExtra("unit", goodsListItem.getUnit());
 				startActivity(intent);
 			}
 		});
@@ -93,12 +99,15 @@ public class CollectionVegetableFragment extends Fragment{
 		RequestParam paramPath = new RequestParam("account/myfavo/listGoodsFavo")
 		.setParams("userId", userId)
 		.setParams("addressId", addressId);
+		
 		HttpManager.getInstance(getActivity()).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mGoodsListItems = gson.fromJson(response, new TypeToken<List<GoodsListItem>>() { }.getType());
+					List<GoodsListItem> goods = gson.fromJson(response, new TypeToken<List<GoodsListItem>>() { }.getType());
+					mGoodsListItems.clear();
+					mGoodsListItems.addAll(goods);
 					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 				}
 			});
@@ -110,9 +119,23 @@ public class CollectionVegetableFragment extends Fragment{
 	private void updateView(){
 		if(mCollectionVegetableAdapter == null){
 			mCollectionVegetableAdapter = new CollectionVegetableListAdapter(getActivity(), mGoodsListItems);
+			mCollectionVegetableAdapter.setOnUpdateVegetableListener(new UpdateVegetableListener() {
+				@Override
+				public void update() {
+					initData();
+				}
+			});
 			mCollectionVegetableList.setAdapter(mCollectionVegetableAdapter);
 		}else{
 			mCollectionVegetableAdapter.notifyDataSetChanged();
+		}
+		if(mEmptyView == null) return;
+		if(mGoodsListItems == null || mGoodsListItems.isEmpty()){
+			mCollectionVegetableList.setVisibility(View.GONE);
+			mEmptyView.setVisibility(View.VISIBLE);
+		}else{
+			mEmptyView.setVisibility(View.GONE);
+			mCollectionVegetableList.setVisibility(View.VISIBLE);
 		}
 	}
 	

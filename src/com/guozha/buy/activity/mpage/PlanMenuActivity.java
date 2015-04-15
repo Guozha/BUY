@@ -32,11 +32,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.global.SetWarnTimeActivity;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.mpage.plan.PlanMenu;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
@@ -78,7 +80,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	
 	private List<ImageView> points = new ArrayList<ImageView>();
 	
-	private BitmapCache mBitmapCache;
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private TextView mWeakDayText;
 	
@@ -114,7 +116,6 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	 */
 	private void initView(){
 		mViewFlipper = (ViewFlipper) findViewById(R.id.planmenu_content_view);
-		mBitmapCache = new BitmapCache(this);
 		
 		mCollectionChoosed = (Button) findViewById(R.id.colloection_menu_button);
 		mAddCartChoosed = (Button) findViewById(R.id.addcart_menu_button);
@@ -195,6 +196,10 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		String token = ConfigManager.getInstance().getUserToken(PlanMenuActivity.this);
 		if(token == null) return;
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		if(mCheckBoxs == null) {
+			ToastUtil.showToast(PlanMenuActivity.this, "没有可添加的数据");
+			return;
+		}
 		List<CheckBox> checkBoxs = mCheckBoxs.get(mCurrentIndex);
 		for(int i = 0; i < checkBoxs.size(); i++){
 			CheckBox checkbox = checkBoxs.get(i);
@@ -202,6 +207,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			requestAddCart(userId, token, addressId,
 					checkbox);
 		}
+		MainPageInitDataManager.mCartItemsUpdated = true;
 	}
 
 	private void requestAddCart(int userId, String token,
@@ -240,6 +246,10 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		String token = ConfigManager.getInstance().getUserToken(PlanMenuActivity.this);
 		if(token == null) return;
 		StringBuffer menuIds = new StringBuffer();
+		if(mCheckBoxs == null) {
+			ToastUtil.showToast(PlanMenuActivity.this, "没有可添加的数据");
+			return;
+		}
 		List<CheckBox> checkBoxs = mCheckBoxs.get(mCurrentIndex);
 		for(int i = 0; i < checkBoxs.size(); i++){
 			CheckBox checkbox = checkBoxs.get(i);
@@ -605,7 +615,7 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟页面统计代码
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

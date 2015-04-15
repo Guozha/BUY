@@ -56,7 +56,7 @@ public class SettingActivity extends BaseActivity{
 	private void initData(){
 		mSettingItems = new ArrayList<String>();
 		mSettingItems.add("意见反馈");
-		mSettingItems.add("常见问题");
+		//mSettingItems.add("常见问题");
 		mSettingItems.add("在线客服");
 		//mSettingItems.add("系统更新");
 		mSettingItems.add("关于我们");
@@ -86,11 +86,13 @@ public class SettingActivity extends BaseActivity{
 					intent = new Intent(SettingActivity.this, FeadbackActivity.class);
 					startActivity(intent);
 					break;
+				/*
 				case 1:		//常见问题
 					intent = new Intent(SettingActivity.this, AnswerQuestionActivity.class);
 					startActivity(intent);
 					break;
-				case 2:     //在线客服
+				*/
+				case 1:     //在线客服
 					dialServerTelephone();
 					break;
 			    /*
@@ -114,11 +116,11 @@ public class SettingActivity extends BaseActivity{
 					
 					break;
 					*/
-				case 3:     //关于我们
+				case 2:     //关于我们
 					intent = new Intent(SettingActivity.this, AboutOurActivity.class);
 					startActivity(intent);
 					break;
-				case 4:		//服务协议
+				case 3:		//服务协议
 					intent = new Intent(SettingActivity.this, LicenceActivity.class);
 					startActivity(intent);
 					break;

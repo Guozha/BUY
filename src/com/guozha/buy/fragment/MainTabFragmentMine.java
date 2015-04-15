@@ -35,6 +35,7 @@ import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.BitmapUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
@@ -109,7 +110,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		if(mMineBeans == null) return;
 		mMineBeans.setText("菜豆 " + accountInfo.getBeanAmount() + "个");
 		if(mMineRemainMoney == null) return;
-		mMineRemainMoney.setText("我的余额 ￥" + accountInfo.getBalance());
+		mMineRemainMoney.setText("我的余额 ￥" + UnitConvertUtil.getSwitchedMoney(accountInfo.getBalance()));
 		setTextColor();
 	}
 	

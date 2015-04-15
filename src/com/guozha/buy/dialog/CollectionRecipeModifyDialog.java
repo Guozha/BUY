@@ -101,53 +101,6 @@ public class CollectionRecipeModifyDialog extends Activity{
 				requestModifyCollectionFolder(mCollectionDir.get(position).getMyDirId());
 			}
 		});
-		
-		mRecipeModifyList.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				final int posit = position;
-				final CustomDialog deleteDialog = new CustomDialog(
-						CollectionRecipeModifyDialog.this, R.layout.dialog_delete_collection_folder);
-				deleteDialog.setDismissButtonId(R.id.cancel_button);
-				deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						deleteDialog.dismiss();
-						requestDeleteCollectionFolder(mCollectionDir.get(posit).getMyDirId());
-					}
-				});
-				return true;
-			}
-		});
-	}
-	
-	/**
-	 * 请求删除收藏夹
-	 * @param dirId
-	 */
-	private void requestDeleteCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken(CollectionRecipeModifyDialog.this);
-		if(token == null)return;
-		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyDir")
-		.setParams("token", token)
-		.setParams("myDirId", dirId);
-		HttpManager.getInstance(CollectionRecipeModifyDialog.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							requestCollectionRecipeData();
-						}else{
-							ToastUtil.showToast(CollectionRecipeModifyDialog.this, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
 	}
 	
 	/**

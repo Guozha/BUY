@@ -1,4 +1,4 @@
-package com.guozha.buy.activity.cart;
+package com.guozha.buy.server;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,7 +32,11 @@ public class AlipayManager{
 	public AlipayManager(String orderNum, String subject, String body, double price){
 		mOrderNum = orderNum;
 		mSubject = subject;
+		mPrice = price;
 		mBody = body;
+		if(mBody == null || "".equals(mBody)){
+			mBody = "没有备注";
+		}
 	}
 	/**
 	 * 请求支付
@@ -104,8 +108,7 @@ public class AlipayManager{
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + NOTIFY_URL
-				+ "\"";
+		orderInfo += "&notify_url=" + "\"" + NOTIFY_URL + "\"";
 
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";

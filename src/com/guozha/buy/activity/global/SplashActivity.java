@@ -1,6 +1,5 @@
 package com.guozha.buy.activity.global;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.json.JSONException;
@@ -8,6 +7,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -170,6 +170,8 @@ public class SplashActivity extends Activity{
 		initDataManager.getGoodsItemType(null);
 		//获取逛菜场首页数据
 		initDataManager.getMarketHomePage(null, 1, 4);
+		//获取系统当前时间
+		initDataManager.getSystemTime(null);
 		//设置别名和标签
 		//Set<String> tags = new HashSet<String>();
 		int userId = ConfigManager.getInstance().getUserId();
@@ -212,7 +214,7 @@ public class SplashActivity extends Activity{
 				}
 			}
 		});
-	}
+	}     
 	
 	@Override
 	protected void onResume() {

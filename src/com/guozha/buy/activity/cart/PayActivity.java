@@ -1,7 +1,6 @@
 package com.guozha.buy.activity.cart;
 
 import java.util.List;
-import java.util.logging.LogManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,12 +26,13 @@ import com.guozha.buy.activity.mine.MyOrderActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.PayOrderMesg;
 import com.guozha.buy.entry.cart.PayValidateResult;
-import com.guozha.buy.entry.market.MarketHomePage;
+import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
@@ -46,6 +46,9 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private static final int HAND_MAIN_SIGNLE_COMPLETED = 0x0005; 	//主单信息请求完毕
 	private static final int HAND_PAY_VALIDATE_COMPLETED = 0x0006;  //付款前验证完毕
 	private static final int HAND_PAY_SUCCESSED = 0x0007;			//支付成功
+	private static final int HAND_CHOOSED_TICKET_COMPLETED = 0x0008; //选择菜谱完成
+	
+	private boolean mOrderComeIn = false; 	//是否从订单进来
 	
 	private int mOrderId = -1;
 	private int mServicePrice = -1;
@@ -65,10 +68,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private TextView mTotalPriceText;	//总费用
 	private TextView mServerPriceText;  //服务费
 	private View mCanUseMoneyView;			//账户余额
+	private TextView mCanUseMoneyDeduct;	//扣除余额
 	private ImageView mCanUserMoneyViewIcon;	
 	private View mCanUseBeanView;			//菜豆
 	private ImageView mCanUserBeanViewIcon;	
 	private TextView mTicketText;		//菜票
+	private View mTicketView;		
 	private ImageView mTicketArrowIcon;	//菜票右边箭头
 	private TextView mPriceText;		//应支付
 	
@@ -108,7 +113,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					break;
 				case HAND_PAY_WAY_COMPLETED:
 					for(int i = 0; i < mPayWayList.size(); i++){
-						switch (mPayWayList.get(i).payWayId) {
+						switch (mPayWayList.get(i).getPayWayId()) {
 						case 1:			//支付宝支付
 							mZhiFuBaoView.setVisibility(View.VISIBLE);
 							break;
@@ -128,16 +133,33 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					LogUtil.e("mTotalPrice = " + mTotalPrice);
 					mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
 					mServerPriceText.setText(UnitConvertUtil.getSwitchedMoney(mServicePrice) + "元");
-					mPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice - mServicePrice) + "元");
+					mPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice + mServicePrice) + "元");
 					break;
 				case HAND_PAY_VALIDATE_COMPLETED:
 					requestPayMoney();
 					break;
 				case HAND_PAY_SUCCESSED:
 					ToastUtil.showToast(PayActivity.this, "支付成功");
-					Intent intent = new Intent(PayActivity.this, MyOrderActivity.class);
-					startActivity(intent);
-					PayActivity.this.finish();
+					if(mOrderComeIn){
+						Intent intent = getIntent();
+						if(intent != null){
+							intent.putExtra("paySuccess", true);
+						}
+						setResult(0, intent);
+						PayActivity.this.finish();
+					}else{
+						Intent intent = new Intent(PayActivity.this, MyOrderActivity.class);
+						startActivity(intent);
+						PayActivity.this.finish();
+					}
+					break;
+				case HAND_CHOOSED_TICKET_COMPLETED: //选择菜谱成功
+					if(mTicketId != -1){
+						mTicketArrowIcon.setVisibility(View.GONE);
+						mTicketText.setVisibility(View.VISIBLE);
+						mTicketText.setText(UnitConvertUtil.getSwitchedMoney(mTicketPrice) + "元");
+						setPayPriceText();
+					}
 					break;
 			}
 		};
@@ -154,8 +176,10 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			if(bundle != null){
 				mOrderId = bundle.getInt("orderId");
 				mServicePrice = bundle.getInt("serverPrice");
+				mOrderComeIn = bundle.getBoolean("orderComeIn");
 			}
 		}
+		setResult(0);
 		initView();
 		initData();
 	}
@@ -175,7 +199,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		mTicketText = (TextView) findViewById(R.id.pay_ticket);
 		mPriceText = (TextView) findViewById(R.id.pay_price);
 		mTicketArrowIcon = (ImageView) findViewById(R.id.pay_ticket_icon);
-		
+		mCanUseMoneyDeduct = (TextView) findViewById(R.id.pay_can_use_money_deduct);
 		mCanUseMoneyText = (TextView) findViewById(R.id.pay_can_use_money_text);
 		mCanUseBeanText = (TextView) findViewById(R.id.pay_can_user_bean_text);
 		
@@ -195,7 +219,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		mCanUseBeanView.setOnClickListener(this);
 		mCanUseMoneyView.setOnClickListener(this);
 		findViewById(R.id.pay_server_fee_rule).setOnClickListener(this);
-		findViewById(R.id.pay_ticket_choose).setOnClickListener(this);
+		mTicketView = findViewById(R.id.pay_ticket_choose);
+		mTicketView.setOnClickListener(this);
 		findViewById(R.id.pay_button).setOnClickListener(this);
 	}
 	
@@ -257,19 +282,20 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					PayActivity.this, R.layout.dialog_server_fee_rule);
 			customDialog.setDismissButtonId(0);
 			break;
-		case R.id.pay_ticket_choose:
+		case R.id.pay_ticket_choose:	//请求有效菜票
 			intent = new Intent(PayActivity.this, ChooseTicketActivity.class);
+			intent.putExtra("money", mTotalPrice);
 			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.pay_button:
 			requestPayCheck();
 			break;
-		case R.id.pay_can_use_money:
+		case R.id.pay_can_use_money:   //扣除余额选择
 			if(mCanUserMoneyViewIcon == null) return;
 			mAccountRemainChecked = exchangeIcon(mCanUserMoneyViewIcon);
 			setPayPriceText();
 			break;
-		case R.id.pay_can_use_bean:
+		case R.id.pay_can_use_bean:	   //扣除菜豆选择
 			if(mCanUserBeanViewIcon == null) return;
 			mBeanChecked = exchangeIcon(mCanUserBeanViewIcon);
 			setPayPriceText();
@@ -288,17 +314,49 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 	}
+	
+	private int mAccountRemainDeduct = 0; //扣除的余额
+	private int mBeanrDeduct = 0;		  //扣除菜豆
 
 	/**
 	 * 设置应付多少款文字
 	 */
 	private void setPayPriceText() {
-		int payPrice = mTotalPrice - mServicePrice;
+		int payPrice = mTotalPrice + mServicePrice;
 		if(mAccountRemainChecked){
-			payPrice = payPrice + mAccountRemain;
+			if(payPrice > mAccountRemain){
+				payPrice = payPrice - mAccountRemain;
+				mAccountRemainDeduct = mAccountRemain;
+			}else{
+				mAccountRemainDeduct = payPrice;
+				payPrice = 0;
+				mTicketId = -1;
+				mBeanrDeduct = 0;
+				mCanUseBeanView.setVisibility(View.GONE);
+				mTicketView.setVisibility(View.GONE);
+			}
+			mCanUseMoneyDeduct.setVisibility(View.VISIBLE);
+			mCanUseMoneyDeduct.setText(" 扣除" + UnitConvertUtil.getSwitchedMoney(mAccountRemainDeduct) + "元");
+		}else{
+			mCanUseMoneyDeduct.setVisibility(View.GONE);
+			mCanUseBeanView.setVisibility(View.VISIBLE);
+			mTicketView.setVisibility(View.VISIBLE);
 		}
 		if(mBeanChecked){
-			payPrice = payPrice + mBeanNum;
+			payPrice = payPrice - mBeanNum;
+			if(payPrice < 0){
+				payPrice = 0;
+			}
+			mBeanrDeduct = mBeanNum;
+		}else{
+			mBeanrDeduct = 0;
+		}
+		
+		if(mTicketId != -1){
+			payPrice = payPrice - mTicketPrice;
+			if(payPrice < 0){
+				payPrice = 0;
+			}
 		}
 		mPriceText.setText(UnitConvertUtil.getSwitchedMoney(payPrice) + "元");
 	}
@@ -334,20 +392,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("orderId", mOrderId)
-		.setParams("useTicketId", mTicketId == -1 ? "": String.valueOf(mTicketId))
-		.setParams("payWayId", payWayId);
+		.setParams("useTicketId", mTicketId == -1 ? "0": String.valueOf(mTicketId))
+		.setParams("payWayId", payWayId)
+		.setParams("balanceDecPrice", mAccountRemainDeduct)
+		.setParams("useBeanAmount", mBeanrDeduct);
 		
-		if(mAccountRemainChecked){
-			paramPath.setParams("balanceDecPrice", mAccountRemain);
-		}else{
-			paramPath.setParams("balanceDecPrice", 0);
-		}
-		
-		if(mBeanChecked){
-			paramPath.setParams("useBeanAmount", mBeanNum);
-		}else{
-			paramPath.setParams("useBeanAmount", 0);
-		}
+		LogUtil.e("paramPath = " + paramPath);
 		
 		HttpManager.getInstance(this).volleyRequestByPost(
 				HttpManager.URL + paramPath, new Listener<String>() {
@@ -359,12 +409,18 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					if(payValidateResult != null){
 						String resultCode = payValidateResult.getReturnCode();
 						if("1".equals(resultCode)){
-							mPayOrderMesg = payValidateResult.getOrder();
-							if(mPayOrderMesg != null){
-								if(mPayOrderMesg.getPayPrice() <= 0){
-									mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
-								}else{
-									mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
+							String flag = payValidateResult.getNeedPayFlag();
+							if("0".equals(flag)){
+								mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
+							}else if("1".equals(flag)){
+								mPayOrderMesg = payValidateResult.getOrder();
+								if(mPayOrderMesg != null){
+									LogUtil.e("getPayPrice == " + mPayOrderMesg.getPayPrice());
+									if(mPayOrderMesg.getPayPrice() <= 0){
+										ToastUtil.showToast(PayActivity.this, "支付金额必须大于0");
+									}else{
+										mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
+									}
 								}
 							}
 						}else{
@@ -388,6 +444,11 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		case ZHI_FU_BAO:
 			String tag = String.valueOf(payZhifubaoIcon.getTag());
 			if("1".equals(tag)){
+				ToastUtil.showToast(PayActivity.this, "支付了");
+				LogUtil.e("orderNum = " + mPayOrderMesg.getOrderNo());
+				LogUtil.e("subject =  " + mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品");
+				LogUtil.e("object = " + mPayOrderMesg.getMemo());
+				LogUtil.e("payMoney = " + UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()) + "元");
 				AlipayManager alipayManager = new AlipayManager(mPayOrderMesg.getOrderNo(), mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", mPayOrderMesg.getMemo(), UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
 				alipayManager.requestPay(this, mHandler);
 			}else{
@@ -455,12 +516,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 	}
-	
-	class PayWayEntry{
-		int payWayId;
-		String payWayName;
-	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -470,6 +526,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			if(bundle != null){
 				mTicketId = bundle.getInt("ticktId");
 				mTicketPrice = bundle.getInt("ticketPrice");
+				LogUtil.e("mTicketId = " + mTicketId);
+				LogUtil.e("mTicketPrice = " + mTicketPrice);
 			} 
 		}
 	}

@@ -2,15 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fffbf7"
+    android:gravity="center_horizontal"
     android:orientation="vertical" >
     
-    <TextView 
+    <Space 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Loading..."
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="#ffffff"
-        android:background="@color/activity_splash_bg_color"/>
-    
+        android:layout_height="0dip"
+        android:layout_weight="460"/>
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/start_img"/>
+    <Space 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="668"/>
 </LinearLayout>

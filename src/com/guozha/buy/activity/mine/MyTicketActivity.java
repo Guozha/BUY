@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.Response.Listener;
@@ -34,11 +35,20 @@ public class MyTicketActivity extends BaseActivity{
 	
 	private List<MarketTicket> mMarketTickets;
 	
+	private View mEmptyView;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
-				if(mMyTicket == null) return;
+				if(mMyTicket == null || mEmptyView == null) return;
+				if(mMarketTickets == null || mMarketTickets.isEmpty()){
+					mMyTicket.setVisibility(View.GONE);
+					mEmptyView.setVisibility(View.VISIBLE);
+				}else{
+					mEmptyView.setVisibility(View.GONE);
+					mMyTicket.setVisibility(View.VISIBLE);
+				}
 				mMyTicket.setAdapter(new TicketListAdapter(MyTicketActivity.this, mMarketTickets));
 				break;
 			}
@@ -59,6 +69,7 @@ public class MyTicketActivity extends BaseActivity{
 	 * 初始化View
 	 */
 	private void initView(){
+		mEmptyView = findViewById(R.id.empty_view);
 		mMyTicket = (ListView) findViewById(R.id.my_ticket);
 	}
 	

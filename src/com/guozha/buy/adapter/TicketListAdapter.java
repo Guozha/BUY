@@ -2,7 +2,10 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
+import u.aly.cu;
+
 import android.content.Context;
+import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,10 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mine.MarketTicket;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.util.ConstantUtil;
+import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 
 /**
  * 我的菜票适配器
@@ -22,10 +29,12 @@ public class TicketListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<MarketTicket> mMarketTicket;
+	private long currentTime;
 	
 	public TicketListAdapter(Context context, List<MarketTicket> marketTicket){
 		mInflater = LayoutInflater.from(context);
 		mMarketTicket = marketTicket;
+		currentTime = ConfigManager.getInstance().getTodayDate();
 	}
 
 	@Override
@@ -61,11 +70,15 @@ public class TicketListAdapter extends BaseAdapter{
 		}
 		
 		MarketTicket marketTicket = mMarketTicket.get(position);
-		holder.ticketType.setText(marketTicket.getTicketType());
-		holder.ticketForPrice.setText("订单满" + marketTicket.getForPrice() + "元使用");
-		holder.ticketValidDate.setText("使用期限 " + marketTicket.getValidDate());
-		holder.ticketParValue.setText("￥" + marketTicket.getParValue());
-		holder.ticketEffective.setVisibility(View.VISIBLE);
+		holder.ticketType.setText(ConstantUtil.getTicketType(marketTicket.getTicketType()));
+		holder.ticketForPrice.setText("订单满" + UnitConvertUtil.getSwitchedMoney(marketTicket.getForPrice()) + "元使用");
+		holder.ticketValidDate.setText("菜票有效期 " + DimenUtil.getStringFormatDate(marketTicket.getValidDate()));
+		holder.ticketParValue.setText("￥" + UnitConvertUtil.getSwitchedMoney(marketTicket.getParValue()));
+		if(currentTime < marketTicket.getValidDate().getTime()){
+			holder.ticketEffective.setVisibility(View.GONE);
+		}else{
+			holder.ticketEffective.setVisibility(View.VISIBLE);
+		}
 		return convertView;
 	}
 	

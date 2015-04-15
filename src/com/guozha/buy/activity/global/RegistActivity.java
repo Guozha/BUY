@@ -13,14 +13,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -40,6 +43,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	
 	private ImageView mPhoneNumIcon;
 	private ImageView mPwdIcon;
+	
+	private EditText mEditInvitation;	//邀请码
 	
 	private Button mObtainValidNumButton;
 	private Button mRegistButton;
@@ -73,6 +78,8 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 		mRegistButton = (Button) findViewById(R.id.regist_button);
 		
 		mProtocalAffirmCheckBox = (CheckBox) findViewById(R.id.regist_protocal_affirm);
+		
+		mEditInvitation = (EditText) findViewById(R.id.regist_invitation);
 		
 		findViewById(R.id.regist_licence).setOnClickListener(this);
 		
@@ -112,6 +119,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			pwd = mEditPwd.getText().toString();
 			String validNum = mEditValidNum.getText().toString();
+			String invitationNum = mEditInvitation.getText().toString();
 			if(!isValidatePhoneNum(phoneNum)){
 				//提示手机号填写有误
 				ToastUtil.showToast(this, "手机号码格式不正确");
@@ -133,7 +141,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 				return;
 			}
 			//请求注册
-			requestRegist(phoneNum, pwd, validNum);
+			requestRegist(phoneNum, pwd, validNum, invitationNum);
 			break;
 		case R.id.regist_licence:
 			Intent intent = new Intent(RegistActivity.this, LicenceActivity.class);
@@ -150,23 +158,30 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 	 * @param pwd
 	 * @param validNum
 	 */
-	private void requestRegist(final String phoneNum, final String pwd, String validNum) {		
+	private void requestRegist(final String phoneNum, final String pwd, String validNum, String invitationNum) {		
 		RequestParam paramPath = new RequestParam("account/register")
 		.setParams("mobileNo", phoneNum)
 		.setParams("passwd", pwd)
+		.setParams("inviteCode", invitationNum)
 		.setParams("checkCode", validNum);
-		//TODO 可以登录了
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
 					String returnCode = response.getString("returnCode").trim();
+					LogUtil.e("returnCode == " + returnCode);
 					if("1".equals(returnCode)){
 						ToastUtil.showToast(RegistActivity.this, "注册成功");
 						//存储密码
 						ConfigManager.getInstance().setUserPwd(mEditPwd.getText().toString());
 						requestLogin(phoneNum, pwd);
+					}else if("2".equals(returnCode)){
+						mEditInvitation.setText("");
+						LogUtil.e("返回了2哦");
+						CustomDialog invitDialog = 
+								new CustomDialog(RegistActivity.this, R.layout.dialog_invitnum_error);
+						invitDialog.getWindow();
 					}else{
 						String msg = response.getString("msg").trim();
 						ToastUtil.showToast(RegistActivity.this, msg);
@@ -203,6 +218,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 						//请求地址数据
 						MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAddressInfos(null);
+						MainPageInitDataManager.mAccountUpdated = true;  //允许用户账户信息变化
 						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
 						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
 						Intent intent = getIntent();

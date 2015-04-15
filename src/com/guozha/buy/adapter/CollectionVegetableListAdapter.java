@@ -2,6 +2,9 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.collection.GoodsListItem;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
 /**
@@ -68,8 +76,9 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		}
 		GoodsListItem goodsItem = mGoodsListItems.get(position);
 		holder.goodsName.setText(goodsItem.getGoodsName());
-		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getPrice()) +
-				"/" + UnitConvertUtil.getSwitchedWeight(1000, goodsItem.getUnit()));
+		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getUnitPrice()) +
+				"元/" + UnitConvertUtil.getSwitchedWeight(1000, goodsItem.getUnit()));
+		holder.deleteButton.setTag(goodsItem.getMyGoodsId());
 		return convertView;
 	}
 	
@@ -88,10 +97,57 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 	class DeleteClickListener implements OnClickListener{
 
 		@Override
-		public void onClick(View v) {
-			CustomDialog dialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
+		public void onClick(View view) {
+			final int goodsId = (Integer) view.getTag();
+			final CustomDialog dialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
 			dialog.setDismissButtonId(R.id.cancel_button);
+			dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					requestDeleteVegetable(goodsId);
+					dialog.dismiss();
+				}
+			});
 		}
+	}
+	
+	/**
+	 * 请求删除菜品
+	 * @param goodsId
+	 */
+	private void requestDeleteVegetable(final int goodsId) {
+		String token = ConfigManager.getInstance().getUserToken();
+		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyGoods")
+		.setParams("token", token)
+		.setParams("myGoodsId", goodsId);
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							if(mUpdateRecipeListener != null){
+								mUpdateRecipeListener.update();
+							}
+						}else{
+							ToastUtil.showToast(mContext, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
+	}
+	
+	private UpdateVegetableListener mUpdateRecipeListener;
+	
+	public interface UpdateVegetableListener{
+		public void update();
+	}
+	
+	public void setOnUpdateVegetableListener(UpdateVegetableListener updateVegetableListener){
+		this.mUpdateRecipeListener = updateVegetableListener;
 	}
 
 }

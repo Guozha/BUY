@@ -164,7 +164,14 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="18dip"
             android:text="可用账户余额12元"/>
-        
+        <TextView 
+            android:id="@+id/pay_can_use_money_deduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_1"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/prespecial_account_remain_text"/>
         <ImageView 
             android:id="@+id/prespecial_account_remain_icon"
             android:layout_width="wrap_content"
@@ -233,7 +240,17 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dip"
+            android:visibility="gone"
             android:text="￥12.00"/>
+        
+        <ImageView 
+            android:id="@+id/pay_ticket_icon"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="18dip"
+            android:src="@drawable/main_right_arrow"/>
     </RelativeLayout>
     
     <!-- 还需支付 -->

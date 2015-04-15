@@ -89,7 +89,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		//服务费
 		mServiceFree = cartTotalData.getServiceFee();
 		//距离免服务费还剩多少
-		mFreeGap = cartTotalData.getServiceFee() - cartTotalData.getTotalPrice();
+		mFreeGap = cartTotalData.getServiceFeePrice() - cartTotalData.getTotalPrice();
 		
 		if(mCartItems == null){
 			mCartItems = new ArrayList<CartBaseItem>();
@@ -199,6 +199,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private void setBottomMessageText(int quantity, int totalPrice, int serverFee, int gapFreeFee) {
 		mMesgTotal.setText("共计" + mQuantity + "件 合计￥" + UnitConvertUtil.getSwitchedMoney(totalPrice));
 		mMesgServerMoney.setText("预计服务费￥" + UnitConvertUtil.getSwitchedMoney(serverFee));
+		gapFreeFee = gapFreeFee < 0 ? 0 : gapFreeFee;
 		mMesgFreeGap.setText("离免服务费还差￥" + UnitConvertUtil.getSwitchedMoney(gapFreeFee));
 		setTextColor();
 	}

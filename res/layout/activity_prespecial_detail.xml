@@ -18,7 +18,7 @@
 	    android:id="@+id/prespecial_detail_img"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:src="@drawable/sale_details_img_01"
+	    android:src="@drawable/default_icon_large"
 	    android:scaleType="fitXY"/>
 	
 	<LinearLayout 

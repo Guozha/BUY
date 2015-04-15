@@ -13,6 +13,8 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.guozha.buy.entry.cart.CartCookItem;
+import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
@@ -23,6 +25,7 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 主界面数据管理类
@@ -38,9 +41,13 @@ public class MainPageInitDataManager {
 	public static final int HAND_INITDATA_MSG_CART_ITEM = 0x0005;	 //购物车
 	public static final int HAND_INTTDATA_MSG_ADDRESS_LIST = 0x0006; //地址列表
 	public static final int HAND_INITDATA_MSG_TODAY_INFO = 0x0007;	 //今日时间
+	public static final int HAND_INITDATA_MSG_CURRENT_TIME = 0x0008;	 //获取当前时间
+	public static final int HAND_INITDATA_MSG_PLAN_MENU_STATUS = 0x0009;	//今日菜票计划状态
 	
+	public static boolean mAccountUpdated = false;  //用户账户信息发生了变化
 	public static boolean mAddressUpdated = false; 	//地址信息是否发生了变化
 	public static boolean mCartItemsUpdated = false; //购物车是否发生了变化
+	public static boolean mMarketItemUpdated = false; //商品条目是否发生了变化
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -52,6 +59,7 @@ public class MainPageInitDataManager {
 	private List<QuickMenu> mQuickMenus;
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
+	private boolean mPlanMenuStatus = false;
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -88,7 +96,7 @@ public class MainPageInitDataManager {
 	 * @return
 	 */
 	public AccountInfo getAccountInfo(Handler handler){
-		if(mAccountInfo == null){
+		if(mAccountInfo == null || mAccountUpdated){
 			requestAccountInfo(handler);
 		}else{
 			if(handler != null){
@@ -138,7 +146,7 @@ public class MainPageInitDataManager {
 	 * @return
 	 */
 	public MarketHomePage getMarketHomePage(Handler handler, int pageNum, int pageSize){
-		if(mMarketHomePage == null){
+		if(mMarketHomePage == null || mMarketItemUpdated){
 			requestGoodsBriefItemData(handler, pageNum, pageSize);
 		}else{
 			if(handler != null){
@@ -156,7 +164,6 @@ public class MainPageInitDataManager {
 	public List<AddressInfo> getAddressInfos(Handler handler){
 		if(mAddressInfos == null || mAddressUpdated){
 			requestAdressInfoListData(handler);
-			mAddressUpdated = false;
 		}else{
 			if(handler != null){
 				handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
@@ -173,13 +180,30 @@ public class MainPageInitDataManager {
 	public CartTotalData getCartItems(Handler handler){
 		if(mCartTotalData == null || mCartItemsUpdated){
 			requestCartItemsData(handler);
-			mCartItemsUpdated = false;
 		}else{
 			if(handler != null){
 				handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
 			}
 		}
 		return mCartTotalData;
+	}
+	
+	/**
+	 * 获取购物车物品数量
+	 * @return
+	 */
+	public int getCartItemsNum(){
+		if(mCartTotalData == null) return 0;
+		int num = 0;
+		List<CartMarketItem> marketItems = mCartTotalData.getGoodsList();
+		List<CartCookItem> cookItems = mCartTotalData.getMenuList();
+		if(marketItems != null){
+			num = num + marketItems.size();
+		}
+		if(cookItems != null){
+			num = num + cookItems.size();
+		}
+		return num;
 	}
 	
 	private TodayInfo mTodayInfo = null;
@@ -198,6 +222,36 @@ public class MainPageInitDataManager {
 			}
 		}
 		return mTodayInfo;
+	}
+	
+	/**
+	 * 获取今日菜谱计划状态
+	 * @param handler
+	 */
+	public boolean getMenuPlaneStatus(final Handler handler){
+		requestPlanMenusStatus(handler);
+		return mPlanMenuStatus;
+	}
+	
+	/**
+	 * 获取系统当前时间
+	 * @param handler
+	 */
+	public void getSystemTime(final Handler handler){
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + "system/date", new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						long currentdate = response.getLong("gregorianDate");
+						ConfigManager.getInstance().setTodayDate(currentdate);
+						if(handler == null) return;
+						handler.sendEmptyMessage(HAND_INITDATA_MSG_CURRENT_TIME);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
 	}
 	
 	//////////////////////////////HTTP-请求////////////////////////////////
@@ -219,6 +273,7 @@ public class MainPageInitDataManager {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				mCartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
 				if(handler != null && mCartTotalData != null){
+					mCartItemsUpdated = false;
 					handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
 				}
 			}
@@ -246,6 +301,7 @@ public class MainPageInitDataManager {
 			public void onResponse(String response) {
 				mAccountInfo = mGson.fromJson(response, AccountInfo.class);
 				if(handler != null && mAccountInfo != null){
+					mAccountUpdated = false;
 					handler.sendEmptyMessage(HAND_INITDATA_MSG_ACCOUNTINFO);
 				}
 			}
@@ -337,6 +393,7 @@ public class MainPageInitDataManager {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mMarketHomePage = gson.fromJson(response, new TypeToken<MarketHomePage>() { }.getType());
 					if(handler != null && mMarketHomePage != null){
+						mMarketItemUpdated = false;
 						handler.sendEmptyMessage(HAND_INITDATA_MSG_MARKETHOME);
 					}
 				}
@@ -360,6 +417,7 @@ public class MainPageInitDataManager {
 							new TypeToken<List<AddressInfo>>() { }.getType());
 					setDefaultAddressChoosed();
 					if(handler != null && mAddressInfos != null){
+						mAddressUpdated = false;
 						handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
 					}
 				}
@@ -404,4 +462,38 @@ public class MainPageInitDataManager {
 				}
 		});
 	}
+	
+	/**
+	 * 请求今日菜谱计划状态
+	 * @param handler
+	 */
+	private void requestPlanMenusStatus(final Handler handler) {
+		String token = ConfigManager.getInstance().getUserToken();
+		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("menuplan/exist")
+		.setParams("token", token)
+		.setParams("userId", userId);
+		
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							mPlanMenuStatus = true;
+						}else{
+							mPlanMenuStatus = false;
+						}
+						LogUtil.e("getPlanMenus dddd== " + mPlanMenuStatus);
+						if(handler != null){
+							handler.sendEmptyMessage(HAND_INITDATA_MSG_PLAN_MENU_STATUS);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
+	}
+	
 }

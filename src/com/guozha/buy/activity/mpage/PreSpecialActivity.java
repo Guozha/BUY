@@ -18,11 +18,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialItem;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialPage;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -40,6 +42,7 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 	private static final int HAND_DATA_COMPLETED = 0x0001; //请求数据完成
 	private static final int PAGE_SIZE = 10;
 	
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	private GridView mGridView;
 	private List<PreSpecialItem> mPreSpecialItems;
 	private PreSpecialGridAdapter mPreSpecialGridAdapter;
@@ -105,7 +108,7 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 	private void initView(){
 		mGridView = (GridView) findViewById(R.id.pre_special_gridlist);
 		mPreSpecialItems = new ArrayList<PreSpecialItem>();
-		mPreSpecialGridAdapter = new PreSpecialGridAdapter(this, mPreSpecialItems);
+		mPreSpecialGridAdapter = new PreSpecialGridAdapter(this, mPreSpecialItems, mBitmapCache);
 		mGridView.setAdapter(mPreSpecialGridAdapter);
 		mGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -136,7 +139,7 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

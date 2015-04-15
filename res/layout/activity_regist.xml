@@ -126,6 +126,35 @@
 	        android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
+    <!-- 邀请码 -->
+    <LinearLayout 
+        android:id="@+id/regist_invitation_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+	     
+	    <EditText
+	        android:id="@+id/regist_invitation"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1.0"
+	        android:hint="输入邀请码获得菜票（此项可不填）"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:singleLine="true"
+	        android:background="@null"
+	        android:maxLength="18"
+	        android:gravity="center_vertical"
+	        android:inputType="textPassword"/>
+    </LinearLayout>
+    
     <!-- 同意协议 -->
     <LinearLayout 
         android:layout_width="wrap_content"

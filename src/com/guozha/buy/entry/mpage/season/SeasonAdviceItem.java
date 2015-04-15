@@ -15,6 +15,7 @@ public class SeasonAdviceItem implements Serializable{
 	private String goodsName;  	//商品名称
 	private String memo;   		//商品描述
 	private String goodsImg;   	//商品图标
+	private String word;		//关键词
 	
 	
 	public SeasonAdviceItem(int goodsId, String goodsName, String memo,
@@ -49,5 +50,11 @@ public class SeasonAdviceItem implements Serializable{
 	}
 	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
 	}
 }

@@ -92,7 +92,7 @@
             android:background="@drawable/main_background_selector"
             android:textColor="@color/color_app_base_2"
             android:textSize="@dimen/dimen_global_14sp"
-            android:text="加入收藏" />
+            android:text="一键收藏" />
 
         <Button
             android:id="@+id/addcart_menu_button"

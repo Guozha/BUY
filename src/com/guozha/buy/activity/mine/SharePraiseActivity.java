@@ -3,17 +3,24 @@ package com.guozha.buy.activity.mine;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.dialog.ActiveRuleActivity;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.media.UMImage;
 
 /**
  * 推荐有奖
@@ -24,6 +31,7 @@ public class SharePraiseActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SharePraisePage";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
+	private static final int HAND_INVITEID_COMPLTED = 0x0002;
 	
 	private TextView mTotalAmountText;
 	private TextView mUsedAmountText;
@@ -47,8 +55,16 @@ public class SharePraiseActivity extends BaseActivity{
 					mTotalMoneyText.setText(String.valueOf(mAwardPrice));
 				}
 				break;
-
-			default:
+			case HAND_INVITEID_COMPLTED:
+				//分享
+				ShareManager shareManager = new ShareManager(SharePraiseActivity.this);
+				
+				if(mShareUrl == null || "".equals(mShareUrl)){
+					mShareUrl = "http://www.wymc.com.cn";
+				}
+				shareManager.shareToWeixinFriends(SharePraiseActivity.this,
+						new UMImage(SharePraiseActivity.this, R.drawable.ic_launcher),
+						"title", "content", mShareUrl + mInviteId);
 				break;
 			}
 		};
@@ -63,6 +79,9 @@ public class SharePraiseActivity extends BaseActivity{
 		initData();
 	}
 	
+	private int mInviteId = 0;	//邀请id
+	private String mShareUrl = null;
+	
 	/**
 	 * 初始化View
 	 */
@@ -70,6 +89,43 @@ public class SharePraiseActivity extends BaseActivity{
 		mTotalAmountText = (TextView) findViewById(R.id.total_amount);
 		mUsedAmountText = (TextView) findViewById(R.id.used_amount);
 		mTotalMoneyText = (TextView) findViewById(R.id.total_money);
+		
+		findViewById(R.id.advice_praise_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int userId = ConfigManager.getInstance().getUserId();
+				String token = ConfigManager.getInstance().getUserToken();
+				RequestParam paramPath = new RequestParam("account/invite/insert")
+				.setParams("userId", userId)
+				.setParams("token", token);
+				HttpManager.getInstance(SharePraiseActivity.this).volleyJsonRequestByPost(
+					HttpManager.URL + paramPath, new Listener<JSONObject>() {
+						@Override
+						public void onResponse(JSONObject response) {
+							try {
+								String returnCode = response.getString("returnCode");
+								if("1".equals(returnCode)){
+									mInviteId = response.getInt("inviteId");
+									mShareUrl = response.getString("shareUrl");
+									handler.sendEmptyMessage(HAND_INVITEID_COMPLTED);
+								}else{
+									ToastUtil.showToast(SharePraiseActivity.this, response.getString("msg"));
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+				});
+			}
+		});
+		
+		findViewById(R.id.activity_rule_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(SharePraiseActivity.this, ActiveRuleActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	/**

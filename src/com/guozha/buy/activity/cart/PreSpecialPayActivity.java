@@ -2,9 +2,6 @@ package com.guozha.buy.activity.cart;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,13 +22,16 @@ import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
 import com.guozha.buy.entry.cart.PayOrderMesg;
-import com.guozha.buy.entry.cart.PayValidateResult;
+import com.guozha.buy.entry.cart.PayWayEntry;
+import com.guozha.buy.entry.cart.PreSpecialOrder;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.server.AlipayManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -52,9 +52,9 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 	private static final int REQUEST_CODE = 0x0001;
 	
 	private static final int HAND_PAY_WAY_COMPLETED = 0x0004;		//支付方式请求完毕
-	private static final int HAND_PAY_VALIDATE_COMPLETED = 0x0006;  //付款前验证完毕
 	private static final int HAND_PAY_SUCCESSED = 0x0007;			//支付成功
 	private static final int HAND_ORDER_COMPLETED = 0x008;			//订单提交成功
+	private static final int HAND_CHOOSED_TICKET_COMPLETED = 0x0009; //选择菜谱完成
 	
 	private int mGoodsId;  //商品Id
 	private int mUnitPrice;		//商品单价
@@ -98,8 +98,11 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 	
 	private View mTicketView;
 	private TextView mTicketText;
+	private ImageView mTicketArrowIcon;	//菜票右边箭头
 	
 	private TextView mNeedPayPriceText;
+	
+	private TextView mCanUseMoneyDeduct;	//扣除余额
 	
 	/**
 	 * 支付相关
@@ -139,7 +142,7 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 					break;
 				case HAND_PAY_WAY_COMPLETED:
 					for(int i = 0; i < mPayWayList.size(); i++){
-						switch (mPayWayList.get(i).payWayId) {
+						switch (mPayWayList.get(i).getPayWayId()) {
 						case 1:			//支付宝支付
 							mPayZhifubaoView.setVisibility(View.VISIBLE);
 							break;
@@ -155,9 +158,6 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 						};
 					}
 					break;
-				case HAND_PAY_VALIDATE_COMPLETED:
-					requestPayMoney();
-					break;
 				case HAND_PAY_SUCCESSED:
 					ToastUtil.showToast(PreSpecialPayActivity.this, "支付成功");
 					Intent intent = new Intent(PreSpecialPayActivity.this, MyOrderActivity.class);
@@ -165,7 +165,15 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 					PreSpecialPayActivity.this.finish();
 					break;
 				case HAND_ORDER_COMPLETED:
-					requestPayCheck();
+					requestPayMoney();
+					break;
+				case HAND_CHOOSED_TICKET_COMPLETED: //选择菜谱成功
+					if(mTicketId != -1){
+						mTicketArrowIcon.setVisibility(View.GONE);
+						mTicketText.setVisibility(View.VISIBLE);
+						mTicketText.setText(UnitConvertUtil.getSwitchedMoney(mTicketPrice) + "元");
+						setPayPriceText();
+					}
 					break;
 			}
 		};
@@ -187,6 +195,7 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 				mGoodsType = bundle.getString("goodsType");
 			}
 		}
+		mTotalPrice = mUnitPrice;
 		
 		initView();
 		
@@ -221,10 +230,14 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 		mBeanRemainIcon = (ImageView) findViewById(R.id.prespecial_bean_remain_icon);
 		mTicketView = findViewById(R.id.my_ticket_view);
 		mTicketText = (TextView) findViewById(R.id.my_ticket_text);
+		mTicketArrowIcon = (ImageView) findViewById(R.id.pay_ticket_icon);
+		mCanUseMoneyDeduct = (TextView) findViewById(R.id.pay_can_use_money_deduct);
 		
 		mTicketView.setOnClickListener(this);
 		
 		mNeedPayPriceText = (TextView) findViewById(R.id.prespecial_need_pay_text);
+		
+		mNeedPayPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice + mServicePrice) + "元");
 		
 		findViewById(R.id.pay_way_zhifubao);
 		
@@ -293,12 +306,16 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 				mAmount--;
 			}
 			mItemNumText.setText(mAmount + "份");
-			mItemPriceText.setText("￥" + UnitConvertUtil.getSwitchedMoney(mUnitPrice * mAmount));
+			mTotalPrice = mUnitPrice * mAmount;
+			mItemPriceText.setText("￥" + UnitConvertUtil.getSwitchedMoney(mTotalPrice));
+			setPayPriceText();
 			break;
 		case R.id.cart_list_cell_plus:
 			mAmount++;
 			mItemNumText.setText(mAmount + "份");
-			mItemPriceText.setText("￥" + UnitConvertUtil.getSwitchedMoney(mUnitPrice * mAmount));
+			mTotalPrice = mUnitPrice * mAmount;
+			mItemPriceText.setText("￥" + UnitConvertUtil.getSwitchedMoney(mTotalPrice));
+			setPayPriceText();
 			break;
 		case R.id.prespecial_pay_button:
 			if("02".equals(mGoodsType)){
@@ -341,17 +358,41 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 		mPayHuodaofukuanIcon.setTag("0");
 	}
 	
+	private int mAccountRemainDeduct = 0; //扣除的余额
+	private int mBeanrDeduct = 0;		  //扣除菜豆
+	
 	/**
 	 * 设置应付多少款文字
 	 */
 	private void setPayPriceText() {
-		int payPrice = mTotalPrice - mServicePrice;
+		LogUtil.e("mTotalPrice = " + mTotalPrice);
+		LogUtil.e("mServicePrice = " + mServicePrice);
+		int payPrice = mTotalPrice + mServicePrice;
 		if(mAccountRemainChecked){
-			payPrice = payPrice + mAccountRemain;
+			if(payPrice > mAccountRemain){
+				payPrice = payPrice - mAccountRemain;
+				mAccountRemainDeduct = mAccountRemain;
+			}else{
+				payPrice = 0;
+				mAccountRemainDeduct = payPrice;
+				mTicketId = -1;
+				mBeanrDeduct = 0;
+				mBeanRemainView.setVisibility(View.GONE);
+				mTicketView.setVisibility(View.GONE);
+			}
+			mCanUseMoneyDeduct.setText(" 扣除" + UnitConvertUtil.getSwitchedMoney(mAccountRemainDeduct) + "元");
+		}else{
+			mBeanRemainView.setVisibility(View.VISIBLE);
+			mTicketView.setVisibility(View.VISIBLE);
 		}
 		if(mBeanChecked){
-			payPrice = payPrice + mBeanNum;
+			payPrice = payPrice - mBeanNum;
+			if(payPrice < 0){
+				payPrice = 0;
+			}
+			mBeanrDeduct = mBeanNum;
 		}
+		LogUtil.e("payPrice == " + payPrice);
 		mNeedPayPriceText.setText(UnitConvertUtil.getSwitchedMoney(payPrice) + "元");
 	}
 	
@@ -423,11 +464,6 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 		
 	}
 	
-	class PayWayEntry{
-		int payWayId;
-		String payWayName;
-	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -445,72 +481,7 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 	 * 请求提交订单
 	 */
 	private void requestAddOrder(String uri){
-		String token = ConfigManager.getInstance().getUserToken();
-		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		
-		RequestParam paramPath = new RequestParam(uri)
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("addressId", addressId)
-		.setParams("goodsId", mGoodsId)
-		.setParams("amount", mAmount)
-		.setParams("memo", mPreSpeMemoText.getText().toString());
-		
-		HttpManager.getInstance(PreSpecialPayActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							mOrderId = response.getInt("orderId");
-							mHandler.sendEmptyMessage(HAND_ORDER_COMPLETED);
-						}else{
-							ToastUtil.showToast(PreSpecialPayActivity.this, "订单提交失败");
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
-	}
-	
-	/**
-	 * 请求支付
-	 */
-	private void requestPayMoney() {
-		if(mPayWay == null) {
-			ToastUtil.showToast(PreSpecialPayActivity.this, "请选择支付方式");
-			return;
-		}
-		switch (mPayWay) {
-		case ZHI_FU_BAO:
-			String tag = String.valueOf(mPayZhifubaoIcon.getTag());
-			if("1".equals(tag)){
-				AlipayManager alipayManager = new AlipayManager(mPayOrderMesg.getOrderNo(), 
-						mPayOrderMesg.getFirstShowName() + "_特供预售", mPayOrderMesg.getMemo(), UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
-				alipayManager.requestPay(this, mHandler);
-			}else{
-				ToastUtil.showToast(PreSpecialPayActivity.this, "请选择支付方式");
-			}
-			break;
-		case WEI_XIN:
-			
-			break;
-		case HUO_DAO_FU_KUAN:
-			
-			break;
-		case WANG_YING:
-			
-			break;
-		}
-	}
-	
-	/**
-	 * 请求支付核对
-	 */
-	private void requestPayCheck(){
 		String payWayId = null;
 		switch (mPayWay) {
 		case ZHI_FU_BAO:
@@ -532,51 +503,82 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 			ToastUtil.showToast(PreSpecialPayActivity.this, "请选择支付方式");
 			return;
 		}
+		
 		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("payment/preparePay")
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		
+		RequestParam paramPath = new RequestParam(uri)
 		.setParams("token", token)
 		.setParams("userId", userId)
-		.setParams("orderId", mOrderId)
-		.setParams("useTicketId", mTicketId == -1 ? "": String.valueOf(mTicketId))
-		.setParams("payWayId", payWayId);
+		.setParams("orderId", "0")
+		.setParams("balanceDecPrice", mAccountRemainDeduct)
+		.setParams("useBeanAmount", mBeanrDeduct)
+		.setParams("useTicketId", mTicketId == -1 ? "0": String.valueOf(mTicketId))
+		.setParams("payWayId", payWayId)
+		.setParams("addressId", addressId)
+		.setParams("goodsId", mGoodsId)
+		.setParams("amount", mAmount)
+		.setParams("memo", mPreSpeMemoText.getText().toString());
 		
-		if(mAccountRemainChecked){
-			paramPath.setParams("balanceDecPrice", mAccountRemain);
-		}else{
-			paramPath.setParams("balanceDecPrice", 0);
-		}
-		
-		if(mBeanChecked){
-			paramPath.setParams("useBeanAmount", mBeanNum);
-		}else{
-			paramPath.setParams("useBeanAmount", 0);
-		}
-		
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+		HttpManager.getInstance(PreSpecialPayActivity.this).volleyRequestByPost(
+			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					PayValidateResult payValidateResult = 
-							gson.fromJson(response, new TypeToken<PayValidateResult>() { }.getType());
-					if(payValidateResult != null){
-						String resultCode = payValidateResult.getReturnCode();
-						if("1".equals(resultCode)){
-							mPayOrderMesg = payValidateResult.getOrder();
-							if(mPayOrderMesg != null){
-								if(mPayOrderMesg.getPayPrice() <= 0){
-									mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
-								}else{
-									mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
-								}
+					PreSpecialOrder preSpecialOrder = 
+							gson.fromJson(response, new TypeToken<PreSpecialOrder>() { }.getType());
+					if(preSpecialOrder != null){
+						String flag = preSpecialOrder.getNeedPayFlag();
+						String returnCode = preSpecialOrder.getReturnCode();
+						mPayOrderMesg = preSpecialOrder.getOrder();
+						if("1".equals(returnCode)){
+							if("0".equals(flag)){
+								mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
+							}else{
+								mHandler.sendEmptyMessage(HAND_ORDER_COMPLETED);
 							}
 						}else{
-							ToastUtil.showToast(PreSpecialPayActivity.this, payValidateResult.getMsg());
+							ToastUtil.showToast(PreSpecialPayActivity.this, preSpecialOrder.getMsg());
 						}
 					}
 				}
 		});
- 
+	}
+	
+	/**
+	 * 请求支付
+	 */
+	private void requestPayMoney() {
+		if(mPayWay == null) {
+			ToastUtil.showToast(PreSpecialPayActivity.this, "请选择支付方式");
+			return;
+		}
+		switch (mPayWay) {
+		case ZHI_FU_BAO:
+			String tag = String.valueOf(mPayZhifubaoIcon.getTag());
+			if("1".equals(tag)){
+				//AlipayManager alipayManager = new AlipayManager(mPayOrderMesg.getOrderNo(), 
+				//		mPayOrderMesg.getFirstShowName() + "_特供预售", mPayOrderMesg.getMemo(), UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
+				//alipayManager.requestPay(this, mHandler);
+				ToastUtil.showToast(PreSpecialPayActivity.this, "支付了");
+				LogUtil.e("orderNum = " + mPayOrderMesg.getOrderNo());
+				LogUtil.e("subject =  " + mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品");
+				LogUtil.e("object = " + mPayOrderMesg.getMemo());
+				LogUtil.e("payMoney = " + UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()) + "元");
+			}else{
+				ToastUtil.showToast(PreSpecialPayActivity.this, "请选择支付方式");
+			}
+			break;
+		case WEI_XIN:
+			
+			break;
+		case HUO_DAO_FU_KUAN:
+			
+			break;
+		case WANG_YING:
+			
+			break;
+		}
 	}
 }

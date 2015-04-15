@@ -17,7 +17,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="180dip"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/main_vegetable_details_img_01"/>
+	        android:src="@drawable/default_icon"/>
 	    
 	    <TextView
 	        android:id="@+id/detail_name"

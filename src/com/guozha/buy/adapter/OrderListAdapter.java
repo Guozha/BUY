@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mine.order.OrderSummary;
+import com.guozha.buy.util.ConstantUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 订单列表适配器
@@ -65,27 +67,11 @@ public class OrderListAdapter extends BaseAdapter{
 		Date date = orderSummary.getCreateTime();
 		holder.orderTime.setText(mDateFormat.format(date));
 		holder.orderCount.setText("共" + orderSummary.getQuantity() + "件商品，");
-		holder.orderStatus.setText(getOrderStatusString(orderSummary.getFinishPayFlag(), 
-				orderSummary.getArrivalPayFlag(), orderSummary.getCommentFlag()));
+		holder.orderStatus.setText(ConstantUtil.getOrderStatusString(
+				orderSummary.getStatus(),
+				orderSummary.getArrivalPayFlag(), 
+				orderSummary.getCommentFlag()));
 		return convertView;
-	}
-	
-	/**
-	 * @param payStatus  支付状态
-	 * @param arriviPayStatus 是否货到付款
- 	 * @param commentStatus 是否评价过
-	 * @return
-	 */
-	public String getOrderStatusString(String payStatus, String arriviPayStatus, String commentStatus){
-		StringBuffer orderStatu = new StringBuffer();
-		if("1".equals(arriviPayStatus)){
-			orderStatu.append("货到付款");
-		}else if("1".equals(payStatus)){
-			orderStatu.append("已支付");
-		}else{
-			orderStatu.append("未支付");
-		}
-		return orderStatu.toString();
 	}
 	
 	static class ViewHolder{

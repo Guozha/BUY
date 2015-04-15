@@ -1,6 +1,7 @@
 package com.guozha.buy.entry.mine;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 菜票
@@ -15,7 +16,7 @@ public class MarketTicket implements Serializable{
 	private String ticketType;
 	private int parValue;
 	private int forPrice;
-	private String validDate;
+	private Date validDate;
 	
 	public int getMyTicketId() {
 		return myTicketId;
@@ -41,10 +42,10 @@ public class MarketTicket implements Serializable{
 	public void setForPrice(int forPrice) {
 		this.forPrice = forPrice;
 	}
-	public String getValidDate() {
+	public Date getValidDate() {
 		return validDate;
 	}
-	public void setValidDate(String validDate) {
+	public void setValidDate(Date validDate) {
 		this.validDate = validDate;
 	}
 }

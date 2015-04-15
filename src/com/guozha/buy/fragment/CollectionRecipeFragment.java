@@ -3,6 +3,9 @@ package com.guozha.buy.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +14,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
@@ -19,13 +25,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.mpage.CookBookDetailActivity;
 import com.guozha.buy.adapter.CollectionRecipeExpandAdapter;
 import com.guozha.buy.adapter.CollectionRecipeExpandAdapter.UpdateRecipeListener;
+import com.guozha.buy.dialog.CollectionRecipeModifyDialog;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,6 +51,8 @@ public class CollectionRecipeFragment extends Fragment{
 	private static final int HAND_DIR_DATA_COMPLETED = 0x0001;  //收藏文件夹数据请求完毕
 	
 	private AnimatedExpandableListView mCollectionRecipeList;
+	
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private List<CollectionDir> mCollectionDir = new ArrayList<CollectionDir>();
 	private CollectionRecipeExpandAdapter mCollectionRecipeAdapter;
@@ -79,13 +92,33 @@ public class CollectionRecipeFragment extends Fragment{
 				return false;
 			}
 		});
+		
+		mCollectionRecipeList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				final int posit = position;
+				final CustomDialog deleteDialog = new CustomDialog(
+						CollectionRecipeFragment.this.getActivity(), R.layout.dialog_delete_collection_folder);
+				deleteDialog.setDismissButtonId(R.id.cancel_button);
+				deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						deleteDialog.dismiss();
+						requestDeleteCollectionFolder(mCollectionDir.get(posit).getMyDirId());
+					}
+				});
+				return true;
+			}
+		});
 	}
 	
 	private void updateView(){
 		if(mCollectionRecipeAdapter != null){
 			mCollectionRecipeAdapter.notifyDataSetChanged();
 		}else{
-			mCollectionRecipeAdapter = new CollectionRecipeExpandAdapter(getActivity(), mCollectionDir);
+			mCollectionRecipeAdapter = new CollectionRecipeExpandAdapter(getActivity(), mCollectionDir, mBitmapCache);
 			mCollectionRecipeList.setAdapter(mCollectionRecipeAdapter);
 			mCollectionRecipeAdapter.setOnUpdateRecipeListener(new UpdateRecipeListener() {
 				@Override
@@ -93,6 +126,9 @@ public class CollectionRecipeFragment extends Fragment{
 					requestCollectionRecipeData();
 				}
 			});
+		}
+		if(!mCollectionDir.isEmpty()){
+			mCollectionRecipeList.expandGroup(0);
 		}
 	}
 	
@@ -118,6 +154,34 @@ public class CollectionRecipeFragment extends Fragment{
 			});
 	}
 	
+	/**
+	 * 请求删除收藏夹
+	 * @param dirId
+	 */
+	private void requestDeleteCollectionFolder(int dirId){
+		String token = ConfigManager.getInstance().getUserToken(getActivity());
+		if(token == null)return;
+		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyDir")
+		.setParams("token", token)
+		.setParams("myDirId", dirId);
+		HttpManager.getInstance(getActivity()).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							requestCollectionRecipeData();
+						}else{
+							ToastUtil.showToast(getActivity(), response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+	}
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -137,5 +201,11 @@ public class CollectionRecipeFragment extends Fragment{
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
 	}
 }

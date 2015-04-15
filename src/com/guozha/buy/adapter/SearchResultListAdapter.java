@@ -26,10 +26,10 @@ public class SearchResultListAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
 	
-	public SearchResultListAdapter(Context context, List<ItemSaleInfo> itemSaleInfos){
+	public SearchResultListAdapter(Context context, List<ItemSaleInfo> itemSaleInfos, BitmapCache bitmapCache){
 		mInflater = LayoutInflater.from(context);
 		mItemSaleInfos = itemSaleInfos;
-		mBitmapCache = new BitmapCache(context);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override

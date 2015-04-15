@@ -2,6 +2,9 @@ package com.guozha.buy.activity.market;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +13,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,12 +25,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.mpage.CookBookDetailActivity;
 import com.guozha.buy.adapter.CookBookListAdapter;
+import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.GoodsDetail;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -88,6 +97,18 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		View head = getLayoutInflater().inflate(R.layout.vegetable_detail_list_head, null);
 		initHeader(head);
 		mConnCookBookList.addHeaderView(head);
+		mConnCookBookList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				RelationRecipe recipe = mRelationRecipes.get(position - 1);
+				Intent intent = new Intent(VegetableDetailActivity.this, CookBookDetailActivity.class);
+				if(recipe != null){
+					intent.putExtra("menuId", recipe.getMenuId());
+				}
+				startActivity(intent);
+			}
+		});
 		setTextColor();
 	}
 	
@@ -105,12 +126,47 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.cookbook_add_cart_button:
-			
+			Intent intent = new Intent(VegetableDetailActivity.this, WeightSelectDialog.class);
+			intent.putExtra("goodsId", mGoodsId);
+			if(mGoodsDetails != null){
+				intent.putExtra("unitPrice", String.valueOf(mGoodsDetails.getUnitPrice()));
+				intent.putExtra("unit", mGoodsDetails.getUnit());
+			}
+			startActivity(intent);
 			break;
 		case R.id.cookbook_collection_button:
-			
+			requestCollectionVegetable();
 			break;
 		}
+	}
+
+	/**
+	 * 请求收藏食材
+	 */
+	private void requestCollectionVegetable() {
+		String token = ConfigManager.getInstance().getUserToken();
+		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("account/myfavo/insertGoodsFavo")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("goodsId", mGoodsId);
+		HttpManager.getInstance(VegetableDetailActivity.this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							ToastUtil.showToast(VegetableDetailActivity.this, "收藏成功");
+						}else{
+							ToastUtil.showToast(VegetableDetailActivity.this, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
+				}
+		});
 	}
 	
 	private void initData(){
@@ -153,7 +209,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 				HttpManager.IMG_URL + mGoodsDetails.getGoodsImg(), 
 				mDetailImage, R.drawable.default_icon, R.drawable.default_icon);
 		mDetailName.setText(mGoodsDetails.getGoodsName());
-		mDetailPrice.setText("￥" + mGoodsDetails.getUnitPrice() + "/斤");
+		mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/斤");
 		mDetailDescript.setText(mGoodsDetails.getMemo());
 		setTextColor();
 	}
@@ -175,7 +231,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		ForegroundColorSpan redSpan = new ForegroundColorSpan(
 				getResources().getColor(R.color.color_app_base_1));
 		int totalSpanSart = msgTotal.indexOf("/");
-		builder.setSpan(redSpan, 0, totalSpanSart - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(redSpan, 0, totalSpanSart, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		mDetailPrice.setText(builder);
 	}
 	

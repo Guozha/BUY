@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.format.Time;
 import android.util.LruCache;
 import android.widget.ImageView;
 
@@ -60,6 +61,19 @@ public class BitmapCache implements ImageCache{
                 return bitmap.getByteCount();
             }  
         };  
+	}
+	
+	/**
+	 * 将缓存记录同步到journal文件中。
+	 */
+	public void fluchCache() {
+		if (mDiskLruCache != null) {
+			try {
+				mDiskLruCache.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public BitmapCache(Context context){
@@ -202,6 +216,7 @@ public class BitmapCache implements ImageCache{
 							editor.abort();
 						}
 					}
+					mDiskLruCache.flush();
 					// 缓存被写入后，再次查找key对应的缓存
 					snapShot = mDiskLruCache.get(key);
 				}

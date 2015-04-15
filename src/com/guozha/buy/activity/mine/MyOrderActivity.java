@@ -1,10 +1,7 @@
 package com.guozha.buy.activity.mine;
 
-import java.util.List;
-
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,15 +14,9 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
-import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.fragment.OrderFinishedFragment;
 import com.guozha.buy.fragment.OrderUnFinishFragment;
-import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.view.ViewPagerTab;
 
 /**

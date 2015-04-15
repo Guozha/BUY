@@ -91,6 +91,7 @@
 	    android:orientation="horizontal">
 	    
 	    <EditText 
+	        android:id="@+id/order_feadback_text"
 	        android:layout_width="0dip"
 	        android:layout_weight="1"
 	        android:layout_height="34dip"
@@ -101,7 +102,8 @@
 	        android:background="@drawable/main_dialog_background"
 	        android:textColorHint="@color/color_app_base_8"/>
 	    
-	    <Button 
+	    <Button
+	        android:id="@+id/order_feadback_button" 
 	        android:layout_width="80dip"
 	        android:layout_height="34dip"
 	        android:layout_marginLeft="5dip"

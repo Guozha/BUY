@@ -19,10 +19,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.VegetableListAdapter;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.ItemSaleInfoPage;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -41,6 +44,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private int mMaxDateNum; //最大数据数
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private ListView mListView;
 	private View mBottomLoadingView;  //底部刷新视图
@@ -89,7 +93,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		
 		mAdapterData = new ArrayList<ItemSaleInfo[]>();
-		mVegetableAdapter = new VegetableListAdapter(this, mAdapterData, mListView);
+		mVegetableAdapter = new VegetableListAdapter(this, mAdapterData, mListView, mBitmapCache);
 		mListView.addFooterView(mBottomLoadingView);
 		mListView.setAdapter(mVegetableAdapter);
 		mListView.setOnScrollListener(this);
@@ -149,13 +153,12 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	 * 向服务器请求数据
 	 */
 	private void requestNewData(){
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/general/typeList")
-		//TODO 这里的地址和类型写死了
-		.setParams("frontTypeId", "1")
-		.setParams("addressId", "0")
+		.setParams("frontTypeId", mFrontTypeId)
+		.setParams("addressId", addressId)
 		.setParams("pageNum", mCurrentPage + 1)
 		.setParams("pageSize", PAGE_ITEM_COUNT);
-		
 		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
 
 			@Override
@@ -214,7 +217,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟页面统计代码
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

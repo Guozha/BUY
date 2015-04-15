@@ -35,6 +35,7 @@ import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
+import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
 
 /**
@@ -67,8 +68,12 @@ public class PlanceOrderActivity extends BaseActivity{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_TIMES_DATA_COMPLETED:
-				//if(mWheelView == null) return;
-				//mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this));
+				if(mWheelView == null) return;
+				mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this));
+				if(mShowTimes.size() >= 2){
+					mWheelView.setCurrentItem(1);
+				}
+				mWheelView.setVisibility(View.VISIBLE);
 				break;
 			case HAND_CHANGE_QUICK_MENU:
 				if(mQuickTimeChoose != null){
@@ -93,6 +98,7 @@ public class PlanceOrderActivity extends BaseActivity{
 			}
 		}
 		initView();
+		initData();
 	}
 	
 	/**
@@ -105,8 +111,17 @@ public class PlanceOrderActivity extends BaseActivity{
 		mWheelView.setWheelBackground(R.drawable.wheel_bg_white);
 		mWheelView.setWheelForeground(R.drawable.wheel_val_white);
 		mWheelView.setShadowColor(0x00000000, 0x00000000, 0x00000000);
-		mWheelView.setViewAdapter(new TimeOptionAdapter(PlanceOrderActivity.this));
-		addData();
+		mWheelView.setLastItemListener(new ItemChangeListener() {
+			@Override
+			public void itemChanged(int index) {
+				if(index == 0){
+					setChooseOneHourArrive();
+				}else{
+					setCancelOneHourArrive();
+				}
+			}
+		});
+
 		
 		findViewById(R.id.plance_order_button).setOnClickListener(new OnClickListener() {
 			
@@ -144,21 +159,35 @@ public class PlanceOrderActivity extends BaseActivity{
 			public void onClick(View view) {
 				String tag = String.valueOf(mQuickTimeChooseIcon.getTag());
 				if(tag == null || "null".equals(tag) ||  "0".equals(tag)){
-					mQuickTimeChooseIcon.setTag("1");
-					mQuickTimeChooseIcon.setImageResource(R.drawable.truck);
-					mQuickTimeChooseText.setText("1小时之内给您送到");
-					mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_1));
+					setChooseOneHourArrive();
+					if(!mShowTimes.isEmpty()){
+						mWheelView.setCurrentItem(0, true);
+					}
 				}else{
-					mQuickTimeChooseIcon.setTag("0");
-					mQuickTimeChooseIcon.setImageResource(R.drawable.truck_unselected);
-					mQuickTimeChooseText.setText("1小时速达");
-					mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_4));
+					setCancelOneHourArrive();
+					if(mShowTimes.size() >=2){
+						mWheelView.setCurrentItem(1, true);
+					}
 				}
 			}
 		});
 		
 		mTotalPriceText = (TextView) findViewById(R.id.plance_order_total_price);
 		mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
+	}
+	
+	private void setCancelOneHourArrive() {
+		mQuickTimeChooseIcon.setTag("0");
+		mQuickTimeChooseIcon.setImageResource(R.drawable.truck_unselected);
+		mQuickTimeChooseText.setText("1小时速达");
+		mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_4));
+	}
+
+	private void setChooseOneHourArrive() {
+		mQuickTimeChooseIcon.setTag("1");
+		mQuickTimeChooseIcon.setImageResource(R.drawable.truck);
+		mQuickTimeChooseText.setText("1小时之内给您送到");
+		mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_1));
 	}
 	
 	/**
@@ -221,7 +250,7 @@ public class PlanceOrderActivity extends BaseActivity{
 	/**
 	 * 添加数据
 	 */
-	private void addData(){
+	private void initData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("order/times")
 		.setParams("addressId", addressId);

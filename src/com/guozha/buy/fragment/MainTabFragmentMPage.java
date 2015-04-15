@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
+import com.guozha.buy.activity.global.FindPwdActivity;
 import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
@@ -26,6 +27,7 @@ import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
@@ -41,6 +43,11 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	private TextView mCalendarSolar;
 	private TextView mCalendarLunar;
 	private TextView mTodayDescript;
+	
+	private ImageView mPlanMenuIcon;
+	private TextView mPlanMenuText;
+	
+	private boolean mPlanStatus = false;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -84,6 +91,10 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		mTodayDescript = (TextView) view.findViewById(R.id.today_descript);
 		
 		setTodyInfo();
+		
+		mPlanMenuIcon = (ImageView) view.findViewById(R.id.main_mpage_add_plan_icon);
+		mPlanMenuText = (TextView) view.findViewById(R.id.main_mpage_add_plan_text);
+		setPlanMenuIcon();
 	}
 	
 	/**
@@ -151,6 +162,26 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:		//今日信息
 			setTodyInfo();
 			break;
+		case MainPageInitDataManager.HAND_INITDATA_MSG_PLAN_MENU_STATUS: //今日菜谱计划状态
+			setPlanMenuButton();
+			break;
+		}
+	}
+	
+	private void setPlanMenuButton(){
+		if(mDataManager == null) return;
+		if(mPlanMenuIcon == null || mPlanMenuText == null)return;
+		mPlanStatus = mDataManager.getMenuPlaneStatus(null);
+		setPlanMenuIcon();
+	}
+
+	private void setPlanMenuIcon() {
+		if(mPlanStatus){
+			mPlanMenuIcon.setImageResource(R.drawable.main_plan_tick);
+			mPlanMenuText.setText("赶快去下单吧~");
+		}else{
+			mPlanMenuIcon.setImageResource(R.drawable.main_plan_add);
+			mPlanMenuText.setText("来点菜吧");
 		}
 	}
 

@@ -3,6 +3,8 @@ package com.guozha.buy.activity.mine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.protocol.HTTP;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -79,7 +81,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	
 	private void updateView(){
 		if(mMenusAdapter == null){
-			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas);
+			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas, false);
 			mExpandableListView.setAdapter(mMenusAdapter);
 			//首次全部展开
 			for (int i = 0; i < mExpandListDatas.size(); i++) {
@@ -97,7 +99,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 		LogUtil.e("OrderId = " + mOrderId);
 		RequestParam paramPath = new RequestParam("order/detail")
 		.setParams("orderId", mOrderId);
-		
+		LogUtil.e("request ... " + HttpManager.URL + paramPath);
 		HttpManager.getInstance(this).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
@@ -116,6 +118,9 @@ public class OrderPayedDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailGoods.getGoodsId());
 							expandListData.setName(orderDetailGoods.getGoodsName());
+							expandListData.setUnit(orderDetailGoods.getUnit());
+							expandListData.setAmount(orderDetailGoods.getAmount());
+							expandListData.setPrice(orderDetailGoods.getPrice());
 							//TODO 设置价格等
 							mExpandListDatas.add(expandListData);
 						}
@@ -128,6 +133,10 @@ public class OrderPayedDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailMenus.getMenuId());
 							expandListData.setName(orderDetailMenus.getMenuName());
+							expandListData.setAmount(orderDetailMenus.getAmount());
+							expandListData.setUnit("8");
+							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setPrice(orderDetailMenus.getPrice());
 							mExpandListDatas.add(expandListData);
 						}
 					}

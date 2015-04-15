@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.DetailMaterialListAdapter;
 import com.guozha.buy.adapter.DetailSeasonListAdapter;
@@ -28,6 +29,7 @@ import com.guozha.buy.adapter.DetailStepListAdapter;
 import com.guozha.buy.entry.mpage.plan.CookBookDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ConstantUtil;
@@ -45,6 +47,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	private static final String PAGE_NAME = "CookBookDetailPage";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
+	
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private ListView mMaterialList;//食材
 	private ListView mSeasonList;  //调料
@@ -73,7 +77,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cookbook_detail);
-		customActionBarStyle("菜品详情");
+		customActionBarStyle("菜谱详情");
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
@@ -93,18 +97,15 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		mSeasonList = (ListView) findViewById(R.id.cookbook_detail_seasoning);
 		mStepList = (ListView) findViewById(R.id.cookbook_detail_step);
 		
-		measureListHeight(mMaterialList);
-		measureListHeight(mSeasonList);
-		measureListHeight(mStepList);
-		
 		//解决scrollview进入时位置不在最顶部问题
+		/*
 		mMaterialList.post(new Runnable() {
 			@Override
 			public void run() {
 				findViewById(R.id.scrollview).scrollTo(0, 0);
 			}
 		});
-		
+		*/
 		mCookBookName = (TextView) findViewById(R.id.cookbook_name);
 		mCookBookDifficu = (TextView) findViewById(R.id.cookbook_difficulty);
 		mCookBookUsingTime = (TextView) findViewById(R.id.cookbook_using_time);
@@ -225,30 +226,9 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 				}
 			}
 		});
-
 		mMaterialList.setAdapter(new DetailMaterialListAdapter(this, mCookBookDetail.getMenuGoods()));
 		mSeasonList.setAdapter(new DetailSeasonListAdapter(this, mCookBookDetail.getSeasonings()));
-		mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps()));
-	}
-	
-	/**
-	 *测量ListView的高度，为了解决和ScrollView滑动冲突问题 
-	 * @param listView
-	 */
-	private void measureListHeight(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter();
-		if(listAdapter != null){
-			int totalHeight = 0; 
-		    for (int i = 0; i < listAdapter.getCount(); i++) { 
-		        View listItem = listAdapter.getView(i, null, listView); 
-		        listItem.measure(0, 0); 
-		        totalHeight += listItem.getMeasuredHeight(); 
-		    } 
-		    ViewGroup.LayoutParams params = listView.getLayoutParams(); 
-			params.height = totalHeight + (listView.getDividerHeight() * ( listAdapter.getCount() - 1)); 
-			((MarginLayoutParams)params).setMargins(10, 10, 10, 10);
-			listView.setLayoutParams(params); 
-		}
+		mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps(), mBitmapCache));
 	}
 	
 	@Override
@@ -263,7 +243,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

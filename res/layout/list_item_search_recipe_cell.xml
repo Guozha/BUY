@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:scaleType="centerInside"
-            android:src="@drawable/main_favorite_close"
+            android:src="@drawable/main_basket_icon_01"
             android:paddingLeft="18dip"
             android:paddingRight="18dip"/>
     </LinearLayout>

@@ -73,6 +73,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_horizontal"
 	            android:background="@color/color_app_base_5"
+	            android:visibility="gone"
 	            android:layout_marginTop="1dp" />
 	    	<ImageView
 	    	    android:layout_width="match_parent"

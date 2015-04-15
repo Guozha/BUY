@@ -44,12 +44,12 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
 	
-	public MarketItemListAdapter(Activity context, List<MarketHomeItem> marketHomeItems){
+	public MarketItemListAdapter(Activity context, List<MarketHomeItem> marketHomeItems, BitmapCache bitmapCache){
 		if(context == null) return;
 		mContext = context;
 		mInflater = LayoutInflater.from(mContext);
 		mMarketHomeItems = marketHomeItems;
-		mBitmapCache = new BitmapCache(mContext);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -146,13 +146,14 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
 			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
 			holderEntry.price.setText(
-					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "/" +
+					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "元/" +
 					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 			String imgUrl = itemSaleInfo.getGoodsImg();
+			holderEntry.image.setImageResource(R.drawable.default_icon);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 		}
 		
-		for(int i = itemSaleInfos.size(); i < 6; i++){
+		for(int i = itemSaleInfos.size(); i < holder.cells.size(); i++){
 			HolderEntry holderEntry = holder.cells.get(i);
 			holderEntry.itemVegetable.setTag("-1");
 			holderEntry.productName.setVisibility(View.INVISIBLE);
@@ -172,7 +173,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		}
 		//TODO 再判断当前选择的地址是否为NULL
 		if(ConfigManager.getInstance().getChoosedAddressId() == -1){
-			CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
+			final CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
 			addAddressDialog.setDismissButtonId(R.id.cancel_button);
 			addAddressDialog.getViewById(R.id.agree_button)
 				.setOnClickListener(new OnClickListener() {
@@ -180,6 +181,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 				public void onClick(View v) {
 					Intent intent = new Intent(mContext, AddAddressActivity.class);
 					mContext.startActivity(intent);
+					addAddressDialog.dismiss();
 				}
 			});
 			return;

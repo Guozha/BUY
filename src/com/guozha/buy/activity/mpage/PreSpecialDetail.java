@@ -117,12 +117,15 @@ public class PreSpecialDetail extends BaseActivity{
 	
 	private void initData(){
 		LogUtil.e("请求数据");
-		if(mGoodsId == -1) return;
+		if(mGoodsId == -1) {
+			LogUtil.e("mGoodsId == -1");
+			return;
+		}
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/special/detail")
 		.setParams("addressId", addressId)
 		.setParams("goodsId", mGoodsId);
-		
+		LogUtil.e("paramPath = " + paramPath);
 		HttpManager.getInstance(PreSpecialDetail.this).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
@@ -138,6 +141,8 @@ public class PreSpecialDetail extends BaseActivity{
 						mArrivalDays = response.getInt("arrivalDays");		//送达天数
 						mWebUrl = response.getString("picDesc");			//图文介绍地址
 						mGoodsPrice = UnitConvertUtil.getSwitchedMoney(mUnitPrice) + "元/" + UnitConvertUtil.getSwichedUnit(1000, unit);
+					
+						LogUtil.e("mUnitPrice = " + mUnitPrice);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -150,12 +155,12 @@ public class PreSpecialDetail extends BaseActivity{
 	
 	private void updateView(){
 		HttpManager.getInstance(PreSpecialDetail.this).volleyImageRequest(
-				HttpManager.IMG_URL + mImageUrl, mHeadImage, R.drawable.default_icon, R.drawable.default_icon);
+				HttpManager.IMG_URL + mImageUrl, mHeadImage, R.drawable.default_icon_large, R.drawable.default_icon_large);
 		mPreSpecialTitle.setText(mGoodsName);
 		mPriceText.setText(mGoodsPrice);
 		mEndDayText.setText("截止时间：" + mEndDate);
 		mArrivalDayText.setText("预计送达日期:" + mArrivalDays + "天");
-		mWebView.loadUrl(mWebUrl);
+		mWebView.loadUrl(HttpManager.URL + mWebUrl);
 		
 		int iconId = -1;
 		if("02".equals(mGoodsType)){

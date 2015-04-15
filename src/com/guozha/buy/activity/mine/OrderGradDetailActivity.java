@@ -3,9 +3,16 @@ package com.guozha.buy.activity.mine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -20,9 +27,11 @@ import com.guozha.buy.entry.mine.order.ExpandListData;
 import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.entry.mine.order.OrderDetailMenus;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -41,6 +50,8 @@ public class OrderGradDetailActivity extends BaseActivity{
 	
 	private List<ExpandListData> mExpandListDatas;
 	private TextView mOrderDescriptText;
+	private EditText mFeadBackText;
+	private Button mFeadBackButton;
 	private int mOrderId; 
 	private String mOrderDescript;
 	
@@ -75,11 +86,47 @@ public class OrderGradDetailActivity extends BaseActivity{
 	private void initView(){
 		mExpandableListView = (ExpandableListView) findViewById(R.id.expandable_order_detail_list);
 		mOrderDescriptText = (TextView) findViewById(R.id.order_descript_text);
+		mFeadBackText = (EditText)findViewById(R.id.order_feadback_text);
+		mFeadBackButton = (Button) findViewById(R.id.order_feadback_button);
+		mFeadBackButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				requestOrderFeadback();
+			}
+		});
+	}
+	
+	/**
+	 * 请求订单评价
+	 */
+	private void requestOrderFeadback() {
+		String feadback = mFeadBackText.getText().toString();
+		if(feadback.isEmpty()) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		RequestParam paramPath = new RequestParam("order/orderMark")
+		.setParams("token", token)
+		.setParams("orderId", mOrderId)
+		.setParams("commentDesc", feadback)
+		.setParams("serviceStar", "");
+		HttpManager.getInstance(OrderGradDetailActivity.this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							ToastUtil.showToast(OrderGradDetailActivity.this, "评价成功");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
 	}
 	
 	private void updateView(){
 		if(mMenusAdapter == null){
-			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas);
+			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas, true, mOrderId);
 			mExpandableListView.setAdapter(mMenusAdapter);
 			//首次全部展开
 			for (int i = 0; i < mExpandListDatas.size(); i++) {
@@ -88,7 +135,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 		}else{
 			mMenusAdapter.notifyDataSetChanged();
 		}
-		mOrderDescriptText.setText(mOrderDescript);
+		mOrderDescriptText.setText("订单状态：" + mOrderDescript);
 	}
 	
 	private void initData(){
@@ -114,6 +161,10 @@ public class OrderGradDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailGoods.getGoodsId());
 							expandListData.setName(orderDetailGoods.getGoodsName());
+							expandListData.setUnit(orderDetailGoods.getUnit());
+							expandListData.setAmount(orderDetailGoods.getAmount());
+							expandListData.setPrice(orderDetailGoods.getPrice());
+							expandListData.setType(1);
 							//TODO 设置价格等
 							mExpandListDatas.add(expandListData);
 						}
@@ -126,7 +177,11 @@ public class OrderGradDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailMenus.getMenuId());
 							expandListData.setName(orderDetailMenus.getMenuName());
-							expandListData.setMenuslist(orderDetailMenus.getGoodsInfo());
+							expandListData.setAmount(orderDetailMenus.getAmount());
+							expandListData.setUnit("8");
+							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setPrice(orderDetailMenus.getPrice());
+							expandListData.setType(0);
 							mExpandListDatas.add(expandListData);
 						}
 					}

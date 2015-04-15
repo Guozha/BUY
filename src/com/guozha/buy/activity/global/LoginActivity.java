@@ -16,12 +16,10 @@ import android.widget.ImageView;
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -160,6 +158,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 								e.printStackTrace();
 							}
 						}
+						MainPageInitDataManager.mAccountUpdated = true;	//允许用户账户信息变化
 						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
 						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
 						LoginActivity.this.finish();

@@ -2,18 +2,28 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.global.SearchRecipe;
 import com.guozha.buy.entry.mine.collection.Material;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
 /**
@@ -21,17 +31,19 @@ import com.guozha.buy.util.UnitConvertUtil;
  * @author PeggyTong
  *
  */
-public class SearchRelateRecipeListAdapter extends BaseAdapter{
+public class SearchRelateRecipeListAdapter extends BaseAdapter implements OnClickListener{
 	
 	private List<SearchRecipe> mRecipeListItem;
 	
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
+	private Context mContext;
 	
-	public SearchRelateRecipeListAdapter(Context context, List<SearchRecipe> searchRecipItems){
+	public SearchRelateRecipeListAdapter(Context context, List<SearchRecipe> searchRecipItems, BitmapCache bitmapCache){
+		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mRecipeListItem = searchRecipItems;
-		mBitmapCache = new BitmapCache(context);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -59,6 +71,8 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter{
 			holder.image = (ImageView) convertView.findViewById(R.id.search_recipe_image);
 			holder.name = (TextView) convertView.findViewById(R.id.search_recipe_name);
 			holder.descript = (TextView) convertView.findViewById(R.id.search_recipe_descript);
+			holder.addCart = (ImageView) convertView.findViewById(R.id.search_recipe_addcart_button);
+			holder.addCart.setOnClickListener(this);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
@@ -67,6 +81,7 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter{
 		mBitmapCache.loadBitmaps(holder.image, searchRecipe.getMenuImg());
 		holder.name.setText(searchRecipe.getMenuName());
 		holder.descript.setText(getRecipeDescript(searchRecipe.getGoodsList()));
+		holder.addCart.setTag(searchRecipe.getMenuId());
 		return convertView;
 	}
 	
@@ -74,6 +89,7 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter{
 		private ImageView image;
 		private TextView name;
 		private TextView descript;
+		private ImageView addCart;
 	}
 
 	/**
@@ -92,5 +108,37 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter{
 			buffer.append("、");
 		}
 		return buffer.toString();
+	}
+
+	@Override
+	public void onClick(View view) {
+		int menuId = (Integer) view.getTag();
+		int userId = ConfigManager.getInstance().getUserId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		RequestParam paramPath = new RequestParam("cart/insert")
+		.setParams("userId"	, userId)
+		.setParams("addressId", addressId)
+		.setParams("token", token)
+		.setParams("id", menuId)
+		.setParams("productType", "01")
+		.setParams("amount", 1);
+		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String retunCode = response.getString("returnCode");
+						if("1".equals(retunCode)){
+							ToastUtil.showToast(mContext, "添加购物车成功");
+							MainPageInitDataManager.mCartItemsUpdated = true;
+						}else{
+							ToastUtil.showToast(mContext, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
 	}
 }

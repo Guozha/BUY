@@ -29,11 +29,11 @@ public class PreSpecialGridAdapter extends BaseAdapter{
 	private BitmapCache mBitmapCache;
 	private Context mContext;
 	
-	public PreSpecialGridAdapter(Context context, List<PreSpecialItem> preSpecialItems){
+	public PreSpecialGridAdapter(Context context, List<PreSpecialItem> preSpecialItems, BitmapCache bitmapCache){
 		mContext = context;
 		mInflater = LayoutInflater.from(mContext);
 		mPreSpecialItems = preSpecialItems;
-		mBitmapCache = new BitmapCache(mContext);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class PreSpecialGridAdapter extends BaseAdapter{
 		mBitmapCache.loadBitmaps(holder.image, preSpecialItem.getGoodsImg());
 		holder.name.setText(preSpecialItem.getGoodsName());
 		holder.price.setText(UnitConvertUtil.getSwitchedMoney(preSpecialItem.getUnitPrice()) 
-				+ "/" + UnitConvertUtil.getSwichedUnit(1000, preSpecialItem.getUnit()));
+				+ "元/" + UnitConvertUtil.getSwichedUnit(1000, preSpecialItem.getUnit()));
 		int iconId = -1;
 		if("02".equals(preSpecialItem.getGoodsProp())){
 			iconId = R.drawable.sale_tag_01;
