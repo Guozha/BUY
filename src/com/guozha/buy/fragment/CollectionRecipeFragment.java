@@ -56,6 +56,7 @@ public class CollectionRecipeFragment extends Fragment{
 	
 	private List<CollectionDir> mCollectionDir = new ArrayList<CollectionDir>();
 	private CollectionRecipeExpandAdapter mCollectionRecipeAdapter;
+	private View mEmptyView;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -78,6 +79,7 @@ public class CollectionRecipeFragment extends Fragment{
 	}
 	
 	private void initView(View view){
+		mEmptyView = view.findViewById(R.id.empty_view);
 		mCollectionRecipeList = 
 				(AnimatedExpandableListView) view.findViewById(R.id.collection_recipe_list);
 		mCollectionRecipeList.setOnChildClickListener(new OnChildClickListener() {
@@ -92,13 +94,17 @@ public class CollectionRecipeFragment extends Fragment{
 				return false;
 			}
 		});
-		
+
 		mCollectionRecipeList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				final int posit = position;
+				final View groupView = view.findViewById(R.id.collection_recipe_dirname);
+				if(groupView == null) return false;
+				if(position == 0){
+					ToastUtil.showToast(CollectionRecipeFragment.this.getActivity(), "默认收藏夹不允许删除");
+					return true;
+				}
 				final CustomDialog deleteDialog = new CustomDialog(
 						CollectionRecipeFragment.this.getActivity(), R.layout.dialog_delete_collection_folder);
 				deleteDialog.setDismissButtonId(R.id.cancel_button);
@@ -106,7 +112,7 @@ public class CollectionRecipeFragment extends Fragment{
 					@Override
 					public void onClick(View v) {
 						deleteDialog.dismiss();
-						requestDeleteCollectionFolder(mCollectionDir.get(posit).getMyDirId());
+						requestDeleteCollectionFolder((Integer)groupView.getTag());
 					}
 				});
 				return true;
@@ -115,6 +121,13 @@ public class CollectionRecipeFragment extends Fragment{
 	}
 	
 	private void updateView(){
+		if(mCollectionDir.isEmpty()){
+			mCollectionRecipeList.setVisibility(View.GONE);
+			mEmptyView.setVisibility(View.VISIBLE);
+		}else{
+			mCollectionRecipeList.setVisibility(View.VISIBLE);
+			mEmptyView.setVisibility(View.GONE);
+		}
 		if(mCollectionRecipeAdapter != null){
 			mCollectionRecipeAdapter.notifyDataSetChanged();
 		}else{

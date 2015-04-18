@@ -19,6 +19,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.collection.GoodsListItem;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
@@ -36,12 +37,14 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 	private DeleteClickListener mDeletedClickListener;
 	private List<GoodsListItem> mGoodsListItems;
 	private Context mContext;
+	private BitmapCache mBitmapCache;
 	
-	public CollectionVegetableListAdapter(Context context, List<GoodsListItem> goodsListItems){
+	public CollectionVegetableListAdapter(Context context, List<GoodsListItem> goodsListItems, BitmapCache bitmapCache){
 		mContext = context;
 		mDeletedClickListener = new DeleteClickListener();
 		mGoodsListItems = goodsListItems;
 		mInflater = LayoutInflater.from(context);
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -66,6 +69,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_fragment_collection_vegetable_item_cell, null);
 			holder = new ViewHolder();
+			holder.goodsIcon = (ImageView) convertView.findViewById(R.id.goods_icon);
 			holder.goodsName = (TextView) convertView.findViewById(R.id.goods_name);
 			holder.goodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
 			holder.deleteButton = (ImageView) convertView.findViewById(R.id.delete_button);
@@ -79,10 +83,13 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getUnitPrice()) +
 				"元/" + UnitConvertUtil.getSwitchedWeight(1000, goodsItem.getUnit()));
 		holder.deleteButton.setTag(goodsItem.getMyGoodsId());
+		holder.goodsIcon.setImageResource(R.drawable.default_icon);
+		mBitmapCache.loadBitmaps(holder.goodsIcon, goodsItem.getGoodsImg());
 		return convertView;
 	}
 	
 	static class ViewHolder{
+		private ImageView goodsIcon;
 		private ImageView deleteButton;
 		private TextView goodsName;
 		private TextView goodsPrice;

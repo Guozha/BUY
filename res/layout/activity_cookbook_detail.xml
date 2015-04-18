@@ -68,9 +68,7 @@
 	        android:paddingTop="18dip"
 	        android:textSize="@dimen/dimen_global_14sp"
 	        android:textColor="@color/color_app_base_4"
-	        android:lineSpacingExtra="5dip"
-	        android:text="菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。菜谱描述段落，菜谱需要描述哦，描述吧，这就是菜谱哦。"
-	        />
+	        android:lineSpacingExtra="5dip"/>
 	    
 	    <LinearLayout 
 	        android:id="@+id/cookbook_add_cart_button"

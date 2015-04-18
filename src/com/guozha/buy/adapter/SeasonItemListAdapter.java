@@ -12,15 +12,18 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
+import com.guozha.buy.global.net.BitmapCache;
 
 public class SeasonItemListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<SeasonAdviceItem> mAdviceItem;
+	private BitmapCache mBitmapCache;
 	
-	public SeasonItemListAdapter(Context context, List<SeasonAdviceItem> adviceItem){
+	public SeasonItemListAdapter(Context context, List<SeasonAdviceItem> adviceItem, BitmapCache bitmapCache){
 		mInflater = LayoutInflater.from(context);
 		mAdviceItem = adviceItem;
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -51,6 +54,7 @@ public class SeasonItemListAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		mBitmapCache.loadBitmaps(holder.mItemIcon, mAdviceItem.get(position).getGoodsImg());
 		holder.mItemDescrip.setText(mAdviceItem.get(position).getMemo());
 		return convertView;
 	}

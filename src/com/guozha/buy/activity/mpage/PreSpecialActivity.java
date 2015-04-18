@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -19,8 +20,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.cart.PlanceOrderActivity;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialItem;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialPage;
 import com.guozha.buy.global.ConfigManager;
@@ -114,6 +118,8 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				int addressId = ConfigManager.getInstance().getChoosedAddressId(PreSpecialActivity.this);
+				if(addressId == -1) return;
 				String prop = mPreSpecialItems.get(position).getGoodsProp();
 				if("02".equals(prop) || "03".equals(prop)){
 					Intent intent = new Intent(PreSpecialActivity.this, PreSpecialDetail.class);

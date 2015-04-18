@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -61,7 +63,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private ImageView mAddressCountryIcon;
 	private ImageView mAddressCityIcon;
 	
-	private int mCountryId;
+	private int mCountryId = -1;
 	
 	private int defaultFlag = 0;  //是否默认地址
 	
@@ -151,6 +153,24 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			findViewById(R.id.add_city_button).setOnClickListener(this);
 			mRequestAddButton.setText("添加");
 			mRequestSettingDefaultButton.setVisibility(View.GONE);
+			mAddressDetai.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					
+				}
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					
+				}
+				@Override
+				public void afterTextChanged(Editable s) {
+					if(mCountryId == -1){
+						ToastUtil.showToast(AddAddressActivity.this, "请先选择所在区");
+						requestCatonList();
+					}
+				}
+			});
 		}
 		
 		mRequestAddButton.setOnClickListener(this);
@@ -198,8 +218,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(AddAddressActivity.this, "抱歉，目前只支持杭州地区");
 			break;
 		case R.id.add_canton_button:   //请求区列表
-			Intent intent = new Intent(AddAddressActivity.this, ChooseCantonActivity.class);
-			startActivityForResult(intent, REQUEST_CODE);
+			requestCatonList();
 			break;
 		case R.id.add_address_setting_default: //设为默认
 			if(valideRequestAddress()){
@@ -230,6 +249,11 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			requestAddAddress();
 			break;
 		}
+	}
+
+	private void requestCatonList() {
+		Intent intent = new Intent(AddAddressActivity.this, ChooseCantonActivity.class);
+		startActivityForResult(intent, REQUEST_CODE);
 	}
 
 	/**
@@ -421,6 +445,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mCountryId = bundle.getInt("areaId");
 			String areaName = bundle.getString("areaName");
 			mAddressCountry.setText(areaName);
+			mAddressDetai.setText("");
 			handler.sendEmptyMessage(HAND_CHOOSED_COUNTRY);
 			ToastUtil.showToast(AddAddressActivity.this, areaName);
 		}

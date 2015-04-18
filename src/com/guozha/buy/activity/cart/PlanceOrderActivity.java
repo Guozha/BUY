@@ -1,6 +1,7 @@
 package com.guozha.buy.activity.cart;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONException;
@@ -37,6 +38,7 @@ import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 下单界面
@@ -44,6 +46,8 @@ import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
  *
  */
 public class PlanceOrderActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "SubmitOrderPage";
 	
 	private WheelView mWheelView;
 	
@@ -213,13 +217,23 @@ public class PlanceOrderActivity extends BaseActivity{
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(PlanceOrderActivity.this);
 		if(token == null) return;
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this);
+		if(addressId == -1) return;
+		long todayDate = ConfigManager.getInstance().getTodayDate();
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(todayDate);
+		if("明天".equals(pointTime.getDayname())){
+			calendar.add(Calendar.DATE, 1);
+		}
+		String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
+		LogUtil.e("timeStr === " + timeStr);
 		RequestParam paramPath = new RequestParam("order/insert")
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("addressId", addressId)
-		.setParams("wantUpTime", pointTime.getFromTime())
-		.setParams("wantDownTime", pointTime.getToTime())
+		.setParams("wantUpTime", timeStr + "$" + pointTime.getFromTime())
+		.setParams("wantDownTime", timeStr + "$" + pointTime.getToTime())
 		.setParams("memo", mLeaveMessage.getText().toString());
 		
 		HttpManager.getInstance(PlanceOrderActivity.this).volleyJsonRequestByPost(
@@ -297,7 +311,6 @@ public class PlanceOrderActivity extends BaseActivity{
 		@Override
 		public int getItemsCount() {
 			if(mShowTimes == null) return 0;
-			LogUtil.e("mShowTimes ..... " + mShowTimes.size());
 			return mShowTimes.size();
 		}
 
@@ -307,5 +320,23 @@ public class PlanceOrderActivity extends BaseActivity{
 			return showTime.getDayname() + "    " + 
 					showTime.getFromTime() + "-" + showTime.getToTime();
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

@@ -20,6 +20,7 @@ import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.market.RelationRecipeMaterial;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
@@ -30,10 +31,12 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 	private LayoutInflater mInflater;
 	private List<RelationRecipe> mRelationRecipe;
 	private Context mContext;
-	public CookBookListAdapter(Context context, List<RelationRecipe> relationRecipe){
+	private BitmapCache mBitmapCache;
+	public CookBookListAdapter(Context context, List<RelationRecipe> relationRecipe, BitmapCache bitmapCache){
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mRelationRecipe = relationRecipe;
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
@@ -58,6 +61,7 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_item_cook_book_list_cell, null);
 			holder = new ViewHolder();
+			holder.image = (ImageView) convertView.findViewById(R.id.cook_book_imag);
 			holder.name = (TextView) convertView.findViewById(R.id.cooke_book_name);
 			holder.material = (TextView) convertView.findViewById(R.id.cook_book_material);
 			holder.collectionButton = (ImageView) convertView.findViewById(R.id.cook_book_collection);
@@ -67,6 +71,8 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		RelationRecipe relationRecipe = mRelationRecipe.get(position);
+		holder.image.setImageResource(R.drawable.default_icon);
+		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
 		holder.name.setText(relationRecipe.getMenuName());
 		holder.material.setText(getRecipeDescript(relationRecipe.getGoodsList()));
 		holder.collectionButton.setTag(relationRecipe.getMenuId());
@@ -93,6 +99,7 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 	
 	
     static class ViewHolder{
+    	private ImageView image;
     	private TextView name;
     	private TextView material;
     	private ImageView collectionButton;

@@ -259,12 +259,12 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 		}
 		String menus = "";
 		if(menuIds.length() > 1){
-			 menus = menuIds.substring(1, menuIds.length());
+			 menus = menuIds.substring(0, menuIds.length() - 1);
 		}else{
 			ToastUtil.showToast(PlanMenuActivity.this, "请先选择菜谱");
 			return;
 		}
-		
+		LogUtil.e("menusId end==== " + menus);
 		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
 		.setParams("token", token)
 		.setParams("userId", userId)

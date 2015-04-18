@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -264,9 +265,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				}
 				//让全部更新
 				MainPageInitDataManager.mMarketItemUpdated = true;
-				MainPageInitDataManager.mAccountUpdated = true;
-				MainPageInitDataManager.mCartItemsUpdated = true;
-				MainPageInitDataManager.mAddressUpdated = true;
 				mDataManager.getMarketHomePage(handler, 1, 4);
 				try {
 					Thread.sleep(2000);
@@ -328,7 +326,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 */
 	private void setAddressInfoData(){
 		if(mDataManager == null){
-			return;
+			mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
 		}
 		mAddressInfos = mDataManager.getAddressInfos(null);
 		//TODO 设置ActionBar上面的显示
@@ -495,7 +493,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
 			//View不可见
-			
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}

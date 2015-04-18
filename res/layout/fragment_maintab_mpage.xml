@@ -270,18 +270,13 @@
 	            android:src="@drawable/main_season_icon"/>
 	    </LinearLayout>
 	        
-        <FrameLayout 
+        <RelativeLayout 
+            android:id="@+id/mpage_season_menu"
+            android:src="@drawable/main_season_img_spring"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="378"
-            android:layout_marginLeft="8dip"
-            android:background="@drawable/main_background">
-            <ImageView 
-                android:id="@+id/mpage_season_menu"
-	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
-	            android:scaleType="centerCrop"
-	            android:src="@drawable/main_season_img_spring"/>
+            android:layout_marginLeft="8dip">
             <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -290,7 +285,7 @@
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="@color/color_app_base_1"
 	            android:text="时令养生"/>
-        </FrameLayout>
+        </RelativeLayout>
 	       
 	</LinearLayout>
 </LinearLayout>

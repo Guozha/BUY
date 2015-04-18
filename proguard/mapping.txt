@@ -14148,6 +14148,7 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int login_right_state -> login_right_state
     int login_wrong_state -> login_wrong_state
     int logo_icon -> logo_icon
+    int logo_share -> logo_share
     int main_add_in -> main_add_in
     int main_address_edit -> main_address_edit
     int main_address_icon -> main_address_icon
@@ -14461,6 +14462,7 @@ com.guozha.buy.R$id -> com.guozha.buy.R$id:
     int come_in_button -> come_in_button
     int confirm_button -> confirm_button
     int cook_book_collection -> cook_book_collection
+    int cook_book_imag -> cook_book_imag
     int cook_book_material -> cook_book_material
     int cookbook_add_cart_button -> cookbook_add_cart_button
     int cookbook_add_collection_button -> cookbook_add_collection_button
@@ -14500,6 +14502,7 @@ com.guozha.buy.R$id -> com.guozha.buy.R$id:
     int findpwd_validenum -> findpwd_validenum
     int findpwd_validenum_input_area -> findpwd_validenum_input_area
     int fragment_mpage_season -> fragment_mpage_season
+    int goods_icon -> goods_icon
     int goods_name -> goods_name
     int goods_price -> goods_price
     int group_amount -> group_amount
@@ -14878,6 +14881,7 @@ com.guozha.buy.R$layout -> com.guozha.buy.R$layout:
     int actionbar_search_custom_view -> actionbar_search_custom_view
     int activity_about_our -> activity_about_our
     int activity_add_address -> activity_add_address
+    int activity_address_detail -> activity_address_detail
     int activity_advice_praise -> activity_advice_praise
     int activity_alipay -> activity_alipay
     int activity_answer_question -> activity_answer_question
@@ -14920,6 +14924,7 @@ com.guozha.buy.R$layout -> com.guozha.buy.R$layout:
     int detail_step_list_item_cell -> detail_step_list_item_cell
     int dialog_active_rule -> dialog_active_rule
     int dialog_add_address -> dialog_add_address
+    int dialog_cancel_order -> dialog_cancel_order
     int dialog_cart_empty -> dialog_cart_empty
     int dialog_choose_address -> dialog_choose_address
     int dialog_collection_recipe_modify -> dialog_collection_recipe_modify
@@ -15165,9 +15170,9 @@ com.guozha.buy.R$styleable -> com.guozha.buy.R$styleable:
 com.guozha.buy.activity.CustomApplication -> com.guozha.buy.activity.CustomApplication:
     com.guozha.buy.activity.CustomApplication instance -> a
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> b
-    21:26:void onCreate() -> onCreate
-    33:36:com.guozha.buy.global.net.BitmapCache getBitmapCache() -> a
-    44:44:android.content.Context getContext() -> b
+    22:27:void onCreate() -> onCreate
+    34:37:com.guozha.buy.global.net.BitmapCache getBitmapCache() -> a
+    45:45:android.content.Context getContext() -> b
 com.guozha.buy.activity.cart.ChooseTicketActivity -> com.guozha.buy.activity.cart.ChooseTicketActivity:
     java.lang.String PAGE_NAME -> a
     int HAND_DATA_COMPLETED -> b
@@ -15325,48 +15330,48 @@ com.guozha.buy.activity.cart.PlanceOrderActivity -> com.guozha.buy.activity.cart
     android.widget.TextView mQuickTimeChooseText -> m
     android.view.View mQuickTimeChoose -> n
     android.os.Handler handler -> o
-    89:102:void onCreate(android.os.Bundle) -> onCreate
-    108:177:void initView() -> a
-    180:184:void setCancelOneHourArrive() -> c
-    187:191:void setChooseOneHourArrive() -> d
-    197:248:void requestSubmitOrder() -> e
-    254:282:void initData() -> f
-    48:48:com.guozha.buy.view.scroll.WheelView access$0(com.guozha.buy.activity.cart.PlanceOrderActivity) -> a
-    53:53:java.util.List access$1(com.guozha.buy.activity.cart.PlanceOrderActivity) -> b
-    65:65:android.view.View access$2(com.guozha.buy.activity.cart.PlanceOrderActivity) -> c
-    186:186:void access$3(com.guozha.buy.activity.cart.PlanceOrderActivity) -> d
-    179:179:void access$4(com.guozha.buy.activity.cart.PlanceOrderActivity) -> e
-    196:196:void access$5(com.guozha.buy.activity.cart.PlanceOrderActivity) -> f
-    63:63:android.widget.ImageView access$6(com.guozha.buy.activity.cart.PlanceOrderActivity) -> g
-    56:56:int access$7(com.guozha.buy.activity.cart.PlanceOrderActivity) -> h
-    67:67:android.os.Handler access$8(com.guozha.buy.activity.cart.PlanceOrderActivity) -> i
+    95:108:void onCreate(android.os.Bundle) -> onCreate
+    114:183:void initView() -> a
+    186:190:void setCancelOneHourArrive() -> c
+    193:197:void setChooseOneHourArrive() -> d
+    203:264:void requestSubmitOrder() -> e
+    270:298:void initData() -> f
+    54:54:com.guozha.buy.view.scroll.WheelView access$0(com.guozha.buy.activity.cart.PlanceOrderActivity) -> a
+    59:59:java.util.List access$1(com.guozha.buy.activity.cart.PlanceOrderActivity) -> b
+    71:71:android.view.View access$2(com.guozha.buy.activity.cart.PlanceOrderActivity) -> c
+    192:192:void access$3(com.guozha.buy.activity.cart.PlanceOrderActivity) -> d
+    185:185:void access$4(com.guozha.buy.activity.cart.PlanceOrderActivity) -> e
+    202:202:void access$5(com.guozha.buy.activity.cart.PlanceOrderActivity) -> f
+    69:69:android.widget.ImageView access$6(com.guozha.buy.activity.cart.PlanceOrderActivity) -> g
+    62:62:int access$7(com.guozha.buy.activity.cart.PlanceOrderActivity) -> h
+    73:73:android.os.Handler access$8(com.guozha.buy.activity.cart.PlanceOrderActivity) -> i
 com.guozha.buy.activity.cart.PlanceOrderActivity$1 -> com.guozha.buy.activity.cart.k:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    69:84:void handleMessage(android.os.Message) -> handleMessage
+    75:90:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.cart.PlanceOrderActivity$2 -> com.guozha.buy.activity.cart.l:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    117:122:void itemChanged(int) -> a
+    123:128:void itemChanged(int) -> a
 com.guozha.buy.activity.cart.PlanceOrderActivity$3 -> com.guozha.buy.activity.cart.m:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    131:132:void onClick(android.view.View) -> onClick
+    137:138:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.cart.PlanceOrderActivity$4 -> com.guozha.buy.activity.cart.n:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    160:172:void onClick(android.view.View) -> onClick
+    166:178:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.cart.PlanceOrderActivity$5 -> com.guozha.buy.activity.cart.o:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    230:245:void onResponse(org.json.JSONObject) -> a
+    246:261:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PlanceOrderActivity$6 -> com.guozha.buy.activity.cart.p:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    261:280:void onResponse(java.lang.String) -> a
+    277:296:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PlanceOrderActivity$6$1 -> com.guozha.buy.activity.cart.q:
     com.guozha.buy.activity.cart.PlanceOrderActivity$6 this$1 -> d
 com.guozha.buy.activity.cart.PlanceOrderActivity$TimeOptionAdapter -> com.guozha.buy.activity.cart.PlanceOrderActivity$a:
     com.guozha.buy.activity.cart.PlanceOrderActivity this$0 -> a
-    293:294:android.view.View getItem(int,android.view.View,android.view.ViewGroup) -> a
-    299:301:int getItemsCount() -> a
-    306:307:java.lang.CharSequence getItemText(int) -> a
+    309:310:android.view.View getItem(int,android.view.View,android.view.ViewGroup) -> a
+    315:316:int getItemsCount() -> a
+    321:322:java.lang.CharSequence getItemText(int) -> a
 com.guozha.buy.activity.cart.PreSpecialPayActivity -> com.guozha.buy.activity.cart.PreSpecialPayActivity:
     int REQUEST_CODE -> a
     int HAND_PAY_WAY_COMPLETED -> b
@@ -15381,85 +15386,87 @@ com.guozha.buy.activity.cart.PreSpecialPayActivity -> com.guozha.buy.activity.ca
     int mOrderId -> k
     int mTicketId -> l
     int mTicketPrice -> m
-    com.guozha.buy.entry.cart.PayOrderMesg mPayOrderMesg -> n
-    android.widget.TextView mAddressNameText -> o
-    android.widget.TextView mAddressMobileText -> p
-    android.widget.TextView mAddressDetailText -> q
-    android.widget.TextView mItemNameText -> r
-    android.view.View mItemMinus -> s
-    android.widget.TextView mItemNumText -> t
-    android.view.View mItemPlus -> u
-    android.widget.TextView mItemPriceText -> v
-    android.widget.EditText mPreSpeMemoText -> w
-    android.view.View mAccountRemainView -> x
-    android.widget.TextView mAccountRemainText -> y
-    android.widget.ImageView mAccountRemainIcon -> z
-    android.view.View mBeanRemainView -> A
-    android.widget.TextView mBeanRemainText -> B
-    android.widget.ImageView mBeanRemainIcon -> C
-    android.view.View mTicketView -> D
-    android.widget.TextView mTicketText -> E
-    android.widget.ImageView mTicketArrowIcon -> F
-    android.widget.TextView mNeedPayPriceText -> G
-    android.widget.TextView mCanUseMoneyDeduct -> H
-    android.view.View mPayZhifubaoView -> I
-    android.view.View mPayWeixinView -> J
-    android.view.View mPayWangyingView -> K
-    android.view.View mPayHuodaofukuanView -> L
-    android.widget.ImageView mPayZhifubaoIcon -> M
-    android.widget.ImageView mPayWeixinIcon -> N
-    android.widget.ImageView mPayWangyingIcon -> O
-    android.widget.ImageView mPayHuodaofukuanIcon -> P
-    android.os.Handler mHandler -> Q
-    boolean mBeanChecked -> R
-    boolean mAccountRemainChecked -> S
-    com.guozha.buy.activity.cart.PreSpecialPayActivity$PayWay mPayWay -> T
-    int mAccountRemainDeduct -> U
-    int mBeanrDeduct -> V
-    int mTotalPrice -> W
-    int mServicePrice -> X
-    int mAccountRemain -> Y
-    int mBeanNum -> Z
-    java.util.List mPayWayList -> aa
-    int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PreSpecialPayActivity$PayWay -> ab
-    184:203:void onCreate(android.os.Bundle) -> onCreate
-    207:268:void initView() -> c
-    275:328:void onClick(android.view.View) -> onClick
-    340:344:void payWayExchangeIcon(android.widget.ImageView,com.guozha.buy.activity.cart.PreSpecialPayActivity$PayWay) -> a
-    350:359:void clearPayWayIcon() -> d
-    368:397:void setPayPriceText() -> e
-    406:414:boolean exchangeIcon(android.widget.ImageView) -> a
-    427:465:void initData() -> f
-    469:478:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    485:547:void requestAddOrder(java.lang.String) -> b
-    553:583:void requestPayMoney() -> g
-    121:121:android.os.Handler access$0(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> a
-    423:423:java.util.List access$1(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> b
-    111:111:android.view.View access$2(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> c
-    112:112:android.view.View access$3(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> d
-    113:113:android.view.View access$4(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> e
-    114:114:android.view.View access$5(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> f
-    552:552:void access$6(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> g
-    67:67:int access$7(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> h
-    101:101:android.widget.ImageView access$8(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> i
-    100:100:android.widget.TextView access$9(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> j
-    68:68:int access$10(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> k
-    367:367:void access$11(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> l
-    423:423:void access$12(com.guozha.buy.activity.cart.PreSpecialPayActivity,java.util.List) -> a
-    50:50:int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PreSpecialPayActivity$PayWay() -> a
-    70:70:void access$14(com.guozha.buy.activity.cart.PreSpecialPayActivity,com.guozha.buy.entry.cart.PayOrderMesg) -> a
+    boolean mOrderComeIn -> n
+    com.guozha.buy.entry.cart.PayOrderMesg mPayOrderMesg -> o
+    android.widget.TextView mAddressNameText -> p
+    android.widget.TextView mAddressMobileText -> q
+    android.widget.TextView mAddressDetailText -> r
+    android.widget.TextView mItemNameText -> s
+    android.view.View mItemMinus -> t
+    android.widget.TextView mItemNumText -> u
+    android.view.View mItemPlus -> v
+    android.widget.TextView mItemPriceText -> w
+    android.widget.EditText mPreSpeMemoText -> x
+    android.view.View mAccountRemainView -> y
+    android.widget.TextView mAccountRemainText -> z
+    android.widget.ImageView mAccountRemainIcon -> A
+    android.view.View mBeanRemainView -> B
+    android.widget.TextView mBeanRemainText -> C
+    android.widget.ImageView mBeanRemainIcon -> D
+    android.view.View mTicketView -> E
+    android.widget.TextView mTicketText -> F
+    android.widget.ImageView mTicketArrowIcon -> G
+    android.widget.TextView mNeedPayPriceText -> H
+    android.widget.TextView mCanUseMoneyDeduct -> I
+    android.view.View mPayZhifubaoView -> J
+    android.view.View mPayWeixinView -> K
+    android.view.View mPayWangyingView -> L
+    android.view.View mPayHuodaofukuanView -> M
+    android.widget.ImageView mPayZhifubaoIcon -> N
+    android.widget.ImageView mPayWeixinIcon -> O
+    android.widget.ImageView mPayWangyingIcon -> P
+    android.widget.ImageView mPayHuodaofukuanIcon -> Q
+    android.os.Handler mHandler -> R
+    boolean mBeanChecked -> S
+    boolean mAccountRemainChecked -> T
+    com.guozha.buy.activity.cart.PreSpecialPayActivity$PayWay mPayWay -> U
+    int mAccountRemainDeduct -> V
+    int mBeanrDeduct -> W
+    int mTotalPrice -> X
+    int mServicePrice -> Y
+    int mAccountRemain -> Z
+    int mBeanNum -> aa
+    java.util.List mPayWayList -> ab
+    int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PreSpecialPayActivity$PayWay -> ac
+    197:217:void onCreate(android.os.Bundle) -> onCreate
+    221:282:void initView() -> c
+    289:343:void onClick(android.view.View) -> onClick
+    355:359:void payWayExchangeIcon(android.widget.ImageView,com.guozha.buy.activity.cart.PreSpecialPayActivity$PayWay) -> a
+    365:374:void clearPayWayIcon() -> d
+    383:419:void setPayPriceText() -> e
+    428:436:boolean exchangeIcon(android.widget.ImageView) -> a
+    449:488:void initData() -> f
+    492:502:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    509:571:void requestAddOrder(java.lang.String) -> b
+    577:602:void requestPayMoney() -> g
+    125:125:android.os.Handler access$0(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> a
+    445:445:java.util.List access$1(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> b
+    115:115:android.view.View access$2(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> c
+    116:116:android.view.View access$3(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> d
+    117:117:android.view.View access$4(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> e
+    118:118:android.view.View access$5(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> f
+    72:72:boolean access$6(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> g
+    576:576:void access$7(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> h
+    69:69:int access$8(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> i
+    105:105:android.widget.ImageView access$9(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> j
+    104:104:android.widget.TextView access$10(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> k
+    70:70:int access$11(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> l
+    382:382:void access$12(com.guozha.buy.activity.cart.PreSpecialPayActivity) -> m
+    445:445:void access$13(com.guozha.buy.activity.cart.PreSpecialPayActivity,java.util.List) -> a
+    52:52:int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PreSpecialPayActivity$PayWay() -> a
+    74:74:void access$15(com.guozha.buy.activity.cart.PreSpecialPayActivity,com.guozha.buy.entry.cart.PayOrderMesg) -> a
 com.guozha.buy.activity.cart.PreSpecialPayActivity$1 -> com.guozha.buy.activity.cart.r:
     com.guozha.buy.activity.cart.PreSpecialPayActivity this$0 -> a
-    123:179:void handleMessage(android.os.Message) -> handleMessage
+    127:192:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.cart.PreSpecialPayActivity$2 -> com.guozha.buy.activity.cart.s:
     com.guozha.buy.activity.cart.PreSpecialPayActivity this$0 -> a
-    459:462:void onResponse(java.lang.String) -> a
+    482:485:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PreSpecialPayActivity$2$1 -> com.guozha.buy.activity.cart.t:
     com.guozha.buy.activity.cart.PreSpecialPayActivity$2 this$1 -> d
 com.guozha.buy.activity.cart.PreSpecialPayActivity$3 -> com.guozha.buy.activity.cart.u:
     com.guozha.buy.activity.cart.PreSpecialPayActivity this$0 -> a
-    528:545:void onResponse(java.lang.String) -> a
+    552:569:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PreSpecialPayActivity$3$1 -> com.guozha.buy.activity.cart.v:
     com.guozha.buy.activity.cart.PreSpecialPayActivity$3 this$1 -> d
@@ -15842,30 +15849,30 @@ com.guozha.buy.activity.global.SetWarnTimeActivity -> com.guozha.buy.activity.gl
     android.widget.TextView mSettingWarnTime -> c
     java.util.List mWarnTimes -> d
     42:49:void onCreate(android.os.Bundle) -> onCreate
-    55:87:void initView() -> a
-    94:115:void requestMenuPlan(java.lang.String) -> b
-    136:156:void setWarnTimeData(java.lang.String) -> c
-    160:165:void onResume() -> onResume
-    169:174:void onPause() -> onPause
+    55:90:void initView() -> a
+    97:118:void requestMenuPlan(java.lang.String) -> b
+    139:159:void setWarnTimeData(java.lang.String) -> c
+    163:168:void onResume() -> onResume
+    172:177:void onPause() -> onPause
     38:38:java.util.List access$0(com.guozha.buy.activity.global.SetWarnTimeActivity) -> a
-    135:135:void access$1(com.guozha.buy.activity.global.SetWarnTimeActivity,java.lang.String) -> a
-    93:93:void access$2(com.guozha.buy.activity.global.SetWarnTimeActivity,java.lang.String) -> b
+    138:138:void access$1(com.guozha.buy.activity.global.SetWarnTimeActivity,java.lang.String) -> a
+    96:96:void access$2(com.guozha.buy.activity.global.SetWarnTimeActivity,java.lang.String) -> b
 com.guozha.buy.activity.global.SetWarnTimeActivity$1 -> com.guozha.buy.activity.global.ae:
     com.guozha.buy.activity.global.SetWarnTimeActivity this$0 -> a
     63:70:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.guozha.buy.activity.global.SetWarnTimeActivity$2 -> com.guozha.buy.activity.global.af:
     com.guozha.buy.activity.global.SetWarnTimeActivity this$0 -> a
-    78:85:void onCheckedChanged(com.guozha.buy.view.Switch,boolean) -> a
+    78:86:void onCheckedChanged(com.guozha.buy.view.Switch,boolean) -> a
 com.guozha.buy.activity.global.SetWarnTimeActivity$3 -> com.guozha.buy.activity.global.ag:
     com.guozha.buy.activity.global.SetWarnTimeActivity this$0 -> a
-    105:113:void onResponse(org.json.JSONObject) -> a
+    108:116:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.global.SetWarnTimeActivity$WarnTime -> com.guozha.buy.activity.global.SetWarnTimeActivity$a:
     java.lang.String showTime -> b
     java.lang.String valueTime -> c
     com.guozha.buy.activity.global.SetWarnTimeActivity this$0 -> a
-    125:125:java.lang.String getShowTime() -> a
-    128:128:java.lang.String getValueTime() -> b
+    128:128:java.lang.String getShowTime() -> a
+    131:131:java.lang.String getValueTime() -> b
 com.guozha.buy.activity.global.SplashActivity -> com.guozha.buy.activity.global.SplashActivity:
     int SPLASH_TIME -> a
     int MSG_START_INIT -> b
@@ -15948,44 +15955,45 @@ com.guozha.buy.activity.market.VegetableDetailActivity -> com.guozha.buy.activit
     android.widget.TextView mDetailName -> h
     android.widget.TextView mDetailPrice -> i
     android.widget.TextView mDetailDescript -> j
-    java.lang.String mGoodsId -> k
-    android.os.Handler handler -> l
-    77:89:void onCreate(android.os.Bundle) -> onCreate
-    95:113:void initView() -> a
-    116:122:void initHeader(android.view.View) -> a
-    127:141:void onClick(android.view.View) -> onClick
-    147:170:void requestCollectionVegetable() -> c
-    174:201:void initData() -> d
-    207:215:void updateHeadView() -> e
-    221:222:void updateRelationView() -> f
-    228:236:void setTextColor() -> g
-    240:245:void onResume() -> onResume
-    249:254:void onPause() -> onPause
-    206:206:void access$0(com.guozha.buy.activity.market.VegetableDetailActivity) -> a
-    220:220:void access$1(com.guozha.buy.activity.market.VegetableDetailActivity) -> b
-    53:53:java.util.List access$2(com.guozha.buy.activity.market.VegetableDetailActivity) -> c
-    52:52:void access$3(com.guozha.buy.activity.market.VegetableDetailActivity,com.guozha.buy.entry.market.GoodsDetail) -> a
-    62:62:android.os.Handler access$4(com.guozha.buy.activity.market.VegetableDetailActivity) -> d
-    53:53:void access$5(com.guozha.buy.activity.market.VegetableDetailActivity,java.util.List) -> a
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> k
+    java.lang.String mGoodsId -> l
+    android.os.Handler handler -> m
+    80:92:void onCreate(android.os.Bundle) -> onCreate
+    98:117:void initView() -> a
+    120:126:void initHeader(android.view.View) -> a
+    131:145:void onClick(android.view.View) -> onClick
+    151:174:void requestCollectionVegetable() -> c
+    178:205:void initData() -> d
+    211:219:void updateHeadView() -> e
+    225:226:void updateRelationView() -> f
+    232:240:void setTextColor() -> g
+    244:249:void onResume() -> onResume
+    253:258:void onPause() -> onPause
+    210:210:void access$0(com.guozha.buy.activity.market.VegetableDetailActivity) -> a
+    224:224:void access$1(com.guozha.buy.activity.market.VegetableDetailActivity) -> b
+    55:55:java.util.List access$2(com.guozha.buy.activity.market.VegetableDetailActivity) -> c
+    54:54:void access$3(com.guozha.buy.activity.market.VegetableDetailActivity,com.guozha.buy.entry.market.GoodsDetail) -> a
+    65:65:android.os.Handler access$4(com.guozha.buy.activity.market.VegetableDetailActivity) -> d
+    55:55:void access$5(com.guozha.buy.activity.market.VegetableDetailActivity,java.util.List) -> a
 com.guozha.buy.activity.market.VegetableDetailActivity$1 -> com.guozha.buy.activity.market.e:
     com.guozha.buy.activity.market.VegetableDetailActivity this$0 -> a
-    64:72:void handleMessage(android.os.Message) -> handleMessage
+    67:75:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.market.VegetableDetailActivity$2 -> com.guozha.buy.activity.market.f:
     com.guozha.buy.activity.market.VegetableDetailActivity this$0 -> a
-    104:110:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    107:114:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.guozha.buy.activity.market.VegetableDetailActivity$3 -> com.guozha.buy.activity.market.g:
     com.guozha.buy.activity.market.VegetableDetailActivity this$0 -> a
-    158:168:void onResponse(org.json.JSONObject) -> a
+    162:172:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.market.VegetableDetailActivity$4 -> com.guozha.buy.activity.market.h:
     com.guozha.buy.activity.market.VegetableDetailActivity this$0 -> a
-    182:185:void onResponse(java.lang.String) -> a
+    186:189:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.market.VegetableDetailActivity$4$1 -> com.guozha.buy.activity.market.i:
     com.guozha.buy.activity.market.VegetableDetailActivity$4 this$1 -> d
 com.guozha.buy.activity.market.VegetableDetailActivity$5 -> com.guozha.buy.activity.market.j:
     com.guozha.buy.activity.market.VegetableDetailActivity this$0 -> a
-    194:197:void onResponse(java.lang.String) -> a
+    198:201:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.market.VegetableDetailActivity$5$1 -> com.guozha.buy.activity.market.k:
     com.guozha.buy.activity.market.VegetableDetailActivity$5 this$1 -> d
@@ -16021,59 +16029,67 @@ com.guozha.buy.activity.mine.AddAddressActivity -> com.guozha.buy.activity.mine.
     android.widget.Button mRequestAddButton -> s
     android.widget.Button mRequestSettingDefaultButton -> t
     android.os.Handler handler -> u
-    100:110:void onCreate(android.os.Bundle) -> onCreate
-    116:158:void initView() -> a
-    164:179:void requestAddressBuilding() -> c
-    185:191:void addKeyWordToText() -> d
-    195:233:void onClick(android.view.View) -> onClick
-    239:287:void requestAddAddress() -> e
-    293:308:void showNotCoveredDialog() -> f
-    314:339:void deleteOldAddress() -> g
-    345:370:boolean valideRequestAddress() -> h
-    378:382:boolean isValidatePhoneNum(java.lang.String) -> b
-    390:415:void requestDefaultAddress() -> i
-    419:428:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    432:437:void onResume() -> onResume
-    441:446:void onPause() -> onPause
-    163:163:void access$0(com.guozha.buy.activity.mine.AddAddressActivity) -> a
-    184:184:void access$1(com.guozha.buy.activity.mine.AddAddressActivity) -> b
-    313:313:void access$2(com.guozha.buy.activity.mine.AddAddressActivity) -> c
-    68:68:void access$3(com.guozha.buy.activity.mine.AddAddressActivity,java.util.List) -> a
-    74:74:android.os.Handler access$4(com.guozha.buy.activity.mine.AddAddressActivity) -> d
-    69:69:com.guozha.buy.entry.mine.address.AddressInfo access$5(com.guozha.buy.activity.mine.AddAddressActivity) -> e
-    292:292:void access$6(com.guozha.buy.activity.mine.AddAddressActivity) -> f
+    102:112:void onCreate(android.os.Bundle) -> onCreate
+    118:178:void initView() -> a
+    184:199:void requestAddressBuilding() -> c
+    205:211:void addKeyWordToText() -> d
+    215:252:void onClick(android.view.View) -> onClick
+    255:257:void requestCatonList() -> e
+    263:311:void requestAddAddress() -> f
+    317:332:void showNotCoveredDialog() -> g
+    338:363:void deleteOldAddress() -> h
+    369:394:boolean valideRequestAddress() -> i
+    402:406:boolean isValidatePhoneNum(java.lang.String) -> b
+    414:439:void requestDefaultAddress() -> j
+    443:453:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    457:462:void onResume() -> onResume
+    466:471:void onPause() -> onPause
+    183:183:void access$0(com.guozha.buy.activity.mine.AddAddressActivity) -> a
+    204:204:void access$1(com.guozha.buy.activity.mine.AddAddressActivity) -> b
+    337:337:void access$2(com.guozha.buy.activity.mine.AddAddressActivity) -> c
+    66:66:int access$3(com.guozha.buy.activity.mine.AddAddressActivity) -> d
+    254:254:void access$4(com.guozha.buy.activity.mine.AddAddressActivity) -> e
+    70:70:void access$5(com.guozha.buy.activity.mine.AddAddressActivity,java.util.List) -> a
+    76:76:android.os.Handler access$6(com.guozha.buy.activity.mine.AddAddressActivity) -> f
+    71:71:com.guozha.buy.entry.mine.address.AddressInfo access$7(com.guozha.buy.activity.mine.AddAddressActivity) -> g
+    316:316:void access$8(com.guozha.buy.activity.mine.AddAddressActivity) -> h
 com.guozha.buy.activity.mine.AddAddressActivity$1 -> com.guozha.buy.activity.mine.a:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    77:95:void handleMessage(android.os.Message) -> handleMessage
+    79:97:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.mine.AddAddressActivity$2 -> com.guozha.buy.activity.mine.b:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    174:177:void onResponse(java.lang.String) -> a
-    1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.AddAddressActivity$2$1 -> com.guozha.buy.activity.mine.c:
-    com.guozha.buy.activity.mine.AddAddressActivity$2 this$1 -> d
-com.guozha.buy.activity.mine.AddAddressActivity$3 -> com.guozha.buy.activity.mine.d:
+    160:160:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+    165:165:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    168:172:void afterTextChanged(android.text.Editable) -> afterTextChanged
+com.guozha.buy.activity.mine.AddAddressActivity$3 -> com.guozha.buy.activity.mine.c:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    com.guozha.buy.dialog.CustomDialog val$dialog -> b
-    222:224:void onClick(android.view.View) -> onClick
+    194:197:void onResponse(java.lang.String) -> a
+    1:1:void onResponse(java.lang.Object) -> a
+com.guozha.buy.activity.mine.AddAddressActivity$3$1 -> com.guozha.buy.activity.mine.d:
+    com.guozha.buy.activity.mine.AddAddressActivity$3 this$1 -> d
 com.guozha.buy.activity.mine.AddAddressActivity$4 -> com.guozha.buy.activity.mine.e:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    261:285:void onResponse(org.json.JSONObject) -> a
-    1:1:void onResponse(java.lang.Object) -> a
+    com.guozha.buy.dialog.CustomDialog val$dialog -> b
+    241:243:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mine.AddAddressActivity$5 -> com.guozha.buy.activity.mine.f:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    com.guozha.buy.dialog.CustomDialog val$dialog -> b
-    297:299:void onClick(android.view.View) -> onClick
+    285:309:void onResponse(org.json.JSONObject) -> a
+    1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mine.AddAddressActivity$6 -> com.guozha.buy.activity.mine.g:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
     com.guozha.buy.dialog.CustomDialog val$dialog -> b
-    304:306:void onClick(android.view.View) -> onClick
+    321:323:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mine.AddAddressActivity$7 -> com.guozha.buy.activity.mine.h:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    328:337:void onResponse(org.json.JSONObject) -> a
-    1:1:void onResponse(java.lang.Object) -> a
+    com.guozha.buy.dialog.CustomDialog val$dialog -> b
+    328:330:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mine.AddAddressActivity$8 -> com.guozha.buy.activity.mine.i:
     com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
-    404:413:void onResponse(org.json.JSONObject) -> a
+    352:361:void onResponse(org.json.JSONObject) -> a
+    1:1:void onResponse(java.lang.Object) -> a
+com.guozha.buy.activity.mine.AddAddressActivity$9 -> com.guozha.buy.activity.mine.j:
+    com.guozha.buy.activity.mine.AddAddressActivity this$0 -> a
+    428:437:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mine.AnswerQuestionActivity -> com.guozha.buy.activity.mine.AnswerQuestionActivity:
     java.lang.String PAGE_NAME -> a
@@ -16082,7 +16098,7 @@ com.guozha.buy.activity.mine.AnswerQuestionActivity -> com.guozha.buy.activity.m
     33:42:void initView() -> a
     46:51:void onResume() -> onResume
     55:60:void onPause() -> onPause
-com.guozha.buy.activity.mine.AnswerQuestionActivity$1 -> com.guozha.buy.activity.mine.j:
+com.guozha.buy.activity.mine.AnswerQuestionActivity$1 -> com.guozha.buy.activity.mine.k:
     com.guozha.buy.activity.mine.AnswerQuestionActivity this$0 -> a
     37:38:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
 com.guozha.buy.activity.mine.ChooseCantonActivity -> com.guozha.buy.activity.mine.ChooseCantonActivity:
@@ -16102,18 +16118,48 @@ com.guozha.buy.activity.mine.ChooseCantonActivity -> com.guozha.buy.activity.min
     39:39:java.util.List access$1(com.guozha.buy.activity.mine.ChooseCantonActivity) -> b
     39:39:void access$2(com.guozha.buy.activity.mine.ChooseCantonActivity,java.util.List) -> a
     41:41:android.os.Handler access$3(com.guozha.buy.activity.mine.ChooseCantonActivity) -> c
-com.guozha.buy.activity.mine.ChooseCantonActivity$1 -> com.guozha.buy.activity.mine.k:
+com.guozha.buy.activity.mine.ChooseCantonActivity$1 -> com.guozha.buy.activity.mine.l:
     com.guozha.buy.activity.mine.ChooseCantonActivity this$0 -> a
     43:54:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.ChooseCantonActivity$2 -> com.guozha.buy.activity.mine.l:
+com.guozha.buy.activity.mine.ChooseCantonActivity$2 -> com.guozha.buy.activity.mine.m:
     com.guozha.buy.activity.mine.ChooseCantonActivity this$0 -> a
     79:84:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.guozha.buy.activity.mine.ChooseCantonActivity$3 -> com.guozha.buy.activity.mine.m:
+com.guozha.buy.activity.mine.ChooseCantonActivity$3 -> com.guozha.buy.activity.mine.n:
     com.guozha.buy.activity.mine.ChooseCantonActivity this$0 -> a
     99:102:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.ChooseCantonActivity$3$1 -> com.guozha.buy.activity.mine.n:
+com.guozha.buy.activity.mine.ChooseCantonActivity$3$1 -> com.guozha.buy.activity.mine.o:
     com.guozha.buy.activity.mine.ChooseCantonActivity$3 this$1 -> d
+com.guozha.buy.activity.mine.ChooseDetailActivity -> com.guozha.buy.activity.mine.ChooseDetailActivity:
+    java.lang.String PAGE_NAME -> b
+    java.lang.String BUNDLE_DATA -> a
+    java.util.List mKeyWords -> c
+    int HAND_DATA_COMPLETED -> d
+    android.widget.ListView mCantonList -> e
+    int mCountryId -> f
+    android.os.Handler handler -> g
+    60:76:void onCreate(android.os.Bundle) -> onCreate
+    82:93:void initView() -> a
+    99:114:void requestAddressBuilding() -> c
+    118:119:void onDestroy() -> onDestroy
+    123:128:void onResume() -> onResume
+    132:137:void onPause() -> onPause
+    40:40:android.widget.ListView access$0(com.guozha.buy.activity.mine.ChooseDetailActivity) -> a
+    37:37:java.util.List access$1(com.guozha.buy.activity.mine.ChooseDetailActivity) -> b
+    37:37:void access$2(com.guozha.buy.activity.mine.ChooseDetailActivity,java.util.List) -> a
+    42:42:android.os.Handler access$3(com.guozha.buy.activity.mine.ChooseDetailActivity) -> c
+com.guozha.buy.activity.mine.ChooseDetailActivity$1 -> com.guozha.buy.activity.mine.p:
+    com.guozha.buy.activity.mine.ChooseDetailActivity this$0 -> a
+    44:55:void handleMessage(android.os.Message) -> handleMessage
+com.guozha.buy.activity.mine.ChooseDetailActivity$2 -> com.guozha.buy.activity.mine.q:
+    com.guozha.buy.activity.mine.ChooseDetailActivity this$0 -> a
+    87:91:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.guozha.buy.activity.mine.ChooseDetailActivity$3 -> com.guozha.buy.activity.mine.r:
+    com.guozha.buy.activity.mine.ChooseDetailActivity this$0 -> a
+    109:112:void onResponse(java.lang.String) -> a
+    1:1:void onResponse(java.lang.Object) -> a
+com.guozha.buy.activity.mine.ChooseDetailActivity$3$1 -> com.guozha.buy.activity.mine.s:
+    com.guozha.buy.activity.mine.ChooseDetailActivity$3 this$1 -> d
 com.guozha.buy.activity.mine.FeadbackActivity -> com.guozha.buy.activity.mine.FeadbackActivity:
     android.widget.TextView mFeadBackText -> a
     java.lang.String PAGE_NAME -> b
@@ -16124,10 +16170,10 @@ com.guozha.buy.activity.mine.FeadbackActivity -> com.guozha.buy.activity.mine.Fe
     90:95:void onPause() -> onPause
     27:27:android.widget.TextView access$0(com.guozha.buy.activity.mine.FeadbackActivity) -> a
     55:55:void access$1(com.guozha.buy.activity.mine.FeadbackActivity,java.lang.String) -> a
-com.guozha.buy.activity.mine.FeadbackActivity$1 -> com.guozha.buy.activity.mine.o:
+com.guozha.buy.activity.mine.FeadbackActivity$1 -> com.guozha.buy.activity.mine.t:
     com.guozha.buy.activity.mine.FeadbackActivity this$0 -> a
     45:51:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.FeadbackActivity$2 -> com.guozha.buy.activity.mine.p:
+com.guozha.buy.activity.mine.FeadbackActivity$2 -> com.guozha.buy.activity.mine.u:
     com.guozha.buy.activity.mine.FeadbackActivity this$0 -> a
     68:75:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
@@ -16152,20 +16198,20 @@ com.guozha.buy.activity.mine.MyAddressActivity -> com.guozha.buy.activity.mine.M
     44:44:java.util.List access$2(com.guozha.buy.activity.mine.MyAddressActivity) -> c
     44:44:void access$3(com.guozha.buy.activity.mine.MyAddressActivity,java.util.List) -> a
     47:47:android.os.Handler access$4(com.guozha.buy.activity.mine.MyAddressActivity) -> d
-com.guozha.buy.activity.mine.MyAddressActivity$1 -> com.guozha.buy.activity.mine.q:
+com.guozha.buy.activity.mine.MyAddressActivity$1 -> com.guozha.buy.activity.mine.v:
     com.guozha.buy.activity.mine.MyAddressActivity this$0 -> a
     49:57:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.MyAddressActivity$2 -> com.guozha.buy.activity.mine.r:
+com.guozha.buy.activity.mine.MyAddressActivity$2 -> com.guozha.buy.activity.mine.w:
     com.guozha.buy.activity.mine.MyAddressActivity this$0 -> a
     83:87:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.guozha.buy.activity.mine.MyAddressActivity$3 -> com.guozha.buy.activity.mine.s:
+com.guozha.buy.activity.mine.MyAddressActivity$3 -> com.guozha.buy.activity.mine.x:
     com.guozha.buy.activity.mine.MyAddressActivity this$0 -> a
     94:96:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.MyAddressActivity$4 -> com.guozha.buy.activity.mine.t:
+com.guozha.buy.activity.mine.MyAddressActivity$4 -> com.guozha.buy.activity.mine.y:
     com.guozha.buy.activity.mine.MyAddressActivity this$0 -> a
     114:118:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.MyAddressActivity$4$1 -> com.guozha.buy.activity.mine.u:
+com.guozha.buy.activity.mine.MyAddressActivity$4$1 -> com.guozha.buy.activity.mine.z:
     com.guozha.buy.activity.mine.MyAddressActivity$4 this$1 -> d
 com.guozha.buy.activity.mine.MyCollectionActivity -> com.guozha.buy.activity.mine.MyCollectionActivity:
     android.support.v4.view.ViewPager mViewPager -> q
@@ -16178,10 +16224,10 @@ com.guozha.buy.activity.mine.MyCollectionActivity -> com.guozha.buy.activity.min
     77:92:void initView() -> n
     124:131:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     29:29:android.support.v4.view.ViewPager access$0(com.guozha.buy.activity.mine.MyCollectionActivity) -> a
-com.guozha.buy.activity.mine.MyCollectionActivity$1 -> com.guozha.buy.activity.mine.v:
+com.guozha.buy.activity.mine.MyCollectionActivity$1 -> com.guozha.buy.activity.mine.aa:
     com.guozha.buy.activity.mine.MyCollectionActivity this$0 -> a
     80:82:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.MyCollectionActivity$2 -> com.guozha.buy.activity.mine.w:
+com.guozha.buy.activity.mine.MyCollectionActivity$2 -> com.guozha.buy.activity.mine.ab:
     com.guozha.buy.activity.mine.MyCollectionActivity this$0 -> a
     88:90:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mine.MyCollectionActivity$ViewPagerAdapter -> com.guozha.buy.activity.mine.MyCollectionActivity$a:
@@ -16200,10 +16246,10 @@ com.guozha.buy.activity.mine.MyOrderActivity -> com.guozha.buy.activity.mine.MyO
     76:91:void initView() -> n
     123:130:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     29:29:android.support.v4.view.ViewPager access$0(com.guozha.buy.activity.mine.MyOrderActivity) -> a
-com.guozha.buy.activity.mine.MyOrderActivity$1 -> com.guozha.buy.activity.mine.x:
+com.guozha.buy.activity.mine.MyOrderActivity$1 -> com.guozha.buy.activity.mine.ac:
     com.guozha.buy.activity.mine.MyOrderActivity this$0 -> a
     79:81:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.MyOrderActivity$2 -> com.guozha.buy.activity.mine.y:
+com.guozha.buy.activity.mine.MyOrderActivity$2 -> com.guozha.buy.activity.mine.ad:
     com.guozha.buy.activity.mine.MyOrderActivity this$0 -> a
     87:89:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mine.MyOrderActivity$ViewPagerAdapter -> com.guozha.buy.activity.mine.MyOrderActivity$a:
@@ -16227,14 +16273,14 @@ com.guozha.buy.activity.mine.MySellerActivity -> com.guozha.buy.activity.mine.My
     36:36:java.util.List access$2(com.guozha.buy.activity.mine.MySellerActivity) -> c
     36:36:void access$3(com.guozha.buy.activity.mine.MySellerActivity,java.util.List) -> a
     39:39:android.os.Handler access$4(com.guozha.buy.activity.mine.MySellerActivity) -> d
-com.guozha.buy.activity.mine.MySellerActivity$1 -> com.guozha.buy.activity.mine.z:
+com.guozha.buy.activity.mine.MySellerActivity$1 -> com.guozha.buy.activity.mine.ae:
     com.guozha.buy.activity.mine.MySellerActivity this$0 -> a
     41:54:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.MySellerActivity$2 -> com.guozha.buy.activity.mine.aa:
+com.guozha.buy.activity.mine.MySellerActivity$2 -> com.guozha.buy.activity.mine.af:
     com.guozha.buy.activity.mine.MySellerActivity this$0 -> a
     77:83:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.MySellerActivity$2$1 -> com.guozha.buy.activity.mine.ab:
+com.guozha.buy.activity.mine.MySellerActivity$2$1 -> com.guozha.buy.activity.mine.ag:
     com.guozha.buy.activity.mine.MySellerActivity$2 this$1 -> d
 com.guozha.buy.activity.mine.MyTicketActivity -> com.guozha.buy.activity.mine.MyTicketActivity:
     java.lang.String PAGE_NAME -> a
@@ -16253,83 +16299,113 @@ com.guozha.buy.activity.mine.MyTicketActivity -> com.guozha.buy.activity.mine.My
     36:36:java.util.List access$2(com.guozha.buy.activity.mine.MyTicketActivity) -> c
     36:36:void access$3(com.guozha.buy.activity.mine.MyTicketActivity,java.util.List) -> a
     40:40:android.os.Handler access$4(com.guozha.buy.activity.mine.MyTicketActivity) -> d
-com.guozha.buy.activity.mine.MyTicketActivity$1 -> com.guozha.buy.activity.mine.ac:
+com.guozha.buy.activity.mine.MyTicketActivity$1 -> com.guozha.buy.activity.mine.ah:
     com.guozha.buy.activity.mine.MyTicketActivity this$0 -> a
     42:55:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.MyTicketActivity$2 -> com.guozha.buy.activity.mine.ad:
+com.guozha.buy.activity.mine.MyTicketActivity$2 -> com.guozha.buy.activity.mine.ai:
     com.guozha.buy.activity.mine.MyTicketActivity this$0 -> a
     87:91:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.MyTicketActivity$2$1 -> com.guozha.buy.activity.mine.ae:
+com.guozha.buy.activity.mine.MyTicketActivity$2$1 -> com.guozha.buy.activity.mine.aj:
     com.guozha.buy.activity.mine.MyTicketActivity$2 this$1 -> d
 com.guozha.buy.activity.mine.OrderGradDetailActivity -> com.guozha.buy.activity.mine.OrderGradDetailActivity:
     java.lang.String PAGE_NAME -> a
     int HAND_DATA_COMPLTED -> b
-    android.widget.ExpandableListView mExpandableListView -> c
-    com.guozha.buy.adapter.OrderDetailMenusListAdapter mMenusAdapter -> d
-    java.util.List mExpandListDatas -> e
-    android.widget.TextView mOrderDescriptText -> f
-    android.widget.EditText mFeadBackText -> g
-    android.widget.Button mFeadBackButton -> h
-    int mOrderId -> i
-    java.lang.String mOrderDescript -> j
-    android.os.Handler handler -> k
-    70:84:void onCreate(android.os.Bundle) -> onCreate
-    87:97:void initView() -> a
-    103:125:void requestOrderFeadback() -> c
-    128:139:void updateView() -> d
-    142:192:void initData() -> e
-    196:201:void onResume() -> onResume
-    205:210:void onPause() -> onPause
-    127:127:void access$0(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> a
-    102:102:void access$1(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> b
-    51:51:java.util.List access$2(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> c
-    51:51:void access$3(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.util.List) -> a
-    58:58:android.os.Handler access$4(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> d
-com.guozha.buy.activity.mine.OrderGradDetailActivity$1 -> com.guozha.buy.activity.mine.af:
+    java.lang.String mOrderNum -> c
+    java.lang.String mOrderTime -> d
+    java.lang.String mOrderDescript -> e
+    java.lang.String mOrderAddressName -> f
+    java.lang.String mOrderAddressDetail -> g
+    java.lang.String mOrderTotalPrice -> h
+    android.widget.TextView mOrderNumText -> i
+    android.widget.TextView mOrderTimeText -> j
+    android.widget.TextView mOrderDescriptText -> k
+    android.widget.TextView mOrderAddressNameText -> l
+    android.widget.TextView mOrderAddressDetailText -> m
+    android.widget.TextView mOrderTotalPriceText -> n
+    android.widget.ExpandableListView mExpandableListView -> o
+    com.guozha.buy.adapter.OrderDetailMenusListAdapter mMenusAdapter -> p
+    java.util.List mExpandListDatas -> q
+    android.widget.EditText mFeadBackText -> r
+    android.widget.Button mFeadBackButton -> s
+    int mOrderId -> t
+    android.os.Handler handler -> u
+    84:98:void onCreate(android.os.Bundle) -> onCreate
+    101:117:void initView() -> a
+    123:145:void requestOrderFeadback() -> c
+    148:165:void updateView() -> d
+    168:225:void initData() -> e
+    229:234:void onResume() -> onResume
+    238:243:void onPause() -> onPause
+    147:147:void access$0(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> a
+    122:122:void access$1(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> b
+    50:50:void access$2(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.lang.String) -> a
+    51:51:void access$3(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.lang.String) -> b
+    53:53:void access$4(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.lang.String) -> c
+    54:54:void access$5(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.lang.String) -> d
+    55:55:void access$6(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.lang.String) -> e
+    67:67:java.util.List access$7(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> c
+    67:67:void access$8(com.guozha.buy.activity.mine.OrderGradDetailActivity,java.util.List) -> a
+    72:72:android.os.Handler access$9(com.guozha.buy.activity.mine.OrderGradDetailActivity) -> d
+com.guozha.buy.activity.mine.OrderGradDetailActivity$1 -> com.guozha.buy.activity.mine.ak:
     com.guozha.buy.activity.mine.OrderGradDetailActivity this$0 -> a
-    60:65:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.OrderGradDetailActivity$2 -> com.guozha.buy.activity.mine.ag:
+    74:79:void handleMessage(android.os.Message) -> handleMessage
+com.guozha.buy.activity.mine.OrderGradDetailActivity$2 -> com.guozha.buy.activity.mine.al:
     com.guozha.buy.activity.mine.OrderGradDetailActivity this$0 -> a
-    94:95:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.OrderGradDetailActivity$3 -> com.guozha.buy.activity.mine.ah:
+    108:109:void onClick(android.view.View) -> onClick
+com.guozha.buy.activity.mine.OrderGradDetailActivity$3 -> com.guozha.buy.activity.mine.am:
     com.guozha.buy.activity.mine.OrderGradDetailActivity this$0 -> a
-    116:123:void onResponse(org.json.JSONObject) -> a
+    136:143:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.OrderGradDetailActivity$4 -> com.guozha.buy.activity.mine.ai:
+com.guozha.buy.activity.mine.OrderGradDetailActivity$4 -> com.guozha.buy.activity.mine.an:
     com.guozha.buy.activity.mine.OrderGradDetailActivity this$0 -> a
-    150:189:void onResponse(java.lang.String) -> a
+    176:222:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.OrderGradDetailActivity$4$1 -> com.guozha.buy.activity.mine.aj:
+com.guozha.buy.activity.mine.OrderGradDetailActivity$4$1 -> com.guozha.buy.activity.mine.ao:
     com.guozha.buy.activity.mine.OrderGradDetailActivity$4 this$1 -> d
 com.guozha.buy.activity.mine.OrderPayedDetailActivity -> com.guozha.buy.activity.mine.OrderPayedDetailActivity:
     java.lang.String PAGE_NAME -> a
     int HAND_DATA_COMPLTED -> b
-    android.widget.ExpandableListView mExpandableListView -> c
-    com.guozha.buy.adapter.OrderDetailMenusListAdapter mMenusAdapter -> d
-    java.util.List mExpandListDatas -> e
-    android.widget.TextView mOrderDescriptText -> f
-    int mOrderId -> g
-    java.lang.String mOrderDescript -> h
-    android.os.Handler handler -> i
-    61:75:void onCreate(android.os.Bundle) -> onCreate
-    78:80:void initView() -> a
-    83:96:void updateView() -> c
-    99:148:void initData() -> d
-    152:157:void onResume() -> onResume
-    161:166:void onPause() -> onPause
-    82:82:void access$0(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> a
-    43:43:java.util.List access$1(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> b
-    43:43:void access$2(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.util.List) -> a
-    49:49:android.os.Handler access$3(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> c
-com.guozha.buy.activity.mine.OrderPayedDetailActivity$1 -> com.guozha.buy.activity.mine.ak:
+    int mOrderId -> c
+    java.lang.String mOrderNum -> d
+    java.lang.String mOrderTime -> e
+    java.lang.String mOrderDescript -> f
+    java.lang.String mOrderAddressName -> g
+    java.lang.String mOrderAddressDetail -> h
+    java.lang.String mOrderTotalPrice -> i
+    android.widget.TextView mOrderNumText -> j
+    android.widget.TextView mOrderTimeText -> k
+    android.widget.TextView mOrderDescriptText -> l
+    android.widget.TextView mOrderAddressNameText -> m
+    android.widget.TextView mOrderAddressDetailText -> n
+    android.widget.TextView mOrderTotalPriceText -> o
+    android.widget.ExpandableListView mExpandableListView -> p
+    com.guozha.buy.adapter.OrderDetailMenusListAdapter mMenusAdapter -> q
+    java.util.List mExpandListDatas -> r
+    android.os.Handler handler -> s
+    72:86:void onCreate(android.os.Bundle) -> onCreate
+    89:97:void initView() -> a
+    100:120:void updateView() -> c
+    123:177:void initData() -> d
+    181:186:void onResume() -> onResume
+    190:195:void onPause() -> onPause
+    99:99:void access$0(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> a
+    41:41:void access$1(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.lang.String) -> a
+    42:42:void access$2(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.lang.String) -> b
+    44:44:void access$3(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.lang.String) -> c
+    45:45:void access$4(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.lang.String) -> d
+    46:46:void access$5(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.lang.String) -> e
+    58:58:java.util.List access$6(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> b
+    58:58:void access$7(com.guozha.buy.activity.mine.OrderPayedDetailActivity,java.util.List) -> a
+    60:60:android.os.Handler access$8(com.guozha.buy.activity.mine.OrderPayedDetailActivity) -> c
+com.guozha.buy.activity.mine.OrderPayedDetailActivity$1 -> com.guozha.buy.activity.mine.ap:
     com.guozha.buy.activity.mine.OrderPayedDetailActivity this$0 -> a
-    51:56:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.OrderPayedDetailActivity$2 -> com.guozha.buy.activity.mine.al:
+    62:67:void handleMessage(android.os.Message) -> handleMessage
+com.guozha.buy.activity.mine.OrderPayedDetailActivity$2 -> com.guozha.buy.activity.mine.aq:
     com.guozha.buy.activity.mine.OrderPayedDetailActivity this$0 -> a
-    107:145:void onResponse(java.lang.String) -> a
+    131:174:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.OrderPayedDetailActivity$2$1 -> com.guozha.buy.activity.mine.am:
+com.guozha.buy.activity.mine.OrderPayedDetailActivity$2$1 -> com.guozha.buy.activity.mine.ar:
     com.guozha.buy.activity.mine.OrderPayedDetailActivity$2 this$1 -> d
 com.guozha.buy.activity.mine.OrderUnPayDetailActivity -> com.guozha.buy.activity.mine.OrderUnPayDetailActivity:
     java.lang.String PAGE_NAME -> a
@@ -16339,62 +16415,69 @@ com.guozha.buy.activity.mine.OrderUnPayDetailActivity -> com.guozha.buy.activity
     com.guozha.buy.adapter.OrderDetailMenusListAdapter mMenusAdapter -> e
     java.util.List mExpandListDatas -> f
     int mOrderId -> g
-    java.lang.String mOrderNum -> h
-    java.lang.String mOrderTime -> i
-    java.lang.String mOrderDescript -> j
-    java.lang.String mOrderAddressName -> k
-    java.lang.String mOrderAddressDetail -> l
-    java.lang.String mOrderTotalPrice -> m
-    int mServiceFee -> n
-    java.lang.String mOrderStatus -> o
-    android.widget.TextView mOrderNumText -> p
-    android.widget.TextView mOrderTimeText -> q
-    android.widget.TextView mOrderDescriptText -> r
-    android.widget.TextView mOrderAddressNameText -> s
-    android.widget.TextView mOrderAddressDetailText -> t
-    android.widget.TextView mOrderTotalPriceText -> u
-    android.os.Handler handler -> v
-    84:99:void onCreate(android.os.Bundle) -> onCreate
-    102:149:void initView() -> a
-    152:168:void updateView() -> c
-    171:226:void initData() -> d
-    230:235:void onResume() -> onResume
-    239:244:void onPause() -> onPause
-    248:260:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    151:151:void access$0(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> a
-    54:54:int access$1(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> b
-    63:63:java.lang.String access$2(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> c
-    61:61:int access$3(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> d
-    55:55:void access$4(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> a
-    56:56:void access$5(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> b
-    58:58:void access$6(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> c
-    59:59:void access$7(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> d
-    61:61:void access$8(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,int) -> a
-    60:60:void access$9(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> e
-    63:63:void access$10(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> f
-    52:52:java.util.List access$11(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> e
-    52:52:void access$12(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.util.List) -> a
-    72:72:android.os.Handler access$13(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> f
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$1 -> com.guozha.buy.activity.mine.an:
+    java.lang.String mOrderType -> h
+    java.lang.String mOrderNum -> i
+    java.lang.String mOrderTime -> j
+    java.lang.String mOrderDescript -> k
+    java.lang.String mOrderAddressName -> l
+    java.lang.String mOrderAddressDetail -> m
+    java.lang.String mOrderTotalPrice -> n
+    int mServiceFee -> o
+    java.lang.String mOrderStatus -> p
+    android.widget.TextView mOrderNumText -> q
+    android.widget.TextView mOrderTimeText -> r
+    android.widget.TextView mOrderDescriptText -> s
+    android.widget.TextView mOrderAddressNameText -> t
+    android.widget.TextView mOrderAddressDetailText -> u
+    android.widget.TextView mOrderTotalPriceText -> v
+    android.os.Handler handler -> w
+    87:102:void onCreate(android.os.Bundle) -> onCreate
+    105:153:void initView() -> a
+    159:181:void requestCancelOrder() -> c
+    184:200:void updateView() -> d
+    203:261:void initData() -> e
+    265:270:void onResume() -> onResume
+    274:279:void onPause() -> onPause
+    283:295:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    183:183:void access$0(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> a
+    158:158:void access$1(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> b
+    57:57:java.lang.String access$2(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> c
+    56:56:int access$3(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> d
+    64:64:int access$4(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> e
+    54:54:java.util.List access$5(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> f
+    58:58:void access$6(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> a
+    57:57:void access$7(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> b
+    59:59:void access$8(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> c
+    61:61:void access$9(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> d
+    62:62:void access$10(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> e
+    64:64:void access$11(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,int) -> a
+    63:63:void access$12(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> f
+    66:66:void access$13(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.lang.String) -> g
+    54:54:void access$14(com.guozha.buy.activity.mine.OrderUnPayDetailActivity,java.util.List) -> a
+    75:75:android.os.Handler access$15(com.guozha.buy.activity.mine.OrderUnPayDetailActivity) -> g
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$1 -> com.guozha.buy.activity.mine.as:
     com.guozha.buy.activity.mine.OrderUnPayDetailActivity this$0 -> a
-    74:79:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2 -> com.guozha.buy.activity.mine.ao:
+    77:82:void handleMessage(android.os.Message) -> handleMessage
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2 -> com.guozha.buy.activity.mine.at:
     com.guozha.buy.activity.mine.OrderUnPayDetailActivity this$0 -> a
-    114:136:void onClick(android.view.View) -> onClick
-    111:111:com.guozha.buy.activity.mine.OrderUnPayDetailActivity access$0(com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2) -> a
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2$1 -> com.guozha.buy.activity.mine.ap:
+    117:126:void onClick(android.view.View) -> onClick
+    114:114:com.guozha.buy.activity.mine.OrderUnPayDetailActivity access$0(com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2) -> a
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2$1 -> com.guozha.buy.activity.mine.au:
     com.guozha.buy.activity.mine.OrderUnPayDetailActivity$2 this$1 -> a
-    125:134:void onResponse(org.json.JSONObject) -> a
-    1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$3 -> com.guozha.buy.activity.mine.aq:
+    123:124:void onClick(android.view.View) -> onClick
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$3 -> com.guozha.buy.activity.mine.av:
     com.guozha.buy.activity.mine.OrderUnPayDetailActivity this$0 -> a
-    142:147:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$4 -> com.guozha.buy.activity.mine.ar:
+    133:151:void onClick(android.view.View) -> onClick
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$4 -> com.guozha.buy.activity.mine.aw:
     com.guozha.buy.activity.mine.OrderUnPayDetailActivity this$0 -> a
-    179:223:void onResponse(java.lang.String) -> a
+    170:179:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.OrderUnPayDetailActivity$4$1 -> com.guozha.buy.activity.mine.as:
-    com.guozha.buy.activity.mine.OrderUnPayDetailActivity$4 this$1 -> d
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$5 -> com.guozha.buy.activity.mine.ax:
+    com.guozha.buy.activity.mine.OrderUnPayDetailActivity this$0 -> a
+    211:258:void onResponse(java.lang.String) -> a
+    1:1:void onResponse(java.lang.Object) -> a
+com.guozha.buy.activity.mine.OrderUnPayDetailActivity$5$1 -> com.guozha.buy.activity.mine.ay:
+    com.guozha.buy.activity.mine.OrderUnPayDetailActivity$5 this$1 -> d
 com.guozha.buy.activity.mine.SettingActivity -> com.guozha.buy.activity.mine.SettingActivity:
     java.lang.String PAGE_NAME -> a
     android.widget.ListView mSettingList -> b
@@ -16408,17 +16491,17 @@ com.guozha.buy.activity.mine.SettingActivity -> com.guozha.buy.activity.mine.Set
     201:206:void onPause() -> onPause
     138:138:void access$0(com.guozha.buy.activity.mine.SettingActivity) -> a
     175:175:void access$1(com.guozha.buy.activity.mine.SettingActivity) -> b
-com.guozha.buy.activity.mine.SettingActivity$1 -> com.guozha.buy.activity.mine.at:
+com.guozha.buy.activity.mine.SettingActivity$1 -> com.guozha.buy.activity.mine.az:
     com.guozha.buy.activity.mine.SettingActivity this$0 -> a
     71:72:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.SettingActivity$2 -> com.guozha.buy.activity.mine.au:
+com.guozha.buy.activity.mine.SettingActivity$2 -> com.guozha.buy.activity.mine.ba:
     com.guozha.buy.activity.mine.SettingActivity this$0 -> a
     84:131:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.guozha.buy.activity.mine.SettingActivity$3 -> com.guozha.buy.activity.mine.av:
+com.guozha.buy.activity.mine.SettingActivity$3 -> com.guozha.buy.activity.mine.bb:
     com.guozha.buy.activity.mine.SettingActivity this$0 -> a
     151:168:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.SettingActivity$4 -> com.guozha.buy.activity.mine.aw:
+com.guozha.buy.activity.mine.SettingActivity$4 -> com.guozha.buy.activity.mine.bc:
     com.guozha.buy.activity.mine.SettingActivity this$0 -> a
     com.guozha.buy.dialog.CustomDialog val$dialDialog -> b
     182:186:void onClick(android.view.View) -> onClick
@@ -16426,51 +16509,53 @@ com.guozha.buy.activity.mine.SharePraiseActivity -> com.guozha.buy.activity.mine
     java.lang.String PAGE_NAME -> a
     int HAND_DATA_COMPLETED -> b
     int HAND_INVITEID_COMPLTED -> c
-    android.widget.TextView mTotalAmountText -> d
-    android.widget.TextView mUsedAmountText -> e
-    android.widget.TextView mTotalMoneyText -> f
-    int mDrawAmount -> g
-    int mUsedAmount -> h
-    int mAwardPrice -> i
-    android.os.Handler handler -> j
-    int mInviteId -> k
-    java.lang.String mShareUrl -> l
-    75:80:void onCreate(android.os.Bundle) -> onCreate
-    89:129:void initView() -> a
-    135:152:void initData() -> c
-    156:161:void onResume() -> onResume
-    165:170:void onPause() -> onPause
-    36:36:android.widget.TextView access$0(com.guozha.buy.activity.mine.SharePraiseActivity) -> a
-    40:40:int access$1(com.guozha.buy.activity.mine.SharePraiseActivity) -> b
-    37:37:android.widget.TextView access$2(com.guozha.buy.activity.mine.SharePraiseActivity) -> c
-    41:41:int access$3(com.guozha.buy.activity.mine.SharePraiseActivity) -> d
-    38:38:android.widget.TextView access$4(com.guozha.buy.activity.mine.SharePraiseActivity) -> e
-    42:42:int access$5(com.guozha.buy.activity.mine.SharePraiseActivity) -> f
-    83:83:java.lang.String access$6(com.guozha.buy.activity.mine.SharePraiseActivity) -> g
-    83:83:void access$7(com.guozha.buy.activity.mine.SharePraiseActivity,java.lang.String) -> a
-    82:82:int access$8(com.guozha.buy.activity.mine.SharePraiseActivity) -> h
-    82:82:void access$9(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> a
-    44:44:android.os.Handler access$10(com.guozha.buy.activity.mine.SharePraiseActivity) -> i
-    40:40:void access$11(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> b
-    41:41:void access$12(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> c
-    42:42:void access$13(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> d
-com.guozha.buy.activity.mine.SharePraiseActivity$1 -> com.guozha.buy.activity.mine.ax:
+    java.lang.String SHARE_TITLE -> d
+    java.lang.String SHARE_CONTENT -> e
+    android.widget.TextView mTotalAmountText -> f
+    android.widget.TextView mUsedAmountText -> g
+    android.widget.TextView mTotalMoneyText -> h
+    int mDrawAmount -> i
+    int mUsedAmount -> j
+    int mAwardPrice -> k
+    android.os.Handler handler -> l
+    int mInviteId -> m
+    java.lang.String mShareUrl -> n
+    77:82:void onCreate(android.os.Bundle) -> onCreate
+    91:131:void initView() -> a
+    137:154:void initData() -> c
+    158:163:void onResume() -> onResume
+    167:172:void onPause() -> onPause
+    38:38:android.widget.TextView access$0(com.guozha.buy.activity.mine.SharePraiseActivity) -> a
+    42:42:int access$1(com.guozha.buy.activity.mine.SharePraiseActivity) -> b
+    39:39:android.widget.TextView access$2(com.guozha.buy.activity.mine.SharePraiseActivity) -> c
+    43:43:int access$3(com.guozha.buy.activity.mine.SharePraiseActivity) -> d
+    40:40:android.widget.TextView access$4(com.guozha.buy.activity.mine.SharePraiseActivity) -> e
+    44:44:int access$5(com.guozha.buy.activity.mine.SharePraiseActivity) -> f
+    85:85:java.lang.String access$6(com.guozha.buy.activity.mine.SharePraiseActivity) -> g
+    85:85:void access$7(com.guozha.buy.activity.mine.SharePraiseActivity,java.lang.String) -> a
+    84:84:int access$8(com.guozha.buy.activity.mine.SharePraiseActivity) -> h
+    84:84:void access$9(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> a
+    46:46:android.os.Handler access$10(com.guozha.buy.activity.mine.SharePraiseActivity) -> i
+    42:42:void access$11(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> b
+    43:43:void access$12(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> c
+    44:44:void access$13(com.guozha.buy.activity.mine.SharePraiseActivity,int) -> d
+com.guozha.buy.activity.mine.SharePraiseActivity$1 -> com.guozha.buy.activity.mine.bd:
     com.guozha.buy.activity.mine.SharePraiseActivity this$0 -> a
-    46:70:void handleMessage(android.os.Message) -> handleMessage
-com.guozha.buy.activity.mine.SharePraiseActivity$2 -> com.guozha.buy.activity.mine.ay:
+    48:72:void handleMessage(android.os.Message) -> handleMessage
+com.guozha.buy.activity.mine.SharePraiseActivity$2 -> com.guozha.buy.activity.mine.be:
     com.guozha.buy.activity.mine.SharePraiseActivity this$0 -> a
-    96:119:void onClick(android.view.View) -> onClick
-    93:93:com.guozha.buy.activity.mine.SharePraiseActivity access$0(com.guozha.buy.activity.mine.SharePraiseActivity$2) -> a
-com.guozha.buy.activity.mine.SharePraiseActivity$2$1 -> com.guozha.buy.activity.mine.az:
+    98:121:void onClick(android.view.View) -> onClick
+    95:95:com.guozha.buy.activity.mine.SharePraiseActivity access$0(com.guozha.buy.activity.mine.SharePraiseActivity$2) -> a
+com.guozha.buy.activity.mine.SharePraiseActivity$2$1 -> com.guozha.buy.activity.mine.bf:
     com.guozha.buy.activity.mine.SharePraiseActivity$2 this$1 -> a
-    106:117:void onResponse(org.json.JSONObject) -> a
+    108:119:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.activity.mine.SharePraiseActivity$3 -> com.guozha.buy.activity.mine.ba:
+com.guozha.buy.activity.mine.SharePraiseActivity$3 -> com.guozha.buy.activity.mine.bg:
     com.guozha.buy.activity.mine.SharePraiseActivity this$0 -> a
-    125:127:void onClick(android.view.View) -> onClick
-com.guozha.buy.activity.mine.SharePraiseActivity$4 -> com.guozha.buy.activity.mine.bb:
+    127:129:void onClick(android.view.View) -> onClick
+com.guozha.buy.activity.mine.SharePraiseActivity$4 -> com.guozha.buy.activity.mine.bh:
     com.guozha.buy.activity.mine.SharePraiseActivity this$0 -> a
-    143:150:void onResponse(org.json.JSONObject) -> a
+    145:152:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mpage.CookBookDetailActivity -> com.guozha.buy.activity.mpage.CookBookDetailActivity:
     java.lang.String PAGE_NAME -> a
@@ -16621,29 +16706,29 @@ com.guozha.buy.activity.mpage.PreSpecialActivity -> com.guozha.buy.activity.mpag
     int mMaxDataNum -> j
     int mTotalPageSize -> k
     int mLastVisibleIndex -> l
-    62:67:void onCreate(android.os.Bundle) -> onCreate
-    74:89:void loadNewDataAndUpdate() -> a
-    92:103:void addFormatData(com.guozha.buy.entry.mpage.prespecial.PreSpecialPage) -> a
-    109:128:void initView() -> c
-    132:137:void onResume() -> onResume
-    141:146:void onPause() -> onPause
-    152:157:void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
-    163:170:void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
-    48:48:com.guozha.buy.adapter.PreSpecialGridAdapter access$0(com.guozha.buy.activity.mpage.PreSpecialActivity) -> a
-    91:91:void access$1(com.guozha.buy.activity.mpage.PreSpecialActivity,com.guozha.buy.entry.mpage.prespecial.PreSpecialPage) -> a
-    47:47:java.util.List access$2(com.guozha.buy.activity.mpage.PreSpecialActivity) -> b
+    66:71:void onCreate(android.os.Bundle) -> onCreate
+    78:93:void loadNewDataAndUpdate() -> a
+    96:107:void addFormatData(com.guozha.buy.entry.mpage.prespecial.PreSpecialPage) -> a
+    113:134:void initView() -> c
+    138:143:void onResume() -> onResume
+    147:152:void onPause() -> onPause
+    158:163:void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
+    169:176:void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
+    52:52:com.guozha.buy.adapter.PreSpecialGridAdapter access$0(com.guozha.buy.activity.mpage.PreSpecialActivity) -> a
+    95:95:void access$1(com.guozha.buy.activity.mpage.PreSpecialActivity,com.guozha.buy.entry.mpage.prespecial.PreSpecialPage) -> a
+    51:51:java.util.List access$2(com.guozha.buy.activity.mpage.PreSpecialActivity) -> b
 com.guozha.buy.activity.mpage.PreSpecialActivity$1 -> com.guozha.buy.activity.mpage.m:
     com.guozha.buy.activity.mpage.PreSpecialActivity this$0 -> a
-    52:57:void handleMessage(android.os.Message) -> handleMessage
+    56:61:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.mpage.PreSpecialActivity$2 -> com.guozha.buy.activity.mpage.n:
     com.guozha.buy.activity.mpage.PreSpecialActivity this$0 -> a
-    83:86:void onResponse(java.lang.String) -> a
+    87:90:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mpage.PreSpecialActivity$2$1 -> com.guozha.buy.activity.mpage.o:
     com.guozha.buy.activity.mpage.PreSpecialActivity$2 this$1 -> d
 com.guozha.buy.activity.mpage.PreSpecialActivity$3 -> com.guozha.buy.activity.mpage.p:
     com.guozha.buy.activity.mpage.PreSpecialActivity this$0 -> a
-    117:125:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    121:131:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.guozha.buy.activity.mpage.PreSpecialDetail -> com.guozha.buy.activity.mpage.PreSpecialDetail:
     int HAND_DATA_COMPLETED -> a
     android.widget.ImageView mHeadImage -> b
@@ -16663,37 +16748,37 @@ com.guozha.buy.activity.mpage.PreSpecialDetail -> com.guozha.buy.activity.mpage.
     java.lang.String mGoodsType -> p
     java.lang.String mWebUrl -> q
     android.os.Handler handler -> r
-    66:79:void onCreate(android.os.Bundle) -> onCreate
-    82:115:void initView() -> a
-    119:153:void initData() -> c
-    157:177:void updateView() -> d
-    156:156:void access$0(com.guozha.buy.activity.mpage.PreSpecialDetail) -> a
-    42:42:int access$1(com.guozha.buy.activity.mpage.PreSpecialDetail) -> b
-    43:43:int access$2(com.guozha.buy.activity.mpage.PreSpecialDetail) -> c
-    45:45:java.lang.String access$3(com.guozha.buy.activity.mpage.PreSpecialDetail) -> d
-    51:51:java.lang.String access$4(com.guozha.buy.activity.mpage.PreSpecialDetail) -> e
-    47:47:void access$5(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> a
-    45:45:void access$6(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> b
-    51:51:void access$7(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> c
-    48:48:void access$8(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> d
-    43:43:void access$9(com.guozha.buy.activity.mpage.PreSpecialDetail,int) -> a
-    50:50:void access$10(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> e
-    49:49:void access$11(com.guozha.buy.activity.mpage.PreSpecialDetail,int) -> b
-    52:52:void access$12(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> f
-    46:46:void access$13(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> g
-    54:54:android.os.Handler access$14(com.guozha.buy.activity.mpage.PreSpecialDetail) -> f
+    68:81:void onCreate(android.os.Bundle) -> onCreate
+    84:122:void initView() -> a
+    126:158:void initData() -> c
+    162:182:void updateView() -> d
+    161:161:void access$0(com.guozha.buy.activity.mpage.PreSpecialDetail) -> a
+    44:44:int access$1(com.guozha.buy.activity.mpage.PreSpecialDetail) -> b
+    45:45:int access$2(com.guozha.buy.activity.mpage.PreSpecialDetail) -> c
+    47:47:java.lang.String access$3(com.guozha.buy.activity.mpage.PreSpecialDetail) -> d
+    53:53:java.lang.String access$4(com.guozha.buy.activity.mpage.PreSpecialDetail) -> e
+    49:49:void access$5(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> a
+    47:47:void access$6(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> b
+    53:53:void access$7(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> c
+    50:50:void access$8(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> d
+    45:45:void access$9(com.guozha.buy.activity.mpage.PreSpecialDetail,int) -> a
+    52:52:void access$10(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> e
+    51:51:void access$11(com.guozha.buy.activity.mpage.PreSpecialDetail,int) -> b
+    54:54:void access$12(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> f
+    48:48:void access$13(com.guozha.buy.activity.mpage.PreSpecialDetail,java.lang.String) -> g
+    56:56:android.os.Handler access$14(com.guozha.buy.activity.mpage.PreSpecialDetail) -> f
 com.guozha.buy.activity.mpage.PreSpecialDetail$1 -> com.guozha.buy.activity.mpage.q:
     com.guozha.buy.activity.mpage.PreSpecialDetail this$0 -> a
-    56:61:void handleMessage(android.os.Message) -> handleMessage
+    58:63:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.mpage.PreSpecialDetail$2 -> com.guozha.buy.activity.mpage.r:
     com.guozha.buy.activity.mpage.PreSpecialDetail this$0 -> a
-    85:91:void onClick(android.view.View) -> onClick
+    88:98:void onClick(android.view.View) -> onClick
 com.guozha.buy.activity.mpage.PreSpecialDetail$3 -> com.guozha.buy.activity.mpage.s:
     com.guozha.buy.activity.mpage.PreSpecialDetail this$0 -> a
-    105:106:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+    112:113:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
 com.guozha.buy.activity.mpage.PreSpecialDetail$4 -> com.guozha.buy.activity.mpage.t:
     com.guozha.buy.activity.mpage.PreSpecialDetail this$0 -> a
-    134:151:void onResponse(org.json.JSONObject) -> a
+    141:156:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mpage.SeasonActivity -> com.guozha.buy.activity.mpage.SeasonActivity:
     java.lang.String PAGE_NAME -> a
@@ -16706,86 +16791,86 @@ com.guozha.buy.activity.mpage.SeasonActivity -> com.guozha.buy.activity.mpage.Se
     java.util.List mSeasonsList -> h
     com.guozha.buy.view.AutoViewFlipper mAutoViewFilpper -> i
     java.util.List seasonBitmaps -> j
-    java.util.List mAdviceItem -> k
-    android.os.Handler handler -> l
-    73:79:void onCreate(android.os.Bundle) -> onCreate
-    85:125:void initView() -> a
-    128:137:void initData() -> c
-    143:165:void requestSeasonImage() -> d
-    171:172:void updateSeasonImage(android.graphics.Bitmap,int) -> a
-    179:184:void updateSeasonAdviceList(int) -> c
-    188:193:void onResume() -> onResume
-    197:202:void onPause() -> onPause
-    142:142:void access$0(com.guozha.buy.activity.mpage.SeasonActivity) -> a
-    178:178:void access$1(com.guozha.buy.activity.mpage.SeasonActivity,int) -> a
-    170:170:void access$2(com.guozha.buy.activity.mpage.SeasonActivity,android.graphics.Bitmap,int) -> a
-    53:53:java.util.List access$3(com.guozha.buy.activity.mpage.SeasonActivity) -> b
-    49:49:void access$4(com.guozha.buy.activity.mpage.SeasonActivity,java.util.List) -> a
-    55:55:android.os.Handler access$5(com.guozha.buy.activity.mpage.SeasonActivity) -> c
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> k
+    java.util.List mAdviceItem -> l
+    android.os.Handler handler -> m
+    76:82:void onCreate(android.os.Bundle) -> onCreate
+    88:128:void initView() -> a
+    131:140:void initData() -> c
+    146:168:void requestSeasonImage() -> d
+    174:175:void updateSeasonImage(android.graphics.Bitmap,int) -> a
+    182:187:void updateSeasonAdviceList(int) -> c
+    191:196:void onResume() -> onResume
+    200:205:void onPause() -> onPause
+    145:145:void access$0(com.guozha.buy.activity.mpage.SeasonActivity) -> a
+    181:181:void access$1(com.guozha.buy.activity.mpage.SeasonActivity,int) -> a
+    173:173:void access$2(com.guozha.buy.activity.mpage.SeasonActivity,android.graphics.Bitmap,int) -> a
+    56:56:java.util.List access$3(com.guozha.buy.activity.mpage.SeasonActivity) -> b
+    51:51:void access$4(com.guozha.buy.activity.mpage.SeasonActivity,java.util.List) -> a
+    58:58:android.os.Handler access$5(com.guozha.buy.activity.mpage.SeasonActivity) -> c
 com.guozha.buy.activity.mpage.SeasonActivity$1 -> com.guozha.buy.activity.mpage.u:
     com.guozha.buy.activity.mpage.SeasonActivity this$0 -> a
-    57:68:void handleMessage(android.os.Message) -> handleMessage
+    60:71:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.mpage.SeasonActivity$2 -> com.guozha.buy.activity.mpage.v:
     com.guozha.buy.activity.mpage.SeasonActivity this$0 -> a
-    91:97:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    94:100:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.guozha.buy.activity.mpage.SeasonActivity$3 -> com.guozha.buy.activity.mpage.w:
     com.guozha.buy.activity.mpage.SeasonActivity this$0 -> a
-    107:108:void scrollChanged(int) -> a
-    110:110:void onTouchedView() -> a
+    110:111:void scrollChanged(int) -> a
+    113:113:void onTouchedView() -> a
 com.guozha.buy.activity.mpage.SeasonActivity$4 -> com.guozha.buy.activity.mpage.x:
     com.guozha.buy.activity.mpage.SeasonActivity this$0 -> a
-    132:135:void onResponse(java.lang.String) -> a
+    135:138:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.mpage.SeasonActivity$4$1 -> com.guozha.buy.activity.mpage.y:
     com.guozha.buy.activity.mpage.SeasonActivity$4 this$1 -> d
 com.guozha.buy.activity.mpage.SeasonActivity$5 -> com.guozha.buy.activity.mpage.z:
     com.guozha.buy.activity.mpage.SeasonActivity this$0 -> a
     int val$position -> b
-    155:161:void onResponse(android.graphics.Bitmap) -> a
+    158:164:void onResponse(android.graphics.Bitmap) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CartItemListAdapter -> com.guozha.buy.a.a:
     android.view.LayoutInflater mInflater -> a
-    int mTitleIndex -> b
-    android.content.res.Resources mResource -> c
-    android.app.Activity mContext -> d
-    java.util.List mCartItems -> e
-    55:56:int getGroupCount() -> getGroupCount
-    61:67:int getChildrenCount(int) -> getChildrenCount
-    73:73:java.lang.Object getGroup(int) -> getGroup
-    78:83:java.lang.Object getChild(int,int) -> getChild
-    89:89:long getGroupId(int) -> getGroupId
-    94:94:long getChildId(int,int) -> getChildId
-    99:99:boolean hasStableIds() -> hasStableIds
-    106:156:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
-    163:180:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
-    186:186:boolean isChildSelectable(int,int) -> isChildSelectable
-    204:215:void onClick(android.view.View) -> onClick
-    222:223:void clickMinusButton(android.view.View) -> a
-    230:231:void clickPlusButton(android.view.View) -> b
-    239:277:void updateCartItemAmount(android.view.View,boolean) -> a
-    284:293:void clickDeleteButton(android.view.View) -> c
-    300:325:void requestDeleteCartItem(android.view.View) -> d
-    331:336:void refreshCartItem() -> a
-    330:330:void access$0(com.guozha.buy.adapter.CartItemListAdapter) -> a
-    43:43:android.app.Activity access$1(com.guozha.buy.adapter.CartItemListAdapter) -> b
-    299:299:void access$2(com.guozha.buy.adapter.CartItemListAdapter,android.view.View) -> a
+    android.content.res.Resources mResource -> b
+    android.app.Activity mContext -> c
+    java.util.List mCartItems -> d
+    54:55:int getGroupCount() -> getGroupCount
+    60:66:int getChildrenCount(int) -> getChildrenCount
+    72:72:java.lang.Object getGroup(int) -> getGroup
+    77:82:java.lang.Object getChild(int,int) -> getChild
+    88:88:long getGroupId(int) -> getGroupId
+    93:93:long getChildId(int,int) -> getChildId
+    98:98:boolean hasStableIds() -> hasStableIds
+    105:151:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
+    158:175:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
+    181:181:boolean isChildSelectable(int,int) -> isChildSelectable
+    199:210:void onClick(android.view.View) -> onClick
+    217:218:void clickMinusButton(android.view.View) -> a
+    225:226:void clickPlusButton(android.view.View) -> b
+    234:272:void updateCartItemAmount(android.view.View,boolean) -> a
+    279:288:void clickDeleteButton(android.view.View) -> c
+    295:320:void requestDeleteCartItem(android.view.View) -> d
+    326:331:void refreshCartItem() -> a
+    325:325:void access$0(com.guozha.buy.adapter.CartItemListAdapter) -> a
+    42:42:android.app.Activity access$1(com.guozha.buy.adapter.CartItemListAdapter) -> b
+    294:294:void access$2(com.guozha.buy.adapter.CartItemListAdapter,android.view.View) -> a
 com.guozha.buy.adapter.CartItemListAdapter$1 -> com.guozha.buy.a.b:
     com.guozha.buy.adapter.CartItemListAdapter this$0 -> a
-    266:275:void onResponse(org.json.JSONObject) -> a
+    261:270:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CartItemListAdapter$2 -> com.guozha.buy.a.c:
     com.guozha.buy.adapter.CartItemListAdapter this$0 -> a
     com.guozha.buy.dialog.CustomDialog val$deleteDialog -> b
     android.view.View val$view -> c
-    289:291:void onClick(android.view.View) -> onClick
+    284:286:void onClick(android.view.View) -> onClick
 com.guozha.buy.adapter.CartItemListAdapter$3 -> com.guozha.buy.a.d:
     com.guozha.buy.adapter.CartItemListAdapter this$0 -> a
-    313:323:void onResponse(org.json.JSONObject) -> a
+    308:318:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder -> com.guozha.buy.a.a$a:
     android.widget.TextView title -> a
-    199:199:void access$0(com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder,android.widget.TextView) -> a
-    199:199:android.widget.TextView access$1(com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder) -> a
+    194:194:void access$0(com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder,android.widget.TextView) -> a
+    194:194:android.widget.TextView access$1(com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder) -> a
 com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder -> com.guozha.buy.a.a$b:
     android.widget.TextView title -> a
     android.widget.ImageView minus -> b
@@ -16793,18 +16878,18 @@ com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder -> com.guozha.buy.a.a
     android.widget.ImageView plus -> d
     android.widget.TextView price -> e
     android.widget.ImageView close -> f
-    190:190:void access$0(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> a
-    191:191:void access$1(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> a
-    192:192:void access$2(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> b
-    193:193:void access$3(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> b
-    194:194:void access$4(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> c
-    195:195:void access$5(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> c
-    191:191:android.widget.ImageView access$6(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> a
-    193:193:android.widget.ImageView access$7(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> b
-    195:195:android.widget.ImageView access$8(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> c
-    192:192:android.widget.TextView access$9(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> d
-    194:194:android.widget.TextView access$10(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> e
-    190:190:android.widget.TextView access$11(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> f
+    185:185:void access$0(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> a
+    186:186:void access$1(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> a
+    187:187:void access$2(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> b
+    188:188:void access$3(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> b
+    189:189:void access$4(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.TextView) -> c
+    190:190:void access$5(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder,android.widget.ImageView) -> c
+    186:186:android.widget.ImageView access$6(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> a
+    188:188:android.widget.ImageView access$7(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> b
+    190:190:android.widget.ImageView access$8(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> c
+    187:187:android.widget.TextView access$9(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> d
+    189:189:android.widget.TextView access$10(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> e
+    185:185:android.widget.TextView access$11(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> f
 com.guozha.buy.adapter.ChooseAddressListAdapter -> com.guozha.buy.a.e:
     android.view.LayoutInflater mInflater -> a
     java.util.List mAddressInfos -> b
@@ -16849,19 +16934,19 @@ com.guozha.buy.adapter.CollectionRecipeExpandAdapter -> com.guozha.buy.a.i:
     74:74:long getGroupId(int) -> getGroupId
     79:79:long getChildId(int,int) -> getChildId
     84:84:boolean hasStableIds() -> hasStableIds
-    90:100:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
-    106:106:boolean isChildSelectable(int,int) -> isChildSelectable
-    113:136:android.view.View getRealChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> a
-    145:154:java.lang.String getRecipeDescript(java.util.List) -> a
-    159:163:int getRealChildrenCount(int) -> a
-    218:241:void requestDeleteRecipeItem(int) -> b
-    246:247:void setOnUpdateRecipeListener(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$UpdateRecipeListener) -> a
+    90:101:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
+    107:107:boolean isChildSelectable(int,int) -> isChildSelectable
+    114:138:android.view.View getRealChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> a
+    147:156:java.lang.String getRecipeDescript(java.util.List) -> a
+    161:165:int getRealChildrenCount(int) -> a
+    220:243:void requestDeleteRecipeItem(int) -> b
+    248:249:void setOnUpdateRecipeListener(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$UpdateRecipeListener) -> a
     40:40:android.content.Context access$0(com.guozha.buy.adapter.CollectionRecipeExpandAdapter) -> a
-    217:217:void access$1(com.guozha.buy.adapter.CollectionRecipeExpandAdapter,int) -> a
-    243:243:com.guozha.buy.adapter.CollectionRecipeExpandAdapter$UpdateRecipeListener access$2(com.guozha.buy.adapter.CollectionRecipeExpandAdapter) -> b
+    219:219:void access$1(com.guozha.buy.adapter.CollectionRecipeExpandAdapter,int) -> a
+    245:245:com.guozha.buy.adapter.CollectionRecipeExpandAdapter$UpdateRecipeListener access$2(com.guozha.buy.adapter.CollectionRecipeExpandAdapter) -> b
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$1 -> com.guozha.buy.a.j:
     com.guozha.buy.adapter.CollectionRecipeExpandAdapter this$0 -> a
-    227:239:void onResponse(org.json.JSONObject) -> a
+    229:241:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder -> com.guozha.buy.a.i$a:
     android.widget.ImageView recipeImg -> a
@@ -16869,28 +16954,28 @@ com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder -> com.guoz
     android.widget.TextView recipeDescript -> c
     android.widget.ImageView modifyButton -> d
     android.widget.ImageView deleteButton -> e
-    167:167:void access$0(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> a
-    168:168:void access$1(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.TextView) -> a
-    169:169:void access$2(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.TextView) -> b
-    171:171:void access$3(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> b
-    172:172:void access$4(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> c
-    171:171:android.widget.ImageView access$5(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> a
-    172:172:android.widget.ImageView access$6(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> b
-    167:167:android.widget.ImageView access$7(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> c
-    168:168:android.widget.TextView access$8(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> d
-    169:169:android.widget.TextView access$9(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> e
+    169:169:void access$0(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> a
+    170:170:void access$1(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.TextView) -> a
+    171:171:void access$2(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.TextView) -> b
+    173:173:void access$3(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> b
+    174:174:void access$4(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder,android.widget.ImageView) -> c
+    173:173:android.widget.ImageView access$5(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> a
+    174:174:android.widget.ImageView access$6(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> b
+    169:169:android.widget.ImageView access$7(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> c
+    170:170:android.widget.TextView access$8(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> d
+    171:171:android.widget.TextView access$9(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ChildViewHolder) -> e
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$DeleteClickListener -> com.guozha.buy.a.i$b:
     com.guozha.buy.adapter.CollectionRecipeExpandAdapter this$0 -> a
-    201:211:void onClick(android.view.View) -> onClick
-    197:197:com.guozha.buy.adapter.CollectionRecipeExpandAdapter access$0(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$DeleteClickListener) -> a
+    203:213:void onClick(android.view.View) -> onClick
+    199:199:com.guozha.buy.adapter.CollectionRecipeExpandAdapter access$0(com.guozha.buy.adapter.CollectionRecipeExpandAdapter$DeleteClickListener) -> a
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$DeleteClickListener$1 -> com.guozha.buy.a.k:
     com.guozha.buy.adapter.CollectionRecipeExpandAdapter$DeleteClickListener this$1 -> a
     com.guozha.buy.dialog.CustomDialog val$dialog -> b
     int val$menuId -> c
-    207:209:void onClick(android.view.View) -> onClick
+    209:211:void onClick(android.view.View) -> onClick
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$ModifyClickListener -> com.guozha.buy.a.i$c:
     com.guozha.buy.adapter.CollectionRecipeExpandAdapter this$0 -> a
-    185:189:void onClick(android.view.View) -> onClick
+    187:191:void onClick(android.view.View) -> onClick
 com.guozha.buy.adapter.CollectionRecipeExpandAdapter$UpdateRecipeListener -> com.guozha.buy.a.i$d:
     void update() -> a
 com.guozha.buy.adapter.CollectionRecipeModifyListAdapter -> com.guozha.buy.a.l:
@@ -16905,67 +16990,75 @@ com.guozha.buy.adapter.CollectionVegetableListAdapter -> com.guozha.buy.a.m:
     com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener mDeletedClickListener -> b
     java.util.List mGoodsListItems -> c
     android.content.Context mContext -> d
-    com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener mUpdateRecipeListener -> e
-    49:50:int getCount() -> getCount
-    55:55:java.lang.Object getItem(int) -> getItem
-    60:60:long getItemId(int) -> getItemId
-    66:82:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    119:141:void requestDeleteVegetable(int) -> a
-    150:151:void setOnUpdateVegetableListener(com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener) -> a
-    38:38:android.content.Context access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter) -> a
-    118:118:void access$1(com.guozha.buy.adapter.CollectionVegetableListAdapter,int) -> a
-    143:143:com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener access$2(com.guozha.buy.adapter.CollectionVegetableListAdapter) -> b
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> e
+    com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener mUpdateRecipeListener -> f
+    52:53:int getCount() -> getCount
+    58:58:java.lang.Object getItem(int) -> getItem
+    63:63:long getItemId(int) -> getItemId
+    69:88:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    126:148:void requestDeleteVegetable(int) -> a
+    157:158:void setOnUpdateVegetableListener(com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener) -> a
+    39:39:android.content.Context access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter) -> a
+    125:125:void access$1(com.guozha.buy.adapter.CollectionVegetableListAdapter,int) -> a
+    150:150:com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener access$2(com.guozha.buy.adapter.CollectionVegetableListAdapter) -> b
 com.guozha.buy.adapter.CollectionVegetableListAdapter$1 -> com.guozha.buy.a.n:
     com.guozha.buy.adapter.CollectionVegetableListAdapter this$0 -> a
-    128:139:void onResponse(org.json.JSONObject) -> a
+    135:146:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener -> com.guozha.buy.a.m$a:
     com.guozha.buy.adapter.CollectionVegetableListAdapter this$0 -> a
-    101:111:void onClick(android.view.View) -> onClick
-    97:97:com.guozha.buy.adapter.CollectionVegetableListAdapter access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener) -> a
+    108:118:void onClick(android.view.View) -> onClick
+    104:104:com.guozha.buy.adapter.CollectionVegetableListAdapter access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener) -> a
 com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener$1 -> com.guozha.buy.a.o:
     com.guozha.buy.adapter.CollectionVegetableListAdapter$DeleteClickListener this$1 -> a
     int val$goodsId -> b
     com.guozha.buy.dialog.CustomDialog val$dialog -> c
-    107:109:void onClick(android.view.View) -> onClick
+    114:116:void onClick(android.view.View) -> onClick
 com.guozha.buy.adapter.CollectionVegetableListAdapter$UpdateVegetableListener -> com.guozha.buy.a.m$b:
     void update() -> a
 com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder -> com.guozha.buy.a.m$c:
-    android.widget.ImageView deleteButton -> a
-    android.widget.TextView goodsName -> b
-    android.widget.TextView goodsPrice -> c
-    87:87:void access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.TextView) -> a
-    88:88:void access$1(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.TextView) -> b
-    86:86:void access$2(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.ImageView) -> a
-    86:86:android.widget.ImageView access$3(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> a
-    87:87:android.widget.TextView access$4(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> b
-    88:88:android.widget.TextView access$5(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> c
+    android.widget.ImageView goodsIcon -> a
+    android.widget.ImageView deleteButton -> b
+    android.widget.TextView goodsName -> c
+    android.widget.TextView goodsPrice -> d
+    92:92:void access$0(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.ImageView) -> a
+    94:94:void access$1(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.TextView) -> a
+    95:95:void access$2(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.TextView) -> b
+    93:93:void access$3(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder,android.widget.ImageView) -> b
+    93:93:android.widget.ImageView access$4(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> a
+    94:94:android.widget.TextView access$5(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> b
+    95:95:android.widget.TextView access$6(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> c
+    92:92:android.widget.ImageView access$7(com.guozha.buy.adapter.CollectionVegetableListAdapter$ViewHolder) -> d
 com.guozha.buy.adapter.CookBookListAdapter -> com.guozha.buy.a.p:
     android.view.LayoutInflater mInflater -> a
     java.util.List mRelationRecipe -> b
     android.content.Context mContext -> c
-    41:42:int getCount() -> getCount
-    47:47:java.lang.Object getItem(int) -> getItem
-    52:52:long getItemId(int) -> getItemId
-    58:73:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    82:91:java.lang.String getRecipeDescript(java.util.List) -> a
-    104:110:void onClick(android.view.View) -> onClick
-    117:144:void requestCollectionRecipe(int) -> a
-    32:32:android.content.Context access$0(com.guozha.buy.adapter.CookBookListAdapter) -> a
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> d
+    44:45:int getCount() -> getCount
+    50:50:java.lang.Object getItem(int) -> getItem
+    55:55:long getItemId(int) -> getItemId
+    61:79:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    88:97:java.lang.String getRecipeDescript(java.util.List) -> a
+    111:117:void onClick(android.view.View) -> onClick
+    124:151:void requestCollectionRecipe(int) -> a
+    33:33:android.content.Context access$0(com.guozha.buy.adapter.CookBookListAdapter) -> a
 com.guozha.buy.adapter.CookBookListAdapter$1 -> com.guozha.buy.a.q:
     com.guozha.buy.adapter.CookBookListAdapter this$0 -> a
-    132:142:void onResponse(org.json.JSONObject) -> a
+    139:149:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.adapter.CookBookListAdapter$ViewHolder -> com.guozha.buy.a.p$a:
-    android.widget.TextView name -> a
-    android.widget.TextView material -> b
-    android.widget.ImageView collectionButton -> c
-    96:96:void access$0(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.TextView) -> a
-    97:97:void access$1(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.TextView) -> b
-    98:98:void access$2(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.ImageView) -> a
-    98:98:android.widget.ImageView access$3(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> a
-    96:96:android.widget.TextView access$4(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> b
-    97:97:android.widget.TextView access$5(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> c
+    android.widget.ImageView image -> a
+    android.widget.TextView name -> b
+    android.widget.TextView material -> c
+    android.widget.ImageView collectionButton -> d
+    102:102:void access$0(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.ImageView) -> a
+    103:103:void access$1(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.TextView) -> a
+    104:104:void access$2(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.TextView) -> b
+    105:105:void access$3(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder,android.widget.ImageView) -> b
+    105:105:android.widget.ImageView access$4(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> a
+    102:102:android.widget.ImageView access$5(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> b
+    103:103:android.widget.TextView access$6(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> c
+    104:104:android.widget.TextView access$7(com.guozha.buy.adapter.CookBookListAdapter$ViewHolder) -> d
 com.guozha.buy.adapter.DetailMaterialListAdapter -> com.guozha.buy.a.r:
     android.view.LayoutInflater mInflater -> a
     java.util.List mMenuGoods -> b
@@ -16997,41 +17090,37 @@ com.guozha.buy.adapter.MarketItemListAdapter -> com.guozha.buy.a.u:
     63:63:java.lang.Object getItem(int) -> getItem
     68:68:long getItemId(int) -> getItemId
     74:164:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    171:203:void onClick(android.view.View) -> onClick
+    171:190:void onClick(android.view.View) -> onClick
     42:42:android.app.Activity access$0(com.guozha.buy.adapter.MarketItemListAdapter) -> a
 com.guozha.buy.adapter.MarketItemListAdapter$1 -> com.guozha.buy.a.v:
     com.guozha.buy.adapter.MarketItemListAdapter this$0 -> a
     117:126:void onClick(android.view.View) -> onClick
-com.guozha.buy.adapter.MarketItemListAdapter$2 -> com.guozha.buy.a.w:
-    com.guozha.buy.adapter.MarketItemListAdapter this$0 -> a
-    com.guozha.buy.dialog.CustomDialog val$addAddressDialog -> b
-    182:185:void onClick(android.view.View) -> onClick
 com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry -> com.guozha.buy.a.u$a:
     android.view.View itemVegetable -> a
     android.view.View buyedIcon -> b
     android.widget.ImageView image -> c
     android.widget.TextView productName -> d
     android.widget.TextView price -> e
-    213:213:void access$0(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.view.View) -> a
-    214:214:void access$1(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.view.View) -> b
-    215:215:void access$2(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.ImageView) -> a
-    216:216:void access$3(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.TextView) -> a
-    217:217:void access$4(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.TextView) -> b
-    216:216:android.widget.TextView access$5(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> a
-    217:217:android.widget.TextView access$6(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> b
-    213:213:android.view.View access$7(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> c
-    215:215:android.widget.ImageView access$8(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> d
+    200:200:void access$0(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.view.View) -> a
+    201:201:void access$1(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.view.View) -> b
+    202:202:void access$2(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.ImageView) -> a
+    203:203:void access$3(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.TextView) -> a
+    204:204:void access$4(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry,android.widget.TextView) -> b
+    203:203:android.widget.TextView access$5(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> a
+    204:204:android.widget.TextView access$6(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> b
+    200:200:android.view.View access$7(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> c
+    202:202:android.widget.ImageView access$8(com.guozha.buy.adapter.MarketItemListAdapter$HolderEntry) -> d
 com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder -> com.guozha.buy.a.u$b:
     android.widget.TextView typeName -> a
     android.widget.ImageView itemMore -> b
     java.util.List cells -> c
-    209:209:void access$0(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,java.util.List) -> a
-    209:209:java.util.List access$1(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> a
-    207:207:void access$2(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,android.widget.TextView) -> a
-    208:208:void access$3(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,android.widget.ImageView) -> a
-    208:208:android.widget.ImageView access$4(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> b
-    207:207:android.widget.TextView access$5(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> c
-com.guozha.buy.adapter.MenuExpandListAapter -> com.guozha.buy.a.x:
+    196:196:void access$0(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,java.util.List) -> a
+    196:196:java.util.List access$1(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> a
+    194:194:void access$2(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,android.widget.TextView) -> a
+    195:195:void access$3(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder,android.widget.ImageView) -> a
+    195:195:android.widget.ImageView access$4(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> b
+    194:194:android.widget.TextView access$5(com.guozha.buy.adapter.MarketItemListAdapter$ViewHolder) -> c
+com.guozha.buy.adapter.MenuExpandListAapter -> com.guozha.buy.a.w:
     java.util.List mGoodsItemType -> a
     android.view.LayoutInflater mInflate -> b
     36:37:int getGroupCount() -> getGroupCount
@@ -17044,24 +17133,24 @@ com.guozha.buy.adapter.MenuExpandListAapter -> com.guozha.buy.a.x:
     81:102:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
     110:125:android.view.View getRealChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> a
     130:130:boolean isChildSelectable(int,int) -> isChildSelectable
-com.guozha.buy.adapter.MenuExpandListAapter$ChildViewHolder -> com.guozha.buy.a.x$a:
+com.guozha.buy.adapter.MenuExpandListAapter$ChildViewHolder -> com.guozha.buy.a.w$a:
     android.widget.TextView menuText -> a
     139:139:void access$0(com.guozha.buy.adapter.MenuExpandListAapter$ChildViewHolder,android.widget.TextView) -> a
     139:139:android.widget.TextView access$1(com.guozha.buy.adapter.MenuExpandListAapter$ChildViewHolder) -> a
-com.guozha.buy.adapter.MenuExpandListAapter$GroupViewHolder -> com.guozha.buy.a.x$b:
+com.guozha.buy.adapter.MenuExpandListAapter$GroupViewHolder -> com.guozha.buy.a.w$b:
     android.widget.TextView menuText -> a
     android.widget.ImageView arrowIcon -> b
     134:134:void access$0(com.guozha.buy.adapter.MenuExpandListAapter$GroupViewHolder,android.widget.TextView) -> a
     135:135:void access$1(com.guozha.buy.adapter.MenuExpandListAapter$GroupViewHolder,android.widget.ImageView) -> a
     134:134:android.widget.TextView access$2(com.guozha.buy.adapter.MenuExpandListAapter$GroupViewHolder) -> a
-com.guozha.buy.adapter.MyAdressListAdapter -> com.guozha.buy.a.y:
+com.guozha.buy.adapter.MyAdressListAdapter -> com.guozha.buy.a.x:
     android.view.LayoutInflater mInflater -> a
     java.util.List mAddressInfos -> b
     32:33:int getCount() -> getCount
     38:38:java.lang.Object getItem(int) -> getItem
     43:43:long getItemId(int) -> getItemId
     49:69:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder -> com.guozha.buy.a.y$a:
+com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder -> com.guozha.buy.a.x$a:
     android.widget.TextView receiveName -> a
     android.widget.TextView mobileNo -> b
     android.widget.TextView detailAddress -> c
@@ -17074,21 +17163,21 @@ com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder -> com.guozha.buy.a.y$a:
     75:75:android.widget.TextView access$5(com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder) -> b
     76:76:android.widget.TextView access$6(com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder) -> c
     77:77:android.widget.TextView access$7(com.guozha.buy.adapter.MyAdressListAdapter$ViewHolder) -> d
-com.guozha.buy.adapter.MySellerListAdapter -> com.guozha.buy.a.z:
+com.guozha.buy.adapter.MySellerListAdapter -> com.guozha.buy.a.y:
     android.view.LayoutInflater mInflater -> a
     java.util.List mSellers -> b
     32:33:int getCount() -> getCount
     38:38:java.lang.Object getItem(int) -> getItem
     43:43:long getItemId(int) -> getItemId
     49:61:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.MySellerListAdapter$ViewHolder -> com.guozha.buy.a.z$a:
+com.guozha.buy.adapter.MySellerListAdapter$ViewHolder -> com.guozha.buy.a.y$a:
     android.widget.TextView sellerDescript -> a
     android.widget.TextView sellerVisitCount -> b
     65:65:void access$0(com.guozha.buy.adapter.MySellerListAdapter$ViewHolder,android.widget.TextView) -> a
     66:66:void access$1(com.guozha.buy.adapter.MySellerListAdapter$ViewHolder,android.widget.TextView) -> b
     65:65:android.widget.TextView access$2(com.guozha.buy.adapter.MySellerListAdapter$ViewHolder) -> a
     66:66:android.widget.TextView access$3(com.guozha.buy.adapter.MySellerListAdapter$ViewHolder) -> b
-com.guozha.buy.adapter.OrderDetailMenusListAdapter -> com.guozha.buy.a.aa:
+com.guozha.buy.adapter.OrderDetailMenusListAdapter -> com.guozha.buy.a.z:
     android.view.LayoutInflater mInflater -> a
     java.util.List mExpandListDatas -> b
     boolean mShowFace -> c
@@ -17107,11 +17196,11 @@ com.guozha.buy.adapter.OrderDetailMenusListAdapter -> com.guozha.buy.a.aa:
     162:200:void onClick(android.view.View) -> onClick
     203:228:void requestGradeProduct(int,int,int) -> a
     33:33:android.content.Context access$0(com.guozha.buy.adapter.OrderDetailMenusListAdapter) -> a
-com.guozha.buy.adapter.OrderDetailMenusListAdapter$1 -> com.guozha.buy.a.ab:
+com.guozha.buy.adapter.OrderDetailMenusListAdapter$1 -> com.guozha.buy.a.aa:
     com.guozha.buy.adapter.OrderDetailMenusListAdapter this$0 -> a
     221:226:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.adapter.OrderListAdapter -> com.guozha.buy.a.ac:
+com.guozha.buy.adapter.OrderListAdapter -> com.guozha.buy.a.ab:
     android.view.LayoutInflater mInflater -> a
     java.util.List mOrderSummary -> b
     java.text.SimpleDateFormat mDateFormat -> c
@@ -17119,7 +17208,7 @@ com.guozha.buy.adapter.OrderListAdapter -> com.guozha.buy.a.ac:
     44:44:java.lang.Object getItem(int) -> getItem
     49:49:long getItemId(int) -> getItemId
     55:74:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.OrderListAdapter$ViewHolder -> com.guozha.buy.a.ac$a:
+com.guozha.buy.adapter.OrderListAdapter$ViewHolder -> com.guozha.buy.a.ab$a:
     android.widget.TextView orderTime -> a
     android.widget.TextView orderCount -> b
     android.widget.TextView orderStatus -> c
@@ -17129,7 +17218,7 @@ com.guozha.buy.adapter.OrderListAdapter$ViewHolder -> com.guozha.buy.a.ac$a:
     78:78:android.widget.TextView access$3(com.guozha.buy.adapter.OrderListAdapter$ViewHolder) -> a
     79:79:android.widget.TextView access$4(com.guozha.buy.adapter.OrderListAdapter$ViewHolder) -> b
     80:80:android.widget.TextView access$5(com.guozha.buy.adapter.OrderListAdapter$ViewHolder) -> c
-com.guozha.buy.adapter.OrderPayedListAdapter -> com.guozha.buy.a.ad:
+com.guozha.buy.adapter.OrderPayedListAdapter -> com.guozha.buy.a.ac:
     android.view.LayoutInflater mInflater -> a
     25:25:int getGroupCount() -> getGroupCount
     31:31:int getChildrenCount(int) -> getChildrenCount
@@ -17141,7 +17230,7 @@ com.guozha.buy.adapter.OrderPayedListAdapter -> com.guozha.buy.a.ad:
     68:68:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
     75:75:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
     81:81:boolean isChildSelectable(int,int) -> isChildSelectable
-com.guozha.buy.adapter.OrderUnPayedListAdapter -> com.guozha.buy.a.ae:
+com.guozha.buy.adapter.OrderUnPayedListAdapter -> com.guozha.buy.a.ad:
     android.view.LayoutInflater mInflater -> a
     25:25:int getGroupCount() -> getGroupCount
     31:31:int getChildrenCount(int) -> getChildrenCount
@@ -17153,7 +17242,7 @@ com.guozha.buy.adapter.OrderUnPayedListAdapter -> com.guozha.buy.a.ae:
     68:68:android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
     75:75:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
     81:81:boolean isChildSelectable(int,int) -> isChildSelectable
-com.guozha.buy.adapter.PreSpecialGridAdapter -> com.guozha.buy.a.af:
+com.guozha.buy.adapter.PreSpecialGridAdapter -> com.guozha.buy.a.ae:
     android.view.LayoutInflater mInflater -> a
     java.util.List mPreSpecialItems -> b
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> c
@@ -17162,7 +17251,7 @@ com.guozha.buy.adapter.PreSpecialGridAdapter -> com.guozha.buy.a.af:
     47:47:java.lang.Object getItem(int) -> getItem
     52:52:long getItemId(int) -> getItemId
     58:87:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder -> com.guozha.buy.a.af$a:
+com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder -> com.guozha.buy.a.ae$a:
     android.widget.ImageView image -> a
     android.widget.TextView name -> b
     android.widget.TextView price -> c
@@ -17175,7 +17264,7 @@ com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder -> com.guozha.buy.a.af$a
     92:92:android.widget.TextView access$5(com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder) -> b
     93:93:android.widget.TextView access$6(com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder) -> c
     94:94:android.widget.TextView access$7(com.guozha.buy.adapter.PreSpecialGridAdapter$ViewHolder) -> d
-com.guozha.buy.adapter.SearchRelateRecipeListAdapter -> com.guozha.buy.a.ag:
+com.guozha.buy.adapter.SearchRelateRecipeListAdapter -> com.guozha.buy.a.af:
     java.util.List mRecipeListItem -> a
     android.view.LayoutInflater mInflater -> b
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> c
@@ -17187,11 +17276,11 @@ com.guozha.buy.adapter.SearchRelateRecipeListAdapter -> com.guozha.buy.a.ag:
     101:110:java.lang.String getRecipeDescript(java.util.List) -> a
     115:143:void onClick(android.view.View) -> onClick
     40:40:android.content.Context access$0(com.guozha.buy.adapter.SearchRelateRecipeListAdapter) -> a
-com.guozha.buy.adapter.SearchRelateRecipeListAdapter$1 -> com.guozha.buy.a.ah:
+com.guozha.buy.adapter.SearchRelateRecipeListAdapter$1 -> com.guozha.buy.a.ag:
     com.guozha.buy.adapter.SearchRelateRecipeListAdapter this$0 -> a
     131:141:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder -> com.guozha.buy.a.ag$a:
+com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder -> com.guozha.buy.a.af$a:
     android.widget.ImageView image -> a
     android.widget.TextView name -> b
     android.widget.TextView descript -> c
@@ -17204,7 +17293,7 @@ com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder -> com.guozha.bu
     89:89:android.widget.ImageView access$5(com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder) -> b
     90:90:android.widget.TextView access$6(com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder) -> c
     91:91:android.widget.TextView access$7(com.guozha.buy.adapter.SearchRelateRecipeListAdapter$ViewHolder) -> d
-com.guozha.buy.adapter.SearchResultListAdapter -> com.guozha.buy.a.ai:
+com.guozha.buy.adapter.SearchResultListAdapter -> com.guozha.buy.a.ah:
     java.util.List mItemSaleInfos -> a
     android.view.LayoutInflater mInflater -> b
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> c
@@ -17212,7 +17301,7 @@ com.guozha.buy.adapter.SearchResultListAdapter -> com.guozha.buy.a.ai:
     43:43:java.lang.Object getItem(int) -> getItem
     48:48:long getItemId(int) -> getItemId
     54:74:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder -> com.guozha.buy.a.ai$a:
+com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder -> com.guozha.buy.a.ah$a:
     android.view.View buyedIcon -> a
     android.widget.ImageView image -> b
     android.widget.TextView productName -> c
@@ -17224,51 +17313,53 @@ com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder -> com.guozha.buy.a.ai
     79:79:android.widget.ImageView access$4(com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder) -> a
     80:80:android.widget.TextView access$5(com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder) -> b
     81:81:android.widget.TextView access$6(com.guozha.buy.adapter.SearchResultListAdapter$ViewHolder) -> c
-com.guozha.buy.adapter.SeasonItemListAdapter -> com.guozha.buy.a.aj:
+com.guozha.buy.adapter.SeasonItemListAdapter -> com.guozha.buy.a.ai:
     android.view.LayoutInflater mInflater -> a
     java.util.List mAdviceItem -> b
-    28:29:int getCount() -> getCount
-    34:34:java.lang.Object getItem(int) -> getItem
-    39:39:long getItemId(int) -> getItemId
-    45:55:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder -> com.guozha.buy.a.aj$a:
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> c
+    31:32:int getCount() -> getCount
+    37:37:java.lang.Object getItem(int) -> getItem
+    42:42:long getItemId(int) -> getItemId
+    48:59:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder -> com.guozha.buy.a.ai$a:
     android.widget.ImageView mItemIcon -> a
     android.widget.TextView mItemDescrip -> b
-    59:59:void access$0(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder,android.widget.ImageView) -> a
-    60:60:void access$1(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder,android.widget.TextView) -> a
-    60:60:android.widget.TextView access$2(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder) -> a
-com.guozha.buy.adapter.SettingListAdapter -> com.guozha.buy.a.ak:
+    63:63:void access$0(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder,android.widget.ImageView) -> a
+    64:64:void access$1(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder,android.widget.TextView) -> a
+    63:63:android.widget.ImageView access$2(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder) -> a
+    64:64:android.widget.TextView access$3(com.guozha.buy.adapter.SeasonItemListAdapter$ViewHolder) -> b
+com.guozha.buy.adapter.SettingListAdapter -> com.guozha.buy.a.aj:
     android.view.LayoutInflater mInflater -> a
     java.util.List mSettingItems -> b
     31:32:int getCount() -> getCount
     37:37:java.lang.Object getItem(int) -> getItem
     42:42:long getItemId(int) -> getItemId
     47:52:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.TicketListAdapter -> com.guozha.buy.a.al:
+com.guozha.buy.adapter.TicketListAdapter -> com.guozha.buy.a.ak:
     android.view.LayoutInflater mInflater -> a
     java.util.List mMarketTicket -> b
     long currentTime -> c
     42:43:int getCount() -> getCount
     48:48:java.lang.Object getItem(int) -> getItem
     53:53:long getItemId(int) -> getItemId
-    59:82:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.guozha.buy.adapter.TicketListAdapter$ViewHolder -> com.guozha.buy.a.al$a:
+    59:87:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.guozha.buy.adapter.TicketListAdapter$ViewHolder -> com.guozha.buy.a.ak$a:
     android.widget.TextView ticketType -> a
     android.widget.TextView ticketForPrice -> b
     android.widget.TextView ticketValidDate -> c
     android.widget.TextView ticketParValue -> d
     android.widget.ImageView ticketEffective -> e
-    86:86:void access$0(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> a
-    87:87:void access$1(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> b
-    88:88:void access$2(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> c
-    89:89:void access$3(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> d
-    90:90:void access$4(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.ImageView) -> a
-    86:86:android.widget.TextView access$5(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> a
-    87:87:android.widget.TextView access$6(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> b
-    88:88:android.widget.TextView access$7(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> c
-    89:89:android.widget.TextView access$8(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> d
-    90:90:android.widget.ImageView access$9(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> e
-com.guozha.buy.adapter.VegetableListAdapter -> com.guozha.buy.a.am:
+    91:91:void access$0(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> a
+    92:92:void access$1(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> b
+    93:93:void access$2(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> c
+    94:94:void access$3(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.TextView) -> d
+    95:95:void access$4(com.guozha.buy.adapter.TicketListAdapter$ViewHolder,android.widget.ImageView) -> a
+    91:91:android.widget.TextView access$5(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> a
+    92:92:android.widget.TextView access$6(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> b
+    93:93:android.widget.TextView access$7(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> c
+    94:94:android.widget.TextView access$8(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> d
+    95:95:android.widget.ImageView access$9(com.guozha.buy.adapter.TicketListAdapter$ViewHolder) -> e
+com.guozha.buy.adapter.VegetableListAdapter -> com.guozha.buy.a.al:
     java.util.List mVegetables -> a
     android.view.LayoutInflater mInflater -> b
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> c
@@ -17277,30 +17368,25 @@ com.guozha.buy.adapter.VegetableListAdapter -> com.guozha.buy.a.am:
     57:57:java.lang.Object getItem(int) -> getItem
     62:62:long getItemId(int) -> getItemId
     68:104:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    111:140:void onClick(android.view.View) -> onClick
-    40:40:android.content.Context access$0(com.guozha.buy.adapter.VegetableListAdapter) -> a
-com.guozha.buy.adapter.VegetableListAdapter$1 -> com.guozha.buy.a.an:
-    com.guozha.buy.adapter.VegetableListAdapter this$0 -> a
-    com.guozha.buy.dialog.CustomDialog val$addAddressDialog -> b
-    124:127:void onClick(android.view.View) -> onClick
-com.guozha.buy.adapter.VegetableListAdapter$ViewHolder -> com.guozha.buy.a.am$a:
+    111:127:void onClick(android.view.View) -> onClick
+com.guozha.buy.adapter.VegetableListAdapter$ViewHolder -> com.guozha.buy.a.al$a:
     java.util.List items -> a
     java.util.List itemHolder -> b
-    143:143:java.util.List access$0(com.guozha.buy.adapter.VegetableListAdapter$ViewHolder) -> a
-    144:144:java.util.List access$1(com.guozha.buy.adapter.VegetableListAdapter$ViewHolder) -> b
-com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder -> com.guozha.buy.a.am$b:
+    130:130:java.util.List access$0(com.guozha.buy.adapter.VegetableListAdapter$ViewHolder) -> a
+    131:131:java.util.List access$1(com.guozha.buy.adapter.VegetableListAdapter$ViewHolder) -> b
+com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder -> com.guozha.buy.a.al$b:
     android.widget.ImageView chooseIcon -> a
     android.widget.ImageView vegetableIcon -> b
     android.widget.TextView vegetableName -> c
     android.widget.TextView vegetablePrice -> d
-    149:149:void access$0(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.ImageView) -> a
-    150:150:void access$1(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.ImageView) -> b
-    151:151:void access$2(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.TextView) -> a
-    152:152:void access$3(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.TextView) -> b
-    150:150:android.widget.ImageView access$4(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> a
-    151:151:android.widget.TextView access$5(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> b
-    152:152:android.widget.TextView access$6(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> c
-com.guozha.buy.adapter.WarnTimeListAdapter -> com.guozha.buy.a.ao:
+    136:136:void access$0(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.ImageView) -> a
+    137:137:void access$1(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.ImageView) -> b
+    138:138:void access$2(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.TextView) -> a
+    139:139:void access$3(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder,android.widget.TextView) -> b
+    137:137:android.widget.ImageView access$4(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> a
+    138:138:android.widget.TextView access$5(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> b
+    139:139:android.widget.TextView access$6(com.guozha.buy.adapter.VegetableListAdapter$ViewItemHolder) -> c
+com.guozha.buy.adapter.WarnTimeListAdapter -> com.guozha.buy.a.am:
     android.view.LayoutInflater mInflater -> a
     java.util.List mWarnTimes -> b
     java.lang.String mChoosedTime -> c
@@ -18098,25 +18184,29 @@ com.guozha.buy.entry.mine.order.ExpandListData -> com.guozha.buy.entry.mine.orde
     java.lang.String name -> name
     int amount -> amount
     int price -> price
+    int unitPrice -> unitPrice
     java.lang.String unit -> unit
     java.util.List menuslist -> menuslist
-    16:16:int getId() -> getId
-    19:20:void setId(int) -> setId
-    22:22:int getType() -> getType
-    25:26:void setType(int) -> setType
-    28:28:java.lang.String getName() -> getName
-    31:32:void setName(java.lang.String) -> setName
-    34:34:int getAmount() -> getAmount
-    37:38:void setAmount(int) -> setAmount
-    40:40:int getPrice() -> getPrice
-    43:44:void setPrice(int) -> setPrice
-    46:46:java.util.List getMenuslist() -> getMenuslist
-    49:50:void setMenuslist(java.util.List) -> setMenuslist
-    52:52:java.lang.String getUnit() -> getUnit
-    55:56:void setUnit(java.lang.String) -> setUnit
+    17:17:int getId() -> getId
+    20:21:void setId(int) -> setId
+    23:23:int getType() -> getType
+    26:27:void setType(int) -> setType
+    29:29:java.lang.String getName() -> getName
+    32:33:void setName(java.lang.String) -> setName
+    35:35:int getAmount() -> getAmount
+    38:39:void setAmount(int) -> setAmount
+    41:41:int getPrice() -> getPrice
+    44:45:void setPrice(int) -> setPrice
+    47:47:int getUnitPrice() -> getUnitPrice
+    50:51:void setUnitPrice(int) -> setUnitPrice
+    53:53:java.util.List getMenuslist() -> getMenuslist
+    56:57:void setMenuslist(java.util.List) -> setMenuslist
+    59:59:java.lang.String getUnit() -> getUnit
+    62:63:void setUnit(java.lang.String) -> setUnit
 com.guozha.buy.entry.mine.order.OrderDetail -> com.guozha.buy.entry.mine.order.OrderDetail:
     long serialVersionUID -> serialVersionUID
     int orderId -> orderId
+    java.lang.String orderType -> orderType
     java.lang.String orderNo -> orderNo
     java.util.Date createTime -> createTime
     java.util.Date arrivalTime -> arrivalTime
@@ -18129,32 +18219,34 @@ com.guozha.buy.entry.mine.order.OrderDetail -> com.guozha.buy.entry.mine.order.O
     java.lang.String status -> status
     java.util.List goodsInfoList -> goodsInfoList
     java.util.List menuInfoList -> menuInfoList
-    25:25:int getOrderId() -> getOrderId
-    28:29:void setOrderId(int) -> setOrderId
-    31:31:java.lang.String getOrderNo() -> getOrderNo
-    34:35:void setOrderNo(java.lang.String) -> setOrderNo
-    37:37:java.util.Date getCreateTime() -> getCreateTime
-    40:41:void setCreateTime(java.util.Date) -> setCreateTime
-    43:43:java.util.Date getArrivalTime() -> getArrivalTime
-    46:47:void setArrivalTime(java.util.Date) -> setArrivalTime
-    49:49:java.lang.String getReceiveMen() -> getReceiveMen
-    52:53:void setReceiveMen(java.lang.String) -> setReceiveMen
-    55:55:java.lang.String getReceiveMobile() -> getReceiveMobile
-    58:59:void setReceiveMobile(java.lang.String) -> setReceiveMobile
-    61:61:java.lang.String getReceiveAddr() -> getReceiveAddr
-    64:65:void setReceiveAddr(java.lang.String) -> setReceiveAddr
-    67:67:int getQuantity() -> getQuantity
-    70:71:void setQuantity(int) -> setQuantity
-    73:73:int getTotalPrice() -> getTotalPrice
-    76:77:void setTotalPrice(int) -> setTotalPrice
-    79:79:java.lang.String getStatus() -> getStatus
-    82:83:void setStatus(java.lang.String) -> setStatus
-    85:85:java.util.List getGoodsInfoList() -> getGoodsInfoList
-    88:89:void setGoodsInfoList(java.util.List) -> setGoodsInfoList
-    91:91:java.util.List getMenuInfoList() -> getMenuInfoList
-    94:95:void setMenuInfoList(java.util.List) -> setMenuInfoList
-    97:97:int getServiceFee() -> getServiceFee
-    100:101:void setServiceFee(int) -> setServiceFee
+    26:26:int getOrderId() -> getOrderId
+    29:30:void setOrderId(int) -> setOrderId
+    32:32:java.lang.String getOrderType() -> getOrderType
+    35:36:void setOrderType(java.lang.String) -> setOrderType
+    38:38:java.lang.String getOrderNo() -> getOrderNo
+    41:42:void setOrderNo(java.lang.String) -> setOrderNo
+    44:44:java.util.Date getCreateTime() -> getCreateTime
+    47:48:void setCreateTime(java.util.Date) -> setCreateTime
+    50:50:java.util.Date getArrivalTime() -> getArrivalTime
+    53:54:void setArrivalTime(java.util.Date) -> setArrivalTime
+    56:56:java.lang.String getReceiveMen() -> getReceiveMen
+    59:60:void setReceiveMen(java.lang.String) -> setReceiveMen
+    62:62:java.lang.String getReceiveMobile() -> getReceiveMobile
+    65:66:void setReceiveMobile(java.lang.String) -> setReceiveMobile
+    68:68:java.lang.String getReceiveAddr() -> getReceiveAddr
+    71:72:void setReceiveAddr(java.lang.String) -> setReceiveAddr
+    74:74:int getQuantity() -> getQuantity
+    77:78:void setQuantity(int) -> setQuantity
+    80:80:int getTotalPrice() -> getTotalPrice
+    83:84:void setTotalPrice(int) -> setTotalPrice
+    86:86:java.lang.String getStatus() -> getStatus
+    89:90:void setStatus(java.lang.String) -> setStatus
+    92:92:java.util.List getGoodsInfoList() -> getGoodsInfoList
+    95:96:void setGoodsInfoList(java.util.List) -> setGoodsInfoList
+    98:98:java.util.List getMenuInfoList() -> getMenuInfoList
+    101:102:void setMenuInfoList(java.util.List) -> setMenuInfoList
+    104:104:int getServiceFee() -> getServiceFee
+    107:108:void setServiceFee(int) -> setServiceFee
 com.guozha.buy.entry.mine.order.OrderDetailGoods -> com.guozha.buy.entry.mine.order.OrderDetailGoods:
     long serialVersionUID -> serialVersionUID
     java.lang.String goodsFromType -> goodsFromType
@@ -18505,47 +18597,48 @@ com.guozha.buy.fragment.CollectionRecipeFragment -> com.guozha.buy.c.a:
     com.guozha.buy.global.net.BitmapCache mBitmapCache -> d
     java.util.List mCollectionDir -> e
     com.guozha.buy.adapter.CollectionRecipeExpandAdapter mCollectionRecipeAdapter -> f
-    android.os.Handler handler -> g
-    75:77:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    81:115:void initView(android.view.View) -> c
-    118:133:void updateView() -> a
-    139:155:void requestCollectionRecipeData() -> b
-    162:183:void requestDeleteCollectionFolder(int) -> c
-    187:189:void onResume() -> I
-    193:204:void setUserVisibleHint(boolean) -> h
-    208:210:void onPause() -> J
+    android.view.View mEmptyView -> g
+    android.os.Handler handler -> h
+    76:78:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    82:121:void initView(android.view.View) -> c
+    124:146:void updateView() -> a
+    152:168:void requestCollectionRecipeData() -> b
+    175:196:void requestDeleteCollectionFolder(int) -> c
+    200:202:void onResume() -> I
+    206:217:void setUserVisibleHint(boolean) -> h
+    221:223:void onPause() -> J
     57:57:java.util.List access$0(com.guozha.buy.fragment.CollectionRecipeFragment) -> a
-    117:117:void access$1(com.guozha.buy.fragment.CollectionRecipeFragment) -> b
-    161:161:void access$2(com.guozha.buy.fragment.CollectionRecipeFragment,int) -> a
-    138:138:void access$3(com.guozha.buy.fragment.CollectionRecipeFragment) -> c
-    60:60:android.os.Handler access$4(com.guozha.buy.fragment.CollectionRecipeFragment) -> d
+    123:123:void access$1(com.guozha.buy.fragment.CollectionRecipeFragment) -> b
+    174:174:void access$2(com.guozha.buy.fragment.CollectionRecipeFragment,int) -> a
+    151:151:void access$3(com.guozha.buy.fragment.CollectionRecipeFragment) -> c
+    61:61:android.os.Handler access$4(com.guozha.buy.fragment.CollectionRecipeFragment) -> d
 com.guozha.buy.fragment.CollectionRecipeFragment$1 -> com.guozha.buy.c.b:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    62:68:void handleMessage(android.os.Message) -> handleMessage
+    63:69:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.fragment.CollectionRecipeFragment$2 -> com.guozha.buy.c.c:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    89:92:boolean onChildClick(android.widget.ExpandableListView,android.view.View,int,int,long) -> onChildClick
+    91:94:boolean onChildClick(android.widget.ExpandableListView,android.view.View,int,int,long) -> onChildClick
 com.guozha.buy.fragment.CollectionRecipeFragment$3 -> com.guozha.buy.c.d:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    101:112:boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
-    96:96:com.guozha.buy.fragment.CollectionRecipeFragment access$0(com.guozha.buy.fragment.CollectionRecipeFragment$3) -> a
+    102:118:boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
+    98:98:com.guozha.buy.fragment.CollectionRecipeFragment access$0(com.guozha.buy.fragment.CollectionRecipeFragment$3) -> a
 com.guozha.buy.fragment.CollectionRecipeFragment$3$1 -> com.guozha.buy.c.e:
     com.guozha.buy.fragment.CollectionRecipeFragment$3 this$1 -> a
     com.guozha.buy.dialog.CustomDialog val$deleteDialog -> b
-    int val$posit -> c
-    108:110:void onClick(android.view.View) -> onClick
+    android.view.View val$groupView -> c
+    114:116:void onClick(android.view.View) -> onClick
 com.guozha.buy.fragment.CollectionRecipeFragment$4 -> com.guozha.buy.c.f:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    126:127:void update() -> a
+    139:140:void update() -> a
 com.guozha.buy.fragment.CollectionRecipeFragment$5 -> com.guozha.buy.c.g:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    148:153:void onResponse(java.lang.String) -> a
+    161:166:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.fragment.CollectionRecipeFragment$5$1 -> com.guozha.buy.c.h:
     com.guozha.buy.fragment.CollectionRecipeFragment$5 this$1 -> d
 com.guozha.buy.fragment.CollectionRecipeFragment$6 -> com.guozha.buy.c.i:
     com.guozha.buy.fragment.CollectionRecipeFragment this$0 -> a
-    172:181:void onResponse(org.json.JSONObject) -> a
+    185:194:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.fragment.CollectionVegetableFragment -> com.guozha.buy.c.j:
     java.lang.String PAGE_NAME -> a
@@ -18553,32 +18646,33 @@ com.guozha.buy.fragment.CollectionVegetableFragment -> com.guozha.buy.c.j:
     android.widget.ListView mCollectionVegetableList -> c
     com.guozha.buy.adapter.CollectionVegetableListAdapter mCollectionVegetableAdapter -> d
     java.util.List mGoodsListItems -> e
-    android.view.View mEmptyView -> f
-    android.os.Handler handler -> g
-    64:67:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    75:91:void initView(android.view.View) -> c
-    97:114:void initData() -> a
-    120:140:void updateView() -> b
-    144:155:void setUserVisibleHint(boolean) -> h
-    119:119:void access$0(com.guozha.buy.fragment.CollectionVegetableFragment) -> a
-    47:47:java.util.List access$1(com.guozha.buy.fragment.CollectionVegetableFragment) -> b
-    50:50:android.os.Handler access$2(com.guozha.buy.fragment.CollectionVegetableFragment) -> c
-    96:96:void access$3(com.guozha.buy.fragment.CollectionVegetableFragment) -> d
+    com.guozha.buy.global.net.BitmapCache mBitmapCache -> f
+    android.view.View mEmptyView -> g
+    android.os.Handler handler -> h
+    70:73:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    81:99:void initView(android.view.View) -> c
+    105:122:void initData() -> a
+    128:148:void updateView() -> b
+    152:163:void setUserVisibleHint(boolean) -> h
+    127:127:void access$0(com.guozha.buy.fragment.CollectionVegetableFragment) -> a
+    52:52:java.util.List access$1(com.guozha.buy.fragment.CollectionVegetableFragment) -> b
+    56:56:android.os.Handler access$2(com.guozha.buy.fragment.CollectionVegetableFragment) -> c
+    104:104:void access$3(com.guozha.buy.fragment.CollectionVegetableFragment) -> d
 com.guozha.buy.fragment.CollectionVegetableFragment$1 -> com.guozha.buy.c.k:
     com.guozha.buy.fragment.CollectionVegetableFragment this$0 -> a
-    52:57:void handleMessage(android.os.Message) -> handleMessage
+    58:63:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.fragment.CollectionVegetableFragment$2 -> com.guozha.buy.c.l:
     com.guozha.buy.fragment.CollectionVegetableFragment this$0 -> a
-    82:89:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    89:97:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.guozha.buy.fragment.CollectionVegetableFragment$3 -> com.guozha.buy.c.m:
     com.guozha.buy.fragment.CollectionVegetableFragment this$0 -> a
-    107:112:void onResponse(java.lang.String) -> a
+    115:120:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.fragment.CollectionVegetableFragment$3$1 -> com.guozha.buy.c.n:
     com.guozha.buy.fragment.CollectionVegetableFragment$3 this$1 -> d
 com.guozha.buy.fragment.CollectionVegetableFragment$4 -> com.guozha.buy.c.o:
     com.guozha.buy.fragment.CollectionVegetableFragment this$0 -> a
-    125:126:void update() -> a
+    133:134:void update() -> a
 com.guozha.buy.fragment.MainTabBaseFragment -> com.guozha.buy.c.p:
     com.guozha.buy.global.MainPageInitDataManager mDataManager -> a
     void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
@@ -18598,31 +18692,31 @@ com.guozha.buy.fragment.MainTabFragmentCart -> com.guozha.buy.c.q:
     int mFreeGap -> at
     android.os.Handler handler -> au
     com.guozha.buy.activity.market.ClickMarketMenuListener mClickMarketMenuListener -> av
-    74:77:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    86:114:void exchangeDataFormat(com.guozha.buy.entry.cart.CartTotalData) -> a
-    121:137:void initView(android.view.View) -> c
-    144:162:void requestTurnChooseTime() -> a
-    167:168:void setOnClickMarketMenuListener(com.guozha.buy.activity.market.ClickMarketMenuListener) -> a
-    174:197:void updateViewData() -> b
-    200:205:void setBottomMessageText(int,int,int,int) -> a
-    209:215:void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
-    221:232:void setCartItemsData() -> c
-    238:259:void setTextColor() -> d
-    263:276:void setUserVisibleHint(boolean) -> h
-    283:292:void initActionBar(android.app.ActionBar) -> a
-    173:173:void access$0(com.guozha.buy.fragment.MainTabFragmentCart) -> a
-    142:142:void access$1(com.guozha.buy.fragment.MainTabFragmentCart) -> b
-    164:164:com.guozha.buy.activity.market.ClickMarketMenuListener access$2(com.guozha.buy.fragment.MainTabFragmentCart) -> c
+    76:79:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    87:107:void exchangeDataFormat(com.guozha.buy.entry.cart.CartTotalData) -> a
+    114:130:void initView(android.view.View) -> c
+    137:155:void requestTurnChooseTime() -> a
+    160:161:void setOnClickMarketMenuListener(com.guozha.buy.activity.market.ClickMarketMenuListener) -> a
+    167:191:void updateViewData() -> b
+    194:199:void setBottomMessageText(int,int,int,int) -> a
+    203:209:void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
+    215:228:void setCartItemsData() -> c
+    234:255:void setTextColor() -> d
+    259:272:void setUserVisibleHint(boolean) -> h
+    279:288:void initActionBar(android.app.ActionBar) -> a
+    166:166:void access$0(com.guozha.buy.fragment.MainTabFragmentCart) -> a
+    135:135:void access$1(com.guozha.buy.fragment.MainTabFragmentCart) -> b
+    157:157:com.guozha.buy.activity.market.ClickMarketMenuListener access$2(com.guozha.buy.fragment.MainTabFragmentCart) -> c
 com.guozha.buy.fragment.MainTabFragmentCart$1 -> com.guozha.buy.c.r:
     com.guozha.buy.fragment.MainTabFragmentCart this$0 -> a
-    60:68:void handleMessage(android.os.Message) -> handleMessage
+    62:70:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.fragment.MainTabFragmentCart$2 -> com.guozha.buy.c.s:
     com.guozha.buy.fragment.MainTabFragmentCart this$0 -> a
-    129:130:void onClick(android.view.View) -> onClick
+    122:123:void onClick(android.view.View) -> onClick
 com.guozha.buy.fragment.MainTabFragmentCart$3 -> com.guozha.buy.c.t:
     com.guozha.buy.fragment.MainTabFragmentCart this$0 -> a
     com.guozha.buy.dialog.CustomDialog val$emptyNotify -> b
-    150:154:void onClick(android.view.View) -> onClick
+    143:147:void onClick(android.view.View) -> onClick
 com.guozha.buy.fragment.MainTabFragmentMPage -> com.guozha.buy.c.u:
     java.lang.String TAG -> b
     java.lang.String PAGE_NAME -> c
@@ -18690,35 +18784,35 @@ com.guozha.buy.fragment.MainTabFragmentMarket -> com.guozha.buy.c.v:
     int mLastVisibleIndex -> aP
     int mMaxDateNum -> aQ
     134:143:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    152:280:void initView(android.view.View) -> c
-    286:308:void initQuickMenusData() -> b
-    312:324:void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
-    330:351:void setAddressInfoData() -> c
-    357:365:void setGoodsItemTypeData() -> d
-    371:383:void setMarketHomeData() -> e
-    388:410:void loadNewDataAndUpdate() -> f
-    416:418:void updateItemList() -> ae
-    423:443:void onClick(android.view.View) -> onClick
-    450:466:void clickQuickMneuEvent(android.view.View) -> d
-    473:485:void expandMenuAction(android.view.View) -> e
-    489:502:void setUserVisibleHint(boolean) -> h
-    509:516:void initActionBar(android.app.ActionBar) -> a
-    524:537:void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
-    542:551:void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
-    555:561:void onStart() -> h
-    565:567:void onPause() -> J
-    415:415:void access$0(com.guozha.buy.fragment.MainTabFragmentMarket) -> a
+    152:277:void initView(android.view.View) -> c
+    283:305:void initQuickMenusData() -> b
+    309:321:void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
+    327:348:void setAddressInfoData() -> c
+    354:362:void setGoodsItemTypeData() -> d
+    368:380:void setMarketHomeData() -> e
+    385:407:void loadNewDataAndUpdate() -> f
+    413:415:void updateItemList() -> ae
+    420:440:void onClick(android.view.View) -> onClick
+    447:463:void clickQuickMneuEvent(android.view.View) -> d
+    470:482:void expandMenuAction(android.view.View) -> e
+    486:499:void setUserVisibleHint(boolean) -> h
+    506:513:void initActionBar(android.app.ActionBar) -> a
+    521:534:void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
+    539:548:void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
+    552:558:void onStart() -> h
+    562:564:void onPause() -> J
+    412:412:void access$0(com.guozha.buy.fragment.MainTabFragmentMarket) -> a
     88:88:android.view.View access$1(com.guozha.buy.fragment.MainTabFragmentMarket) -> b
     81:81:com.guozha.buy.view.CustomListView access$2(com.guozha.buy.fragment.MainTabFragmentMarket) -> c
     104:104:android.view.View access$3(com.guozha.buy.fragment.MainTabFragmentMarket) -> d
-    370:370:void access$4(com.guozha.buy.fragment.MainTabFragmentMarket) -> e
+    367:367:void access$4(com.guozha.buy.fragment.MainTabFragmentMarket) -> e
     74:74:com.guozha.buy.view.AnimatedExpandableListView access$5(com.guozha.buy.fragment.MainTabFragmentMarket) -> f
     107:107:android.os.Handler access$6(com.guozha.buy.fragment.MainTabFragmentMarket) -> g
     105:105:com.guozha.buy.view.RefreshableView access$7(com.guozha.buy.fragment.MainTabFragmentMarket) -> h
     90:90:void access$8(com.guozha.buy.fragment.MainTabFragmentMarket,int) -> a
-    520:520:void access$9(com.guozha.buy.fragment.MainTabFragmentMarket,int) -> b
-    385:385:int access$10() -> a
-    385:385:void access$11(int) -> c
+    517:517:void access$9(com.guozha.buy.fragment.MainTabFragmentMarket,int) -> b
+    382:382:int access$10() -> a
+    382:382:void access$11(int) -> c
     79:79:java.util.List access$12(com.guozha.buy.fragment.MainTabFragmentMarket) -> i
 com.guozha.buy.fragment.MainTabFragmentMarket$1 -> com.guozha.buy.c.w:
     com.guozha.buy.fragment.MainTabFragmentMarket this$0 -> a
@@ -18734,10 +18828,10 @@ com.guozha.buy.fragment.MainTabFragmentMarket$4 -> com.guozha.buy.c.z:
     231:236:void upDownEvent(boolean) -> a
 com.guozha.buy.fragment.MainTabFragmentMarket$5 -> com.guozha.buy.c.aa:
     com.guozha.buy.fragment.MainTabFragmentMarket this$0 -> a
-    261:278:void onRefresh() -> a
+    261:275:void onRefresh() -> a
 com.guozha.buy.fragment.MainTabFragmentMarket$6 -> com.guozha.buy.c.ab:
     com.guozha.buy.fragment.MainTabFragmentMarket this$0 -> a
-    397:408:void onResponse(java.lang.String) -> a
+    394:405:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.fragment.MainTabFragmentMarket$6$1 -> com.guozha.buy.c.ac:
     com.guozha.buy.fragment.MainTabFragmentMarket$6 this$1 -> d
@@ -18749,9 +18843,9 @@ com.guozha.buy.fragment.MainTabFragmentMine -> com.guozha.buy.c.ad:
     android.widget.TextView mMineTickes -> f
     android.widget.TextView mMineBeans -> g
     android.view.View mAccountInfoArea -> h
-    57:59:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    67:86:void initView(android.view.View) -> c
-    89:115:void setInfos() -> a
+    58:60:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    68:87:void initView(android.view.View) -> c
+    90:115:void setInfos() -> a
     119:127:void loadDataCompleted(com.guozha.buy.global.MainPageInitDataManager,int) -> a
     133:154:void setTextColor() -> b
     159:163:void onClick(android.view.View) -> onClick
@@ -18901,44 +18995,50 @@ com.guozha.buy.global.ConfigManager -> com.guozha.buy.d.b:
     java.lang.String VERSION_NAME -> w
     java.lang.String WARN_TIME_OPEND -> x
     java.lang.String TODAY_DATE -> y
-    63:63:com.guozha.buy.global.ConfigManager getInstance() -> a
-    86:99:void initConfigXML() -> o
-    106:129:void setQuickMenus(java.util.List) -> a
-    136:151:java.util.List getQuickMenus() -> b
-    160:163:void setConfig(java.lang.String,int) -> a
-    171:174:void setConfig(java.lang.String,long) -> a
-    182:185:void setConfig(java.lang.String,java.lang.String) -> b
-    193:196:void setConfig(java.lang.String,boolean) -> a
-    203:203:int getUserId() -> c
-    210:213:void setUserId(int) -> a
-    220:220:int getChoosedAddressId() -> d
-    228:231:void setChoosedAddressId(int) -> b
-    234:234:java.lang.String getUserToken() -> e
-    243:247:java.lang.String getUserToken(android.content.Context) -> a
-    255:258:void setUserToken(java.lang.String) -> a
-    265:265:java.lang.String getUserPwd() -> f
-    273:276:void setUserPwd(java.lang.String) -> b
-    283:283:java.lang.String getMobileNum() -> g
-    291:294:void setMobileNum(java.lang.String) -> c
-    301:301:java.lang.String getWarnTime() -> h
-    309:312:void setWarnTime(java.lang.String) -> d
-    319:319:java.util.Map getConstantXML() -> i
-    328:329:java.util.Map getConstantMap(java.lang.String) -> e
-    339:341:java.lang.String getConstantValue(java.lang.String,java.lang.String) -> a
-    349:352:void setVersionCode(int) -> c
-    359:359:int getVersionCode() -> j
-    367:370:void setVersionName(java.lang.String) -> f
-    377:377:java.lang.String getVersionName() -> k
-    385:388:void setWarnTimeOpend(boolean) -> a
-    395:395:boolean getWarnTimeOpend() -> l
-    403:406:void setTodayDate(long) -> a
-    413:413:long getTodayDate() -> m
-    422:427:void clearUserInfor() -> n
-    32:32:void access$0(com.guozha.buy.global.ConfigManager,java.util.Map) -> a
+    70:70:com.guozha.buy.global.ConfigManager getInstance() -> a
+    93:106:void initConfigXML() -> o
+    113:136:void setQuickMenus(java.util.List) -> a
+    143:158:java.util.List getQuickMenus() -> b
+    167:170:void setConfig(java.lang.String,int) -> a
+    178:181:void setConfig(java.lang.String,long) -> a
+    189:192:void setConfig(java.lang.String,java.lang.String) -> b
+    200:203:void setConfig(java.lang.String,boolean) -> a
+    210:210:int getUserId() -> c
+    217:220:void setUserId(int) -> a
+    227:227:int getChoosedAddressId() -> d
+    236:249:int getChoosedAddressId(android.content.Context) -> a
+    257:260:void setChoosedAddressId(int) -> b
+    263:263:java.lang.String getUserToken() -> e
+    272:276:java.lang.String getUserToken(android.content.Context) -> b
+    284:287:void setUserToken(java.lang.String) -> a
+    294:294:java.lang.String getUserPwd() -> f
+    302:305:void setUserPwd(java.lang.String) -> b
+    312:312:java.lang.String getMobileNum() -> g
+    320:323:void setMobileNum(java.lang.String) -> c
+    330:330:java.lang.String getWarnTime() -> h
+    338:341:void setWarnTime(java.lang.String) -> d
+    348:348:java.util.Map getConstantXML() -> i
+    357:358:java.util.Map getConstantMap(java.lang.String) -> e
+    368:370:java.lang.String getConstantValue(java.lang.String,java.lang.String) -> a
+    378:381:void setVersionCode(int) -> c
+    388:388:int getVersionCode() -> j
+    396:399:void setVersionName(java.lang.String) -> f
+    406:406:java.lang.String getVersionName() -> k
+    414:417:void setWarnTimeOpend(boolean) -> a
+    424:424:boolean getWarnTimeOpend() -> l
+    432:435:void setTodayDate(long) -> a
+    442:442:long getTodayDate() -> m
+    451:456:void clearUserInfor() -> n
+    39:39:void access$0(com.guozha.buy.global.ConfigManager,java.util.Map) -> a
 com.guozha.buy.global.ConfigManager$1 -> com.guozha.buy.d.c:
     com.guozha.buy.global.ConfigManager this$0 -> a
-    91:97:void run() -> run
-com.guozha.buy.global.CrashHandler -> com.guozha.buy.d.d:
+    98:104:void run() -> run
+com.guozha.buy.global.ConfigManager$2 -> com.guozha.buy.d.d:
+    com.guozha.buy.global.ConfigManager this$0 -> a
+    android.content.Context val$context -> b
+    com.guozha.buy.dialog.CustomDialog val$addAddressDialog -> c
+    243:246:void onClick(android.view.View) -> onClick
+com.guozha.buy.global.CrashHandler -> com.guozha.buy.d.e:
     com.guozha.buy.global.CrashHandler instance -> a
     android.content.Context mContext -> b
     java.lang.Thread$UncaughtExceptionHandler mDefaultHandler -> c
@@ -18952,10 +19052,10 @@ com.guozha.buy.global.CrashHandler -> com.guozha.buy.d.d:
     157:197:java.lang.String saveCrashInfo2File(java.lang.Throwable) -> c
     205:222:java.lang.String getStackTraceString(java.lang.Throwable) -> a
     35:35:android.content.Context access$0(com.guozha.buy.global.CrashHandler) -> a
-com.guozha.buy.global.CrashHandler$1 -> com.guozha.buy.d.e:
+com.guozha.buy.global.CrashHandler$1 -> com.guozha.buy.d.f:
     com.guozha.buy.global.CrashHandler this$0 -> a
     105:108:void run() -> run
-com.guozha.buy.global.MainPageInitDataManager -> com.guozha.buy.d.f:
+com.guozha.buy.global.MainPageInitDataManager -> com.guozha.buy.d.g:
     int HAND_INITDATA_MSG_ACCOUNTINFO -> a
     int HAND_INITDATA_MSG_ITEMTYPE -> b
     int HAND_INITDATA_MSG_MARKETHOME -> c
@@ -19021,57 +19121,57 @@ com.guozha.buy.global.MainPageInitDataManager -> com.guozha.buy.d.f:
     209:209:com.guozha.buy.entry.mpage.TodayInfo access$16(com.guozha.buy.global.MainPageInitDataManager) -> j
     62:62:void access$17(com.guozha.buy.global.MainPageInitDataManager,boolean) -> a
     62:62:boolean access$18(com.guozha.buy.global.MainPageInitDataManager) -> k
-com.guozha.buy.global.MainPageInitDataManager$1 -> com.guozha.buy.d.g:
+com.guozha.buy.global.MainPageInitDataManager$1 -> com.guozha.buy.d.h:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     246:253:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$2 -> com.guozha.buy.d.h:
+com.guozha.buy.global.MainPageInitDataManager$2 -> com.guozha.buy.d.i:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     273:279:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$2$1 -> com.guozha.buy.d.i:
+com.guozha.buy.global.MainPageInitDataManager$2$1 -> com.guozha.buy.d.j:
     com.guozha.buy.global.MainPageInitDataManager$2 this$1 -> d
-com.guozha.buy.global.MainPageInitDataManager$3 -> com.guozha.buy.d.j:
+com.guozha.buy.global.MainPageInitDataManager$3 -> com.guozha.buy.d.k:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     302:307:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$4 -> com.guozha.buy.d.k:
+com.guozha.buy.global.MainPageInitDataManager$4 -> com.guozha.buy.d.l:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     319:327:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$4$1 -> com.guozha.buy.d.l:
+com.guozha.buy.global.MainPageInitDataManager$4$1 -> com.guozha.buy.d.m:
     com.guozha.buy.global.MainPageInitDataManager$4 this$1 -> d
-com.guozha.buy.global.MainPageInitDataManager$5 -> com.guozha.buy.d.m:
+com.guozha.buy.global.MainPageInitDataManager$5 -> com.guozha.buy.d.n:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     353:375:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$5$1 -> com.guozha.buy.d.n:
+com.guozha.buy.global.MainPageInitDataManager$5$1 -> com.guozha.buy.d.o:
     com.guozha.buy.global.MainPageInitDataManager$5 this$1 -> d
-com.guozha.buy.global.MainPageInitDataManager$6 -> com.guozha.buy.d.o:
+com.guozha.buy.global.MainPageInitDataManager$6 -> com.guozha.buy.d.p:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     393:399:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$6$1 -> com.guozha.buy.d.p:
+com.guozha.buy.global.MainPageInitDataManager$6$1 -> com.guozha.buy.d.q:
     com.guozha.buy.global.MainPageInitDataManager$6 this$1 -> d
-com.guozha.buy.global.MainPageInitDataManager$7 -> com.guozha.buy.d.q:
+com.guozha.buy.global.MainPageInitDataManager$7 -> com.guozha.buy.d.r:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     415:423:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$7$1 -> com.guozha.buy.d.r:
+com.guozha.buy.global.MainPageInitDataManager$7$1 -> com.guozha.buy.d.s:
     com.guozha.buy.global.MainPageInitDataManager$7 this$1 -> d
-com.guozha.buy.global.MainPageInitDataManager$8 -> com.guozha.buy.d.s:
+com.guozha.buy.global.MainPageInitDataManager$8 -> com.guozha.buy.d.t:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     452:462:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
-com.guozha.buy.global.MainPageInitDataManager$9 -> com.guozha.buy.d.t:
+com.guozha.buy.global.MainPageInitDataManager$9 -> com.guozha.buy.d.u:
     com.guozha.buy.global.MainPageInitDataManager this$0 -> a
     android.os.Handler val$handler -> b
     482:495:void onResponse(org.json.JSONObject) -> a
@@ -19081,33 +19181,33 @@ com.guozha.buy.global.net.BitmapCache -> com.guozha.buy.d.a.a:
     java.util.Set mTaskCollection -> b
     android.util.LruCache mLruCache -> c
     android.content.Context mContext -> d
-    70:77:void fluchCache() -> a
-    112:123:java.io.File getDiskCacheDir(android.content.Context,java.lang.String) -> a
-    131:137:int getAppVersion(android.content.Context) -> a
-    142:142:android.graphics.Bitmap getBitmap(java.lang.String) -> a
-    147:148:void putBitmap(java.lang.String,android.graphics.Bitmap) -> a
-    155:171:void loadBitmaps(android.widget.ImageView,java.lang.String) -> a
-    181:181:android.graphics.Bitmap getBitmapFromMemoryCache(java.lang.String) -> b
-    42:42:libcore.io.DiskLruCache access$0(com.guozha.buy.global.net.BitmapCache) -> a
-    51:51:android.content.Context access$1(com.guozha.buy.global.net.BitmapCache) -> b
-    47:47:java.util.Set access$2(com.guozha.buy.global.net.BitmapCache) -> c
+    68:75:void fluchCache() -> a
+    110:121:java.io.File getDiskCacheDir(android.content.Context,java.lang.String) -> a
+    129:135:int getAppVersion(android.content.Context) -> a
+    140:140:android.graphics.Bitmap getBitmap(java.lang.String) -> a
+    145:146:void putBitmap(java.lang.String,android.graphics.Bitmap) -> a
+    153:169:void loadBitmaps(android.widget.ImageView,java.lang.String) -> a
+    179:179:android.graphics.Bitmap getBitmapFromMemoryCache(java.lang.String) -> b
+    40:40:libcore.io.DiskLruCache access$0(com.guozha.buy.global.net.BitmapCache) -> a
+    49:49:android.content.Context access$1(com.guozha.buy.global.net.BitmapCache) -> b
+    45:45:java.util.Set access$2(com.guozha.buy.global.net.BitmapCache) -> c
 com.guozha.buy.global.net.BitmapCache$1 -> com.guozha.buy.d.a.b:
     com.guozha.buy.global.net.BitmapCache this$0 -> a
-    61:61:int sizeOf(java.lang.String,android.graphics.Bitmap) -> a
+    59:59:int sizeOf(java.lang.String,android.graphics.Bitmap) -> a
     1:1:int sizeOf(java.lang.Object,java.lang.Object) -> sizeOf
 com.guozha.buy.global.net.BitmapCache$2 -> com.guozha.buy.d.a.c:
     com.guozha.buy.global.net.BitmapCache this$0 -> a
-    88:88:int sizeOf(java.lang.String,android.graphics.Bitmap) -> a
+    86:86:int sizeOf(java.lang.String,android.graphics.Bitmap) -> a
     1:1:int sizeOf(java.lang.Object,java.lang.Object) -> sizeOf
 com.guozha.buy.global.net.BitmapCache$BitmapWorkerTask -> com.guozha.buy.d.a.a$a:
     android.widget.ImageView mImageView -> b
     java.lang.String imageUrl -> c
     com.guozha.buy.global.net.BitmapCache this$0 -> a
-    198:247:android.graphics.Bitmap doInBackground(java.lang.String[]) -> a
-    252:263:void onPostExecute(android.graphics.Bitmap) -> a
-    273:303:boolean downloadUrlToStream(java.lang.String,java.io.OutputStream) -> a
-    315:318:void addBitmapToMemoryCache(java.lang.String,android.graphics.Bitmap) -> a
-    328:328:android.graphics.Bitmap getBitmapFromMemoryCache(java.lang.String) -> a
+    196:245:android.graphics.Bitmap doInBackground(java.lang.String[]) -> a
+    250:261:void onPostExecute(android.graphics.Bitmap) -> a
+    271:301:boolean downloadUrlToStream(java.lang.String,java.io.OutputStream) -> a
+    313:316:void addBitmapToMemoryCache(java.lang.String,android.graphics.Bitmap) -> a
+    326:326:android.graphics.Bitmap getBitmapFromMemoryCache(java.lang.String) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.guozha.buy.global.net.CacheIndex -> com.guozha.buy.d.a.d:

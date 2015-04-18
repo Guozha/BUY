@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.mpage.CookBookDetailActivity;
 import com.guozha.buy.adapter.CookBookListAdapter;
@@ -31,6 +32,7 @@ import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.GoodsDetail;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
@@ -56,6 +58,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private TextView mDetailName;
 	private TextView mDetailPrice;
 	private TextView mDetailDescript;
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private String mGoodsId = null;
 	
@@ -101,6 +104,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(position <= 0) return;
 				RelationRecipe recipe = mRelationRecipes.get(position - 1);
 				Intent intent = new Intent(VegetableDetailActivity.this, CookBookDetailActivity.class);
 				if(recipe != null){
@@ -218,7 +222,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	 * 更新底下相关菜谱列表
 	 */
 	private void updateRelationView(){
-		mConnCookBookList.setAdapter(new CookBookListAdapter(this, mRelationRecipes));
+		mConnCookBookList.setAdapter(new CookBookListAdapter(this, mRelationRecipes, mBitmapCache));
 	}
 	
 	/**
@@ -247,7 +251,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

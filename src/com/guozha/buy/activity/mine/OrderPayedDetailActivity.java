@@ -3,8 +3,6 @@ package com.guozha.buy.activity.mine;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.protocol.HTTP;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +22,9 @@ import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.entry.mine.order.OrderDetailMenus;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -37,14 +37,25 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	private static final String PAGE_NAME = "OrderDetailPage";
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
+	private int mOrderId; 
+	private String mOrderNum;
+	private String mOrderTime;
+	private String mOrderDescript;
+	private String mOrderAddressName;
+	private String mOrderAddressDetail;
+	private String mOrderTotalPrice;
+	
+	private TextView mOrderNumText;
+	private TextView mOrderTimeText;
+	private TextView mOrderDescriptText;
+	private TextView mOrderAddressNameText;
+	private TextView mOrderAddressDetailText;
+	private TextView mOrderTotalPriceText;
+	
 	private ExpandableListView mExpandableListView;
 	private OrderDetailMenusListAdapter mMenusAdapter;
 	
 	private List<ExpandListData> mExpandListDatas;
-	private TextView mOrderDescriptText;
-	
-	private int mOrderId; 
-	private String mOrderDescript;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -61,7 +72,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_payed_order_detail);
 		customActionBarStyle("订单详情");
-		
+		setResult(0);
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
@@ -77,6 +88,12 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	private void initView(){
 		mExpandableListView = (ExpandableListView) findViewById(R.id.expandable_order_detail_list);
 		mOrderDescriptText = (TextView) findViewById(R.id.order_descript_text);
+		
+		mOrderNumText = (TextView) findViewById(R.id.order_detail_num);
+		mOrderTimeText = (TextView) findViewById(R.id.order_detail_time);
+		mOrderAddressNameText = (TextView) findViewById(R.id.order_detail_address_name);
+		mOrderAddressDetailText = (TextView) findViewById(R.id.order_detail_address_detail);
+		mOrderTotalPriceText = (TextView) findViewById(R.id.order_detail_total_price);
 	}
 	
 	private void updateView(){
@@ -93,6 +110,13 @@ public class OrderPayedDetailActivity extends BaseActivity{
 		if(mOrderDescriptText != null){
 			mOrderDescriptText.setText(mOrderDescript);
 		}
+		
+		mOrderNumText.setText(mOrderNum);
+		mOrderTimeText.setText(mOrderTime);
+		mOrderDescriptText.setText(mOrderDescript);
+		mOrderAddressNameText.setText(mOrderAddressName);
+		mOrderAddressDetailText.setText(mOrderAddressDetail);
+		mOrderTotalPriceText.setText(mOrderTotalPrice);
 	}
 	
 	private void initData(){
@@ -107,6 +131,11 @@ public class OrderPayedDetailActivity extends BaseActivity{
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
 					if(orderDetail == null) return;
+					mOrderNum = "订单号：" + orderDetail.getOrderNo();
+					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
+					mOrderAddressDetail = orderDetail.getReceiveAddr();
+					mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
 					if(mExpandListDatas == null){
 						mExpandListDatas = new ArrayList<ExpandListData>();
 					}
@@ -135,7 +164,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 							expandListData.setName(orderDetailMenus.getMenuName());
 							expandListData.setAmount(orderDetailMenus.getAmount());
 							expandListData.setUnit("8");
-							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
 							expandListData.setPrice(orderDetailMenus.getPrice());
 							mExpandListDatas.add(expandListData);
 						}

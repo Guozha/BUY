@@ -331,6 +331,7 @@ com.guozha.buy.R$drawable: int line_dotted
 com.guozha.buy.R$drawable: int login_right_state
 com.guozha.buy.R$drawable: int login_wrong_state
 com.guozha.buy.R$drawable: int logo_icon
+com.guozha.buy.R$drawable: int logo_share
 com.guozha.buy.R$drawable: int main_add_in
 com.guozha.buy.R$drawable: int main_address_edit
 com.guozha.buy.R$drawable: int main_address_icon
@@ -644,6 +645,7 @@ com.guozha.buy.R$id: int colloection_menu_button
 com.guozha.buy.R$id: int come_in_button
 com.guozha.buy.R$id: int confirm_button
 com.guozha.buy.R$id: int cook_book_collection
+com.guozha.buy.R$id: int cook_book_imag
 com.guozha.buy.R$id: int cook_book_material
 com.guozha.buy.R$id: int cookbook_add_cart_button
 com.guozha.buy.R$id: int cookbook_add_collection_button
@@ -683,6 +685,7 @@ com.guozha.buy.R$id: int findpwd_repeat_pwd_input_area
 com.guozha.buy.R$id: int findpwd_validenum
 com.guozha.buy.R$id: int findpwd_validenum_input_area
 com.guozha.buy.R$id: int fragment_mpage_season
+com.guozha.buy.R$id: int goods_icon
 com.guozha.buy.R$id: int goods_name
 com.guozha.buy.R$id: int goods_price
 com.guozha.buy.R$id: int group_amount
@@ -1061,6 +1064,7 @@ com.guozha.buy.R$layout: int actionbar_market_custom_view
 com.guozha.buy.R$layout: int actionbar_search_custom_view
 com.guozha.buy.R$layout: int activity_about_our
 com.guozha.buy.R$layout: int activity_add_address
+com.guozha.buy.R$layout: int activity_address_detail
 com.guozha.buy.R$layout: int activity_advice_praise
 com.guozha.buy.R$layout: int activity_alipay
 com.guozha.buy.R$layout: int activity_answer_question
@@ -1103,6 +1107,7 @@ com.guozha.buy.R$layout: int detail_season_list_item_cell
 com.guozha.buy.R$layout: int detail_step_list_item_cell
 com.guozha.buy.R$layout: int dialog_active_rule
 com.guozha.buy.R$layout: int dialog_add_address
+com.guozha.buy.R$layout: int dialog_cancel_order
 com.guozha.buy.R$layout: int dialog_cart_empty
 com.guozha.buy.R$layout: int dialog_choose_address
 com.guozha.buy.R$layout: int dialog_collection_recipe_modify
@@ -1402,6 +1407,8 @@ com.guozha.buy.activity.mine.AnswerQuestionActivity
 com.guozha.buy.activity.mine.AnswerQuestionActivity: AnswerQuestionActivity()
 com.guozha.buy.activity.mine.ChooseCantonActivity
 com.guozha.buy.activity.mine.ChooseCantonActivity: ChooseCantonActivity()
+com.guozha.buy.activity.mine.ChooseDetailActivity
+com.guozha.buy.activity.mine.ChooseDetailActivity: ChooseDetailActivity()
 com.guozha.buy.activity.mine.FeadbackActivity
 com.guozha.buy.activity.mine.FeadbackActivity: FeadbackActivity()
 com.guozha.buy.activity.mine.MyAddressActivity
@@ -2129,6 +2136,7 @@ com.guozha.buy.entry.mine.order.ExpandListData: int type
 com.guozha.buy.entry.mine.order.ExpandListData: java.lang.String name
 com.guozha.buy.entry.mine.order.ExpandListData: int amount
 com.guozha.buy.entry.mine.order.ExpandListData: int price
+com.guozha.buy.entry.mine.order.ExpandListData: int unitPrice
 com.guozha.buy.entry.mine.order.ExpandListData: java.lang.String unit
 com.guozha.buy.entry.mine.order.ExpandListData: java.util.List menuslist
 com.guozha.buy.entry.mine.order.ExpandListData: ExpandListData()
@@ -2142,6 +2150,8 @@ com.guozha.buy.entry.mine.order.ExpandListData: int getAmount()
 com.guozha.buy.entry.mine.order.ExpandListData: void setAmount(int)
 com.guozha.buy.entry.mine.order.ExpandListData: int getPrice()
 com.guozha.buy.entry.mine.order.ExpandListData: void setPrice(int)
+com.guozha.buy.entry.mine.order.ExpandListData: int getUnitPrice()
+com.guozha.buy.entry.mine.order.ExpandListData: void setUnitPrice(int)
 com.guozha.buy.entry.mine.order.ExpandListData: java.util.List getMenuslist()
 com.guozha.buy.entry.mine.order.ExpandListData: void setMenuslist(java.util.List)
 com.guozha.buy.entry.mine.order.ExpandListData: java.lang.String getUnit()
@@ -2149,6 +2159,7 @@ com.guozha.buy.entry.mine.order.ExpandListData: void setUnit(java.lang.String)
 com.guozha.buy.entry.mine.order.OrderDetail
 com.guozha.buy.entry.mine.order.OrderDetail: long serialVersionUID
 com.guozha.buy.entry.mine.order.OrderDetail: int orderId
+com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String orderType
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String orderNo
 com.guozha.buy.entry.mine.order.OrderDetail: java.util.Date createTime
 com.guozha.buy.entry.mine.order.OrderDetail: java.util.Date arrivalTime
@@ -2164,6 +2175,8 @@ com.guozha.buy.entry.mine.order.OrderDetail: java.util.List menuInfoList
 com.guozha.buy.entry.mine.order.OrderDetail: OrderDetail()
 com.guozha.buy.entry.mine.order.OrderDetail: int getOrderId()
 com.guozha.buy.entry.mine.order.OrderDetail: void setOrderId(int)
+com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String getOrderType()
+com.guozha.buy.entry.mine.order.OrderDetail: void setOrderType(java.lang.String)
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String getOrderNo()
 com.guozha.buy.entry.mine.order.OrderDetail: void setOrderNo(java.lang.String)
 com.guozha.buy.entry.mine.order.OrderDetail: java.util.Date getCreateTime()

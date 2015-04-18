@@ -81,7 +81,7 @@ public class ChooseTicketActivity extends BaseActivity{
 					LogUtil.e("...ticketid = " + mMarketTickets.get(position).getMyTicketId());
 					LogUtil.e("...ticketPrice = " + mMarketTickets.get(position).getForPrice());
 					intent.putExtra("ticktId", mMarketTickets.get(position).getMyTicketId());
-					intent.putExtra("ticketPrice", mMarketTickets.get(position).getForPrice());
+					intent.putExtra("ticketPrice", mMarketTickets.get(position).getParValue());
 					setResult(0, intent);
 				}
 				ChooseTicketActivity.this.finish();

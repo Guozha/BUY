@@ -112,16 +112,7 @@
 	</LinearLayout>
 	
 	<!-- 商品详情 -->
-	<TextView 
-	    android:layout_width="match_parent"
-	    android:layout_height="48dip"
-	    android:background="@color/color_app_base_5"
-	    android:text="商品详情"
-	    android:textSize="@dimen/dimen_global_14sp"
-	    android:gravity="center_vertical"
-	    android:layout_marginTop="5dip"
-	    android:textColor="@color/color_app_base_4"/>
-	
+
 	<WebView 
 	    android:id="@+id/prespecail_detail_webview"
 	    android:layout_width="match_parent"

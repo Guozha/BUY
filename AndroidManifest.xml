@@ -273,6 +273,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         
+        <!-- 添加地址，选择小区、楼宇 -->
+        <activity 
+            android:name="com.guozha.buy.activity.mine.ChooseDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- *****************对话框**************** -->
         <!-- 重量选择对话框 -->
         <activity 

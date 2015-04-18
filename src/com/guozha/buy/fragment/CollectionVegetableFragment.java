@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -20,11 +21,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.adapter.CollectionVegetableListAdapter;
 import com.guozha.buy.adapter.CollectionVegetableListAdapter.UpdateVegetableListener;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.mine.collection.GoodsListItem;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
@@ -45,6 +50,7 @@ public class CollectionVegetableFragment extends Fragment{
 	private CollectionVegetableListAdapter mCollectionVegetableAdapter;
 	
 	private List<GoodsListItem> mGoodsListItems = new ArrayList<GoodsListItem>();
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	private View mEmptyView;
 	
 	private Handler handler = new Handler(){
@@ -79,6 +85,8 @@ public class CollectionVegetableFragment extends Fragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				//TODO 再判断当前选择的地址是否为NULL
+				if(ConfigManager.getInstance().getChoosedAddressId() == -1) return;
 				GoodsListItem goodsListItem = mGoodsListItems.get(position);
 				Intent intent = new Intent(
 						CollectionVegetableFragment.this.getActivity(), WeightSelectDialog.class);
@@ -118,7 +126,7 @@ public class CollectionVegetableFragment extends Fragment{
 	 */
 	private void updateView(){
 		if(mCollectionVegetableAdapter == null){
-			mCollectionVegetableAdapter = new CollectionVegetableListAdapter(getActivity(), mGoodsListItems);
+			mCollectionVegetableAdapter = new CollectionVegetableListAdapter(getActivity(), mGoodsListItems, mBitmapCache);
 			mCollectionVegetableAdapter.setOnUpdateVegetableListener(new UpdateVegetableListener() {
 				@Override
 				public void update() {

@@ -1,4 +1,4 @@
-package com.guozha.buy.fragment;
+				package com.guozha.buy.fragment;
 
 import java.util.ArrayList;
 import java.util.List;

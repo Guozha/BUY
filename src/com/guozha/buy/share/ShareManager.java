@@ -27,10 +27,10 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
  *
  */
 public class ShareManager{
-	private static final String COMMEN_TITILE = "这是分享标题";
-	private static final String COMMEN_CONTENT = "这是分享内容";
+	private static final String COMMEN_TITILE = "小菜来了！做饭这档子事，除了乐趣，还能剩什么~";
+	private static final String COMMEN_CONTENT = "且看我如何将你一秒变大厨！";
 	private static final String DESCRIPTOR = "com.umeng.share";
-	private static final String COMMEN_TARGET_URL = "http://www.wymc.com.cn";
+	private static final String COMMEN_TARGET_URL = "http://download.wymc.com.cn/app/buyer_app.html";
 	
 	private UMImage mCommenShareImage;
 	
@@ -50,7 +50,7 @@ public class ShareManager{
 	}
 	
 	public ShareManager(Activity activity, SnsPostListener resultListener){
-		mCommenShareImage = new UMImage(activity, R.drawable.ic_launcher);
+		mCommenShareImage = new UMImage(activity, R.drawable.logo_share);
 		if(resultListener == null){
 			this.mShareResultListener = new ShareResultListener();
 		}else{

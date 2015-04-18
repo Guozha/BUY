@@ -30,6 +30,7 @@ import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 查询结果界面
@@ -37,6 +38,8 @@ import com.guozha.buy.util.LogUtil;
  *
  */
 public class SearchResultActivity extends BaseActivity{
+	
+	private static final String PAGE_NAME = "SearchResultPage";
 	
 	public static final int SEARCH_FAIL = 0;
 	public static final int SEARCH_SUCCESS = 1;
@@ -174,8 +177,19 @@ public class SearchResultActivity extends BaseActivity{
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
 		mBitmapCache.fluchCache();
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

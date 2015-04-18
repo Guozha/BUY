@@ -1,6 +1,7 @@
 package com.guozha.buy.fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -37,7 +38,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	
 	private List<TextView> mQuickMenus;
 	
-	private ImageView mSeasonImage;
+	private View mSeasonImage;
 	
 	private TextView mCalendarDay;
 	private TextView mCalendarSolar;
@@ -80,7 +81,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			mQuickMenus.get(i).setOnClickListener(this);
 		}
 		
-		mSeasonImage = (ImageView) view.findViewById(R.id.mpage_season_menu);
+		mSeasonImage = view.findViewById(R.id.mpage_season_menu);
 		mSeasonImage.setOnClickListener(this);
 		
 		setSeasonImageByMonth();
@@ -130,17 +131,18 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	 */
 	private void setSeasonImageByMonth(){
 		if(mSeasonImage == null) return;
-		Time time = new Time();
-		time.setToNow();
-		int month = time.month + 1;
-		if(month >= 2 && month < 5){  //2,3,4月份
-			mSeasonImage.setImageResource(R.drawable.main_season_img_spring);
-		}else if(month >= 5 && month < 8){ //5,6,7月份
-			//TODO 夏天的图片
-		}else if(month >= 8 && month < 11){ //8,9,10月份
-			mSeasonImage.setImageResource(R.drawable.main_season_img_autumn);
+		long todayDate = ConfigManager.getInstance().getTodayDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(todayDate);
+		int month = calendar.get(Calendar.MONTH) + 1;
+		if(month >= 3 && month < 6){  //3，4，5月份
+			mSeasonImage.setBackgroundResource(R.drawable.main_season_img_spring);
+		}else if(month >= 6 && month < 9){ //6，7，8月份
+			mSeasonImage.setBackgroundResource(R.drawable.main_season_img_summer);
+		}else if(month >= 9 && month < 12){ //9，10，11月份
+			mSeasonImage.setBackgroundResource(R.drawable.main_season_img_autumn);
 		}else{//11,12,1月份
-			//TODO 冬天的图片
+			mSeasonImage.setBackgroundResource(R.drawable.main_season_img_winter);
 		}
 	}
 	

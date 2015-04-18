@@ -97,6 +97,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		}else{
 			
 		}
+		recipeDirName.setTag(mCollectionDir.get(groupPosition).getMyDirId());
 		return convertView;
 	}
 
@@ -128,6 +129,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		}
 		CollectionDir collectionDir = mCollectionDir.get(groupPosition);
 		RecipeListItem recipeCollection = collectionDir.getMenuInfoList().get(childPosition);
+		holder.recipeImg.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(holder.recipeImg, recipeCollection.getMenuImg());
 		holder.recipeName.setText(recipeCollection.getMenuName());
 		holder.recipeDescript.setText(getRecipeDescript(recipeCollection.getGoodsList()));

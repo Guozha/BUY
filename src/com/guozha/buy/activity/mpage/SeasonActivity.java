@@ -17,11 +17,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.global.SearchResultActivity;
 import com.guozha.buy.adapter.SeasonItemListAdapter;
 import com.guozha.buy.entry.mpage.season.Season;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AutoViewFlipper;
@@ -49,6 +51,7 @@ public class SeasonActivity extends BaseActivity{
 	private List<Season> mSeasonsList;
 	private AutoViewFlipper mAutoViewFilpper;
 	private List<Bitmap> seasonBitmaps;
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private List<SeasonAdviceItem> mAdviceItem;
 	
@@ -83,7 +86,7 @@ public class SeasonActivity extends BaseActivity{
 	 */
 	private void initView(){
 		mSeasonItemList = (ListView) findViewById(R.id.season_vegetable_list);
-		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
+		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem, mBitmapCache));
 		mSeasonItemList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -91,6 +94,7 @@ public class SeasonActivity extends BaseActivity{
 				SeasonAdviceItem item = mAdviceItem.get(position);
 				Intent intent = new Intent(SeasonActivity.this, SearchResultActivity.class);
 				if(item != null){
+					LogUtil.e("word = " + item.getWord());
 					intent.putExtra("KeyWord", item.getWord());
 				}
 				SeasonActivity.this.startActivity(intent);
@@ -180,7 +184,7 @@ public class SeasonActivity extends BaseActivity{
 		Season season = mSeasonsList.get(index);
 		if(season == null) return;
 		mAdviceItem = season.getGoodsList();
-		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem));
+		mSeasonItemList.setAdapter(new SeasonItemListAdapter(SeasonActivity.this, mAdviceItem, mBitmapCache));
 	}
 	
 	@Override
@@ -195,7 +199,7 @@ public class SeasonActivity extends BaseActivity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
+		mBitmapCache.fluchCache();
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);

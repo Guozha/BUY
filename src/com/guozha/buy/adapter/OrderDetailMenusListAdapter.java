@@ -6,10 +6,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
-public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter implements OnClickListener{
+public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<ExpandListData> mExpandListDatas;
@@ -111,12 +113,13 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter imple
 				ImageView face1 = (ImageView) convertView.findViewById(R.id.group_grade_face1);
 				ImageView face2 = (ImageView) convertView.findViewById(R.id.group_grade_face2);
 				ImageView face3 = (ImageView) convertView.findViewById(R.id.group_grade_face3);
+				ClickFaceListener clickFaceListener = new ClickFaceListener(face1, face2, face3);
 				face1.setTag(expandListData.getId());
 				face2.setTag(expandListData.getId());
 				face3.setTag(expandListData.getId());
-				face1.setOnClickListener(this);
-				face2.setOnClickListener(this);
-				face3.setOnClickListener(this);
+				face1.setOnClickListener(clickFaceListener);
+				face2.setOnClickListener(clickFaceListener);
+				face3.setOnClickListener(clickFaceListener);
 			}
 		}
 		return convertView;
@@ -139,12 +142,13 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter imple
 			ImageView face1 = (ImageView) convertView.findViewById(R.id.child_grade_face1);
 			ImageView face2 = (ImageView) convertView.findViewById(R.id.child_grade_face2);
 			ImageView face3 = (ImageView) convertView.findViewById(R.id.child_grade_face3);
+			ClickFaceListener clickFaceListener = new ClickFaceListener(face1, face2, face3);
 			face1.setTag(orderDetailMenus.getId());
 			face2.setTag(orderDetailMenus.getId());
 			face3.setTag(orderDetailMenus.getId());
-			face1.setOnClickListener(this);
-			face2.setOnClickListener(this);
-			face3.setOnClickListener(this);
+			face1.setOnClickListener(clickFaceListener);
+			face2.setOnClickListener(clickFaceListener);
+			face3.setOnClickListener(clickFaceListener);
 		}else{
 			childGradeArea.setVisibility(View.GONE);
 		}
@@ -153,52 +157,70 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter imple
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public void onClick(View view) {
-		int id = (Integer) view.getTag();
-		ImageView icon = (ImageView) view;
-		int marketType = -1; // 1 菜谱  2 菜场
-		int goodsStar = -2; //1 满意 2 一般 3不满
-		switch (view.getId()) {
-		case R.id.group_grade_face1:
-			goodsStar = 1;
-			marketType = 2;
-			icon.setImageResource(R.drawable.main_emoticons_cool_selected);
-			break;
-		case R.id.group_grade_face2:
-			goodsStar = 0;
-			marketType = 2;
-			icon.setImageResource(R.drawable.main_emoticons_wondering_selected);
-			break;
-		case R.id.group_grade_face3:
-			goodsStar = -1;
-			marketType = 2;
-			icon.setImageResource(R.drawable.main_emoticons_angry_selected);
-			break;
-		case R.id.child_grade_face1:
-			goodsStar = 1;
-			marketType = 1;
-			icon.setImageResource(R.drawable.main_emoticons_cool_selected);
-			break;
-		case R.id.child_grade_face2:
-			goodsStar = 0;
-			marketType = 1;
-			icon.setImageResource(R.drawable.main_emoticons_wondering_selected);
-			break;
-		case R.id.child_grade_face3:
-			goodsStar = -1;
-			marketType = 1;
-			icon.setImageResource(R.drawable.main_emoticons_angry_selected);
-			break;
-		}
-		if(marketType == -1 || goodsStar == -2) return;
-		requestGradeProduct(id, marketType, goodsStar);
-	}
 	
+	/**
+	 * 点击笑脸评价监听
+	 * @author PeggyTong
+	 *
+	 */
+	class ClickFaceListener implements OnClickListener{
+		private ImageView mFace1;
+		private ImageView mFace2;
+		private ImageView mFace3;
+		public ClickFaceListener(ImageView face1, ImageView face2, ImageView face3){
+			mFace1 = face1;
+			mFace2 = face2;
+			mFace3 = face3;
+		}
+		
+		@Override
+		public void onClick(View view) {
+			mFace1.setImageResource(R.drawable.main_emoticons_cool_normal);
+			mFace2.setImageResource(R.drawable.main_emoticons_wondering_normal);
+			mFace3.setImageResource(R.drawable.main_emoticons_angry_normal);
+			int id = (Integer) view.getTag();
+			ImageView icon = (ImageView) view;
+			int marketType = -1; // 1 菜谱  2 菜场
+			int goodsStar = -2; //1 满意 2 一般 3不满
+			switch (view.getId()) {
+			case R.id.group_grade_face1:
+				goodsStar = 1;
+				marketType = 2;
+				icon.setImageResource(R.drawable.main_emoticons_cool_selected);
+				break;
+			case R.id.group_grade_face2:
+				goodsStar = 0;
+				marketType = 2;
+				icon.setImageResource(R.drawable.main_emoticons_wondering_selected);
+				break;
+			case R.id.group_grade_face3:
+				goodsStar = -1;
+				marketType = 2;
+				icon.setImageResource(R.drawable.main_emoticons_angry_selected);
+				break;
+			case R.id.child_grade_face1:
+				goodsStar = 1;
+				marketType = 1;
+				icon.setImageResource(R.drawable.main_emoticons_cool_selected);
+				break;
+			case R.id.child_grade_face2:
+				goodsStar = 0;
+				marketType = 1;
+				icon.setImageResource(R.drawable.main_emoticons_wondering_selected);
+				break;
+			case R.id.child_grade_face3:
+				goodsStar = -1;
+				marketType = 1;
+				icon.setImageResource(R.drawable.main_emoticons_angry_selected);
+				break;
+			}
+			if(marketType == -1 || goodsStar == -2) return;
+			requestGradeProduct(id, marketType, goodsStar);
+		}
+	}
+
 	private void requestGradeProduct(int id, int marketType, int goodsStar){
 		String token = ConfigManager.getInstance().getUserToken();
 		RequestParam paramPath = new RequestParam("order/goodsMark")
@@ -219,7 +241,8 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter imple
 				public void onResponse(JSONObject response) {
 					try {
 						String returnCode = response.getString("returnCode");
-						ToastUtil.showToast(mContext, "returnCode == " + returnCode);
+						String msg = response.getString("msg");
+						LogUtil.e("msg === " + msg);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

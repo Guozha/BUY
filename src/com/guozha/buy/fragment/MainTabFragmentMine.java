@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.LoginActivity;
 import com.guozha.buy.activity.mine.SharePraiseActivity;
 import com.guozha.buy.activity.mine.MyAddressActivity;
@@ -94,8 +95,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			return;
 		}
 		if(mDataManager == null) {
-			mAccountInfoArea.setVisibility(View.GONE);
-			return;
+			mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
 		}
 		AccountInfo accountInfo = mDataManager.getAccountInfo(null);
 		if(accountInfo == null) {

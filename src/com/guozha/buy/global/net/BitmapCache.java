@@ -21,13 +21,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.text.format.Time;
 import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.guozha.buy.util.HttpUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 实现图片的缓存

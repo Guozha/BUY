@@ -30,8 +30,10 @@ import com.guozha.buy.entry.mine.order.OrderDetailMenus;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -45,15 +47,27 @@ public class OrderGradDetailActivity extends BaseActivity{
 	private static final String PAGE_NAME = "OrderDetailPage";
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
+	private String mOrderNum;
+	private String mOrderTime;
+	private String mOrderDescript;
+	private String mOrderAddressName;
+	private String mOrderAddressDetail;
+	private String mOrderTotalPrice;
+	
+	private TextView mOrderNumText;
+	private TextView mOrderTimeText;
+	private TextView mOrderDescriptText;
+	private TextView mOrderAddressNameText;
+	private TextView mOrderAddressDetailText;
+	private TextView mOrderTotalPriceText;
+	
 	private ExpandableListView mExpandableListView;
 	private OrderDetailMenusListAdapter mMenusAdapter;
 	
 	private List<ExpandListData> mExpandListDatas;
-	private TextView mOrderDescriptText;
 	private EditText mFeadBackText;
 	private Button mFeadBackButton;
 	private int mOrderId; 
-	private String mOrderDescript;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -70,7 +84,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_grad_order_detail);
 		customActionBarStyle("订单详情");
-		
+		setResult(1);
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
@@ -94,6 +108,12 @@ public class OrderGradDetailActivity extends BaseActivity{
 				requestOrderFeadback();
 			}
 		});
+		
+		mOrderNumText = (TextView) findViewById(R.id.order_detail_num);
+		mOrderTimeText = (TextView) findViewById(R.id.order_detail_time);
+		mOrderAddressNameText = (TextView) findViewById(R.id.order_detail_address_name);
+		mOrderAddressDetailText = (TextView) findViewById(R.id.order_detail_address_detail);
+		mOrderTotalPriceText = (TextView) findViewById(R.id.order_detail_total_price);
 	}
 	
 	/**
@@ -116,6 +136,8 @@ public class OrderGradDetailActivity extends BaseActivity{
 						String returnCode = response.getString("returnCode");
 						if("1".equals(returnCode)){
 							ToastUtil.showToast(OrderGradDetailActivity.this, "评价成功");
+							setResult(1);
+							OrderGradDetailActivity.this.finish();
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -135,7 +157,14 @@ public class OrderGradDetailActivity extends BaseActivity{
 		}else{
 			mMenusAdapter.notifyDataSetChanged();
 		}
-		mOrderDescriptText.setText("订单状态：" + mOrderDescript);
+		
+		
+		mOrderNumText.setText(mOrderNum);
+		mOrderTimeText.setText(mOrderTime);
+		mOrderDescriptText.setText(mOrderDescript);
+		mOrderAddressNameText.setText(mOrderAddressName);
+		mOrderAddressDetailText.setText(mOrderAddressDetail);
+		mOrderTotalPriceText.setText(mOrderTotalPrice);
 	}
 	
 	private void initData(){
@@ -150,6 +179,13 @@ public class OrderGradDetailActivity extends BaseActivity{
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
 					if(orderDetail == null) return;
+					
+					mOrderNum = "订单号：" + orderDetail.getOrderNo();
+					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
+					mOrderAddressDetail = orderDetail.getReceiveAddr();
+					mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+					
 					if(mExpandListDatas == null){
 						mExpandListDatas = new ArrayList<ExpandListData>();
 					}
@@ -179,7 +215,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 							expandListData.setName(orderDetailMenus.getMenuName());
 							expandListData.setAmount(orderDetailMenus.getAmount());
 							expandListData.setUnit("8");
-							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
 							expandListData.setPrice(orderDetailMenus.getPrice());
 							expandListData.setType(0);
 							mExpandListDatas.add(expandListData);

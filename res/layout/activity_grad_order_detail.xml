@@ -13,17 +13,17 @@
 	    android:orientation="vertical">
 	    
 	    <TextView 
+	        android:id="@+id/order_detail_num"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="订单号：000320150402009"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	    
 	    <TextView 
+	        android:id="@+id/order_detail_time"
 	        android:layout_marginTop="10dip"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="送货时间：4月2日 16：30-17：00"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	    	    
@@ -32,7 +32,6 @@
 	        android:layout_marginTop="10dip"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="订单状态：配送成功，未评价"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>
@@ -47,25 +46,25 @@
 	    android:orientation="vertical">
 	    
 	    <TextView 
+	        android:id="@+id/order_detail_address_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="笑笑笑       13291233434"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	    
 	   <TextView 
+	        android:id="@+id/order_detail_address_detail"
 	        android:layout_marginTop="10dip"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="金地自在城多少幢多少层多少楼602室"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>
 	
 	<TextView 
+	    android:id="@+id/order_detail_total_price"
 	    android:layout_width="match_parent"
 	    android:layout_height="38dip"
-	    android:text="订单总额 ￥89.00"
 	    android:paddingLeft="18dip"
 	    android:gravity="center_vertical"
 	    android:textColor="@color/color_app_base_1"

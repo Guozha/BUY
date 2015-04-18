@@ -38,7 +38,6 @@ import com.guozha.buy.util.UnitConvertUtil;
 public class CartItemListAdapter extends BaseExpandableListAdapter implements OnClickListener{
 	
 	private LayoutInflater mInflater;
-	private int mTitleIndex;
 	private Resources mResource;
 	private Activity mContext;
 	private List<CartBaseItem> mCartItems;
@@ -122,18 +121,14 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
 		
-		if(groupPosition == 0 || baseItem.getCartId() == -1){
+		if(baseItem.getCartId() == -1){
 			holder.minus.setVisibility(View.INVISIBLE);
 			holder.num.setVisibility(View.INVISIBLE);
 			holder.plus.setVisibility(View.INVISIBLE);
 			holder.price.setVisibility(View.INVISIBLE);
 			holder.close.setVisibility(View.INVISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_1));
-			if(groupPosition == 0){
-				holder.title.setText("菜谱");
-			}else{
-				holder.title.setText("逛菜场");
-			}
+			holder.title.setText(baseItem.getGoodsName());
 		}else{
 			holder.minus.setVisibility(View.VISIBLE);
 			holder.num.setVisibility(View.VISIBLE);

@@ -37,8 +37,11 @@ import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class PayActivity extends BaseActivity implements OnClickListener{
+	
+	private static final String PAGE_NAME = "PayPAGE";
 	
 	private static final int REQUEST_CODE = 0x0001;
 	
@@ -153,7 +156,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 						PayActivity.this.finish();
 					}
 					break;
-				case HAND_CHOOSED_TICKET_COMPLETED: //选择菜谱成功
+				case HAND_CHOOSED_TICKET_COMPLETED: //选择菜票成功
 					if(mTicketId != -1){
 						mTicketArrowIcon.setVisibility(View.GONE);
 						mTicketText.setVisibility(View.VISIBLE);
@@ -182,6 +185,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		setResult(0);
 		initView();
 		initData();
+		//允许我的账户数据更新
+		MainPageInitDataManager.mAccountUpdated = true;
 	}
 	
 	private ImageView payZhifubaoIcon;
@@ -526,9 +531,25 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			if(bundle != null){
 				mTicketId = bundle.getInt("ticktId");
 				mTicketPrice = bundle.getInt("ticketPrice");
-				LogUtil.e("mTicketId = " + mTicketId);
-				LogUtil.e("mTicketPrice = " + mTicketPrice);
+				LogUtil.e("mTicketPrice == " + mTicketPrice);
+				mHandler.sendEmptyMessage(HAND_CHOOSED_TICKET_COMPLETED);
 			} 
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

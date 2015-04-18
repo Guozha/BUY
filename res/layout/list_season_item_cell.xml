@@ -17,8 +17,8 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="320"
-	        android:scaleType="centerInside"
-	        android:src="@drawable/main_season_goods_01"/>
+	        android:scaleType="fitCenter"
+	        android:src="@drawable/default_icon"/>
 	    
 	    <TextView 
 	        android:id="@+id/season_list_item_description"
@@ -32,7 +32,7 @@
 	        android:maxLines="4"
 	        android:ellipsize="end"
 	        android:textSize="@dimen/dimen_global_16sp"
-	        android:text="香椿，性香炉，味道苦萍，入肺；味道，大肠经"
+	        android:text=""
 	        />
 	</LinearLayout>
 </LinearLayout>

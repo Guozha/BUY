@@ -27,8 +27,7 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:textSize="@dimen/dimen_global_14sp"
-		    android:textColor="@color/color_app_base_4"
-		    android:text="笑笑笑"/>
+		    android:textColor="@color/color_app_base_4"/>
         
         <TextView 
             android:id="@+id/prespecial_pay_address_mobile"
@@ -36,8 +35,7 @@
 		    android:layout_height="wrap_content"
 		    android:textSize="@dimen/dimen_global_14sp"
 		    android:layout_marginLeft="18dip"
-		    android:textColor="@color/color_app_base_4"
-		    android:text="18401237432"/>
+		    android:textColor="@color/color_app_base_4"/>
         
         <TextView 
             android:id="@+id/prespecial_pay_address_detail"
@@ -48,8 +46,7 @@
 		    android:layout_marginLeft="18dip"
 		    android:layout_marginRight="18dip"
 		    android:singleLine="true"
-		    android:ellipsize="end"
-		    android:text="杭州市西湖区及定时小区某某幢"/>
+		    android:ellipsize="end"/>
     </LinearLayout>
     
     <View 
@@ -69,7 +66,6 @@
 	        android:layout_width="0dip"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="西红柿炒鸡蛋"
 	        android:gravity="center_vertical|left"
 	        android:layout_marginLeft="18dip"
 	        android:textColor="@color/color_app_base_4"
@@ -93,8 +89,7 @@
 	        android:textSize="@dimen/dimen_global_14sp"
 	        android:singleLine="true"
 	        android:ellipsize="end"
-	        android:gravity="center"
-	        android:text="1份"/>
+	        android:gravity="center"/>
 	    
 	    <ImageView 
 	        android:id="@+id/cart_list_cell_plus"
@@ -112,8 +107,7 @@
 	        android:singleLine="true"
 	        android:ellipsize="end"
 	        android:gravity="center_vertical|right"
-	        android:layout_marginRight="18dip"
-	        android:text="￥13.00"/>
+	        android:layout_marginRight="18dip"/>
     </LinearLayout>
     
     <!-- 留言 -->
@@ -162,8 +156,7 @@
             android:textColor="@color/color_app_base_4"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="18dip"
-            android:text="可用账户余额12元"/>
+            android:layout_marginLeft="18dip"/>
         <TextView 
             android:id="@+id/pay_can_use_money_deduct"
             android:layout_width="wrap_content"
@@ -199,8 +192,7 @@
             android:textColor="@color/color_app_base_4"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="18dip"
-            android:text="可用35个菜豆抵0.35元"/>
+            android:layout_marginLeft="18dip"/>
         
         <ImageView 
             android:id="@+id/prespecial_bean_remain_icon"

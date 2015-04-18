@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +111,7 @@ public class OrderFinishedFragment extends Fragment implements OnScrollListener{
 						orderSummary.getArrivalPayFlag(), 
 						orderSummary.getCommentFlag()));
 				intent.putExtra("orderId", orderSummary.getOrderId());
-				startActivity(intent);
+				startActivityForResult(intent, REQUEST_CODE);
 			}
 		});
 		
@@ -224,7 +225,13 @@ public class OrderFinishedFragment extends Fragment implements OnScrollListener{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == REQUEST_CODE){
-			loadData();
+			if(resultCode == 1){
+				mCurrentPage = 0;
+				if(mOrderList != null){
+					mOrderList.clear();
+				}
+				loadData();
+			}
 		}
 	}
 	

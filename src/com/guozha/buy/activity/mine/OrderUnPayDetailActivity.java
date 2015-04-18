@@ -20,8 +20,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.cart.PayActivity;
+import com.guozha.buy.activity.cart.PreSpecialPayActivity;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.OrderDetailMenusListAdapter;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.order.ExpandListData;
 import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
@@ -52,6 +54,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 	private List<ExpandListData> mExpandListDatas;
 	
 	private int mOrderId; 
+	private String mOrderType;
 	private String mOrderNum;
 	private String mOrderTime;
 	private String mOrderDescript;
@@ -111,27 +114,14 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		findViewById(R.id.order_detail_cancel).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String token = ConfigManager.getInstance().getUserToken(OrderUnPayDetailActivity.this);
-				if(token == null) return;
-				RequestParam paramPath = new RequestParam("order/cancel")
-				.setParams("token", token)
-				.setParams("orderId", mOrderId)
-				.setParams("status", mOrderStatus);
-				HttpManager.getInstance(OrderUnPayDetailActivity.this).volleyJsonRequestByPost(
-					HttpManager.URL + paramPath, new Listener<JSONObject>() {
-						@Override
-						public void onResponse(JSONObject response) {
-							try {
-								String returnCode = response.getString("returnCode");
-								if("1".equals(returnCode)){
-									OrderUnPayDetailActivity.this.finish();
-								}else{
-									ToastUtil.showToast(OrderUnPayDetailActivity.this, response.getString("msg"));
-								}
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
+				final CustomDialog cancelOrderDialog = new CustomDialog(
+						OrderUnPayDetailActivity.this, R.layout.dialog_cancel_order);
+				cancelOrderDialog.setDismissButtonId(R.id.cancel_button);
+				cancelOrderDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						requestCancelOrder();
+					}
 				});
 			}
 		});
@@ -139,12 +129,54 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		findViewById(R.id.order_detail_pay).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
-				intent.putExtra("orderId", mOrderId);
-				intent.putExtra("serverPrice", mServiceFee);
-				intent.putExtra("orderComeIn", true);
-				startActivityForResult(intent, REQUEST_CODE);
+				//TODO 判断订单类型
+				if("1".equals(mOrderType)){ //普通订单
+					Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
+					intent.putExtra("orderId", mOrderId);
+					intent.putExtra("serverPrice", mServiceFee);
+					intent.putExtra("orderComeIn", true);
+					startActivityForResult(intent, REQUEST_CODE);
+				}else{		//特供预售
+					if(!mExpandListDatas.isEmpty()){
+						ExpandListData expandListData = mExpandListDatas.get(0);
+						Intent intent = new Intent(OrderUnPayDetailActivity.this, PreSpecialPayActivity.class);
+						intent.putExtra("goodsId", expandListData.getId());
+						intent.putExtra("unitPrice", expandListData.getUnitPrice());
+						intent.putExtra("goodsName", expandListData.getName());
+						intent.putExtra("goodsType", mOrderType);
+						intent.putExtra("orderComeIn", true);
+						startActivityForResult(intent, REQUEST_CODE);
+					}
+				}
 			}
+		});
+	}
+	
+	/**
+	 * 请求取消订单
+	 */
+	private void requestCancelOrder() {
+		String token = ConfigManager.getInstance().getUserToken(OrderUnPayDetailActivity.this);
+		if(token == null) return;
+		RequestParam paramPath = new RequestParam("order/cancel")
+		.setParams("token", token)
+		.setParams("orderId", mOrderId)
+		.setParams("status", mOrderStatus);
+		HttpManager.getInstance(OrderUnPayDetailActivity.this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						if("1".equals(returnCode)){
+							OrderUnPayDetailActivity.this.finish();
+						}else{
+							ToastUtil.showToast(OrderUnPayDetailActivity.this, response.getString("msg"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
 		});
 	}
 	
@@ -171,7 +203,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		LogUtil.e("OrderId = " + mOrderId);
 		RequestParam paramPath = new RequestParam("order/detail")
 		.setParams("orderId", mOrderId);
-		
 		HttpManager.getInstance(this).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
@@ -180,6 +211,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
 					if(orderDetail == null) return;
 					mOrderNum = "订单号：" + orderDetail.getOrderNo();
+					mOrderType = orderDetail.getOrderType();
 					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 					mOrderAddressDetail = orderDetail.getReceiveAddr();
@@ -197,6 +229,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 							ExpandListData expandListData = new ExpandListData();
 							expandListData.setId(orderDetailGoods.getGoodsId());
 							expandListData.setName(orderDetailGoods.getGoodsName());
+							expandListData.setUnitPrice(orderDetailGoods.getUnitPrice());
 							expandListData.setUnit(orderDetailGoods.getUnit());
 							expandListData.setAmount(orderDetailGoods.getAmount());
 							expandListData.setPrice(orderDetailGoods.getPrice());
@@ -214,7 +247,8 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 							expandListData.setName(orderDetailMenus.getMenuName());
 							expandListData.setAmount(orderDetailMenus.getAmount());
 							expandListData.setUnit("8");
-							expandListData.setMenuslist(orderDetail.getGoodsInfoList());
+							expandListData.setUnitPrice(orderDetailMenus.getUnitPrice());
+							expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
 							expandListData.setPrice(orderDetailMenus.getPrice());
 							mExpandListDatas.add(expandListData);
 						}

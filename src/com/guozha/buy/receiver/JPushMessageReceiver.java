@@ -1,5 +1,7 @@
 package com.guozha.buy.receiver;
 
+import com.guozha.buy.activity.global.SplashActivity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -29,10 +31,9 @@ public class JPushMessageReceiver extends BroadcastReceiver{
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             System.out.println("用户点击打开了通知");
             // 在这里可以自己写代码去定义用户点击后的行为
-            /*Intent i = new Intent(context, TestActivity.class);  //自定义打开的界面
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);*/
-            
+            Intent newIntent = new Intent(content, SplashActivity.class);  //自定义打开的界面
+            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            content.startActivity(newIntent);
         } else {
             //Log.d(TAG, "Unhandled intent - " + intent.getAcion());
         }

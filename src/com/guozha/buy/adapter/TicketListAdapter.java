@@ -72,7 +72,12 @@ public class TicketListAdapter extends BaseAdapter{
 		MarketTicket marketTicket = mMarketTicket.get(position);
 		holder.ticketType.setText(ConstantUtil.getTicketType(marketTicket.getTicketType()));
 		holder.ticketForPrice.setText("订单满" + UnitConvertUtil.getSwitchedMoney(marketTicket.getForPrice()) + "元使用");
-		holder.ticketValidDate.setText("菜票有效期 " + DimenUtil.getStringFormatDate(marketTicket.getValidDate()));
+		String validDate = DimenUtil.getStringFormatDate(marketTicket.getValidDate());
+		if("9999年12月31日".equals(validDate)){
+			holder.ticketValidDate.setText("菜票有效期 （长期有效）");
+		}else{
+			holder.ticketValidDate.setText("菜票有效期 " + validDate);
+		}
 		holder.ticketParValue.setText("￥" + UnitConvertUtil.getSwitchedMoney(marketTicket.getParValue()));
 		if(currentTime < marketTicket.getValidDate().getTime()){
 			holder.ticketEffective.setVisibility(View.GONE);

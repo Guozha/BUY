@@ -25,7 +25,6 @@
 	        android:layout_marginTop="10dip"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="送货时间：4月2日 16：30-17：00"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	    	    
@@ -34,7 +33,6 @@
 	        android:layout_marginTop="10dip"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="订单状态：配送成功，未评价"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>

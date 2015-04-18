@@ -9,12 +9,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.view.View;
+import android.view.View.OnClickListener;
 
+import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.cart.PlanceOrderActivity;
+import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.activity.mine.SharePraiseActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -221,6 +228,28 @@ public class ConfigManager{
 	}
 	
 	/**
+	 * 获取选择的地址
+	 * @param context
+	 * @return
+	 */
+	public int getChoosedAddressId(final Context context){
+		if(mChoosedAddressId == -1){
+			final CustomDialog addAddressDialog = new CustomDialog(context, R.layout.dialog_add_address);
+			addAddressDialog.setDismissButtonId(R.id.cancel_button);
+			addAddressDialog.getViewById(R.id.agree_button)
+				.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, AddAddressActivity.class);
+					context.startActivity(intent);
+					addAddressDialog.dismiss();
+				}
+			});
+		}
+		return mChoosedAddressId;
+	}
+	
+	/**
 	 * 设置选择的地址ID
 	 * @param choosedId
 	 */
@@ -400,7 +429,7 @@ public class ConfigManager{
 	 * @param todayDate
 	 */
 	public void setTodayDate(long todayDate){
-		if(mTodayDate != todayDate) return;
+		if(mTodayDate == todayDate) return;
 		mTodayDate = todayDate;
 		setConfig(TODAY_DATE, todayDate);
 	}

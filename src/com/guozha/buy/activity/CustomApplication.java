@@ -4,6 +4,7 @@ import org.litepal.LitePalApplication;
 
 import android.content.Context;
 
+import com.guozha.buy.global.CrashHandler;
 import com.guozha.buy.global.net.BitmapCache;
 
 /**
@@ -21,8 +22,8 @@ public class CustomApplication extends LitePalApplication{
 		super.onCreate();
 		instance = this;
 		//捕获错误日志
-		//CrashHandler crashHandler = CrashHandler.getInstance();
-		//crashHandler.init(getApplicationContext());
+		CrashHandler crashHandler = CrashHandler.getInstance();
+		crashHandler.init(getApplicationContext());
 	}
 	
 	/**

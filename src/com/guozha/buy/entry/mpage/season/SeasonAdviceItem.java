@@ -17,16 +17,6 @@ public class SeasonAdviceItem implements Serializable{
 	private String goodsImg;   	//商品图标
 	private String word;		//关键词
 	
-	
-	public SeasonAdviceItem(int goodsId, String goodsName, String memo,
-			String goodsImg) {
-		super();
-		this.goodsId = goodsId;
-		this.goodsName = goodsName;
-		this.memo = memo;
-		this.goodsImg = goodsImg;
-	}
-	
 	public int getGoodsId() {
 		return goodsId;
 	}

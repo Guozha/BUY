@@ -22,13 +22,18 @@ import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.cart.PreSpecialPayActivity;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.activity.mine.AddAddressActivity;
+import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class PreSpecialDetail extends BaseActivity{
+	
+	private static final String PAGE_NAME = "PreSpecialDetailPage";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
@@ -82,6 +87,11 @@ public class PreSpecialDetail extends BaseActivity{
 		findViewById(R.id.prespecial_buy_button).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//TODO 先判断是否登录，再判断一下是否添加地址了
+				String token = ConfigManager.getInstance().getUserToken(PreSpecialDetail.this);
+				if(token == null) return;
+				//TODO 再判断当前选择的地址是否为NULL
+				if(ConfigManager.getInstance().getChoosedAddressId(PreSpecialDetail.this) == -1) return;
 				Intent intent = new Intent(PreSpecialDetail.this, PreSpecialPayActivity.class);
 				intent.putExtra("goodsId", mGoodsId);
 				intent.putExtra("unitPrice", mUnitPrice);
@@ -141,8 +151,6 @@ public class PreSpecialDetail extends BaseActivity{
 						mArrivalDays = response.getInt("arrivalDays");		//送达天数
 						mWebUrl = response.getString("picDesc");			//图文介绍地址
 						mGoodsPrice = UnitConvertUtil.getSwitchedMoney(mUnitPrice) + "元/" + UnitConvertUtil.getSwichedUnit(1000, unit);
-					
-						LogUtil.e("mUnitPrice = " + mUnitPrice);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -174,5 +182,23 @@ public class PreSpecialDetail extends BaseActivity{
 		}else{
 			mPreSpecialTitle.setCompoundDrawables(null, null, null, null);
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

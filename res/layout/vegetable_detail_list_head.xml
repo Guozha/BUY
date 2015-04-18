@@ -14,9 +14,9 @@
 	    
 	    <ImageView 
 	        android:id="@+id/detail_image"
-	        android:layout_width="wrap_content"
+	        android:layout_width="match_parent"
 	        android:layout_height="180dip"
-	        android:scaleType="centerInside"
+	        android:scaleType="fitCenter"
 	        android:src="@drawable/default_icon"/>
 	    
 	    <TextView
@@ -53,7 +53,6 @@
 		    android:textSize="@dimen/dimen_global_14sp"
 		    android:lineSpacingExtra="5dip"
 		    android:maxLines="4"
-		    android:text="青椒，别名菜椒，柿子椒。性温中散寒，开胃消食，具有增食欲，抗贫血的特点。适宜脾胃虚寒，呕吐、泻痢，冻疮、感冒者食用。青椒收拾收拾收拾收拾"
 		    android:ellipsize="end"/>
 	
 	    <LinearLayout 

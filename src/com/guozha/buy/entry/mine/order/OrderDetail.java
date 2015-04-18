@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 订单详情
+ * @author PeggyTong
+ *
+ */
 public class OrderDetail implements Serializable{
 
 	private static final long serialVersionUID = -6285559783997107505L;
 	
 	private int orderId;
+	private String orderType;
 	private String orderNo;
 	private Date createTime;
 	private Date arrivalTime;
@@ -26,6 +32,12 @@ public class OrderDetail implements Serializable{
 	}
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
+	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 	public String getOrderNo() {
 		return orderNo;

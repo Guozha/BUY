@@ -32,6 +32,8 @@ public class SharePraiseActivity extends BaseActivity{
 	private static final String PAGE_NAME = "SharePraisePage";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	private static final int HAND_INVITEID_COMPLTED = 0x0002;
+	private static final String SHARE_TITLE = "做了好人几十年，真心不愿吃独食，戳一下10块钱菜票拿走不谢~";
+	private static final String SHARE_CONTENT = "我家买菜不要钱，所以你家买菜当然也不要钱~";
 	
 	private TextView mTotalAmountText;
 	private TextView mUsedAmountText;
@@ -58,13 +60,15 @@ public class SharePraiseActivity extends BaseActivity{
 			case HAND_INVITEID_COMPLTED:
 				//分享
 				ShareManager shareManager = new ShareManager(SharePraiseActivity.this);
-				
+				String shareOpenUrl;
 				if(mShareUrl == null || "".equals(mShareUrl)){
-					mShareUrl = "http://www.wymc.com.cn";
+					shareOpenUrl = "http://download.wymc.com.cn/app/buyer_app.html";
+				}else{
+					shareOpenUrl = mShareUrl + mInviteId;
 				}
 				shareManager.shareToWeixinFriends(SharePraiseActivity.this,
-						new UMImage(SharePraiseActivity.this, R.drawable.ic_launcher),
-						"title", "content", mShareUrl + mInviteId);
+						new UMImage(SharePraiseActivity.this, R.drawable.logo_share),
+						SHARE_TITLE, SHARE_CONTENT, shareOpenUrl);
 				break;
 			}
 		};

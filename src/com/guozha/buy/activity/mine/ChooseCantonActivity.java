@@ -59,11 +59,11 @@ public class ChooseCantonActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_choose_canton);
-		customActionBarStyle("行政区");
+		customActionBarStyle("选择小区/写字楼");
 
 		initView();
 		requestCountryList();
-		
+	
 		setResult(0, null);
 	}
 

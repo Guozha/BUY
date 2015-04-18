@@ -7,10 +7,11 @@
         android:background="@color/color_app_base_5"
         android:layout_weight="1">
         
+        <!-- 这里的高度暂时改为0dip -->
         <ImageView 
             android:id="@+id/vegetable_cell_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dip"
             android:scaleType="centerInside"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -20,8 +21,8 @@
             android:id="@+id/vegetable_cell_image"
             android:layout_below="@id/vegetable_cell_icon"
             android:layout_width="match_parent"
-            android:layout_height="70dip"
-            android:scaleType="centerInside"
+            android:layout_height="100dip"
+            android:scaleType="fitCenter"
             android:src="@drawable/default_icon"/>
         
         <TextView

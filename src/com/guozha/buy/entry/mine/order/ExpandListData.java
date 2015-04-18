@@ -9,6 +9,7 @@ public class ExpandListData {
 	private String name;	//商品名称
 	private int amount;	//数量
 	private int price;	//价格
+	private int unitPrice; //单价
 	private String unit;	//单位
 	private List<OrderDetailGoods> menuslist;
 	
@@ -41,6 +42,12 @@ public class ExpandListData {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 	public List<OrderDetailGoods> getMenuslist() {
 		return menuslist;

@@ -172,20 +172,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			return;
 		}
 		//TODO 再判断当前选择的地址是否为NULL
-		if(ConfigManager.getInstance().getChoosedAddressId() == -1){
-			final CustomDialog addAddressDialog = new CustomDialog(mContext, R.layout.dialog_add_address);
-			addAddressDialog.setDismissButtonId(R.id.cancel_button);
-			addAddressDialog.getViewById(R.id.agree_button)
-				.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(mContext, AddAddressActivity.class);
-					mContext.startActivity(intent);
-					addAddressDialog.dismiss();
-				}
-			});
-			return;
-		}
+		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1) return;
 		
 		String tag = String.valueOf(view.getTag());
 		String[] tags = tag.split(":");

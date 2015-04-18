@@ -158,7 +158,6 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
-				//TODO 这里和注册返回一致
 				try {
 					String returnCode = response.getString("returnCode");
 					if("1".equals(returnCode)){
@@ -229,10 +228,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 					mPhoneNumIcon.setVisibility(View.VISIBLE);
 				}
 				if(isValidatePhoneNum(phoneNum)){
-					//TODO 设置为对号图标
 					mPhoneNumIcon.setImageResource(R.drawable.login_right_state);
 				}else{
-					//TODO 设置为叉号图标
 					mPhoneNumIcon.setImageResource(R.drawable.login_wrong_state);
 				}
 			}
@@ -256,10 +253,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 					mPwdIcon.setVisibility(View.VISIBLE);
 				}
 				if(isValidatePwd(pwd)){
-					//TODO
 					mPwdIcon.setImageResource(R.drawable.login_right_state);
 				}else{
-					//TODO
 					mPwdIcon.setImageResource(R.drawable.login_wrong_state);
 				}
 			}
@@ -284,10 +279,8 @@ public class FindPwdActivity extends BaseActivity implements OnClickListener{
 					mRepeatPwdIcon.setVisibility(View.VISIBLE);
 				}
 				if(isValidatePwd(pwd) && (pwd.equals(repeatPwd))){
-					//TODO
 					mRepeatPwdIcon.setImageResource(R.drawable.login_right_state);
 				}else{
-					//TODO
 					mRepeatPwdIcon.setImageResource(R.drawable.login_wrong_state);
 				}
 			}

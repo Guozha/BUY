@@ -79,11 +79,14 @@ public class SetWarnTimeActivity extends BaseActivity{
 					String valueTime = ConfigManager.getInstance().getWarnTime();
 					requestMenuPlan(valueTime);
 				}else{
+					//传null表示关闭
 					requestMenuPlan(null);
 				}
 				ConfigManager.getInstance().setWarnTimeOpend(CheckState);
 			}
 		});
+		boolean opendStatus = ConfigManager.getInstance().getWarnTimeOpend();
+		switchWarn.setChecked(opendStatus);
 	}
 	
 	/**
