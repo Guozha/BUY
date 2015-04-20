@@ -90,6 +90,8 @@ public class CollectionRecipeFragment extends Fragment{
 				//TODO 跳到菜谱详情界面
 				Intent intent = new Intent(
 						CollectionRecipeFragment.this.getActivity(), CookBookDetailActivity.class);
+				intent.putExtra("menuId", 
+						mCollectionDir.get(groupPosition).getMenuInfoList().get(childPosition).getMenuId());
 				startActivity(intent);
 				return false;
 			}

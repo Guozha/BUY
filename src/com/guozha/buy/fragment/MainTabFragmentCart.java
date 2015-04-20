@@ -29,6 +29,7 @@ import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -56,12 +57,17 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private int mTotalPrice = 0;	//总额
 	private int mServiceFree = 0;	//服务费
 	private int mFreeGap = 0;		//还差多少免服务费
+	private int mCurrentAddressId = 
+			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateViewData();
+				break;
+			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
+				setCartItemsData();
 				break;
 
 			default:
@@ -186,7 +192,6 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		for (int i = 0; i < mCartItems.size(); i++) {
 		    mCartList.expandGroup(i);
 		}
-		LogUtil.e("mServiceFee ... = " + mServiceFree);
 		setBottomMessageText(mQuantity, mTotalPrice, mServiceFree, mFreeGap);
 	}
 
@@ -261,6 +266,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			//View可见
 		    //初始化ActionBar	
 			initActionBar(getActivity().getActionBar());
+			int addressId =ConfigManager.getInstance().getChoosedAddressId();
+			if(mDataManager != null && mCurrentAddressId != addressId){
+				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+				mDataManager.getCartItems(handler);
+				mCurrentAddressId = addressId;
+			}
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{

@@ -33,7 +33,6 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -60,9 +59,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private boolean mAccountRemainChecked = false;		//是否选择使用账户余额
 
 	
-	private String mOrderNum;		//订单号
 	private int mTotalPrice;		//总金额
-	private int mBalance;			//账户余额
 	private int mBeanNum;			//菜豆数
 	private int mAccountRemain;		//账户余额
 	private int mTicketId = -1;			//菜票Id
@@ -133,7 +130,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					}
 					break;
 				case HAND_MAIN_SIGNLE_COMPLETED:
-					LogUtil.e("mTotalPrice = " + mTotalPrice);
 					mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
 					mServerPriceText.setText(UnitConvertUtil.getSwitchedMoney(mServicePrice) + "元");
 					mPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice + mServicePrice) + "元");
@@ -242,8 +238,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
-						mOrderNum = response.getString("orderNo");  //订单号
-						LogUtil.e("取出来的orderNum = " + mOrderNum);
+						//mOrderNum = response.getString("orderNo");  //订单号
 						mTotalPrice = response.getInt("totalPrice");//商品金额
 						mServicePrice = response.getInt("serviceFee");				//服务费
 						mHandler.sendEmptyMessage(HAND_MAIN_SIGNLE_COMPLETED);
@@ -402,8 +397,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		.setParams("balanceDecPrice", mAccountRemainDeduct)
 		.setParams("useBeanAmount", mBeanrDeduct);
 		
-		LogUtil.e("paramPath = " + paramPath);
-		
 		HttpManager.getInstance(this).volleyRequestByPost(
 				HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
@@ -420,7 +413,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 							}else if("1".equals(flag)){
 								mPayOrderMesg = payValidateResult.getOrder();
 								if(mPayOrderMesg != null){
-									LogUtil.e("getPayPrice == " + mPayOrderMesg.getPayPrice());
 									if(mPayOrderMesg.getPayPrice() <= 0){
 										ToastUtil.showToast(PayActivity.this, "支付金额必须大于0");
 									}else{
@@ -450,10 +442,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			String tag = String.valueOf(payZhifubaoIcon.getTag());
 			if("1".equals(tag)){
 				ToastUtil.showToast(PayActivity.this, "支付了");
-				LogUtil.e("orderNum = " + mPayOrderMesg.getOrderNo());
-				LogUtil.e("subject =  " + mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品");
-				LogUtil.e("object = " + mPayOrderMesg.getMemo());
-				LogUtil.e("payMoney = " + UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()) + "元");
 				AlipayManager alipayManager = new AlipayManager(mPayOrderMesg.getOrderNo(), mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", mPayOrderMesg.getMemo(), UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
 				alipayManager.requestPay(this, mHandler);
 			}else{
@@ -531,7 +519,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			if(bundle != null){
 				mTicketId = bundle.getInt("ticktId");
 				mTicketPrice = bundle.getInt("ticketPrice");
-				LogUtil.e("mTicketPrice == " + mTicketPrice);
 				mHandler.sendEmptyMessage(HAND_CHOOSED_TICKET_COMPLETED);
 			} 
 		}

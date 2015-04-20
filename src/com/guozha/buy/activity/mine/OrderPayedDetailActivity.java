@@ -23,7 +23,6 @@ import com.guozha.buy.entry.mine.order.OrderDetailMenus;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -120,10 +119,8 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		LogUtil.e("OrderId = " + mOrderId);
 		RequestParam paramPath = new RequestParam("order/detail")
 		.setParams("orderId", mOrderId);
-		LogUtil.e("request ... " + HttpManager.URL + paramPath);
 		HttpManager.getInstance(this).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override
@@ -141,7 +138,6 @@ public class OrderPayedDetailActivity extends BaseActivity{
 					}
 					
 					if(orderDetail.getGoodsInfoList() != null){
-						LogUtil.e("goods_size = " + orderDetail.getGoodsInfoList().size());
 						for(int i = 0; i < orderDetail.getGoodsInfoList().size(); i++){
 							OrderDetailGoods orderDetailGoods = orderDetail.getGoodsInfoList().get(i);
 							ExpandListData expandListData = new ExpandListData();
@@ -156,7 +152,6 @@ public class OrderPayedDetailActivity extends BaseActivity{
 					}
 					
 					if(orderDetail.getMenuInfoList() != null){
-						LogUtil.e("menu_size = " + orderDetail.getMenuInfoList().size());
 						for(int i = 0; i < orderDetail.getMenuInfoList().size(); i++){
 							OrderDetailMenus orderDetailMenus = orderDetail.getMenuInfoList().get(i);
 							ExpandListData expandListData = new ExpandListData();
@@ -169,7 +164,6 @@ public class OrderPayedDetailActivity extends BaseActivity{
 							mExpandListDatas.add(expandListData);
 						}
 					}
-					LogUtil.e("mExpandListDatas == " + mExpandListDatas.size());
 					handler.sendEmptyMessage(HAND_DATA_COMPLTED);
 				}
 		});

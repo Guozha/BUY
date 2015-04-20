@@ -267,7 +267,7 @@
 	            android:scaleType="centerInside"
 	            android:paddingBottom="10dip"
 	            android:paddingTop="10dip"
-	            android:src="@drawable/main_season_icon"/>
+	            android:src="@drawable/main_supplied_img"/>
 	    </LinearLayout>
 	        
         <RelativeLayout 

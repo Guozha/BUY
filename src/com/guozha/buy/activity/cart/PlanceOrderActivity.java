@@ -3,6 +3,7 @@ package com.guozha.buy.activity.cart;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.entry.cart.PointTime;
 import com.guozha.buy.entry.cart.ShowTime;
@@ -33,6 +35,7 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
@@ -67,6 +70,7 @@ public class PlanceOrderActivity extends BaseActivity{
 	private ImageView mQuickTimeChooseIcon;
 	private TextView mQuickTimeChooseText;
 	private View mQuickTimeChoose;
+	private String mTodayEarliestTime = null;  //当天最早的时间
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -103,6 +107,9 @@ public class PlanceOrderActivity extends BaseActivity{
 		}
 		initView();
 		initData();
+		//重新获取一下服务器时间
+		MainPageInitDataManager.getInstance(
+				CustomApplication.getContext()).getTodayInfo(null);
 	}
 	
 	/**
@@ -119,6 +126,7 @@ public class PlanceOrderActivity extends BaseActivity{
 			@Override
 			public void itemChanged(int index) {
 				if(index == 0){
+					if(!regularCanOneHourArrive()) return;
 					setChooseOneHourArrive();
 				}else{
 					setCancelOneHourArrive();
@@ -163,6 +171,10 @@ public class PlanceOrderActivity extends BaseActivity{
 			public void onClick(View view) {
 				String tag = String.valueOf(mQuickTimeChooseIcon.getTag());
 				if(tag == null || "null".equals(tag) ||  "0".equals(tag)){
+					if(!regularCanOneHourArrive()) {
+						ToastUtil.showToast(PlanceOrderActivity.this, "当前时间不支持1小时送达");
+						return;
+					}
 					setChooseOneHourArrive();
 					if(!mShowTimes.isEmpty()){
 						mWheelView.setCurrentItem(0, true);
@@ -193,6 +205,25 @@ public class PlanceOrderActivity extends BaseActivity{
 		mQuickTimeChooseText.setText("1小时之内给您送到");
 		mQuickTimeChooseText.setTextColor(getResources().getColor(R.color.color_app_base_1));
 	}
+
+	/**
+	 * 验证是否可以支持一小时送达
+	 * @return
+	 */
+	private boolean regularCanOneHourArrive() {
+		long todayDate = ConfigManager.getInstance().getTodayDate();
+		if(todayDate == -1) return false;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+		calendar.setTimeInMillis(todayDate);
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		if(mTodayEarliestTime == null) return false;
+		String earliesHour = mTodayEarliestTime.split(":")[0];
+		if(!RegularUtil.regularNumber(earliesHour)) return false;
+		int eHour = Integer.parseInt(earliesHour);
+		if(eHour - hour > 1) return false;
+		return true;
+	}
 	
 	/**
 	 * 请求提交订单
@@ -222,12 +253,12 @@ public class PlanceOrderActivity extends BaseActivity{
 		long todayDate = ConfigManager.getInstance().getTodayDate();
 		
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 		calendar.setTimeInMillis(todayDate);
 		if("明天".equals(pointTime.getDayname())){
 			calendar.add(Calendar.DATE, 1);
 		}
 		String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
-		LogUtil.e("timeStr === " + timeStr);
 		RequestParam paramPath = new RequestParam("order/insert")
 		.setParams("token", token)
 		.setParams("userId", userId)
@@ -244,7 +275,6 @@ public class PlanceOrderActivity extends BaseActivity{
 					String returnCode = response.getString("returnCode");
 					if("1".equals(returnCode)){
 						Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
-						LogUtil.e("orderId=" + response.getInt("orderId"));
 						intent.putExtra("orderId", response.getInt("orderId"));
 						intent.putExtra("serverPrice", mServicePrice);
 						startActivity(intent);
@@ -279,7 +309,11 @@ public class PlanceOrderActivity extends BaseActivity{
 					if(todayPointTime == null || todayPointTime.isEmpty()){
 						handler.sendEmptyMessage(HAND_CHANGE_QUICK_MENU);
 					}else{
+					mTodayEarliestTime = null;
 					for(int i = 0; i < todayPointTime.size(); i++){
+							if(i == 0){
+								mTodayEarliestTime = todayPointTime.get(i).getFromTime();
+							}
 							mShowTimes.add(new ShowTime("今天", 
 									todayPointTime.get(i).getFromTime(), todayPointTime.get(i).getToTime()));
 						}

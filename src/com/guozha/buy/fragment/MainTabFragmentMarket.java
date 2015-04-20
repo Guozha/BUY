@@ -104,6 +104,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private View mItemHeaderView;
 	private RefreshableView mRefreshableView;
+	private int mCurrentAddressId = 
+			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -132,6 +134,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
+		
+		LogUtil.e("第一次进来的地址id = " + mCurrentAddressId);
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
 		
 		//菜单出入动画
@@ -374,6 +378,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mTotalPageSize = marketHomePage.getPageCount();
 		currentPage = 1;
 		mMarketHomeItems.clear();
+		LogUtil.e("clear");
 		mMaxDateNum = marketHomePage.getTotalCount();
 		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 		mMarketHomeItems.addAll(marketHomeItems);
@@ -495,6 +500,19 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			//View不可见
 			//友盟页面统计
 			MobclickAgent.onPageEnd(PAGE_NAME);
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		//如果地址发生变化则改变数据
+		if(mCurrentAddressId != addressId){
+			MainPageInitDataManager.mMarketItemUpdated = true;
+			MainPageInitDataManager.mCartItemsUpdated = true;
+			mDataManager.getMarketHomePage(handler, 1, 4);
+			mCurrentAddressId = addressId;
 		}
 	}
 	

@@ -22,7 +22,6 @@ import com.guozha.buy.entry.mine.UsefulTicket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -78,8 +77,6 @@ public class ChooseTicketActivity extends BaseActivity{
 					int position, long id) {
 				Intent intent = getIntent();
 				if(intent != null && mMarketTickets != null){
-					LogUtil.e("...ticketid = " + mMarketTickets.get(position).getMyTicketId());
-					LogUtil.e("...ticketPrice = " + mMarketTickets.get(position).getForPrice());
 					intent.putExtra("ticktId", mMarketTickets.get(position).getMyTicketId());
 					intent.putExtra("ticketPrice", mMarketTickets.get(position).getParValue());
 					setResult(0, intent);

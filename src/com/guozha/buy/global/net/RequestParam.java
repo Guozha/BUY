@@ -30,6 +30,10 @@ public class RequestParam {
 	 * @param value
 	 */
 	public RequestParam setParams(String key, String value){
+		//遇到空格需要转换
+		if(value != null){
+			value = value.trim().replaceAll(" ", "_");
+		}
 		mParams.put(key, value);
 		return this;
 	}

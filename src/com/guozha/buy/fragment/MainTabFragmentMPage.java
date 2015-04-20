@@ -104,7 +104,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	private void initQuickMenusData(){
 		if(mQuickMenus == null) return;
 		List<QuickMenu> quickMenus = ConfigManager.getInstance().getQuickMenus();
-		
 		if(quickMenus == null) {
 			for(int i = 0; i < 5; i++){
 				mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_edit);
@@ -160,6 +159,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 				defaultQuickMenu.add(quickMenu.get(i));
 			}
 			ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
+			initQuickMenusData();
 			break;
 		case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:		//今日信息
 			setTodyInfo();

@@ -374,9 +374,6 @@ com.guozha.buy.R$drawable: int main_menu_up
 com.guozha.buy.R$drawable: int main_minus
 com.guozha.buy.R$drawable: int main_more
 com.guozha.buy.R$drawable: int main_orders_icon
-com.guozha.buy.R$drawable: int main_page_scroll_image1
-com.guozha.buy.R$drawable: int main_page_scroll_image2
-com.guozha.buy.R$drawable: int main_page_scroll_image3
 com.guozha.buy.R$drawable: int main_plan_add
 com.guozha.buy.R$drawable: int main_plan_added_state
 com.guozha.buy.R$drawable: int main_plan_days_added
@@ -388,19 +385,12 @@ com.guozha.buy.R$drawable: int main_plan_tick
 com.guozha.buy.R$drawable: int main_plus
 com.guozha.buy.R$drawable: int main_pre_sell_background
 com.guozha.buy.R$drawable: int main_recipe_background_blue
-com.guozha.buy.R$drawable: int main_recipe_img_01
-com.guozha.buy.R$drawable: int main_recipe_img_02
-com.guozha.buy.R$drawable: int main_recipe_img_large_01
 com.guozha.buy.R$drawable: int main_right_arrow
-com.guozha.buy.R$drawable: int main_sale_img_01
 com.guozha.buy.R$drawable: int main_season_describe_background
-com.guozha.buy.R$drawable: int main_season_goods_01
-com.guozha.buy.R$drawable: int main_season_icon
-com.guozha.buy.R$drawable: int main_season_img_00
-com.guozha.buy.R$drawable: int main_season_img_01
-com.guozha.buy.R$drawable: int main_season_img_02
 com.guozha.buy.R$drawable: int main_season_img_autumn
 com.guozha.buy.R$drawable: int main_season_img_spring
+com.guozha.buy.R$drawable: int main_season_img_summer
+com.guozha.buy.R$drawable: int main_season_img_winter
 com.guozha.buy.R$drawable: int main_select_normal
 com.guozha.buy.R$drawable: int main_selected
 com.guozha.buy.R$drawable: int main_seller_icon
@@ -412,11 +402,6 @@ com.guozha.buy.R$drawable: int main_switch_on
 com.guozha.buy.R$drawable: int main_tag_backgroung
 com.guozha.buy.R$drawable: int main_tag_edit
 com.guozha.buy.R$drawable: int main_tag_edit_round
-com.guozha.buy.R$drawable: int main_vegetable_details_img_01
-com.guozha.buy.R$drawable: int main_vegetable_img_01
-com.guozha.buy.R$drawable: int main_vegetable_img_02
-com.guozha.buy.R$drawable: int main_vegetable_img_03
-com.guozha.buy.R$drawable: int main_vegetable_img_04
 com.guozha.buy.R$drawable: int market_address_background
 com.guozha.buy.R$drawable: int market_tag_background
 com.guozha.buy.R$drawable: int mian_coupon_decorate
@@ -434,8 +419,6 @@ com.guozha.buy.R$drawable: int pay_zhifubao_icon
 com.guozha.buy.R$drawable: int plan_menu_week_list_bg
 com.guozha.buy.R$drawable: int preview_arrowleft_icon
 com.guozha.buy.R$drawable: int preview_arrowright_icon
-com.guozha.buy.R$drawable: int recipe_step_01
-com.guozha.buy.R$drawable: int sale_details_img_01
 com.guozha.buy.R$drawable: int sale_tag_01
 com.guozha.buy.R$drawable: int sale_tag_02
 com.guozha.buy.R$drawable: int sallers_empty
@@ -557,7 +540,6 @@ com.guozha.buy.R$drawable: int umeng_update_title_bg
 com.guozha.buy.R$drawable: int umeng_update_wifi_disable
 com.guozha.buy.R$drawable: int under_order_mask
 com.guozha.buy.R$drawable: int user_icon
-com.guozha.buy.R$drawable: int vegetable_image
 com.guozha.buy.R$drawable: int weixin_erweima
 com.guozha.buy.R$drawable: int wheel_bg
 com.guozha.buy.R$drawable: int wheel_bg_holo
@@ -605,6 +587,7 @@ com.guozha.buy.R$id: int album_button
 com.guozha.buy.R$id: int alipay_confirm_button
 com.guozha.buy.R$id: int answer_question_page
 com.guozha.buy.R$id: int arrow
+com.guozha.buy.R$id: int back_button
 com.guozha.buy.R$id: int calendar_day
 com.guozha.buy.R$id: int calendar_lunar
 com.guozha.buy.R$id: int calendar_solar
@@ -2548,7 +2531,7 @@ com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String goodsName
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String memo
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String goodsImg
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String word
-com.guozha.buy.entry.mpage.season.SeasonAdviceItem: SeasonAdviceItem(int,java.lang.String,java.lang.String,java.lang.String)
+com.guozha.buy.entry.mpage.season.SeasonAdviceItem: SeasonAdviceItem()
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: int getGoodsId()
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: void setGoodsId(int)
 com.guozha.buy.entry.mpage.season.SeasonAdviceItem: java.lang.String getGoodsName()

@@ -6,11 +6,9 @@ import java.net.URLEncoder;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.Time;
 
 import com.alipay.sdk.app.PayTask;
 import com.guozha.buy.util.Keys;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.Rsa;
 
 /**
@@ -22,7 +20,7 @@ public class AlipayManager{
 	
 	public static final int SDK_PAY_FLAG = 1;
 	public static final int SDK_CHECK_FLAG = 2;
-	private static final String NOTIFY_URL = "http://120.24.220.86/PAY_ALI/notify_url.jsp";
+	private static final String NOTIFY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
 	
 	private String mOrderNum;
 	private String mSubject;
@@ -63,7 +61,6 @@ public class AlipayManager{
 
 			@Override
 			public void run() {
-				LogUtil.e("pay_str_result = " + payInfo);
 				// 构造PayTask 对象
 				PayTask alipay = new PayTask(activity);
 				// 调用支付接口，获取支付结果

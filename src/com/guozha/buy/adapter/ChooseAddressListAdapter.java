@@ -55,7 +55,7 @@ public class ChooseAddressListAdapter extends BaseAdapter{
 		AddressInfo addressInfo = mAddressInfos.get(position);
 		nameText.setText(addressInfo.getReceiveName());
 		mobileText.setText(addressInfo.getMobileNo());
-		detailText.setText(addressInfo.getBuildingName() + addressInfo.getAddressId());
+		detailText.setText(addressInfo.getBuildingName() + addressInfo.getDetailAddr());
 		if("1".equals(addressInfo.getDefaultFlag())){
 			defaultText.setVisibility(View.VISIBLE);
 		}else{

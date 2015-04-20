@@ -170,7 +170,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		Intent intent;
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
-			showChooseImageMethodDialog();
+			//showChooseImageMethodDialog();
 			break;
 		case R.id.mine_orderform: 	//我的订单
 			intent = new Intent(getActivity(), MyOrderActivity.class);

@@ -214,12 +214,10 @@ public class MainPageInitDataManager {
 	 * @return
 	 */
 	public TodayInfo getTodayInfo(Handler handler){
-		if(mTodayInfo == null){
-			requestMPageTodayMessage(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
-			}
+		//每次进来都重新请求
+		requestMPageTodayMessage(handler);
+		if(mTodayInfo != null && handler != null){
+			handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
 		}
 		return mTodayInfo;
 	}
@@ -263,9 +261,11 @@ public class MainPageInitDataManager {
 	private void requestCartItemsData(final Handler handler){
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		if(token == null) return;
 		RequestParam paramPath = new RequestParam("cart/list")
-		.setParams("userId", userId);
+		.setParams("userId", userId)
+		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
 		HttpManager.getInstance(mContext).volleyRequestByPost(
 				HttpManager.URL + paramPath, new Listener<String>() {
 			@Override
@@ -381,9 +381,9 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 */
 	private void requestGoodsBriefItemData(final Handler handler, int pageNum, int pageSize){
-		String addressId = "";
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/general/list")
-		.setParams("addressId", addressId)
+		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId))
 		.setParams("pageNum", pageNum)
 		.setParams("pageSize", pageSize);
 		HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL + paramPath, 
@@ -485,7 +485,6 @@ public class MainPageInitDataManager {
 						}else{
 							mPlanMenuStatus = false;
 						}
-						LogUtil.e("getPlanMenus dddd== " + mPlanMenuStatus);
 						if(handler != null){
 							handler.sendEmptyMessage(HAND_INITDATA_MSG_PLAN_MENU_STATUS);
 						}

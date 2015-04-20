@@ -25,7 +25,6 @@ import com.guozha.buy.entry.mpage.season.Season;
 import com.guozha.buy.entry.mpage.season.SeasonAdviceItem;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AutoViewFlipper;
 import com.guozha.buy.view.AutoViewFlipper.OnSlopTouchListener;
 import com.umeng.analytics.MobclickAgent;
@@ -39,9 +38,9 @@ public class SeasonActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SeasonPage";
 	
-	private static final int SEASON_PRE = 0;    //上一个季节
+	//private static final int SEASON_PRE = 0;    //上一个季节
 	private static final int SEASON_CURRENT = 1;//当前季节
-	private static final int SEASON_NEXT = 2;	//下一个季节
+	//private static final int SEASON_NEXT = 2;	//下一个季节
 	
 	private static final int HAND_REQUEST_SEASON_COMPLETED = 0x0001; //请求时令信息完成
 	private static final int HAND_UPDATE_SEASON_PIC = 0X0002;  //更新时令图片
@@ -50,7 +49,6 @@ public class SeasonActivity extends BaseActivity{
 	
 	private List<Season> mSeasonsList;
 	private AutoViewFlipper mAutoViewFilpper;
-	private List<Bitmap> seasonBitmaps;
 	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private List<SeasonAdviceItem> mAdviceItem;
@@ -94,7 +92,6 @@ public class SeasonActivity extends BaseActivity{
 				SeasonAdviceItem item = mAdviceItem.get(position);
 				Intent intent = new Intent(SeasonActivity.this, SearchResultActivity.class);
 				if(item != null){
-					LogUtil.e("word = " + item.getWord());
 					intent.putExtra("KeyWord", item.getWord());
 				}
 				SeasonActivity.this.startActivity(intent);
@@ -151,7 +148,6 @@ public class SeasonActivity extends BaseActivity{
 				if(season == null) continue;
 				String imageUrl = season.getSeasonPicUrl();
 				if(imageUrl == null) continue;
-				LogUtil.e("image_url = " + HttpManager.URL + imageUrl);
 				HttpManager.getInstance(this).volleyImageRequest(
 					HttpManager.URL + imageUrl, new Listener<Bitmap>() {
 						@Override
@@ -161,7 +157,6 @@ public class SeasonActivity extends BaseActivity{
 							msg.obj = response;
 							msg.arg1 = position;
 							handler.sendMessage(msg);
-							LogUtil.e("position = " + position +", ....");
 						}
 				});
 			}

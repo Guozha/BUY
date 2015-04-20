@@ -22,8 +22,6 @@ import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.cart.PreSpecialPayActivity;
 import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.activity.mine.AddAddressActivity;
-import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
@@ -50,7 +48,7 @@ public class PreSpecialDetail extends BaseActivity{
 	private String mGoodsName;
 	private String mGoodsPrice;
 	private String mImageUrl;
-	private String mGoodsDescript;
+	//private String mGoodsDescript;
 	private int mArrivalDays;
 	private String mEndDate;
 	private String mGoodsType;	//01 普通商品 02 特供 03 预售
@@ -126,16 +124,13 @@ public class PreSpecialDetail extends BaseActivity{
 	
 	
 	private void initData(){
-		LogUtil.e("请求数据");
 		if(mGoodsId == -1) {
-			LogUtil.e("mGoodsId == -1");
 			return;
 		}
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/special/detail")
 		.setParams("addressId", addressId)
 		.setParams("goodsId", mGoodsId);
-		LogUtil.e("paramPath = " + paramPath);
 		HttpManager.getInstance(PreSpecialDetail.this).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
@@ -144,7 +139,7 @@ public class PreSpecialDetail extends BaseActivity{
 						mImageUrl = response.getString("goodsImg");
 						mGoodsName = response.getString("goodsName");
 						mGoodsType = response.getString("goodsProp"); //商品性质
-						mGoodsDescript = response.getString("memo");			   	//商品备注
+						//mGoodsDescript = response.getString("memo");			   	//商品备注
 						mUnitPrice = response.getInt("unitPrice");		//单价
 						String unit = response.getString("unit");				//计量单位
 						mEndDate = response.getString("prepareEndDate");	//预售截止日期
@@ -154,7 +149,6 @@ public class PreSpecialDetail extends BaseActivity{
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					LogUtil.e("请求完成");
 					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 				}
 			});

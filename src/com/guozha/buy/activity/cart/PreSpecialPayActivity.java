@@ -20,9 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
-import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.PayOrderMesg;
 import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.cart.PreSpecialOrder;
@@ -33,7 +31,6 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -230,6 +227,7 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 		mItemNameText = (TextView) findViewById(R.id.cart_list_cell_title);
 		mItemMinus = findViewById(R.id.cart_list_cell_minus);
 		mItemNumText = (TextView) findViewById(R.id.cart_list_cell_num);
+		mItemNumText.setText("1份");
 		mItemPlus = findViewById(R.id.cart_list_cell_plus);
 		mItemPriceText = (TextView) findViewById(R.id.cart_list_cell_price);
 		
@@ -384,8 +382,6 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 	 * 设置应付多少款文字
 	 */
 	private void setPayPriceText() {
-		LogUtil.e("mTotalPrice = " + mTotalPrice);
-		LogUtil.e("mServicePrice = " + mServicePrice);
 		int payPrice = mTotalPrice + mServicePrice;
 		if(mAccountRemainChecked){
 			if(payPrice > mAccountRemain){
@@ -418,7 +414,6 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 				payPrice = 0;
 			}
 		}
-		LogUtil.e("payPrice == " + payPrice);
 		mNeedPayPriceText.setText(UnitConvertUtil.getSwitchedMoney(payPrice) + "元");
 	}
 	

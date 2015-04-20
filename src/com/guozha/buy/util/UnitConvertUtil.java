@@ -218,9 +218,6 @@ public class UnitConvertUtil {
 	 * @return
 	 */
 	public static double getPriceByAmount(int amount, int unitPrice, String unit){
-		LogUtil.e("getPrice___amount = " + amount);
-		LogUtil.e("getPrice___unitPrice = " + unitPrice);
-		LogUtil.e("getPrice___unit = " + unit);
 		try{
 			int unitId = Integer.parseInt(unit);
 			if(UNIT1_KE == unitId){

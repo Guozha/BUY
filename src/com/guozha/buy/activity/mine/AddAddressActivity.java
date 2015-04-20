@@ -28,7 +28,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.address.AddressInfo;
-import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;

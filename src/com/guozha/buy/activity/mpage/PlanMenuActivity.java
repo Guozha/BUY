@@ -35,7 +35,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.global.SetWarnTimeActivity;
-import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.mpage.plan.PlanMenu;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
@@ -43,7 +42,6 @@ import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -264,7 +262,6 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			ToastUtil.showToast(PlanMenuActivity.this, "请先选择菜谱");
 			return;
 		}
-		LogUtil.e("menusId end==== " + menus);
 		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
 		.setParams("token", token)
 		.setParams("userId", userId)
@@ -361,9 +358,10 @@ public class PlanMenuActivity extends BaseActivity implements OnCheckedChangeLis
 			
 			PlanMenu planMenu = mPlanMenus.get(i);
 			
+			if(planMenu == null) return;
 			mWeakDays.get(i).setText(UnitConvertUtil.getWeakString(planMenu.getWeek()));
 			
-			if(planMenu == null) return;
+			
 			String imgUrl = planMenu.getFirstMenuImg();
 			isInitStatus = true;
 			mBitmapCache.loadBitmaps(image1, imgUrl);

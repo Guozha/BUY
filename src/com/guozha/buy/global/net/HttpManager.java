@@ -31,8 +31,10 @@ public class HttpManager {
 	/**
 	 * 服务器路径
 	 */
-	//public static final String URL = "http://192.168.2.117:8080/BUY_SERVER/";
-	public static final String URL = "http://120.24.220.86:80/BUY_SERVER/";
+	//测试服
+	//public static final String URL = "http://120.24.220.86:80/BUY_SERVER/";
+	//正式服
+	public static final String URL = "http://120.24.211.45:8080/BUY_SERVER/";
 	public static String IMG_URL = URL;
 	
 	private RequestQueue mQueue;	//请求队列

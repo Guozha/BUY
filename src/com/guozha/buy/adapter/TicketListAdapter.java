@@ -1,11 +1,9 @@
 package com.guozha.buy.adapter;
 
+import java.util.Date;
 import java.util.List;
 
-import u.aly.cu;
-
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +77,8 @@ public class TicketListAdapter extends BaseAdapter{
 			holder.ticketValidDate.setText("菜票有效期 " + validDate);
 		}
 		holder.ticketParValue.setText("￥" + UnitConvertUtil.getSwitchedMoney(marketTicket.getParValue()));
-		if(currentTime < marketTicket.getValidDate().getTime()){
+		Date validateDate = marketTicket.getValidDate();
+		if(validateDate != null && currentTime < validateDate.getTime()){
 			holder.ticketEffective.setVisibility(View.GONE);
 		}else{
 			holder.ticketEffective.setVisibility(View.VISIBLE);

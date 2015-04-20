@@ -54,7 +54,7 @@ public class SearchResultListAdapter extends BaseAdapter{
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_item_small_cell, null);
 			holder = new ViewHolder();
-			holder.buyedIcon = convertView.findViewById(R.id.vegetable_cell_icon);
+			//holder.buyedIcon = convertView.findViewById(R.id.vegetable_cell_icon);
 	    	holder.image = (ImageView) convertView.findViewById(R.id.vegetable_cell_image);
 	    	holder.productName = (TextView) convertView.findViewById(R.id.vegetable_cell_name);
 	    	holder.price = (TextView) convertView.findViewById(R.id.vegetable_cell_price);
@@ -75,7 +75,7 @@ public class SearchResultListAdapter extends BaseAdapter{
 	}
 	
 	static class ViewHolder{
-		private View buyedIcon;
+		//private View buyedIcon;
 		private ImageView image;
 		private TextView productName;
 		private TextView price;

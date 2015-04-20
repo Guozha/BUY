@@ -14,14 +14,10 @@ import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.activity.cart.PlanceOrderActivity;
 import com.guozha.buy.activity.mine.AddAddressActivity;
-import com.guozha.buy.activity.mine.SharePraiseActivity;
-import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.global.QuickMenu;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -142,10 +138,7 @@ public class ConfigManager{
 	public List<QuickMenu> getQuickMenus(){
 		if(mQuickMenus != null) return mQuickMenus;
 		String quickStr = sharedPreference.getString("quickMenusId", null);
-		if(quickStr == null) {
-			//TODO 这里前面的5个ID不能变化，必须是（0-4）
-			quickStr = "0:干货,1:蔬菜,2:肉类,3:水果,4:水产";
-		}
+		if(quickStr == null) return null;
 		String[] menus = quickStr.split(",");
 		List<QuickMenu> quickMenus = new ArrayList<QuickMenu>();
 		QuickMenu quickMenu;
@@ -451,7 +444,6 @@ public class ConfigManager{
 		setUserId(-1);
 		setUserPwd(null);
 		setUserToken(null);
-		//setMobileNum(null);
 		setChoosedAddressId(-1);
 	}
 

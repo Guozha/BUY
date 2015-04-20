@@ -12,7 +12,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -28,7 +27,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -165,8 +163,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				ItemSaleInfoPage itemSaleInfoPage = gson.fromJson(response, new TypeToken<ItemSaleInfoPage>() { }.getType());
-				mMaxDateNum = itemSaleInfoPage.getTotalCount();
 				if(itemSaleInfoPage == null) return;
+				mMaxDateNum = itemSaleInfoPage.getTotalCount();
 				itemSaleInfoPage.getPageCount();
 				List<ItemSaleInfo> vegetables = itemSaleInfoPage.getGoodsList();
 				if(vegetables == null) return;

@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -71,12 +70,11 @@ public class SplashActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
 		mHasInit = false;
 		initJPush();
 		//友盟统计设置为debug模式
 		//TODO 在发布的时候注意修改
-		MobclickAgent.setDebugMode(true);
+		MobclickAgent.setDebugMode(false);
 		//禁止默认的页面统计方式
 		MobclickAgent.openActivityDurationTrack(false);
 	}
@@ -87,7 +85,7 @@ public class SplashActivity extends Activity{
 	private void initJPush(){
 		//极光推送相关
 		//TODO 注意发布的时候修改Debug模式
-		JPushInterface.setDebugMode(true); //设置为Debug模式
+		JPushInterface.setDebugMode(false); //设置为Debug模式
 		JPushInterface.init(this); //初始化极光SDK
 		
 		//自定义Notification样式
@@ -207,7 +205,7 @@ public class SplashActivity extends Activity{
 						ConfigManager.getInstance().setUserToken(userToken);
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 					}else{
-						String msg = response.getString("msg");
+						//String msg = response.getString("msg");
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

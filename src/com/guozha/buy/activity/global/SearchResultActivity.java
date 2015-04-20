@@ -29,7 +29,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -164,12 +163,10 @@ public class SearchResultActivity extends BaseActivity{
 					}
 					if(searchResult.getGoodsList() != null){
 						mSearchResultList = searchResult.getGoodsList();
-						LogUtil.e("mSearchResultSize == " + mSearchResultList.size());
 						handler.sendEmptyMessage(HAND_RESULT_DATA_COMPLETED);
 					}
 					if(searchResult.getMenuList() != null){
 						mSearchRelateList = searchResult.getMenuList();
-						LogUtil.e("mSearchRecipeSize == " + mSearchRelateList.size());
 						handler.sendEmptyMessage(HAND_RELATE_DATA_COMPLETED);
 					}
 				}

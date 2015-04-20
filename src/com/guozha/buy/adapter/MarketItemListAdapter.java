@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +11,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.market.ListVegetableActivity;
-import com.guozha.buy.activity.mine.AddAddressActivity;
-import com.guozha.buy.dialog.CustomDialog;
-import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.umeng.socialize.sso.CustomHandler;
 
 /**
  * 逛菜场主界面条目列表
@@ -101,7 +93,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		    	itemVegetable.setOnClickListener(this);
 		    	holderEntry = new HolderEntry();
 		    	holderEntry.itemVegetable = itemVegetable;
-		    	holderEntry.buyedIcon = itemVegetable.findViewById(R.id.vegetable_cell_icon);
+		    	//holderEntry.buyedIcon = itemVegetable.findViewById(R.id.vegetable_cell_icon);
 		    	holderEntry.image = (ImageView) itemVegetable.findViewById(R.id.vegetable_cell_image);
 		    	holderEntry.productName = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_name);
 		    	holderEntry.price = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_price);
@@ -198,7 +190,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	
 	static class HolderEntry{
 		private View itemVegetable;
-		private View buyedIcon;
+		//private View buyedIcon;
 		private ImageView image;
 		private TextView productName;
 		private TextView price;

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guozha.buy"
     android:versionCode="300000"
-    android:versionName="3.0" >
+    android:versionName="3.0.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -34,9 +34,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     
 	<!-- TODO 测试相关，发布时需要注释掉 -->
-	<instrumentation
+	<!-- <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.guozha.buy" />
+        android:targetPackage="com.guozha.buy" /> -->
 	    
     <application
         android:allowBackup="true"
@@ -46,7 +46,7 @@
         android:theme="@style/AppTheme" >
         
         <!-- TODO 测试相关，发布时需要注释掉 -->
-        <uses-library android:name="android.test.runner" />
+        <!--  <uses-library android:name="android.test.runner" /> -->
         
         <!-- *****************************   业务逻辑Activity BEGIN   **************************** -->
         

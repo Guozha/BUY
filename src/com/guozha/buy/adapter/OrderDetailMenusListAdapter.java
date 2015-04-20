@@ -2,16 +2,13 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,8 +20,6 @@ import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
 public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
@@ -60,7 +55,6 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 		if(expandListData == null) return 0;
 		List<OrderDetailGoods> orderDetailMenus = expandListData.getMenuslist();
 		if(orderDetailMenus == null) return 0;
-		LogUtil.e("childCount == " + orderDetailMenus.size());
 		return orderDetailMenus.size();
 	}
 
@@ -239,13 +233,14 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
+					/*
 					try {
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
-						LogUtil.e("msg === " + msg);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
+					*/
 				}
 		});
 	}

@@ -204,6 +204,8 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		.setParams("amount", quantity)
 		.setParams("token", token)
 		.setParams("addressId", addressId);
+		
+		LogUtil.e(HttpManager.URL + paramPath);
 		HttpManager.getInstance(this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

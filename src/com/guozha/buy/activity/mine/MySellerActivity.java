@@ -76,9 +76,6 @@ public class MySellerActivity extends BaseActivity{
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mSellers = gson.fromJson(response, new TypeToken<List<Seller>>() { }.getType());
-					for(int i = 0; i < mSellers.size(); i++){
-						Seller seller = mSellers.get(i);
-					}
 					handler.sendEmptyMessage(HAND_SELLER_LIST_COMPLETED);
 				}
 			});

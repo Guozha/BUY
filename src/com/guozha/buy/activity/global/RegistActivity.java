@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
@@ -170,7 +169,6 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 			public void onResponse(JSONObject response) {
 				try {
 					String returnCode = response.getString("returnCode").trim();
-					LogUtil.e("returnCode == " + returnCode);
 					if("1".equals(returnCode)){
 						ToastUtil.showToast(RegistActivity.this, "注册成功");
 						//存储密码
@@ -178,7 +176,6 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 						requestLogin(phoneNum, pwd);
 					}else if("2".equals(returnCode)){
 						mEditInvitation.setText("");
-						LogUtil.e("返回了2哦");
 						CustomDialog invitDialog = 
 								new CustomDialog(RegistActivity.this, R.layout.dialog_invitnum_error);
 						invitDialog.getWindow();

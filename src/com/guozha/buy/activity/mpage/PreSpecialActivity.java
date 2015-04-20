@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -20,18 +19,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.activity.cart.PlanceOrderActivity;
 import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.adapter.PreSpecialGridAdapter;
-import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialItem;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -118,6 +113,8 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String token = ConfigManager.getInstance().getUserToken(PreSpecialActivity.this);
+				if(token == null) return;
 				int addressId = ConfigManager.getInstance().getChoosedAddressId(PreSpecialActivity.this);
 				if(addressId == -1) return;
 				String prop = mPreSpecialItems.get(position).getGoodsProp();
@@ -166,8 +163,6 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		
-		LogUtil.e("pageSize == " + mTotalPageSize);
-		LogUtil.e("currentPage == " + mPageNum);
 		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;  
 		//所有的条目已经和最大数相等，则移除底部的view
 		if(totalItemCount >= mMaxDataNum){	//加了viewHead和viewFooter

@@ -22,7 +22,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.mine.SettingActivity;
-import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.fragment.MainTabFragmentMPage;

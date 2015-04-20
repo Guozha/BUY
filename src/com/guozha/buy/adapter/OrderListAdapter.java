@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.util.ConstantUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 订单列表适配器

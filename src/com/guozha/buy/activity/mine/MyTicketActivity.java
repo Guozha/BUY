@@ -18,7 +18,6 @@ import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -86,7 +85,6 @@ public class MyTicketActivity extends BaseActivity{
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				mMarketTickets = gson.fromJson(response, new TypeToken<List<MarketTicket>>() { }.getType());
-				LogUtil.e("mMarketTicket.size  == " + mMarketTickets.size());
 				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 			}
 		});

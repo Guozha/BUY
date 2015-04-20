@@ -81,7 +81,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		GoodsListItem goodsItem = mGoodsListItems.get(position);
 		holder.goodsName.setText(goodsItem.getGoodsName());
 		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getUnitPrice()) +
-				"元/" + UnitConvertUtil.getSwitchedWeight(1000, goodsItem.getUnit()));
+				"元/" + UnitConvertUtil.getSwichedUnit(1000, goodsItem.getUnit()));
 		holder.deleteButton.setTag(goodsItem.getMyGoodsId());
 		holder.goodsIcon.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(holder.goodsIcon, goodsItem.getGoodsImg());
