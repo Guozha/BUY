@@ -144,6 +144,7 @@ public class ChooseMenuActivity extends BaseActivity{
 	 * 设置快捷入口配置文件
 	 */
 	private void setQuickMenuConfig() {
+		if(mChooseMenuListAdapter == null) return;
 		List<Integer> choosedMenusId = mChooseMenuListAdapter.getChoosedMenusPosition();
 		if(choosedMenusId == null) return;
 		

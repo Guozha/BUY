@@ -20,7 +20,7 @@ public class AlipayManager{
 	
 	public static final int SDK_PAY_FLAG = 1;
 	public static final int SDK_CHECK_FLAG = 2;
-	private static final String NOTIFY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
+	public static String NOTIFY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
 	
 	private String mOrderNum;
 	private String mSubject;

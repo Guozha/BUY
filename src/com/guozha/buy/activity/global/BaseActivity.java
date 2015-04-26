@@ -1,5 +1,9 @@
 package com.guozha.buy.activity.global;
 
+import com.guozha.buy.debug.DebugActivity;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.ToastUtil;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
@@ -84,6 +88,15 @@ public abstract class BaseActivity extends Activity{
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		//测试服提示
+		if(HttpManager.URL.equals(DebugActivity.TEST_URL)){
+			ToastUtil.showToast(this, "当前是测试服");
+		}
 	}
 	
 	@Override

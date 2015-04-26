@@ -644,6 +644,7 @@ com.guozha.buy.R$id: int cookbook_using_time
 com.guozha.buy.R$id: int cooke_book_name
 com.guozha.buy.R$id: int create_new_class
 com.guozha.buy.R$id: int create_newfolder_name
+com.guozha.buy.R$id: int current_http_path_text
 com.guozha.buy.R$id: int custom_weight_area
 com.guozha.buy.R$id: int delete_button
 com.guozha.buy.R$id: int description
@@ -707,6 +708,7 @@ com.guozha.buy.R$id: int login_pwd_clear
 com.guozha.buy.R$id: int login_pwd_input_area
 com.guozha.buy.R$id: int login_tofindpwd_tv
 com.guozha.buy.R$id: int login_toregist_tv
+com.guozha.buy.R$id: int logo_icon
 com.guozha.buy.R$id: int main_mpage_add_plan_icon
 com.guozha.buy.R$id: int main_mpage_add_plan_text
 com.guozha.buy.R$id: int main_viewpage
@@ -915,9 +917,6 @@ com.guozha.buy.R$id: int select_weight_wheelview
 com.guozha.buy.R$id: int seller_descript
 com.guozha.buy.R$id: int seller_visit_count
 com.guozha.buy.R$id: int server_pice_title
-com.guozha.buy.R$id: int set_alarm_button
-com.guozha.buy.R$id: int set_alarm_hour
-com.guozha.buy.R$id: int set_alarm_minute
 com.guozha.buy.R$id: int set_warn_list
 com.guozha.buy.R$id: int setting_item_text
 com.guozha.buy.R$id: int setting_list
@@ -930,6 +929,7 @@ com.guozha.buy.R$id: int status_msg
 com.guozha.buy.R$id: int step_descrip
 com.guozha.buy.R$id: int step_img
 com.guozha.buy.R$id: int step_num
+com.guozha.buy.R$id: int switch_http_path
 com.guozha.buy.R$id: int switch_warn
 com.guozha.buy.R$id: int ticket_effective
 com.guozha.buy.R$id: int ticket_for_price

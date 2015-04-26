@@ -68,7 +68,7 @@ public class SearchResultListAdapter extends BaseAdapter{
 		mBitmapCache.loadBitmaps(holder.image, itemSaleInfo.getGoodsImg());
 		holder.productName.setText(itemSaleInfo.getGoodsName());
 		holder.price.setText(
-				UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "/" +
+				UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "元/" +
 				UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 		
 		return convertView;

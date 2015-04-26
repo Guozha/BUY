@@ -267,7 +267,10 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		    //初始化ActionBar	
 			initActionBar(getActivity().getActionBar());
 			int addressId =ConfigManager.getInstance().getChoosedAddressId();
-			if(mDataManager != null && mCurrentAddressId != addressId){
+			if(mDataManager == null){
+				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+			}
+			if(mCurrentAddressId != addressId){
 				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
 				mDataManager.getCartItems(handler);
 				mCurrentAddressId = addressId;

@@ -157,7 +157,7 @@ public class PreSpecialDetail extends BaseActivity{
 	
 	private void updateView(){
 		HttpManager.getInstance(PreSpecialDetail.this).volleyImageRequest(
-				HttpManager.IMG_URL + mImageUrl, mHeadImage, R.drawable.default_icon_large, R.drawable.default_icon_large);
+				HttpManager.URL + mImageUrl, mHeadImage, R.drawable.default_icon_large, R.drawable.default_icon_large);
 		mPreSpecialTitle.setText(mGoodsName);
 		mPriceText.setText(mGoodsPrice);
 		mEndDayText.setText("截止时间：" + mEndDate);

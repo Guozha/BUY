@@ -24,11 +24,14 @@ import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
+import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
@@ -279,6 +282,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
+			//测试服提示
 		}else{
 			//View不可见
 			

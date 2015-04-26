@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
+import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.util.Misc;
@@ -36,6 +37,8 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	private void initView(){
 		mVersionNameText = (TextView) findViewById(R.id.about_our_version_name);
 		mVersionNameText.setText("爱掌勺" + ConfigManager.getInstance().getVersionName());
+		
+		findViewById(R.id.logo_icon).setOnClickListener(this);
 		
 		findViewById(R.id.about_our_weixin).setOnClickListener(this);
 		findViewById(R.id.about_our_weibo).setOnClickListener(this);
@@ -76,6 +79,27 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 		case R.id.about_our_website:
 			
 			break;
+		case R.id.logo_icon:
+			turnToDebug();
+			break;
+		}
+	}
+	
+	private int mClickIconTimes = 0;
+	private long mBeginTimeMillis;
+	private void turnToDebug(){
+		if(System.currentTimeMillis() - mBeginTimeMillis > 4000){
+			mClickIconTimes = 0;
+		}
+		if(mClickIconTimes == 0){
+			mBeginTimeMillis = System.currentTimeMillis();
+		}
+		if(mClickIconTimes <= 10){
+			mClickIconTimes++;
+		}else{
+			mClickIconTimes = 0;
+			Intent intent = new Intent(AboutOurActivity.this, DebugActivity.class);
+			startActivity(intent);
 		}
 	}
 	

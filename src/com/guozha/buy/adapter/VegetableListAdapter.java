@@ -90,15 +90,22 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 		ItemSaleInfo[] itemSaleInfo = mVegetables.get(position);
 		for(int i = 0; i < itemSaleInfo.length; i++){
 			ItemSaleInfo saleInfo = itemSaleInfo[i];
-			if(saleInfo == null || holder.itemHolder == null) continue;
+			if(holder.itemHolder == null) continue;
 			ViewItemHolder itemHolder = holder.itemHolder.get(i);
-			holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());
-			String imgUrl = saleInfo.getGoodsImg();
-			mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
-			itemHolder.vegetableName.setText(saleInfo.getGoodsName());
-			itemHolder.vegetablePrice.setText(
-					UnitConvertUtil.getSwitchedMoney(saleInfo.getUnitPrice()) + "元/" +
-					UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
+			if(saleInfo == null){
+				itemHolder.vegetableName.setText("");
+				itemHolder.vegetablePrice.setText("");
+				itemHolder.vegetableIcon.setImageDrawable(null);
+			}else{
+				holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());
+				String imgUrl = saleInfo.getGoodsImg();
+				itemHolder.vegetableIcon.setImageResource(R.drawable.default_icon);
+				mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
+				itemHolder.vegetableName.setText(saleInfo.getGoodsName());
+				itemHolder.vegetablePrice.setText(
+						UnitConvertUtil.getSwitchedMoney(saleInfo.getUnitPrice()) + "元/" +
+						UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
+			}
 		}
 		
 		return convertView;

@@ -210,10 +210,11 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private void updateHeadView(){
 		if(mGoodsDetails == null) return;
 		HttpManager.getInstance(this).volleyImageRequest(
-				HttpManager.IMG_URL + mGoodsDetails.getGoodsImg(), 
+				HttpManager.URL + mGoodsDetails.getGoodsImg(), 
 				mDetailImage, R.drawable.default_icon, R.drawable.default_icon);
 		mDetailName.setText(mGoodsDetails.getGoodsName());
-		mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/斤");
+		mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/" 
+				+ UnitConvertUtil.getSwichedUnit(1000, mGoodsDetails.getUnit()));
 		mDetailDescript.setText(mGoodsDetails.getMemo());
 		setTextColor();
 	}
