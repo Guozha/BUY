@@ -418,11 +418,17 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 									}else{
 										mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
 									}
+								}else{
+									ToastUtil.showToast(PayActivity.this, "订单信息获取失败");
 								}
+							}else{
+								ToastUtil.showToast(PayActivity.this, "获取的支付码未定义");
 							}
 						}else{
 							ToastUtil.showToast(PayActivity.this, payValidateResult.getMsg());
 						}
+					}else{
+						ToastUtil.showToast(PayActivity.this, "验证订单失败");
 					}
 				}
 		});
