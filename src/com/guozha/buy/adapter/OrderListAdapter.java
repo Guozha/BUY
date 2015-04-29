@@ -27,6 +27,7 @@ public class OrderListAdapter extends BaseAdapter{
 	private SimpleDateFormat mDateFormat;
 	
 	public OrderListAdapter(Context context, List<OrderSummary> orderSummary){
+		if(context == null) return;
 		mInflater = LayoutInflater.from(context);
 		mOrderSummary = orderSummary;
 		mDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");

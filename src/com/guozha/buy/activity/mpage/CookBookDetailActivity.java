@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +25,6 @@ import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.DetailMaterialListAdapter;
 import com.guozha.buy.adapter.DetailSeasonListAdapter;
-import com.guozha.buy.adapter.DetailStepListAdapter;
 import com.guozha.buy.entry.mpage.plan.CookBookDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
@@ -30,6 +32,8 @@ import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ConstantUtil;
+import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -43,12 +47,16 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	private static final String PAGE_NAME = "CookBookDetailPage";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
+	private static final int HAND_DATA_STEP_COMPLETED = 0x0002;
 	
 	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private ListView mMaterialList;//食材
 	private ListView mSeasonList;  //调料
-	private ListView mStepList;    //做法步骤
+	//private ListView mStepList;    //做法步骤
+	private WebView mStepWebView;
+	
+	private String mStepWebUrl;
 	
 	private TextView mCookBookName;
 	private TextView mCookBookDifficu;
@@ -65,6 +73,9 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateView();
+				break;
+			case HAND_DATA_STEP_COMPLETED:
+				setWebViewStep();
 				break;
 			}
 		};
@@ -91,8 +102,15 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	private void initView(){
 		mMaterialList = (ListView) findViewById(R.id.cookbook_detail_material);
 		mSeasonList = (ListView) findViewById(R.id.cookbook_detail_seasoning);
-		mStepList = (ListView) findViewById(R.id.cookbook_detail_step);
-		
+		//mStepList = (ListView) findViewById(R.id.cookbook_detail_step);
+		mStepWebView = (WebView) findViewById(R.id.cookbook_detail_step_webview);
+		mStepWebView.setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
 		//解决scrollview进入时位置不在最顶部问题
 		/*
 		mMaterialList.post(new Runnable() {
@@ -110,6 +128,10 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		
 		findViewById(R.id.cookbook_add_cart_button).setOnClickListener(this);
 		findViewById(R.id.cookbook_add_collection_button).setOnClickListener(this);
+	}
+	
+	private void setWebViewStep(){
+		mStepWebView.loadUrl(HttpManager.URL + mStepWebUrl);
 	}
 	
 	@Override
@@ -205,6 +227,26 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 				}
 		});
+		
+		/*
+		 * 3.0.1 菜谱步骤新接口
+		 */
+		paramPath = new RequestParam("menuplan/step");
+		paramPath.setParams("menuId", mMenuId);
+		LogUtil.e("请求参数。。。" + paramPath);
+		HttpManager.getInstance(CookBookDetailActivity.this).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						mStepWebUrl = response.getString("picDesc");
+						LogUtil.e("请求到的地址是.." + mStepWebUrl);
+						handler.sendEmptyMessage(HAND_DATA_STEP_COMPLETED);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
 	}
 	
 	private void updateView(){
@@ -213,18 +255,29 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		mCookBookDifficu.setText("难度:" + ConstantUtil.getCookHardType(mCookBookDetail.getHardType()));
 		mCookBookUsingTime.setText("用时:" + mCookBookDetail.getCookieTime() + "分钟");
 		mCookBookDescrip.setText(mCookBookDetail.getMenuDesc());
+		
 		HttpManager.getInstance(this).volleyImageRequest(
 				HttpManager.URL + mCookBookDetail.getMenuImg(), new Listener<Bitmap>() {
 			@Override
 			public void onResponse(Bitmap response) {
 				if(response != null){
+					int[] screenDimen = DimenUtil.getScreenWidthAndHeight(CookBookDetailActivity.this);
+					ViewGroup.LayoutParams lp = mCookBookImage.getLayoutParams();
+					lp.width = screenDimen[0];
+					lp.height = screenDimen[0] * 2 / 3; //要保证图片比例是2：3
+					mCookBookImage.setLayoutParams(lp);
 					mCookBookImage.setImageBitmap(response);
 				}
 			}
 		});
+		
+		/**
+		HttpManager.getInstance(CookBookDetailActivity.this).volleyImageRequest(
+				HttpManager.URL + mCookBookDetail.getMenuImg(), mCookBookImage, R.drawable.default_icon_large, R.drawable.default_icon_large);
+		**/
 		mMaterialList.setAdapter(new DetailMaterialListAdapter(this, mCookBookDetail.getMenuGoods()));
 		mSeasonList.setAdapter(new DetailSeasonListAdapter(this, mCookBookDetail.getSeasonings()));
-		mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps(), mBitmapCache));
+		//mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps(), mBitmapCache));
 	}
 	
 	@Override

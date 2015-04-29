@@ -30,6 +30,7 @@ import com.guozha.buy.entry.cart.PointTime;
 import com.guozha.buy.entry.cart.ShowTime;
 import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.address.AddressInfo;
+import com.guozha.buy.fragment.MainTabFragmentCart;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
@@ -136,11 +137,16 @@ public class PlanceOrderActivity extends BaseActivity{
 
 		
 		findViewById(R.id.plance_order_button).setOnClickListener(new OnClickListener() {
-			
+			private long beginTimeMillis;
 			@Override
 			public void onClick(View v) {
-				//提交菜场订单
-				requestSubmitOrder();
+				if(System.currentTimeMillis() - beginTimeMillis > 3000){
+					beginTimeMillis = System.currentTimeMillis();
+					//提交菜场订单
+					requestSubmitOrder();
+				}else{
+					ToastUtil.showToast(PlanceOrderActivity.this, "请不要重复提交");
+				}
 			}
 		});
 		

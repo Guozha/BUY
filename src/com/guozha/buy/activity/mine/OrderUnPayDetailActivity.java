@@ -137,7 +137,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 					intent.putExtra("orderComeIn", true);
 					startActivityForResult(intent, REQUEST_CODE);
 				}else{		//特供预售
-					if(!mExpandListDatas.isEmpty()){
+					if(mExpandListDatas != null && !mExpandListDatas.isEmpty()){
 						ExpandListData expandListData = mExpandListDatas.get(0);
 						Intent intent = new Intent(OrderUnPayDetailActivity.this, PreSpecialPayActivity.class);
 						intent.putExtra("goodsId", expandListData.getId());

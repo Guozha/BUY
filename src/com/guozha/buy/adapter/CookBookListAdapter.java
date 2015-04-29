@@ -23,6 +23,7 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
@@ -130,7 +131,7 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 		.setParams("id", menuId)
 		.setParams("addressId", addressId)
 		.setParams("amount", 1)
-		.setParams("productType", "02");
+		.setParams("productType", "01");
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override

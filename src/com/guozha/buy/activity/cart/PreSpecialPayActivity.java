@@ -286,6 +286,8 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 	private boolean mBeanChecked = false;				//是否选择使用菜豆
 	private boolean mAccountRemainChecked = false;		//是否选择使用账户余额
 	
+	private long mBeginTimeMillis;
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -335,10 +337,15 @@ public class PreSpecialPayActivity extends BaseActivity implements OnClickListen
 			setPayPriceText();
 			break;
 		case R.id.prespecial_pay_button:
-			if("02".equals(mGoodsType)){
-				requestAddOrder("order/insertSupply"); 		//特供
-			}else{ 
-				requestAddOrder("order/insertPrepare");		//预售
+			if(System.currentTimeMillis() - mBeginTimeMillis > 3000){
+				mBeginTimeMillis = System.currentTimeMillis();
+				if("02".equals(mGoodsType)){
+					requestAddOrder("order/insertSupply"); 		//特供
+				}else{ 
+					requestAddOrder("order/insertPrepare");		//预售
+				}
+			}else{
+				ToastUtil.showToast(PreSpecialPayActivity.this, "请不要重复提交");
 			}
 			break;
 		}

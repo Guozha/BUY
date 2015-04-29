@@ -13,9 +13,8 @@
 	<ImageView 
 	    android:id="@+id/cookbook_imag"
 	    android:layout_width="match_parent"
-	    android:layout_height="205dip"
-	    android:background="@drawable/main_recipe_background_blue"
-	    android:scaleType="centerInside"
+	    android:layout_height="wrap_content"
+	    android:scaleType="centerCrop"
 	    android:src="@drawable/default_icon"/>
 	
 	<RelativeLayout 
@@ -120,7 +119,8 @@
 	</RelativeLayout>
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="0dip"
+	    android:layout_weight="1"
 	    android:orientation="vertical"
 	    android:background="@color/color_app_base_6"
 	    android:paddingLeft="18dip"
@@ -172,11 +172,20 @@
 	        android:text="做法"
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_16sp"/>
+
+	    <!-- 
 	    <com.guozha.buy.view.MultiListView 
 	        android:id="@+id/cookbook_detail_step"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:divider="@null"/>
+	    -->
 	</LinearLayout>
+	
+    <WebView 
+    android:id="@+id/cookbook_detail_step_webview"
+    android:layout_width="match_parent"
+    android:background="@color/color_app_base_6"
+    android:layout_height="wrap_content"/>
 </LinearLayout>
 </ScrollView>

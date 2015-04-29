@@ -32,6 +32,7 @@ import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -123,6 +124,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mMesgServerMoney = (TextView) view.findViewById(R.id.cart_server_money);
 		mMesgFreeGap = (TextView) view.findViewById(R.id.cart_free_money_gap);
 		view.findViewById(R.id.cart_to_order_button).setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				requestTurnChooseTime();

@@ -273,6 +273,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 	
+	private long mBeginTimeMillis;
+	
 	@Override
 	public void onClick(View view) {
 		Intent intent;
@@ -288,7 +290,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.pay_button:
-			requestPayCheck();
+			if(System.currentTimeMillis() - mBeginTimeMillis > 3000){
+				mBeginTimeMillis = System.currentTimeMillis();
+				requestPayCheck();
+			}else{
+				ToastUtil.showToast(PayActivity.this, "请不要重复提交");
+			}
 			break;
 		case R.id.pay_can_use_money:   //扣除余额选择
 			if(mCanUserMoneyViewIcon == null) return;
