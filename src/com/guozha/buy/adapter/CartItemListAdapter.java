@@ -296,6 +296,10 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(mContext);
 		if(token == null) return;
+		if(mCartItems == null || mCartItems.size() <= groupId) {
+			ToastUtil.showToast(mContext, "删除出错");
+			return;
+		}
 		RequestParam paramPath = new RequestParam("cart/delete")
 		.setParams("cartId", mCartItems.get(groupId).getCartId())
 		.setParams("userId", userId)

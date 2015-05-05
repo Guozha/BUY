@@ -233,7 +233,6 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		 */
 		paramPath = new RequestParam("menuplan/step");
 		paramPath.setParams("menuId", mMenuId);
-		LogUtil.e("请求参数。。。" + paramPath);
 		HttpManager.getInstance(CookBookDetailActivity.this).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
