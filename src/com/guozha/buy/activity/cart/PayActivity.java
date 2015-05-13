@@ -33,10 +33,13 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
+import com.guozha.buy.server.WXpayManager;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
+import com.guozha.buy.util.WXPayUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class PayActivity extends BaseActivity implements OnClickListener{
 	
@@ -450,19 +453,34 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(PayActivity.this, "请选择支付方式");
 			return;
 		}
+		String tag;
 		switch (mPayWay) {
 		case ZHI_FU_BAO:
-			String tag = String.valueOf(payZhifubaoIcon.getTag());
+			tag = String.valueOf(payZhifubaoIcon.getTag());
 			if("1".equals(tag)){
-				ToastUtil.showToast(PayActivity.this, "支付了");
-				AlipayManager alipayManager = new AlipayManager(mPayOrderMesg.getOrderNo(), mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", mPayOrderMesg.getMemo(), UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
+				AlipayManager alipayManager = new AlipayManager(
+						mPayOrderMesg.getOrderNo(), 
+						mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", 
+						mPayOrderMesg.getMemo(), 
+						UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
 				alipayManager.requestPay(this, mHandler);
 			}else{
 				ToastUtil.showToast(PayActivity.this, "请选择支付方式");
 			}
 			break;
 		case WEI_XIN:
-			
+			tag = String.valueOf(payWeixinIcon.getTag());
+			if("1".equals(tag)){
+				WXpayManager wxpayManager = new WXpayManager(
+						this, 
+						mPayOrderMesg.getOrderNo(), 
+						mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", 
+						mPayOrderMesg.getMemo(), 
+						mPayOrderMesg.getPayPrice());
+				wxpayManager.requestPay();
+			}else{
+				ToastUtil.showToast(PayActivity.this, "请选择支付方式");
+			}
 			break;
 		case HUO_DAO_FU_KUAN:
 			
