@@ -636,7 +636,7 @@ com.guozha.buy.R$id: int cookbook_collection_button
 com.guozha.buy.R$id: int cookbook_description
 com.guozha.buy.R$id: int cookbook_detail_material
 com.guozha.buy.R$id: int cookbook_detail_seasoning
-com.guozha.buy.R$id: int cookbook_detail_step
+com.guozha.buy.R$id: int cookbook_detail_step_webview
 com.guozha.buy.R$id: int cookbook_difficulty
 com.guozha.buy.R$id: int cookbook_imag
 com.guozha.buy.R$id: int cookbook_name

@@ -11,5 +11,4 @@ public class AlarmReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		Toast.makeText(context, "闹钟响了！", Toast.LENGTH_SHORT).show();
 	}
-
 }

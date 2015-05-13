@@ -19,8 +19,6 @@ public class PlanMenuAlarm {
 
 	public PlanMenuAlarm(Context context){
 		mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
-		
 	}
 	
 	/**

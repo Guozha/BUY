@@ -273,7 +273,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 	
-	private long mBeginTimeMillis;
+	private long mBeginTimeMillis; //防止重复提交的时间记录
 	
 	@Override
 	public void onClick(View view) {
