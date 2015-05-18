@@ -44,10 +44,9 @@ public class MainActivity extends FragmentActivity{
 	
 	private int mCurrentItem = 0;
 	
-	private Fragment mFragment;
-	private MyFragmentPagerAdapter mFragmentPagerAdapter;
-	
 	private ClickTabItemListener mClickTabItemListener;
+	
+	private Fragment mCurrentFragment;
 	
 	private List<MainTabBaseFragment> mFragments = new ArrayList<MainTabBaseFragment>();
 	
@@ -91,9 +90,11 @@ public class MainActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initFragment();
+		//添加一个fragment
+		getSupportFragmentManager().beginTransaction()
+			.add(R.id.fragment_container, mFragments.get(0)).commit();
 		initTabIndicators();
 		initData();
-		initViewPager();
 		initYoumeng();
 	}
 	
@@ -156,13 +157,9 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化Fragment
 	 */
 	private void initFragment(){
-		MainTabFragmentMPage mPage = new MainTabFragmentMPage();
-		mPage.setOnClickMarketMenuListener(clickMarketMenuListener);
-		MainTabFragmentCart mCart = new MainTabFragmentCart();
-		mCart.setOnClickMarketMenuListener(clickMarketMenuListener);
-		mFragments.add(new MainTabFrag);
+		mFragments.add(new MainTabFragmentMPage());
 		mFragments.add(new MainTabFragmentMarket());
-		mFragments.add(mCart);
+		mFragments.add(new MainTabFragmentCart());
 		mFragments.add(new MainTabFragmentMine());
 	}
 	
@@ -192,7 +189,6 @@ public class MainActivity extends FragmentActivity{
 		two.setOnClickListener(mClickTabItemListener);
 		three.setOnClickListener(mClickTabItemListener);
 		four.setOnClickListener(mClickTabItemListener);
-
 		one.setIconAlpha(1.0f);
 	}
 	
@@ -223,9 +219,7 @@ public class MainActivity extends FragmentActivity{
 	 * @param view
 	 */
 	private void clickTab(View view) {
-		
 		resetOtherTabs();
-		
 		switch (view.getId()) {
 		case R.id.id_indicator_one:
 			mCurrentItem = 0;
@@ -241,48 +235,10 @@ public class MainActivity extends FragmentActivity{
 			break;
 		}
 		mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
-		mCustomViewPager.setCurrentItem(mCurrentItem, false);
-	}
-
-	/**
-	 * 主界面Fragment适配器
-	 * @author lixiaoqiang
-	 *
-	 */
-	class MyFragmentPagerAdapter extends FragmentPagerAdapter{
-
-		public MyFragmentPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		@Override
-		public int getCount() {
-			return mFragments.size();
-		}
 		
-		@Override
-		public Fragment getItem(int position) {
-			return mFragments.get(position);
-		}
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		//友盟统计
-		MobclickAgent.onResume(this);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		//友盟统计
-		MobclickAgent.onPause(this);
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+		getSupportFragmentManager().beginTransaction()
+			.replace(R.id.fragment_container, mFragments.get(mCurrentItem))
+			.addToBackStack(null).commit();
 	}
 	
 	/**
@@ -354,7 +310,8 @@ public class MainActivity extends FragmentActivity{
 				resetOtherTabs();
 				mCurrentItem = 0;
 				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
-				mCustomViewPager.setCurrentItem(mCurrentItem, false);
+				
+				//TODO 返回到主Fragment
 				return true;
 			}
 			long currentTimes = System.currentTimeMillis();

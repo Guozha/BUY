@@ -7,12 +7,12 @@
     android:background="@color/app_base_nomal_background_color"
     android:orientation="vertical" >
 
-	<fragment 
-	    android:id="@+id/main_fragment"
+	<FrameLayout
+	    android:id="@+id/fragment_container"
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="1"/>
-    
+	
 	<View 
 	    android:layout_width="match_parent"
 	    android:layout_height="1px"
