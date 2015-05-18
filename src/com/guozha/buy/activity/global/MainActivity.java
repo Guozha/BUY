@@ -32,8 +32,6 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
-import com.guozha.buy.view.CustomViewPager;
-import com.guozha.buy.view.CustomViewPager.OnInterceptTouchListener;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -46,7 +44,7 @@ public class MainActivity extends FragmentActivity{
 	
 	private int mCurrentItem = 0;
 	
-	private CustomViewPager mCustomViewPager;
+	private Fragment mFragment;
 	private MyFragmentPagerAdapter mFragmentPagerAdapter;
 	
 	private ClickTabItemListener mClickTabItemListener;
@@ -87,23 +85,6 @@ public class MainActivity extends FragmentActivity{
 			}
 		};
 	};
-	
-	/** 弱引用
-	 private WeakReferenceHandler<MainActivity> weakHandler = new MyWeakReferenceHandler(this);
-	
-		static class MyWeakReferenceHandler extends WeakReferenceHandler<MainActivity>{
-
-		public MyWeakReferenceHandler(MainActivity ref) {
-			super(ref);
-		}
-
-		@Override
-		protected void handleMessage(MainActivity ref, Message msg) {
-			
-		}
-		
-		}
-	 */
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -168,51 +149,18 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化ViewPager
 	 */
 	private void initViewPager() {
-		mCustomViewPager = (CustomViewPager) findViewById(R.id.main_viewpage);
-		mCustomViewPager.setOnPageChangeListener(new PagerChangeListener());
-		mFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-		mCustomViewPager.setAdapter(mFragmentPagerAdapter);
-		
-		/*
-		 *本来是为了解决滑动冲突的 
-		 */
-		mCustomViewPager.setOnInterceptTouchListener(new OnInterceptTouchListener() {
-			
-			@Override
-			public boolean interceptTouched(float eventX, float eventY) {
-				/*
-				MainTabFragmentMPage mainTabFragmentMPage = 
-						(MainTabFragmentMPage) mFragments.get(0);
-				if(mainTabFragmentMPage == null) return true;
-				int beginYPoint = mainTabFragmentMPage.getBeginYPoint();
-				int endYPoint = mainTabFragmentMPage.getEndYPoint();
-				if(eventY < beginYPoint || (eventY > endYPoint)) return true;
-				*/
-				return false;
-			}
-		});
-		
+	
 	}
 	
 	/**
 	 * 初始化Fragment
 	 */
 	private void initFragment(){
-		ClickMarketMenuListener clickMarketMenuListener = new ClickMarketMenuListener() {
-			
-			@Override
-			public void clickMarketMenu() {
-				resetOtherTabs();
-				mCurrentItem = 1;
-				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
-				mCustomViewPager.setCurrentItem(mCurrentItem, false);
-			}
-		};
 		MainTabFragmentMPage mPage = new MainTabFragmentMPage();
 		mPage.setOnClickMarketMenuListener(clickMarketMenuListener);
 		MainTabFragmentCart mCart = new MainTabFragmentCart();
 		mCart.setOnClickMarketMenuListener(clickMarketMenuListener);
-		mFragments.add(mPage);
+		mFragments.add(new MainTabFrag);
 		mFragments.add(new MainTabFragmentMarket());
 		mFragments.add(mCart);
 		mFragments.add(new MainTabFragmentMine());
@@ -318,79 +266,11 @@ public class MainActivity extends FragmentActivity{
 		}
 	}
 	
-	/**
-	 * 界面滑动监听
-	 * @author lixiaoqiang
-	 *
-	 */
-	class PagerChangeListener implements OnPageChangeListener{	
-
-		@Override
-		public void onPageScrollStateChanged(int status) { 
-			switch (status) {
-			case 0:
-				//mCoverPlateView.setVisibility(View.GONE);
-				break;
-			case 1:
-				//mCoverPlateView.setVisibility(View.VISIBLE);
-				break;
-			case 2:
-				//mCoverPlateView.setVisibility(View.GONE);
-				break;
-			}
-		}
-
-		@Override
-		public void onPageSelected(int position) {			
-			ChangeColorIconWithText choosed = mTabIndicators.get(position);
-			for(int i = 0; i < mTabIndicators.size(); i++){
-				mTabIndicators.get(i).setChoosed(false);
-			}
-			choosed.setChoosed(true);
-			mCurrentItem = position;
-			invalidateOptionsMenu();
-		}
-
-		@Override
-		public void onPageScrolled(int position, 
-				float positionOffset, int positionOffsetPixels) {
-			if(positionOffset <= 0) return;
-			ChangeColorIconWithText left = mTabIndicators.get(position);
-			ChangeColorIconWithText right = mTabIndicators.get(position + 1);
-			if(right == null) return;			
-			left.setIconAlpha(1 - positionOffset);
-			right.setIconAlpha(positionOffset);
-		}
-	}
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		//友盟统计
-		//TODO 注意给其他界面添加友盟统计事件
-		//官方参考 http://dev.umeng.com/analytics/android-doc/integration
 		MobclickAgent.onResume(this);
-		
-		
-		
-		//TODO 友盟自定义事件，在onResume()后面调用，不要放在onCreate()中
-		//1、计数事件（统计次数）
-		//MobclickAgent.onEvent(this, "test_event_1");
-		//2、统计行为属性发生次数
-		/*
-		 *  HashMap<String,String> map = new HashMap<String,String>();
-			map.put("type","book");
-			map.put("quantity","3"); 
-			MobclickAgent.onEvent(mContext, "purchase", map);  
-		 */
-		//3、计算事件
-		/*
-		int duration = 12000; //开发者需要自己计算音乐播放时长
-	　　 Map<String, String> map_value = new HashMap<String, String>();
-	　　 map_value.put("type", "popular");
-	　　 map_value.put("artist", "JJLin");	
-		MobclickAgent.onEventValue(this, "music", map_value, duration);
-		*/
 	}
 	
 	@Override
@@ -402,7 +282,6 @@ public class MainActivity extends FragmentActivity{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//TODO
 		return super.onCreateOptionsMenu(menu);
 	}
 	
