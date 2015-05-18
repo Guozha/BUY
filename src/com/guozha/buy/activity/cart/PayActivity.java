@@ -34,10 +34,12 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.PayResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.util.WXPayUtil;
+import com.guozha.buy.wxapi.WXPayEntryActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
@@ -477,7 +479,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 						mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", 
 						mPayOrderMesg.getMemo(), 
 						mPayOrderMesg.getPayPrice());
-				wxpayManager.requestPay();
+				wxpayManager.requestPay(this);
 			}else{
 				ToastUtil.showToast(PayActivity.this, "请选择支付方式");
 			}

@@ -6,13 +6,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParser;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Xml;
+
+import com.guozha.buy.activity.CustomApplication;
+import com.guozha.buy.activity.cart.PayActivity;
 import com.guozha.buy.util.Keys;
 import com.guozha.buy.util.MD5;
 import com.guozha.buy.util.WXPayUtil;
@@ -26,12 +33,13 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  *
  */
 public class WXpayManager {
-	public static String NOTIFY_URL = "http://121.40.35.3/test";
+	//TODO 注意，这里是测试服地址
+	public static String NOTIFY_URL = "http://120.24.220.86:9999/PAY_WECHAT/notify_url.jsp";
 	private IWXAPI payApi;
 	
 	private String mOrderNum;
 	private String mSubject;
-	private String mBody;
+	//private String mBody;
 	private int mTotalPrice;
 	private PayReq req;
 	private Map<String,String> resultunifiedorder;
@@ -39,8 +47,10 @@ public class WXpayManager {
 	public WXpayManager(Context context, String orderNum, String subject, String body, int price){
 		mOrderNum = orderNum;
 		mSubject = subject;
-		mBody = body;
+		//mBody = body;
 		mTotalPrice = price;
+		
+		mTotalPrice = 1;
 		req = new PayReq();
 		payApi = WXAPIFactory.createWXAPI(context, null);
 		//第一步：注册APP_ID
@@ -50,9 +60,10 @@ public class WXpayManager {
 	/**
 	 * 请求支付
 	 */
-	public void requestPay(){
+	
+	public void requestPay(Context context){
 		//第二步：生成预支付订单
-		GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
+		GetPrepayIdTask getPrepayId = new GetPrepayIdTask(context);
 		getPrepayId.execute();
 	}
 	
@@ -67,7 +78,8 @@ public class WXpayManager {
 		    xml.append("</xml>");
 	        List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
 			packageParams.add(new BasicNameValuePair("appid", Keys.APP_ID));  
-			packageParams.add(new BasicNameValuePair("body", mSubject + "," + mBody));   //商品描述
+			packageParams.add(new BasicNameValuePair("body", mSubject));   //商品描述
+			//packageParams.add(new BasicNameValuePair("body","bodytest"));   //商品描述
 			packageParams.add(new BasicNameValuePair("mch_id", Keys.MCH_ID));  //商户号
 			packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));	 //随机字符串
 			packageParams.add(new BasicNameValuePair("notify_url", NOTIFY_URL));  //通知地址
@@ -75,12 +87,10 @@ public class WXpayManager {
 			packageParams.add(new BasicNameValuePair("spbill_create_ip","127.0.0.1"));   //终端ip
 			packageParams.add(new BasicNameValuePair("total_fee", String.valueOf(mTotalPrice)));			//总金额，单位分
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));			//交易类型
-	
 			String sign = genPackageSign(packageParams);
 			packageParams.add(new BasicNameValuePair("sign", sign));		//签名
-	
 		    String xmlstring =toXml(packageParams);
-			return xmlstring;
+			return new String(xmlstring.toString().getBytes(), "ISO8859-1");
 		} catch (Exception e) {
 			return null;
 		}
@@ -125,9 +135,14 @@ public class WXpayManager {
 	
 
 	private class GetPrepayIdTask extends AsyncTask<Void, Void, Map<String,String>> {
-		
+		private ProgressDialog dialog;
+		private Context context;
+		public GetPrepayIdTask(Context context){
+			this.context = context;
+		}
 		@Override
 		protected void onPreExecute() {
+			dialog = ProgressDialog.show(context, "提示", "正在获取预支付订单...");
 		}
 
 		@Override
@@ -138,6 +153,9 @@ public class WXpayManager {
 			//第四步：调用微信客户端进行支付
 			payApi.registerApp(Keys.APP_ID);
 			payApi.sendReq(req);
+			if (dialog != null) {
+				dialog.dismiss();
+			}
 		}
 
 		@Override

@@ -15232,59 +15232,59 @@ com.guozha.buy.activity.cart.PayActivity -> com.guozha.buy.activity.cart.PayActi
     int mBeanrDeduct -> R
     com.guozha.buy.activity.cart.PayActivity$PayWay mPayWay -> S
     int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PayActivity$PayWay -> T
-    169:186:void onCreate(android.os.Bundle) -> onCreate
-    194:226:void initView() -> c
-    232:274:void initData() -> d
-    281:323:void onClick(android.view.View) -> onClick
-    332:369:void setPayPriceText() -> e
-    375:443:void requestPayCheck() -> f
-    449:474:void requestPayMoney() -> g
-    486:490:void payWayExchangeIcon(android.widget.ImageView,com.guozha.buy.activity.cart.PayActivity$PayWay) -> a
-    496:505:void clearPayWayIcon() -> h
-    514:522:boolean exchangeIcon(android.widget.ImageView) -> a
-    528:538:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    542:546:void onResume() -> onResume
-    550:554:void onPause() -> onPause
-    92:92:android.os.Handler access$0(com.guozha.buy.activity.cart.PayActivity) -> a
-    88:88:java.util.List access$1(com.guozha.buy.activity.cart.PayActivity) -> b
-    83:83:android.view.View access$2(com.guozha.buy.activity.cart.PayActivity) -> c
-    84:84:android.view.View access$3(com.guozha.buy.activity.cart.PayActivity) -> d
-    85:85:android.view.View access$4(com.guozha.buy.activity.cart.PayActivity) -> e
-    86:86:android.view.View access$5(com.guozha.buy.activity.cart.PayActivity) -> f
-    68:68:android.widget.TextView access$6(com.guozha.buy.activity.cart.PayActivity) -> g
-    62:62:int access$7(com.guozha.buy.activity.cart.PayActivity) -> h
-    69:69:android.widget.TextView access$8(com.guozha.buy.activity.cart.PayActivity) -> i
-    56:56:int access$9(com.guozha.buy.activity.cart.PayActivity) -> j
-    78:78:android.widget.TextView access$10(com.guozha.buy.activity.cart.PayActivity) -> k
-    448:448:void access$11(com.guozha.buy.activity.cart.PayActivity) -> l
-    53:53:boolean access$12(com.guozha.buy.activity.cart.PayActivity) -> m
-    65:65:int access$13(com.guozha.buy.activity.cart.PayActivity) -> n
-    77:77:android.widget.ImageView access$14(com.guozha.buy.activity.cart.PayActivity) -> o
-    75:75:android.widget.TextView access$15(com.guozha.buy.activity.cart.PayActivity) -> p
-    66:66:int access$16(com.guozha.buy.activity.cart.PayActivity) -> q
-    331:331:void access$17(com.guozha.buy.activity.cart.PayActivity) -> r
-    62:62:void access$18(com.guozha.buy.activity.cart.PayActivity,int) -> a
-    56:56:void access$19(com.guozha.buy.activity.cart.PayActivity,int) -> b
-    88:88:void access$20(com.guozha.buy.activity.cart.PayActivity,java.util.List) -> a
-    41:41:int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PayActivity$PayWay() -> a
-    90:90:void access$22(com.guozha.buy.activity.cart.PayActivity,com.guozha.buy.entry.cart.PayOrderMesg) -> a
-    90:90:com.guozha.buy.entry.cart.PayOrderMesg access$23(com.guozha.buy.activity.cart.PayActivity) -> s
+    174:191:void onCreate(android.os.Bundle) -> onCreate
+    199:231:void initView() -> c
+    237:279:void initData() -> d
+    286:328:void onClick(android.view.View) -> onClick
+    337:374:void setPayPriceText() -> e
+    380:448:void requestPayCheck() -> f
+    454:494:void requestPayMoney() -> g
+    506:510:void payWayExchangeIcon(android.widget.ImageView,com.guozha.buy.activity.cart.PayActivity$PayWay) -> a
+    516:525:void clearPayWayIcon() -> h
+    534:542:boolean exchangeIcon(android.widget.ImageView) -> a
+    548:558:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    562:566:void onResume() -> onResume
+    570:574:void onPause() -> onPause
+    97:97:android.os.Handler access$0(com.guozha.buy.activity.cart.PayActivity) -> a
+    93:93:java.util.List access$1(com.guozha.buy.activity.cart.PayActivity) -> b
+    88:88:android.view.View access$2(com.guozha.buy.activity.cart.PayActivity) -> c
+    89:89:android.view.View access$3(com.guozha.buy.activity.cart.PayActivity) -> d
+    90:90:android.view.View access$4(com.guozha.buy.activity.cart.PayActivity) -> e
+    91:91:android.view.View access$5(com.guozha.buy.activity.cart.PayActivity) -> f
+    73:73:android.widget.TextView access$6(com.guozha.buy.activity.cart.PayActivity) -> g
+    67:67:int access$7(com.guozha.buy.activity.cart.PayActivity) -> h
+    74:74:android.widget.TextView access$8(com.guozha.buy.activity.cart.PayActivity) -> i
+    61:61:int access$9(com.guozha.buy.activity.cart.PayActivity) -> j
+    83:83:android.widget.TextView access$10(com.guozha.buy.activity.cart.PayActivity) -> k
+    453:453:void access$11(com.guozha.buy.activity.cart.PayActivity) -> l
+    58:58:boolean access$12(com.guozha.buy.activity.cart.PayActivity) -> m
+    70:70:int access$13(com.guozha.buy.activity.cart.PayActivity) -> n
+    82:82:android.widget.ImageView access$14(com.guozha.buy.activity.cart.PayActivity) -> o
+    80:80:android.widget.TextView access$15(com.guozha.buy.activity.cart.PayActivity) -> p
+    71:71:int access$16(com.guozha.buy.activity.cart.PayActivity) -> q
+    336:336:void access$17(com.guozha.buy.activity.cart.PayActivity) -> r
+    67:67:void access$18(com.guozha.buy.activity.cart.PayActivity,int) -> a
+    61:61:void access$19(com.guozha.buy.activity.cart.PayActivity,int) -> b
+    93:93:void access$20(com.guozha.buy.activity.cart.PayActivity,java.util.List) -> a
+    46:46:int[] $SWITCH_TABLE$com$guozha$buy$activity$cart$PayActivity$PayWay() -> a
+    95:95:void access$22(com.guozha.buy.activity.cart.PayActivity,com.guozha.buy.entry.cart.PayOrderMesg) -> a
+    95:95:com.guozha.buy.entry.cart.PayOrderMesg access$23(com.guozha.buy.activity.cart.PayActivity) -> s
 com.guozha.buy.activity.cart.PayActivity$1 -> com.guozha.buy.activity.cart.e:
     com.guozha.buy.activity.cart.PayActivity this$0 -> a
-    94:164:void handleMessage(android.os.Message) -> handleMessage
+    99:169:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.activity.cart.PayActivity$2 -> com.guozha.buy.activity.cart.f:
     com.guozha.buy.activity.cart.PayActivity this$0 -> a
-    242:248:void onResponse(org.json.JSONObject) -> a
+    247:253:void onResponse(org.json.JSONObject) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PayActivity$3 -> com.guozha.buy.activity.cart.g:
     com.guozha.buy.activity.cart.PayActivity this$0 -> a
-    269:272:void onResponse(java.lang.String) -> a
+    274:277:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PayActivity$3$1 -> com.guozha.buy.activity.cart.h:
     com.guozha.buy.activity.cart.PayActivity$3 this$1 -> d
 com.guozha.buy.activity.cart.PayActivity$4 -> com.guozha.buy.activity.cart.i:
     com.guozha.buy.activity.cart.PayActivity this$0 -> a
-    411:440:void onResponse(java.lang.String) -> a
+    416:445:void onResponse(java.lang.String) -> a
     1:1:void onResponse(java.lang.Object) -> a
 com.guozha.buy.activity.cart.PayActivity$4$1 -> com.guozha.buy.activity.cart.j:
     com.guozha.buy.activity.cart.PayActivity$4 this$1 -> d
@@ -19260,6 +19260,38 @@ com.guozha.buy.server.AlipayManager$1 -> com.guozha.buy.e.b:
     java.lang.String val$payInfo -> c
     android.os.Handler val$handler -> d
     65:73:void run() -> run
+com.guozha.buy.server.WXpayManager -> com.guozha.buy.e.c:
+    java.lang.String NOTIFY_URL -> a
+    com.tencent.mm.sdk.openapi.IWXAPI payApi -> b
+    java.lang.String mOrderNum -> c
+    java.lang.String mSubject -> d
+    int mTotalPrice -> e
+    com.tencent.mm.sdk.modelpay.PayReq req -> f
+    java.util.Map resultunifiedorder -> g
+    66:68:void requestPay(android.content.Context) -> a
+    75:95:java.lang.String genProductArgs() -> a
+    100:101:java.lang.String genNonceStr() -> b
+    108:119:java.lang.String genPackageSign(java.util.List) -> a
+    123:132:java.lang.String toXml(java.util.List) -> b
+    187:215:java.util.Map decodeXml(java.lang.String) -> a
+    222:238:void genPayReq() -> c
+    241:241:long genTimeStamp() -> d
+    245:256:java.lang.String genAppSign(java.util.List) -> c
+    45:45:void access$0(com.guozha.buy.server.WXpayManager,java.util.Map) -> a
+    221:221:void access$1(com.guozha.buy.server.WXpayManager) -> a
+    38:38:com.tencent.mm.sdk.openapi.IWXAPI access$2(com.guozha.buy.server.WXpayManager) -> b
+    44:44:com.tencent.mm.sdk.modelpay.PayReq access$3(com.guozha.buy.server.WXpayManager) -> c
+    74:74:java.lang.String access$4(com.guozha.buy.server.WXpayManager) -> d
+com.guozha.buy.server.WXpayManager$GetPrepayIdTask -> com.guozha.buy.e.c$a:
+    android.app.ProgressDialog dialog -> b
+    android.content.Context context -> c
+    com.guozha.buy.server.WXpayManager this$0 -> a
+    145:146:void onPreExecute() -> onPreExecute
+    150:159:void onPostExecute(java.util.Map) -> a
+    163:164:void onCancelled() -> onCancelled
+    169:181:java.util.Map doInBackground(java.lang.Void[]) -> a
+    1:1:void onPostExecute(java.lang.Object) -> onPostExecute
+    1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.guozha.buy.share.ShareManager -> com.guozha.buy.f.a:
     java.lang.String COMMEN_TITILE -> a
     java.lang.String COMMEN_CONTENT -> b
@@ -19341,6 +19373,9 @@ com.guozha.buy.util.Keys -> com.guozha.buy.h.f:
     java.lang.String SELLER -> b
     java.lang.String RSA_PRIVATE -> c
     java.lang.String RSA_PUBLIC -> d
+    java.lang.String APP_ID -> e
+    java.lang.String MCH_ID -> f
+    java.lang.String API_KEY -> g
 com.guozha.buy.util.LogUtil -> com.guozha.buy.h.g:
     java.lang.String TAG -> a
     boolean DEBUG -> b
@@ -19348,11 +19383,18 @@ com.guozha.buy.util.LogUtil -> com.guozha.buy.h.g:
     24:26:void d(java.lang.String) -> a
     30:32:void e(java.lang.String,java.lang.String) -> b
     36:38:void e(java.lang.String) -> b
-com.guozha.buy.util.Misc -> com.guozha.buy.h.h:
+com.guozha.buy.util.MD5 -> com.guozha.buy.h.h:
+    10:25:java.lang.String getMessageDigest(byte[]) -> a
+com.guozha.buy.util.MD5Util -> com.guozha.buy.h.i:
+    java.lang.String[] hexDigits -> a
+    8:12:java.lang.String byteArrayToHexString(byte[]) -> a
+    16:21:java.lang.String byteToHexString(byte) -> a
+    25:37:java.lang.String MD5Encode(java.lang.String,java.lang.String) -> a
+com.guozha.buy.util.Misc -> com.guozha.buy.h.j:
     17:25:boolean isAppInstalled(android.content.Context,java.lang.String) -> a
-com.guozha.buy.util.NetManager -> com.guozha.buy.h.i:
+com.guozha.buy.util.NetManager -> com.guozha.buy.h.k:
     21:28:boolean isNetConnection(android.content.Context) -> a
-com.guozha.buy.util.PayResult -> com.guozha.buy.h.j:
+com.guozha.buy.util.PayResult -> com.guozha.buy.h.l:
     java.lang.String resultStatus -> a
     java.lang.String result -> b
     java.lang.String memo -> c
@@ -19361,12 +19403,12 @@ com.guozha.buy.util.PayResult -> com.guozha.buy.h.j:
     45:45:java.lang.String getResultStatus() -> a
     52:52:java.lang.String getMemo() -> b
     59:59:java.lang.String getResult() -> c
-com.guozha.buy.util.RegularUtil -> com.guozha.buy.h.k:
+com.guozha.buy.util.RegularUtil -> com.guozha.buy.h.m:
     21:23:boolean regularPhoneNum(java.lang.String) -> a
     33:35:boolean regularNumber(java.lang.String) -> b
     45:50:boolean regularUrl(java.lang.String) -> c
     59:67:boolean isEmailValid(java.lang.String) -> d
-com.guozha.buy.util.Result -> com.guozha.buy.h.l:
+com.guozha.buy.util.Result -> com.guozha.buy.h.n:
     java.util.Map sResultStatus -> e
     java.lang.String mResult -> f
     java.lang.String resultStatus -> a
@@ -19378,7 +19420,7 @@ com.guozha.buy.util.Result -> com.guozha.buy.h.l:
     68:89:boolean checkSign(java.lang.String) -> a
     93:105:org.json.JSONObject string2JSON(java.lang.String,java.lang.String) -> a
     109:124:java.lang.String getContent(java.lang.String,java.lang.String,java.lang.String) -> a
-com.guozha.buy.util.Rsa -> com.guozha.buy.h.m:
+com.guozha.buy.util.Rsa -> com.guozha.buy.h.o:
     java.lang.String ALGORITHM -> b
     java.lang.String SIGN_ALGORITHMS -> a
     33:37:java.security.PublicKey getPublicKeyFromX509(java.lang.String,java.lang.String) -> c
@@ -19386,14 +19428,14 @@ com.guozha.buy.util.Rsa -> com.guozha.buy.h.m:
     63:82:java.lang.String sign(java.lang.String,java.lang.String) -> b
     85:105:java.lang.String getMD5(java.lang.String) -> a
     109:128:boolean doCheck(java.lang.String,java.lang.String,java.lang.String) -> a
-com.guozha.buy.util.SignUtils -> com.guozha.buy.h.n:
+com.guozha.buy.util.SignUtils -> com.guozha.buy.h.p:
     java.lang.String ALGORITHM -> a
     java.lang.String SIGN_ALGORITHMS -> b
     java.lang.String DEFAULT_CHARSET -> c
     17:34:java.lang.String sign(java.lang.String,java.lang.String) -> a
-com.guozha.buy.util.ToastUtil -> com.guozha.buy.h.o:
+com.guozha.buy.util.ToastUtil -> com.guozha.buy.h.q:
     19:21:void showToast(android.content.Context,java.lang.String) -> a
-com.guozha.buy.util.UnitConvertUtil -> com.guozha.buy.h.p:
+com.guozha.buy.util.UnitConvertUtil -> com.guozha.buy.h.r:
     int UNIT1_KE -> a
     int UNIT2_HE -> b
     int UNIT3_KUAI -> c
@@ -19420,7 +19462,27 @@ com.guozha.buy.util.UnitConvertUtil -> com.guozha.buy.h.p:
     180:201:java.lang.String getWeakString(int) -> b
     210:210:double getBeanMoney(int) -> c
     222:228:double getPriceByAmount(int,int,java.lang.String) -> a
-com.guozha.buy.util.XMLUtil -> com.guozha.buy.h.q:
+com.guozha.buy.util.WXPayUtil -> com.guozha.buy.h.s:
+    java.lang.String TAG -> a
+    int MAX_DECODE_PICTURE_SIZE -> b
+    55:68:byte[] bmpToByteArray(android.graphics.Bitmap,boolean) -> a
+    72:92:byte[] httpGet(java.lang.String) -> a
+    97:121:byte[] httpPost(java.lang.String,java.lang.String) -> a
+    163:181:org.apache.http.client.HttpClient getNewHttpClient() -> a
+    186:227:byte[] readFromFile(java.lang.String,int,int) -> a
+    232:307:android.graphics.Bitmap extractThumbNail(java.lang.String,int,int,boolean) -> a
+    311:332:java.lang.String sha1(java.lang.String) -> b
+    337:344:java.util.List stringsToList(java.lang.String[]) -> a
+com.guozha.buy.util.WXPayUtil$SSLSocketFactoryEx -> com.guozha.buy.h.s$a:
+    javax.net.ssl.SSLContext sslContext -> a
+    152:152:java.net.Socket createSocket(java.net.Socket,java.lang.String,int,boolean) -> createSocket
+    157:157:java.net.Socket createSocket() -> createSocket
+com.guozha.buy.util.WXPayUtil$SSLSocketFactoryEx$1 -> com.guozha.buy.h.t:
+    com.guozha.buy.util.WXPayUtil$SSLSocketFactoryEx this$1 -> a
+    135:135:java.security.cert.X509Certificate[] getAcceptedIssuers() -> getAcceptedIssuers
+    140:140:void checkClientTrusted(java.security.cert.X509Certificate[],java.lang.String) -> checkClientTrusted
+    144:144:void checkServerTrusted(java.security.cert.X509Certificate[],java.lang.String) -> checkServerTrusted
+com.guozha.buy.util.XMLUtil -> com.guozha.buy.h.u:
     29:65:java.util.Map getConfigXml(java.io.InputStream) -> a
 com.guozha.buy.view.AnimatedExpandableListView -> com.guozha.buy.view.AnimatedExpandableListView:
     int ANIMATION_DURATION -> a
@@ -19910,6 +19972,13 @@ com.guozha.buy.view.scroll.adapter.WheelViewAdapter -> com.guozha.buy.view.scrol
     void registerDataSetObserver(android.database.DataSetObserver) -> a
     void unregisterDataSetObserver(android.database.DataSetObserver) -> b
 com.guozha.buy.wxapi.WXEntryActivity -> com.guozha.buy.wxapi.WXEntryActivity:
+com.guozha.buy.wxapi.WXPayEntryActivity -> com.guozha.buy.wxapi.WXPayEntryActivity:
+    int RESULT_CODE -> a
+    com.tencent.mm.sdk.openapi.IWXAPI api -> b
+    23:28:void onCreate(android.os.Bundle) -> onCreate
+    32:35:void onNewIntent(android.content.Intent) -> onNewIntent
+    39:39:void onReq(com.tencent.mm.sdk.modelbase.BaseReq) -> onReq
+    58:59:void onResp(com.tencent.mm.sdk.modelbase.BaseResp) -> onResp
 com.sina.sso.RemoteSSO -> com.c.a.a:
     java.lang.String getPackageName() -> a
     java.lang.String getActivityName() -> b

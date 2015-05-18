@@ -2613,6 +2613,8 @@ com.guozha.buy.view.scroll.WheelView: int getItemHeight()
 com.guozha.buy.view.scroll.WheelView: com.guozha.buy.view.scroll.ItemsRange getItemsRange()
 com.guozha.buy.wxapi.WXEntryActivity
 com.guozha.buy.wxapi.WXEntryActivity: WXEntryActivity()
+com.guozha.buy.wxapi.WXPayEntryActivity
+com.guozha.buy.wxapi.WXPayEntryActivity: WXPayEntryActivity()
 com.tencent.connect.UserInfo
 com.tencent.connect.UserInfo: java.lang.String GRAPH_OPEN_ID
 com.tencent.connect.UserInfo: UserInfo(android.content.Context,com.tencent.connect.auth.QQToken)
