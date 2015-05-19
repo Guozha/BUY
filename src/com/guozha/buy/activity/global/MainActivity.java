@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -20,6 +19,7 @@ import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.mine.SettingActivity;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
+import com.guozha.buy.fragment.MainTabFragmentFound;
 import com.guozha.buy.fragment.MainTabFragmentMPage;
 import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
@@ -40,8 +40,6 @@ public class MainActivity extends FragmentActivity{
 	private int mCurrentItem = 0;
 	
 	private ClickTabItemListener mClickTabItemListener;
-	
-	private Fragment mCurrentFragment;
 	
 	private List<MainTabBaseFragment> mFragments = new ArrayList<MainTabBaseFragment>();
 	
@@ -146,7 +144,7 @@ public class MainActivity extends FragmentActivity{
 	 */
 	private void initFragment(){
 		mFragments.add(new MainTabFragmentMPage());
-		mFragments.add(null);
+		mFragments.add(new MainTabFragmentFound());
 		mFragments.add(new MainTabFragmentMarket());
 		mFragments.add(new MainTabFragmentCart());
 		mFragments.add(new MainTabFragmentMine());
@@ -191,6 +189,9 @@ public class MainActivity extends FragmentActivity{
 				break;
 			case R.id.id_indicator_four:
 				currentItem = 3;
+				break;
+			case R.id.id_indicator_five:
+				currentItem = 4;
 				break;
 			default:
 				currentItem = 0;
