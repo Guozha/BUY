@@ -3,10 +3,11 @@
 
     <string name="app_name">爱掌勺</string>
 
-    <string name="activity_main_tab1_title">首页</string>
-    <string name="activity_main_tab2_title">逛菜场</string>
-    <string name="activity_main_tab3_title">购物车</string>
-    <string name="activity_main_tab4_title">我的</string>
+    <string name="activity_main_tab1_title">精选</string>
+    <string name="activity_main_tab2_title">发现</string>
+    <string name="activity_main_tab3_title">逛菜场</string>
+    <string name="activity_main_tab4_title">购物车</string>
+    <string name="activity_main_tab5_title">我的</string>
     
     <string name="list_paging_bottom_text">数据全部加载完毕</string>
     

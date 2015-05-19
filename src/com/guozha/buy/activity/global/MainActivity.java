@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +17,6 @@ import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.mine.SettingActivity;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
@@ -31,8 +27,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.share.ShareManager;
 import com.guozha.buy.util.ToastUtil;
-import com.guozha.buy.view.ChangeColorIconWithText;
-import com.umeng.analytics.MobclickAgent;
+import com.guozha.buy.view.TabBarItem;
 import com.umeng.update.UmengUpdateAgent;
 
 /**
@@ -50,8 +45,8 @@ public class MainActivity extends FragmentActivity{
 	
 	private List<MainTabBaseFragment> mFragments = new ArrayList<MainTabBaseFragment>();
 	
-	private List<ChangeColorIconWithText> mTabIndicators = 
-			new ArrayList<ChangeColorIconWithText>();
+	private List<TabBarItem> mTabIndicators = 
+			new ArrayList<TabBarItem>();
 	private MainPageInitDataManager mInitDataManager;
 	
 	private Handler handler = new Handler(){
@@ -70,7 +65,7 @@ public class MainActivity extends FragmentActivity{
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
 				if(!mTabIndicators.isEmpty()){
-					mTabIndicators.get(2).setTextNum(mInitDataManager.getCartItemsNum());
+					//mTabIndicators.get(2).setTextNum(mInitDataManager.getCartItemsNum());
 				}
 				fragment = mFragments.get(2);
 				break;
@@ -145,19 +140,13 @@ public class MainActivity extends FragmentActivity{
 	public Handler getHandler(){
 		return handler;
 	}
-
-	/**
-	 * 初始化ViewPager
-	 */
-	private void initViewPager() {
-	
-	}
 	
 	/**
 	 * 初始化Fragment
 	 */
 	private void initFragment(){
 		mFragments.add(new MainTabFragmentMPage());
+		mFragments.add(null);
 		mFragments.add(new MainTabFragmentMarket());
 		mFragments.add(new MainTabFragmentCart());
 		mFragments.add(new MainTabFragmentMine());
@@ -169,27 +158,15 @@ public class MainActivity extends FragmentActivity{
 	 * 初始化Tab
 	 */
 	private void initTabIndicators(){
-		ChangeColorIconWithText one = 
-				(ChangeColorIconWithText) findViewById(R.id.id_indicator_one);
-		mTabIndicators.add(one);
-		ChangeColorIconWithText two = 
-				(ChangeColorIconWithText) findViewById(R.id.id_indicator_two);
-		
-		mTabIndicators.add(two);
-		ChangeColorIconWithText three = 
-				(ChangeColorIconWithText) findViewById(R.id.id_indicator_three);
-		three.setCloseDrawNum(false);
-		mTabIndicators.add(three);
-		ChangeColorIconWithText four = 
-				(ChangeColorIconWithText) findViewById(R.id.id_indicator_four);
-		mTabIndicators.add(four);
-		
+		mTabIndicators.add((TabBarItem)findViewById(R.id.id_indicator_one));
+		mTabIndicators.add((TabBarItem)findViewById(R.id.id_indicator_two));
+		mTabIndicators.add((TabBarItem)findViewById(R.id.id_indicator_three));
+		mTabIndicators.add((TabBarItem)findViewById(R.id.id_indicator_four));
+		mTabIndicators.add((TabBarItem)findViewById(R.id.id_indicator_five));
 		mClickTabItemListener = new ClickTabItemListener();
-		one.setOnClickListener(mClickTabItemListener);
-		two.setOnClickListener(mClickTabItemListener);
-		three.setOnClickListener(mClickTabItemListener);
-		four.setOnClickListener(mClickTabItemListener);
-		one.setIconAlpha(1.0f);
+		for(int i = 0; i < mTabIndicators.size(); i++){
+			mTabIndicators.get(i).setOnClickListener(mClickTabItemListener);
+		}
 	}
 	
 	/**
@@ -200,45 +177,43 @@ public class MainActivity extends FragmentActivity{
 	class ClickTabItemListener implements OnClickListener{
 		@Override
 		public void onClick(View view) {
-			clickTab(view);
+			int viewId = view.getId();
+			int currentItem;
+			switch (view.getId()) {
+			case R.id.id_indicator_one:
+				currentItem = 0;
+				break;
+			case R.id.id_indicator_two:
+				currentItem = 1;
+				break;
+			case R.id.id_indicator_three:
+				currentItem = 2;
+				break;
+			case R.id.id_indicator_four:
+				currentItem = 3;
+				break;
+			default:
+				currentItem = 0;
+				break;
+			}
+			changeTabRefreshView(currentItem);
 		}
 	}
 	
 	/**
-	 * 重置其他的TabIndicator的颜色
-	 */
-	private void resetOtherTabs() {
-		for (int i = 0; i < mTabIndicators.size(); i++) {
-			mTabIndicators.get(i).setIconAlpha(0);
-		}
-	}
-	
-	/**
-	 * 点击Tab按钮
+	 * 点击按钮后的逻辑及样式变化
 	 * 
 	 * @param view
 	 */
-	private void clickTab(View view) {
-		resetOtherTabs();
-		switch (view.getId()) {
-		case R.id.id_indicator_one:
-			mCurrentItem = 0;
-			break;
-		case R.id.id_indicator_two:
-			mCurrentItem = 1;
-			break;
-		case R.id.id_indicator_three:
-			mCurrentItem = 2;
-			break;
-		case R.id.id_indicator_four:
-			mCurrentItem = 3;
-			break;
-		}
-		mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
+	private void changeTabRefreshView(int currentItem) {
+		mTabIndicators.get(mCurrentItem).setDisCheckedItem();
+		mCurrentItem = currentItem;
+		mTabIndicators.get(mCurrentItem).setCheckedItem();
 		
 		getSupportFragmentManager().beginTransaction()
 			.replace(R.id.fragment_container, mFragments.get(mCurrentItem))
 			.addToBackStack(null).commit();
+		invalidateOptionsMenu();
 	}
 	
 	/**
@@ -307,11 +282,7 @@ public class MainActivity extends FragmentActivity{
 		//按下了物理返回键
 		if(KeyEvent.KEYCODE_BACK == keyCode){
 			if(mCurrentItem != 0){
-				resetOtherTabs();
-				mCurrentItem = 0;
-				mTabIndicators.get(mCurrentItem).setIconAlpha(1.0f);
-				
-				//TODO 返回到主Fragment
+				changeTabRefreshView(0);
 				return true;
 			}
 			long currentTimes = System.currentTimeMillis();

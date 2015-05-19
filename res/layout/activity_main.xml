@@ -22,53 +22,69 @@
         android:layout_height="60dip"
         android:background="@color/main_bottom_tab_bg_color"
         android:orientation="horizontal">
-        <com.guozha.buy.view.ChangeColorIconWithText
+        <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_one"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:padding="5dp"
-            hyman:checkeditem="true"
-            hyman:icon="@drawable/tab_bar_home_normal"
-            hyman:lighticon="@drawable/tab_bar_home_current"
+            hyman:checked_item="true"
+            hyman:nomal_icon="@drawable/tab_bar_home_normal"
+            hyman:check_icon="@drawable/tab_bar_home_current"
             hyman:text="@string/activity_main_tab1_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:color="@color/main_bottom_tab_item_bg_color"/>
-
-        <com.guozha.buy.view.ChangeColorIconWithText
+            hyman:nomal_color="@color/color_app_base_2"
+            hyman:check_color="@color/color_app_base_1"/>
+        
+        <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_two"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:padding="5dp"
-            hyman:icon="@drawable/tab_bar_market_normal"
-            hyman:lighticon="@drawable/tab_bar_market_current"
+            hyman:checked_item="false"
+            hyman:nomal_icon="@drawable/tab_bar_market_normal"
+            hyman:check_icon="@drawable/tab_bar_market_current"
             hyman:text="@string/activity_main_tab2_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:color="@color/main_bottom_tab_item_bg_color"/>
+            hyman:nomal_color="@color/color_app_base_2"
+            hyman:check_color="@color/color_app_base_1"/>
 
-        <com.guozha.buy.view.ChangeColorIconWithText
+        <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_three"
-            android:layout_width="0dp"        
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:padding="5dp"
-            hyman:icon="@drawable/tab_bar_basket_normal"
-            hyman:lighticon="@drawable/tab_bar_basket_current"
-            hyman:text="@string/activity_main_tab3_title"
-            hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:color="@color/main_bottom_tab_item_bg_color"/>
-
-        <com.guozha.buy.view.ChangeColorIconWithText
-            android:id="@+id/id_indicator_four"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:padding="5dp"
-            hyman:icon="@drawable/tab_bar_personal_normal"
-            hyman:lighticon="@drawable/tab_bar_personal_current"
+            hyman:checked_item="false"
+            hyman:nomal_icon="@drawable/tab_bar_market_normal"
+            hyman:check_icon="@drawable/tab_bar_market_current"
+            hyman:text="@string/activity_main_tab3_title"
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:nomal_color="@color/color_app_base_2"
+            hyman:check_color="@color/color_app_base_1"/>
+
+        <com.guozha.buy.view.TabBarItem
+            android:id="@+id/id_indicator_four"
+            android:layout_width="0dp"        
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            hyman:checked_item="false"
+            hyman:nomal_icon="@drawable/tab_bar_basket_normal"
+            hyman:check_icon="@drawable/tab_bar_basket_current"
             hyman:text="@string/activity_main_tab4_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:color="@color/main_bottom_tab_item_bg_color"/>
+            hyman:nomal_color="@color/color_app_base_2"
+            hyman:check_color="@color/color_app_base_1"/>
+
+        <com.guozha.buy.view.TabBarItem
+            android:id="@+id/id_indicator_five"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            hyman:checked_item="false"
+            hyman:nomal_icon="@drawable/tab_bar_personal_normal"
+            hyman:check_icon="@drawable/tab_bar_personal_current"
+            hyman:text="@string/activity_main_tab5_title"
+            hyman:text_size="@dimen/app_nomal_text_size"
+            hyman:nomal_color="@color/color_app_base_2"
+            hyman:check_color="@color/color_app_base_1"/>
     </LinearLayout>
 </LinearLayout>
