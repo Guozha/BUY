@@ -10,16 +10,21 @@ import android.widget.GridView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.newfold.FoundMenuGridAdapter;
 
+/**
+ * 发现-菜谱
+ * @author PeggyTong
+ *
+ */
 public class FoundMenuFragment extends BaseFragment{
 	
-	private static final String PAGE_NAE = "FoundPage";
+	private static final String PAGE_NAE = "FoundMenuPage";
 	private GridView mFoundMenuList;
 	private FoundMenuGridAdapter mMenuGridAdapter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_maintab_found, container, false);
+		View view = inflater.inflate(R.layout.fragment_found_menu, container, false);
 		initView(view); 
 		return view;
 	}

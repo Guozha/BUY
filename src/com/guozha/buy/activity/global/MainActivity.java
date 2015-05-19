@@ -210,7 +210,6 @@ public class MainActivity extends FragmentActivity{
 		mTabIndicators.get(mCurrentItem).setDisCheckedItem();
 		mCurrentItem = currentItem;
 		mTabIndicators.get(mCurrentItem).setCheckedItem();
-		
 		getSupportFragmentManager().beginTransaction()
 			.replace(R.id.fragment_container, mFragments.get(mCurrentItem))
 			.addToBackStack(null).commit();
