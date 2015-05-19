@@ -45,7 +45,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class CollectionRecipeFragment extends Fragment{
+public class CollectionRecipeFragment extends BaseFragment{
 	
 	private static final String PAGE_NAME = "CollectionRecipePage";
 	private static final int HAND_DIR_DATA_COMPLETED = 0x0001;  //收藏文件夹数据请求完毕

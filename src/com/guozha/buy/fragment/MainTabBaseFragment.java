@@ -13,7 +13,7 @@ import android.support.v4.app.Fragment;
  * @author PeggyTong
  *
  */
-public abstract class MainTabBaseFragment extends Fragment{
+public abstract class MainTabBaseFragment extends BaseFragment{
 	
 	protected MainPageInitDataManager mDataManager = null;
 	

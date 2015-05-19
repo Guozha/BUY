@@ -78,20 +78,6 @@
             
         </activity>
         
-        <!-- 计划菜谱选择 -->
-        <activity 
-            android:name="com.guozha.buy.activity.mpage.PlanMenuActivity"
-            android:screenOrientation="portrait">
-             
-        </activity>
-        
-        <!-- 时令推荐 -->
-        <activity
-            android:name="com.guozha.buy.activity.mpage.SeasonActivity"
-            android:screenOrientation="portrait">
-            
-        </activity>
-        
         <!-- 注册界面 -->
         <activity 
             android:name="com.guozha.buy.activity.global.RegistActivity"
@@ -139,11 +125,6 @@
         <!-- 设置提醒 -->
         <activity
             android:name="com.guozha.buy.activity.global.SetWarnTimeActivity"
-            android:screenOrientation="portrait"/>
-        
-        <!-- 特供/预售 -->
-        <activity 
-            android:name="com.guozha.buy.activity.mpage.PreSpecialActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 菜谱详情 -->
@@ -266,11 +247,6 @@
         <!-- 选择有效菜票-->
         <activity 
             android:name="com.guozha.buy.activity.cart.ChooseTicketActivity"
-            android:screenOrientation="portrait"></activity>
-        
-        <!-- 特供（预售）详情 -->
-        <activity 
-            android:name="com.guozha.buy.activity.mpage.PreSpecialDetail"
             android:screenOrientation="portrait"></activity>
         
         <!-- 引导页 -->

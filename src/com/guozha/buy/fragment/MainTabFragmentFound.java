@@ -2,12 +2,17 @@ package com.guozha.buy.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.guozha.buy.R;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.view.ViewPagerTab;
 
 /**
  * 发现
@@ -16,8 +21,8 @@ import com.guozha.buy.global.MainPageInitDataManager;
  */
 public class MainTabFragmentFound extends MainTabBaseFragment{
 	
-	private static final String PAGE_NAE = "FoundPage";
-	
+	private ViewPagerTab mViewPagerTab;
+	private ViewPager mViewPager;
 
 	@Override
 	public void loadDataCompleted(MainPageInitDataManager dataManager,
@@ -34,6 +39,24 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	}
 	
 	private void initView(View view){
-		
+		setUpViewPage(view);
+		setUpTab(view);
+	}
+	
+	private void setUpViewPage(View view){
+		//mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+		mViewPager = (ViewPager) view.findViewById(R.id.found_viewpager);
+		//mViewPager.setAdapter(mViewPagerAdapter);
+	}
+	
+	private void setUpTab(View view){
+		mViewPagerTab = (ViewPagerTab) view.findViewById(R.id.viewpager_tab);
+		mViewPagerTab.setViewPager(mViewPager);
+		ImageView childView = new ImageView(getActivity());
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+		childView.setImageResource(R.drawable.main_favorite_background);
+		childView.setScaleType(ScaleType.FIT_XY);
+		childView.setLayoutParams(params);
+		mViewPagerTab.addView(childView);
 	}
 }

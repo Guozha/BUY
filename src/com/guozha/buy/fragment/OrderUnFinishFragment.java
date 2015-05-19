@@ -41,7 +41,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class OrderUnFinishFragment extends Fragment implements OnScrollListener{
+public class OrderUnFinishFragment extends BaseFragment implements OnScrollListener{
 	
 	private static final String PAGE_NAME = "UnFinishedOrderPage";
 	

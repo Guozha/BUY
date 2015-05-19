@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.cart.PlanceOrderActivity;
-import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.adapter.CartItemListAdapter;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
@@ -31,8 +30,6 @@ import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -148,10 +145,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			emptyNotify.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					emptyNotify.dismiss();
-					if(mClickMarketMenuListener != null){
-						mClickMarketMenuListener.clickMarketMenu();
-					}
+					//TODO
 				}
 			});
 			return;
@@ -160,12 +154,6 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		intent.putExtra("totalPrice", mTotalPrice);
 		intent.putExtra("serverPrice", mServiceFree);
 		startActivity(intent);
-	}
-	
-	private ClickMarketMenuListener mClickMarketMenuListener;
-	
-	public void setOnClickMarketMenuListener(ClickMarketMenuListener clickMarketMenuListner){
-		this.mClickMarketMenuListener = clickMarketMenuListner;
 	}
 	
 	/**

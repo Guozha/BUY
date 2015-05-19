@@ -40,7 +40,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class CollectionVegetableFragment extends Fragment{
+public class CollectionVegetableFragment extends BaseFragment{
 	
 	private static final String PAGE_NAME = "CollectionVegetablePage";
 	

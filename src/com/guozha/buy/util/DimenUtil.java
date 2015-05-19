@@ -32,7 +32,7 @@ public class DimenUtil {
 	 */
 	public static int[] getScreenWidthAndHeight(Context context){
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-	 
+		
 		int[] screenDimen = new int[2];
 	    int width = wm.getDefaultDisplay().getWidth();
 	    int height = wm.getDefaultDisplay().getHeight();
