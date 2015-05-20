@@ -227,12 +227,13 @@ public class MainActivity extends FragmentActivity{
 		switch (mCurrentItem) {
 		case 0:
 		case 1:
+		case 2:
 			inflater.inflate(R.menu.mpage_actionbar_menu, menu);
 			break;
-		case 2:
+		case 3:
 			inflater.inflate(R.menu.cart_actionbar_menu, menu);
 			break;
-		case 3:
+		case 4:
 			inflater.inflate(R.menu.mine_actionbar_menu, menu);
 			break;
 		default:

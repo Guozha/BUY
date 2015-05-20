@@ -3,11 +3,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,7 +139,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		//菜单出入动画
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
-			
+		
+		initActionBar("逛菜场");
 		initView(mView);
 		initQuickMenusData();
 		
@@ -493,7 +492,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(getUserVisibleHint()){
 			//View可见
 			//初始化ActionBar
-			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
@@ -514,20 +512,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mDataManager.getMarketHomePage(handler, 1, 4);
 			mCurrentAddressId = addressId;
 		}
-	}
-	
-	/**
-	 * 初始化ActionBar
-	 * @param actionbar
-	 */
-	private void initActionBar(ActionBar actionbar){
-		if(actionbar == null) return;
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(false);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(true);
-		actionbar.setCustomView(mActionBarView);
 	}
 
 	

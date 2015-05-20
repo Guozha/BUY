@@ -1,12 +1,10 @@
 package com.guozha.buy.fragment;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,12 +40,12 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		LogUtil.e("onCreateView");
 		View view = inflater.inflate(R.layout.fragment_maintab_found, container, false);
+		initActionBar("发现");
 		initView(view); 
 		return view;
 	}
 	
 	private void initView(View view){
-		setActionBar();
 		setUpViewPage(view);
 		setUpTab(view);
 		
@@ -68,20 +66,6 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 				mViewPager.setCurrentItem(1);
 			}
 		});
-	}
-	
-	/**
-	 * 设置ActionBar
-	 */
-	private void setActionBar() {
-		ActionBar actionbar = this.getActivity().getActionBar();
-		if(actionbar == null) return;
-		actionbar.setDisplayHomeAsUpEnabled(true);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(true);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(false);
-		actionbar.setTitle("发现");
 	}
 	
 	private void setUpViewPage(View view){

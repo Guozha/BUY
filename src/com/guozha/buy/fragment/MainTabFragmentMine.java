@@ -56,6 +56,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_mine, container, false);
+		initActionBar("我的");
 		initView(view);
 		return view;
 	}
@@ -328,8 +329,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-		    //初始化ActionBar	
-			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{

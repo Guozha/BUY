@@ -129,7 +129,7 @@
         
         <!-- 菜谱分类列表 -->
         <activity 
-            android:name="com.guozha.buy.activity.found.MenuListActivity"
+            android:name="com.guozha.buy.activity.found.MenuItemListActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 菜谱详情 -->

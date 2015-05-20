@@ -1,6 +1,5 @@
 package com.guozha.buy.fragment;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.newfold.MPageListAdapter;
@@ -24,8 +22,8 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		
 		View view = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
+		initActionBar("爱掌勺");
 		initView(view);
 		return view;
 	}
@@ -51,8 +49,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			//初始化ActionBar
-			initActionBar(getActivity().getActionBar());
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 			//测试服提示
@@ -64,22 +60,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClick
 		}
 	}
 	
-	/**
-	 * 初始化ActionBar
-	 * @param actionbar
-	 */
-	private void initActionBar(ActionBar actionbar) {
-		if(actionbar == null) return;
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(false);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(true);
-		actionbar.setCustomView(R.layout.actionbar_base_view);
-		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
-		title.setText("爱掌勺");
-	}
-
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

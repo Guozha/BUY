@@ -78,6 +78,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
+		initActionBar("购物车");
 		initView(view);
 		setCartItemsData();
 		return view;
@@ -254,8 +255,6 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-		    //初始化ActionBar	
-			initActionBar(getActivity().getActionBar());
 			int addressId =ConfigManager.getInstance().getChoosedAddressId();
 			if(mDataManager == null){
 				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
