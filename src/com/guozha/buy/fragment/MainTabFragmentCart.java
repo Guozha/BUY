@@ -19,7 +19,6 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.cart.PlanceOrderActivity;
 import com.guozha.buy.adapter.CartItemListAdapter;
 import com.guozha.buy.dialog.CustomDialog;

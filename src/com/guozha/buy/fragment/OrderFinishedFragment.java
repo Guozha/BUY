@@ -7,18 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -27,7 +25,6 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.mine.OrderGradDetailActivity;
 import com.guozha.buy.activity.mine.OrderPayedDetailActivity;
-import com.guozha.buy.activity.mine.OrderUnPayDetailActivity;
 import com.guozha.buy.adapter.OrderListAdapter;
 import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
@@ -35,7 +32,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ConstantUtil;
-import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**

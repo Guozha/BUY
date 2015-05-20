@@ -11,7 +11,6 @@ import android.widget.GridView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.found.MenuItemListActivity;
-import com.guozha.buy.adapter.MenuItemGridAdapter;
 
 /**
  * 发现-菜谱

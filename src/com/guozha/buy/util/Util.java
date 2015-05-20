@@ -22,7 +22,8 @@ public class Util {
 			ApplicationInfo info = context.getPackageManager()
 					.getApplicationInfo(packageName,
 							PackageManager.GET_UNINSTALLED_PACKAGES);
-			return true;
+			if(packageName.equals(info.packageName)) return true;
+			else return false;
 		} catch (NameNotFoundException e) {
 			return false;
 		}

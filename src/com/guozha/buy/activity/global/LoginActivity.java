@@ -15,7 +15,6 @@ import android.widget.ImageView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;

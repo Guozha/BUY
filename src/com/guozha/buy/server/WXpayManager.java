@@ -14,12 +14,9 @@ import org.xmlpull.v1.XmlPullParser;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 import android.util.Xml;
 
-import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.activity.cart.PayActivity;
 import com.guozha.buy.util.pay.Keys;
 import com.guozha.buy.util.pay.MD5;
 import com.guozha.buy.util.pay.WXPayUtil;

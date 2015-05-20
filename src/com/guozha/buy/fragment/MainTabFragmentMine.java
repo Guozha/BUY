@@ -22,14 +22,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.LoginActivity;
-import com.guozha.buy.activity.mine.SharePraiseActivity;
 import com.guozha.buy.activity.mine.MyAddressActivity;
 import com.guozha.buy.activity.mine.MyCollectionActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
 import com.guozha.buy.activity.mine.MySellerActivity;
 import com.guozha.buy.activity.mine.MyTicketActivity;
+import com.guozha.buy.activity.mine.SharePraiseActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.mine.account.AccountInfo;

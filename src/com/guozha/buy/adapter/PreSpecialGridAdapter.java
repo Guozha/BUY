@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.mpage.prespecial.PreSpecialItem;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
 /**

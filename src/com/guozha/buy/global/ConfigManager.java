@@ -18,7 +18,6 @@ import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.global.QuickMenu;
-import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**

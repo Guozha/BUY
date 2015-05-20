@@ -111,7 +111,7 @@ public class CrashHandler implements UncaughtExceptionHandler{
 		//收集设备参数
 		collectDeviceInfo(mContext);
 		//保存日志文件
-		String str = saveCrashInfo2File(ex);
+		//String str = saveCrashInfo2File(ex);
 		return false;
 	}
 	

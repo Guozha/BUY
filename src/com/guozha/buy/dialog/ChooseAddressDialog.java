@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.adapter.ChooseAddressListAdapter;
 import com.guozha.buy.entry.mine.address.AddressInfo;

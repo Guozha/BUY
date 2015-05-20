@@ -1,15 +1,13 @@
 package com.guozha.buy.fragment;
 
+import android.app.ActionBar;
+import android.widget.TextView;
+
 import com.guozha.buy.R;
 import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.util.ToastUtil;
-import com.umeng.analytics.MobclickAgent;
-
-import android.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.widget.TextView;
 
 /**
  * MainActivity的Fragment抽象类

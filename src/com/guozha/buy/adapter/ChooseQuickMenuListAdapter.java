@@ -14,7 +14,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.global.QuickMenu;
-import com.guozha.buy.util.LogUtil;
 
 public class ChooseQuickMenuListAdapter extends BaseAdapter{
 	

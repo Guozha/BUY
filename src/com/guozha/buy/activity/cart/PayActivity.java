@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.activity.mine.MyOrderActivity;
 import com.guozha.buy.dialog.CustomDialog;
@@ -34,14 +33,10 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.util.pay.PayResult;
-import com.guozha.buy.util.pay.WXPayUtil;
-import com.guozha.buy.wxapi.WXPayEntryActivity;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class PayActivity extends BaseActivity implements OnClickListener{
 	

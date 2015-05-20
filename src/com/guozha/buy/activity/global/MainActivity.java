@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.mine.SettingActivity;
 import com.guozha.buy.fragment.MainTabBaseFragment;
 import com.guozha.buy.fragment.MainTabFragmentCart;
@@ -145,7 +144,6 @@ public class MainActivity extends FragmentActivity{
 	class ClickTabItemListener implements OnClickListener{
 		@Override
 		public void onClick(View view) {
-			int viewId = view.getId();
 			int currentItem;
 			switch (view.getId()) {
 			case R.id.id_indicator_one:
