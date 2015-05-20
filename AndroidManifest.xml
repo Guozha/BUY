@@ -127,6 +127,11 @@
             android:name="com.guozha.buy.activity.global.SetWarnTimeActivity"
             android:screenOrientation="portrait"/>
         
+        <!-- 菜谱分类列表 -->
+        <activity 
+            android:name="com.guozha.buy.activity.found.MenuListActivity"
+            android:screenOrientation="portrait"/>
+        
         <!-- 菜谱详情 -->
         <activity
             android:name="com.guozha.buy.activity.mpage.CookBookDetailActivity"

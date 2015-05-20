@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.adapter.newfold.FoundSubjectListAdapter;
 
 /**
  * 发现-专题
@@ -18,6 +19,7 @@ public class FoundSubjectFragment extends BaseFragment{
 	
 	private static final String PAGE_NAME = "FoundSubjectPage";
 	private ListView mSubjectListView;
+	private FoundSubjectListAdapter mSubjectListAdapter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -29,6 +31,9 @@ public class FoundSubjectFragment extends BaseFragment{
 	
 	private void initView(View view){
 		mSubjectListView = (ListView) view.findViewById(R.id.found_subject_list);
+		mSubjectListView.setItemsCanFocus(true);
+		mSubjectListAdapter = new FoundSubjectListAdapter(getActivity());
+		mSubjectListView.setAdapter(mSubjectListAdapter);
 	}
 
 }
