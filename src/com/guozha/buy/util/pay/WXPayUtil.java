@@ -1,4 +1,4 @@
-package com.guozha.buy.util;
+package com.guozha.buy.util.pay;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

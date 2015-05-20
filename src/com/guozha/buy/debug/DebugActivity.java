@@ -14,7 +14,7 @@ import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.server.AlipayManager;
-import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 

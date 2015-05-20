@@ -25,7 +25,7 @@ import com.guozha.buy.fragment.MainTabFragmentMarket;
 import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.TabBarItem;
 import com.umeng.update.UmengUpdateAgent;

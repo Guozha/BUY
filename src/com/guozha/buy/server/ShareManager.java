@@ -1,4 +1,4 @@
-package com.guozha.buy.share;
+package com.guozha.buy.server;
 
 import android.app.Activity;
 import android.content.Context;

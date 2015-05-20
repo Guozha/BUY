@@ -17,7 +17,7 @@ import com.guozha.buy.dialog.ActiveRuleActivity;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.media.UMImage;

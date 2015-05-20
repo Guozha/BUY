@@ -4,7 +4,7 @@
  * author: shiqun.shi@alipay.com
  */
 
-package com.guozha.buy.util;
+package com.guozha.buy.util.pay;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +14,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
+
 
 import android.util.Log;
 

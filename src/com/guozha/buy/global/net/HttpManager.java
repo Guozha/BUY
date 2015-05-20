@@ -19,9 +19,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.debug.DebugActivity;
-import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.Util;
 
 /**
  * 网络操作工具类
@@ -144,7 +143,7 @@ public class HttpManager {
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			if(!NetManager.isNetConnection(CustomApplication.getContext())){
+			if(!Util.isNetConnection(CustomApplication.getContext())){
 				ToastUtil.showToast(CustomApplication.getContext(), "你的网络已经断开");
 			}else{
 				ToastUtil.showToast(CustomApplication.getContext(), error.getMessage());

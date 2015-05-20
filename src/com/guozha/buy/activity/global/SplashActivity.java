@@ -19,14 +19,13 @@ import cn.jpush.android.api.TagAliasCallback;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.Util;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -142,7 +141,7 @@ public class SplashActivity extends Activity{
 		ConfigManager.getInstance();
 		
 		//判断网络状态
-		if(!NetManager.isNetConnection(this)){
+		if(!Util.isNetConnection(this)){
 			ToastUtil.showToast(this, "您的网络好像有问题哦~");
 			return;
 		}

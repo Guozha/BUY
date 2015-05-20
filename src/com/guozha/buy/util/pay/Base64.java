@@ -4,7 +4,7 @@
  * author: shiqun.shi@alipay.com
  */
 
-package com.guozha.buy.util;
+package com.guozha.buy.util.pay;
 
 public final class Base64 {
 

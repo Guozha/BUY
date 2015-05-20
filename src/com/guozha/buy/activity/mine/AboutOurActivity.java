@@ -12,7 +12,7 @@ import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.util.Misc;
+import com.guozha.buy.util.Util;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -109,7 +109,7 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
      * @param uid   用户ID
      */
     public void openWeiboUserInfo(String uid){
-    	if(Misc.isAppInstalled(AboutOurActivity.this, "com.sina.weibo")){
+    	if(Util.isAppInstalled(AboutOurActivity.this, "com.sina.weibo")){
 	        Intent intent=new Intent();
 	        intent.setAction(Intent.ACTION_VIEW);
 	        intent.addCategory("android.intent.category.DEFAULT");

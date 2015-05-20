@@ -20,9 +20,9 @@ import android.util.Xml;
 
 import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.cart.PayActivity;
-import com.guozha.buy.util.Keys;
-import com.guozha.buy.util.MD5;
-import com.guozha.buy.util.WXPayUtil;
+import com.guozha.buy.util.pay.Keys;
+import com.guozha.buy.util.pay.MD5;
+import com.guozha.buy.util.pay.WXPayUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
