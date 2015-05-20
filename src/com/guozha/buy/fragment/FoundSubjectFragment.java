@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.adapter.newfold.FoundSubjectListAdapter;
+import com.guozha.buy.adapter.FoundSubjectListAdapter;
 
 /**
  * 发现-专题

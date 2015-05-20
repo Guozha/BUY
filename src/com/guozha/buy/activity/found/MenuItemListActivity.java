@@ -8,7 +8,7 @@ import android.widget.GridView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.BaseActivity;
-import com.guozha.buy.adapter.newfold.MenuItemGridAdapter;
+import com.guozha.buy.adapter.MenuItemGridAdapter;
 import com.guozha.buy.util.DimenUtil;
 
 /**

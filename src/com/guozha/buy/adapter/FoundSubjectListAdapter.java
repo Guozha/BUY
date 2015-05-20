@@ -1,4 +1,4 @@
-package com.guozha.buy.adapter.newfold;
+package com.guozha.buy.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

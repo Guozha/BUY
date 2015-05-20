@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.adapter.newfold.MPageListAdapter;
+import com.guozha.buy.adapter.MPageListAdapter;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
 
