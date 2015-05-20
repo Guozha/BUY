@@ -24,7 +24,7 @@ public class MenuItemGridAdapter extends BaseAdapter{
 	
 	public MenuItemGridAdapter(Context context, int gridSpace){
 		mInflater = LayoutInflater.from(context);
-		int screenWidth = DimenUtil.getScreenWidthAndHeight(context)[0];
+		int screenWidth = DimenUtil.getScreenWidth(context);
 		mGridSpace = gridSpace;
 		mGridWidth = mGridHeight = screenWidth / 2 - gridSpace;
 		mBgColor = context.getResources().getColor(R.color.color_app_base_6);

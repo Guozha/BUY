@@ -260,10 +260,10 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 			@Override
 			public void onResponse(Bitmap response) {
 				if(response != null){
-					int[] screenDimen = DimenUtil.getScreenWidthAndHeight(CookBookDetailActivity.this);
+					int screenWidth = DimenUtil.getScreenWidth(CookBookDetailActivity.this);
 					ViewGroup.LayoutParams lp = mCookBookImage.getLayoutParams();
-					lp.width = screenDimen[0];
-					lp.height = screenDimen[0] * 2 / 3; //要保证图片比例是2：3
+					lp.width = screenWidth;
+					lp.height = screenWidth * 2 / 3; //要保证图片比例是2：3
 					mCookBookImage.setLayoutParams(lp);
 					mCookBookImage.setImageBitmap(response);
 				}

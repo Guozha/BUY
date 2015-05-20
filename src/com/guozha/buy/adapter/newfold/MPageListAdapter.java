@@ -27,7 +27,7 @@ public class MPageListAdapter extends BaseAdapter{
 	public MPageListAdapter(Context context){
 		mInflater = LayoutInflater.from(context);
 		//TODO 获取屏幕宽度可以放到ConfigManager中
-		mScreenWidth = DimenUtil.getScreenWidthAndHeight(context)[0];
+		mScreenWidth = DimenUtil.getScreenWidth(context);
 	}
 
 	@Override

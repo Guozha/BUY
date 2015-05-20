@@ -13,6 +13,9 @@ import android.view.WindowManager;
  *
  */
 public class DimenUtil {
+	
+	private static int mScreenWidth = -1;						   //手机屏幕的宽度
+	private static int mScreenHeight = -1;						   //手机屏幕的高度
 
 	/**
 	 * dip转pix
@@ -32,14 +35,36 @@ public class DimenUtil {
 	 */
 	public static int[] getScreenWidthAndHeight(Context context){
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		
 		int[] screenDimen = new int[2];
-	    int width = wm.getDefaultDisplay().getWidth();
-	    int height = wm.getDefaultDisplay().getHeight();
-	    screenDimen[0] = width;
-	    screenDimen[1] = height;
-	    
+	    mScreenWidth = wm.getDefaultDisplay().getWidth();
+	    mScreenHeight = wm.getDefaultDisplay().getHeight();
+	    screenDimen[0] = mScreenWidth;
+	    screenDimen[1] = mScreenHeight;
 	    return screenDimen;
+	}
+	
+	/**
+	 * 获取屏幕宽度
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenWidth(Context context){
+		if(mScreenWidth == -1){
+			getScreenWidthAndHeight(context);
+		}
+		return mScreenWidth;
+	}
+	
+	/**
+	 * 获取屏幕高度
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenHeight(Context context){
+		if(mScreenHeight == -1){
+			getScreenWidthAndHeight(context);
+		}
+		return mScreenHeight;
 	}
 	
 	/**

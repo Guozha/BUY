@@ -18,6 +18,7 @@ import com.guozha.buy.activity.mine.AddAddressActivity;
 import com.guozha.buy.dialog.CustomDialog;
 import com.guozha.buy.dialog.RemindLoginDialog;
 import com.guozha.buy.entry.global.QuickMenu;
+import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -46,6 +47,7 @@ public class ConfigManager{
 	private String mVersionName;					   //版本名称
 	private boolean mWarnTimeOpend;					   //提醒开关是否打开
 	private long mTodayDate;						   //今天的日期 
+
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN

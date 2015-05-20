@@ -28,6 +28,7 @@ public class MenuItemListActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menulist);
 		mGridSpace = DimenUtil.dp2px(this, 10);
+		customActionBarStyle("xxx");
 		initView();
 	}
 	

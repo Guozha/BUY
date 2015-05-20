@@ -27,7 +27,7 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 	
 	public FoundSubjectListAdapter(Context context){
 		mInflater = LayoutInflater.from(context);
-		mScreenWidth = DimenUtil.getScreenWidthAndHeight(context)[0];
+		mScreenWidth = DimenUtil.getScreenWidth(context);
 		mMargin = DimenUtil.dp2px(context, 3);
 		mBgColor = context.getResources().getColor(R.color.color_app_base_6);
 	}
