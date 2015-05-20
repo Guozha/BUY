@@ -1,12 +1,13 @@
 package com.guozha.buy.fragment;
 
-import com.guozha.buy.R;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.guozha.buy.R;
 
 /**
  * 发现-专题
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 public class FoundSubjectFragment extends BaseFragment{
 	
 	private static final String PAGE_NAME = "FoundSubjectPage";
+	private ListView mSubjectListView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -26,7 +28,7 @@ public class FoundSubjectFragment extends BaseFragment{
 	}
 	
 	private void initView(View view){
-		
+		mSubjectListView = (ListView) view.findViewById(R.id.found_subject_list);
 	}
 
 }
