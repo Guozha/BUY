@@ -255,7 +255,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		
 		//获取账户信息(菜豆、菜票）
 		AccountInfo accountInfo = 
-				MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAccountInfo(null);
+				MainPageInitDataManager.getInstance().getAccountInfo(null);
 		if(accountInfo != null){
 			mAccountRemain = accountInfo.getBalance();
 			mBeanNum = accountInfo.getBeanAmount();

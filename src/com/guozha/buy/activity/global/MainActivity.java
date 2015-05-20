@@ -87,38 +87,8 @@ public class MainActivity extends FragmentActivity{
 		getSupportFragmentManager().beginTransaction()
 			.add(R.id.fragment_container, mFragments.get(0)).commit();
 		initTabIndicators();
-		initData();
+		MainPageInitDataManager.getInstance().initPageData(handler);
 		initYoumeng();
-	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-	}
-	
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
-		mInitDataManager.getAddressInfos(handler);  //获取地址列表
-		mInitDataManager.getCartItems(handler);		//获取购物车信息
-		mInitDataManager.getMenuPlaneStatus(handler); //获取今日菜谱计划状态
-	}
-	
-	/**
-	 * 初始化四个Fragment的数据
-	 */
-	private void initData(){
-		mInitDataManager = 
-				MainPageInitDataManager.getInstance(CustomApplication.getContext());
-		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
-		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
-		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
-		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
-		mInitDataManager.getAddressInfos(handler);  //获取地址列表
-		mInitDataManager.getCartItems(handler);		//获取购物车数据
-		mInitDataManager.getTodayInfo(handler);		//获取今日信息
-		mInitDataManager.getMenuPlaneStatus(handler);	//获取今日菜谱计划状态
 	}
 	
 	/**

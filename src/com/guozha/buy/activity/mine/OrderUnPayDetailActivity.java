@@ -20,7 +20,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.activity.cart.PayActivity;
-import com.guozha.buy.activity.cart.PreSpecialPayActivity;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.OrderDetailMenusListAdapter;
 import com.guozha.buy.dialog.CustomDialog;
@@ -129,7 +128,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		findViewById(R.id.order_detail_pay).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO 判断订单类型
 				if("1".equals(mOrderType)){ //普通订单
 					Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
 					intent.putExtra("orderId", mOrderId);
@@ -137,9 +135,11 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 					intent.putExtra("orderComeIn", true);
 					startActivityForResult(intent, REQUEST_CODE);
 				}else{		//特供预售
+					
+					//TODO 这里要做特殊处理
 					if(mExpandListDatas != null && !mExpandListDatas.isEmpty()){
 						ExpandListData expandListData = mExpandListDatas.get(0);
-						Intent intent = new Intent(OrderUnPayDetailActivity.this, PreSpecialPayActivity.class);
+						Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
 						intent.putExtra("goodsId", expandListData.getId());
 						intent.putExtra("unitPrice", expandListData.getUnitPrice());
 						intent.putExtra("goodsName", expandListData.getName());
@@ -233,7 +233,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 							expandListData.setUnit(orderDetailGoods.getUnit());
 							expandListData.setAmount(orderDetailGoods.getAmount());
 							expandListData.setPrice(orderDetailGoods.getPrice());
-							//TODO 设置价格等
 							mExpandListDatas.add(expandListData);
 						}
 					}
@@ -256,7 +255,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 					handler.sendEmptyMessage(HAND_DATA_COMPLTED);
 				}
 		});
-		//TODO 参考购物车显示
 	}
 	
 	@Override

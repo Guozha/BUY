@@ -150,8 +150,7 @@ public class SplashActivity extends Activity{
 		//注意：下面的操作和网络状态有关（联网状态下才请求）
 		
 		//初始化入口界面数据(这里最好传全局的context)
-		MainPageInitDataManager initDataManager = MainPageInitDataManager.getInstance(
-				CustomApplication.getContext());
+		MainPageInitDataManager initDataManager = MainPageInitDataManager.getInstance();
 		//自动登录应用
 		String mobileNum = ConfigManager.getInstance().getMobileNum();
 		String pwd = ConfigManager.getInstance().getUserPwd();

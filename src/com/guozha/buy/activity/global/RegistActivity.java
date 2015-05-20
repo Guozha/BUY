@@ -214,7 +214,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener{
 						ConfigManager.getInstance().setUserPwd(pwd);
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 						//请求地址数据
-						MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAddressInfos(null);
+						MainPageInitDataManager.getInstance().getAddressInfos(null);
 						MainPageInitDataManager.mAccountUpdated = true;  //允许用户账户信息变化
 						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
 						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据

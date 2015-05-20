@@ -149,7 +149,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						ConfigManager.getInstance().setMobileNum(mobileNum);
 						ToastUtil.showToast(LoginActivity.this, "登录成功");
 						//请求地址数据
-						MainPageInitDataManager.getInstance(CustomApplication.getContext()).getAddressInfos(null);
+						MainPageInitDataManager.getInstance().getAddressInfos(null);
 						if(mSuccessIntent != null){
 							try {
 								Intent intent = new Intent(LoginActivity.this, Class.forName(mSuccessIntent));
@@ -161,8 +161,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						MainPageInitDataManager.mAccountUpdated = true;	//允许用户账户信息变化
 						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
 						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
-						MainPageInitDataManager.getInstance(
-								CustomApplication.getContext()).getAddressInfos(null);
+						MainPageInitDataManager.getInstance().getAddressInfos(null);
 						LoginActivity.this.finish();
 					}else{
 						String msg = response.getString("msg");

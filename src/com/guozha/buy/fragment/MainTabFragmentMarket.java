@@ -264,7 +264,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			public void onRefresh() {
 				handler.sendEmptyMessage(HAND_BEGIN_REFRESH);
 				if(mDataManager == null){
-					mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+					mDataManager = MainPageInitDataManager.getInstance();
 				}
 				//让全部更新
 				MainPageInitDataManager.mMarketItemUpdated = true;
@@ -329,7 +329,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 */
 	private void setAddressInfoData(){
 		if(mDataManager == null){
-			mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+			mDataManager = MainPageInitDataManager.getInstance();
 		}
 		mAddressInfos = mDataManager.getAddressInfos(null);
 		//TODO 设置ActionBar上面的显示

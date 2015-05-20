@@ -209,7 +209,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	 */
 	private void setCartItemsData(){
 		if(mDataManager == null) {
-			mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+			mDataManager = MainPageInitDataManager.getInstance();
 		}
 		CartTotalData cartTotalData = mDataManager.getCartItems(null);
 		if(cartTotalData == null) return;
@@ -257,10 +257,10 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			//View可见
 			int addressId =ConfigManager.getInstance().getChoosedAddressId();
 			if(mDataManager == null){
-				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+				mDataManager = MainPageInitDataManager.getInstance();
 			}
 			if(mCurrentAddressId != addressId){
-				mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+				mDataManager = MainPageInitDataManager.getInstance();
 				mDataManager.getCartItems(handler);
 				mCurrentAddressId = addressId;
 			}

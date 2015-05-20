@@ -107,8 +107,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		initView();
 		initData();
 		//重新获取一下服务器时间
-		MainPageInitDataManager.getInstance(
-				CustomApplication.getContext()).getTodayInfo(null);
+		MainPageInitDataManager.getInstance().getTodayInfo(null);
 	}
 	
 	/**
@@ -154,7 +153,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		
 		//设置地址信息
 		List<AddressInfo> addressInfos = 
-				MainPageInitDataManager.getInstance(this).getAddressInfos(null);
+				MainPageInitDataManager.getInstance().getAddressInfos(null);
 		if(addressInfos != null){
 			for(int i = 0; i < addressInfos.size(); i++){
 				AddressInfo addressInfo = addressInfos.get(i);

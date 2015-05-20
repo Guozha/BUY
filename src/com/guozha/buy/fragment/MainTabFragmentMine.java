@@ -96,7 +96,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			return;
 		}
 		if(mDataManager == null) {
-			mDataManager = MainPageInitDataManager.getInstance(CustomApplication.getContext());
+			mDataManager = MainPageInitDataManager.getInstance();
 		}
 		AccountInfo accountInfo = mDataManager.getAccountInfo(null);
 		if(accountInfo == null) {

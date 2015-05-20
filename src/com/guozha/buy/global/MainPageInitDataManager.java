@@ -13,6 +13,7 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
@@ -25,7 +26,6 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 主界面数据管理类
@@ -59,7 +59,7 @@ public class MainPageInitDataManager {
 	private List<QuickMenu> mQuickMenus;
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
-	private boolean mPlanMenuStatus = false;
+	private TodayInfo mTodayInfo = null;
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
@@ -73,9 +73,9 @@ public class MainPageInitDataManager {
 	 * @param context
 	 * @return
 	 */
-	public static MainPageInitDataManager getInstance(Context context){
+	public static MainPageInitDataManager getInstance(){
 		if(mInitDataManager == null){
-			mInitDataManager = new MainPageInitDataManager(context);
+			mInitDataManager = new MainPageInitDataManager(CustomApplication.getContext());
 		}
 		return mInitDataManager;
 	}
@@ -90,6 +90,18 @@ public class MainPageInitDataManager {
 	}
 	
 	///////////////////////////////GET-方法//////////////////////////////
+	/**
+	 * 初始化界面数据
+	 * @param handler
+	 */
+	public void initPageData(Handler handler){
+		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
+		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
+		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
+		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
+		mInitDataManager.getAddressInfos(handler);  //获取地址列表
+		mInitDataManager.getCartItems(handler);		//获取购物车数据
+	}
 	
 	/**
 	 * 获取账号信息
@@ -157,6 +169,21 @@ public class MainPageInitDataManager {
 	}
 	
 	/**
+	 * 获取今日信息
+	 * 
+	 * @param handler
+	 * @return
+	 */
+	public TodayInfo getTodayInfo(Handler handler) {
+		// 每次进来都重新请求
+		requestMPageTodayMessage(handler);
+		if (mTodayInfo != null && handler != null) {
+			handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
+		}
+		return mTodayInfo;
+	}
+	
+	/**
 	 * 获取用户添加的地址
 	 * @param handler
 	 * @return
@@ -204,31 +231,6 @@ public class MainPageInitDataManager {
 			num = num + cookItems.size();
 		}
 		return num;
-	}
-	
-	private TodayInfo mTodayInfo = null;
-	
-	/**
-	 * 获取今日信息
-	 * @param handler
-	 * @return
-	 */
-	public TodayInfo getTodayInfo(Handler handler){
-		//每次进来都重新请求
-		requestMPageTodayMessage(handler);
-		if(mTodayInfo != null && handler != null){
-			handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
-		}
-		return mTodayInfo;
-	}
-	
-	/**
-	 * 获取今日菜谱计划状态
-	 * @param handler
-	 */
-	public boolean getMenuPlaneStatus(final Handler handler){
-		requestPlanMenusStatus(handler);
-		return mPlanMenuStatus;
 	}
 	
 	/**
@@ -442,57 +444,28 @@ public class MainPageInitDataManager {
 	/**
 	 * 请求MPage的当日信息
 	 */
-	private void requestMPageTodayMessage(final Handler handler){
+	private void requestMPageTodayMessage(final Handler handler) {
 		RequestParam paramPath = new RequestParam("menuplan/todayInfo");
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String calendarSolar = response.getString("today");
-						String calendarLunar = response.getString("lunarToday");
-						String todayDescript = response.getString("dayDesc");
-						mTodayInfo = new TodayInfo(calendarSolar, calendarLunar, todayDescript);
-						if(handler != null && mTodayInfo != null){
-							handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
+				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						try {
+							String calendarSolar = response.getString("today");
+							String calendarLunar = response
+									.getString("lunarToday");
+							String todayDescript = response
+									.getString("dayDesc");
+							mTodayInfo = new TodayInfo(calendarSolar,
+									calendarLunar, todayDescript);
+							if (handler != null && mTodayInfo != null) {
+								handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-					} catch (JSONException e) {
-						e.printStackTrace();
 					}
-				}
-		});
-	}
-	
-	/**
-	 * 请求今日菜谱计划状态
-	 * @param handler
-	 */
-	private void requestPlanMenusStatus(final Handler handler) {
-		String token = ConfigManager.getInstance().getUserToken();
-		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("menuplan/exist")
-		.setParams("token", token)
-		.setParams("userId", userId);
-		
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							mPlanMenuStatus = true;
-						}else{
-							mPlanMenuStatus = false;
-						}
-						if(handler != null){
-							handler.sendEmptyMessage(HAND_INITDATA_MSG_PLAN_MENU_STATUS);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+				});
 	}
 	
 }
