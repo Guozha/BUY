@@ -5,12 +5,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.CharBuffer;
 
-import com.guozha.buy.R;
-import com.umeng.analytics.MobclickAgent;
-
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.webkit.WebView;
+
+import com.guozha.buy.R;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**

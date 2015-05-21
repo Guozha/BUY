@@ -15,7 +15,6 @@ import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
-
 import android.util.Log;
 
 public class Rsa {

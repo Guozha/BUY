@@ -1,15 +1,15 @@
 package com.guozha.buy.activity.global;
 
-import com.guozha.buy.debug.DebugActivity;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.ToastUtil;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.guozha.buy.debug.DebugActivity;
+import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.util.ToastUtil;
 
 /**
  * Activity的基类

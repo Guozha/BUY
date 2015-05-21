@@ -3,7 +3,6 @@ package com.guozha.buy.adapter;
 import java.util.Random;
 
 import android.content.Context;
-import android.provider.MediaStore.Images;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MPageListAdapter;
@@ -42,6 +42,8 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	private void initView(View view){
 		if(view == null) return;
 		mListView = (ListView) view.findViewById(R.id.mpage_list);
+		
+		//添加footerView
 		mBottomLoadingView = getActivity().getLayoutInflater()
 				.inflate(R.layout.list_paging_bottom, null);
 		mBottomLoadingView.setBackgroundColor(getActivity().getResources().getColor(R.color.color_app_base_6));
@@ -76,7 +78,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	}
 	
 	//////////////////////////--分页加载相关--/////////////////////////////
-	
 	private int mLastVisibaleIndex; //可见的最大索引
 	private int mMaxDateNum;		//最大条数
 	private int mMaxPageSize;		//最大页数
@@ -113,6 +114,5 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	private void loadNextPageData(){
 		
 	}
-	
 	//////////////////////////--分页加载END--/////////////////////////////
 }

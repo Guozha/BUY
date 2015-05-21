@@ -4,7 +4,6 @@ import org.litepal.LitePalApplication;
 
 import android.content.Context;
 
-import com.guozha.buy.global.CrashHandler;
 import com.guozha.buy.global.net.BitmapCache;
 
 /**

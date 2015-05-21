@@ -19,7 +19,7 @@
 	            android:layout_height="40dip"
 	            android:gravity="center"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:textColor="@color/color_app_base_2"
+	            android:textColor="@color/color_app_base_1"
 	            android:text="专题"/>
 	        <TextView 
 	             android:id="@+id/found_frag2_tab"
@@ -28,7 +28,7 @@
 	            android:layout_height="40dip"
 	            android:gravity="center"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:textColor="@color/color_app_base_2"
+	            android:textColor="@color/color_app_base_1"
 	            android:text="菜谱"/>
 	    </LinearLayout>
 	    <com.guozha.buy.view.ViewPagerTab

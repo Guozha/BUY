@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-
 import android.util.Log;
 
 public class Result {
