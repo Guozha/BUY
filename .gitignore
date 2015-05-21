@@ -4,3 +4,4 @@ res/.DS_Store
 /gen
 /.settings
 .gitignore
+/.classpath
