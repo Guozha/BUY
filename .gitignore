@@ -1,4 +1,6 @@
-*.DS_Store
+src/*.DS_Store
+res/*.DS_Store
 /bin
 /gen
+/.settings
 .gitignore
