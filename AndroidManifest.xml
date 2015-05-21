@@ -132,6 +132,11 @@
             android:name="com.guozha.buy.activity.found.MenuItemListActivity"
             android:screenOrientation="portrait"/>
         
+        <!-- 主题详情 -->
+        <activity
+            android:name="com.guozha.buy.activity.found.FoundSubjectDetailActivity"
+            android:screenOrientation="portrait"/>
+        
         <!-- 菜谱详情 -->
         <activity
             android:name="com.guozha.buy.activity.mpage.CookBookDetailActivity"

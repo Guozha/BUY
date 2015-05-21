@@ -1,5 +1,6 @@
 package com.guozha.buy.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.found.FoundSubjectDetailActivity;
 import com.guozha.buy.adapter.FoundSubjectListAdapter;
 
 /**
@@ -59,7 +61,8 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+				Intent intent = new Intent(getActivity(), FoundSubjectDetailActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
