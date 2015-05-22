@@ -4,5 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-
+    <!-- 食材 -->
+	<com.guozha.buy.view.MultiListView 
+	    android:id="@+id/menu_detail_food_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"/>
+	
+	<!-- 辅料 -->
+	<com.guozha.buy.view.MultiListView 
+	    android:id="@+id/menu_detail_soup_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"/>
 </LinearLayout>

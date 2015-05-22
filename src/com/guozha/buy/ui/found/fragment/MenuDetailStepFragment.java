@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import com.guozha.buy.R;
 import com.guozha.buy.ui.BaseFragment;
 
+/**
+ * 菜谱详情 - 步骤
+ * @author PeggyTong
+ *
+ */
 public class MenuDetailStepFragment extends BaseFragment{
 
 	@Override

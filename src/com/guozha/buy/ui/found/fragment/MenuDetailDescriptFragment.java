@@ -22,5 +22,6 @@ public class MenuDetailDescriptFragment extends BaseFragment{
 	private void initView(View view){
 		if(view == null) return;
 		//TODO 
+		
 	}
 }
