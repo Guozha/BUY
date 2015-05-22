@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.dialog.RemindLoginDialog;
-import com.guozha.buy.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.ui.dialog.RemindLoginDialog;
+import com.guozha.buy.ui.dialog.WeightSelectDialog;
 import com.guozha.buy.util.UnitConvertUtil;
 
 
