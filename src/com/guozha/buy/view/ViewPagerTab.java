@@ -1,6 +1,9 @@
 package com.guozha.buy.view;
 
+import com.guozha.buy.R;
+
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -20,20 +23,25 @@ public class ViewPagerTab extends ViewGroup{
 	
 	private int mWidth;
 	private int mHeight;
-	private Scroller mScroller;  
+	private Scroller mScroller; 
+	private int mTabNum;
 
 	public ViewPagerTab(Context context, AttributeSet attrs) {
 		super(context, attrs);	
 		this.mContext = context;
 		mScroller = new Scroller(mContext);  
+		initAttr(context, attrs);
 	}
 	
-
+	private void initAttr(Context context, AttributeSet attrs){
+		TypedArray typeArr = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerTab);
+		mTabNum = typeArr.getInt(typeArr.getIndex(0), 2);
+	}
 	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		if(getChildCount() > 0){
-			getChildAt(0).layout(0, 0, mWidth / 2, mHeight);  
+			getChildAt(0).layout(0, 0, mWidth / mTabNum, mHeight);  
 		}
 	}
 	
@@ -63,7 +71,7 @@ public class ViewPagerTab extends ViewGroup{
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			scrollTo(- position * mWidth / 2 - Math.round(positionOffset * mWidth / 2), 0);
+			scrollTo(- position * mWidth / mTabNum - Math.round(positionOffset * mWidth / mTabNum), 0);
 		}
 
 		@Override

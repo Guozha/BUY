@@ -12,4 +12,13 @@
 	    <attr name="check_color" format="color"></attr>
     </declare-styleable>
     
+    <!-- ViewPagerTab -->
+    <declare-styleable name="ViewPagerTab">
+        <attr name="tab_num" format="enum">
+            <enum name="num2" value="2"/>
+            <enum name="num3" value="3"/>
+            <enum name="num4" value="4"/>
+        </attr>
+    </declare-styleable>
+    
 </resources>

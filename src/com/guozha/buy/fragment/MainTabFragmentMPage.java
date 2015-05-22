@@ -1,5 +1,6 @@
 package com.guozha.buy.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.activity.found.MenuDetailActivity;
 import com.guozha.buy.adapter.MPageListAdapter;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
@@ -54,6 +58,15 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 		
 		mMPageListAdpater = new MPageListAdapter(getActivity());
 		mListView.setAdapter(mMPageListAdpater);
+		
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(getActivity(), MenuDetailActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	@Override
