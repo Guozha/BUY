@@ -1,12 +1,14 @@
 package com.guozha.buy.adapter;
 
-import com.guozha.buy.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import com.guozha.buy.R;
 
 /**
  * 菜谱详情-食材  适配器
@@ -24,7 +26,7 @@ public class MenuDetailFoodListAdapter extends BaseAdapter{
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 5;
 	}
 
 	@Override
@@ -44,8 +46,12 @@ public class MenuDetailFoodListAdapter extends BaseAdapter{
 		
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_menu_detail_food_item, null);
-			
 		}
+		TextView name = (TextView) convertView.findViewById(R.id.menu_detail_list_item_name);
+		TextView weight = (TextView) convertView.findViewById(R.id.menu_detail_list_item_weight);
+		CheckBox check = (CheckBox) convertView.findViewById(R.id.menu_detail_list_item_check);
+		name.setText("明虾");
+		weight.setText("100g");
 		return convertView;
 	}
 
