@@ -33,6 +33,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -46,7 +47,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String PAGE_NAME = "AddAddressPage";
 	
-	private static final int HAND_CHOOSED_COUNTRY = 0x0001;  //选择了区
 	private static final int HAND_KEYWORD_COMPLETED = 0x0002;  //关键字获取成功
 	private static final int HAND_DELETE_OLD_ADDRESS = 0x0003; //删除就的地址
 	private static final int HAND_FINISH_WINDOW = 0x0004; //退出
@@ -56,17 +56,18 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private EditText mMobileNum;	 //电话
 	private TextView mAddressCity;   //城市
 	private TextView mAddressCountry; //区
-	private AutoCompleteTextView mAddressDetai;  //详细地址
+	//private AutoCompleteTextView mAddressDetai;  
+	private TextView  mAddressDetai;  //小区，楼宇
 	private EditText mAddressDetaiNum; //门牌号
 	
 	private ImageView mAddressCountryIcon;
 	private ImageView mAddressCityIcon;
+	private ImageView mAddressDetailIcon;
 	
 	private int mCountryId = -1;
 	
 	private int defaultFlag = 0;  //是否默认地址
 	
-	private List<KeyWord> mKeyWords = null;
 	private AddressInfo mAddressInfo = null;
 	
 	private Button mRequestAddButton;
@@ -76,14 +77,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case HAND_CHOOSED_COUNTRY:
-				//请求关键词
-				requestAddressBuilding();
-				break;
-			case HAND_KEYWORD_COMPLETED:
-				//添加关键字
-				addKeyWordToText();
-				break;
 			case HAND_DELETE_OLD_ADDRESS:
 				//删除旧地址
 				deleteOldAddress();
@@ -118,13 +111,14 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		mMobileNum = (EditText) findViewById(R.id.add_address_mobileno);
 		mAddressCity = (TextView) findViewById(R.id.add_address_city);
 		mAddressCountry = (TextView) findViewById(R.id.add_address_country);
-		mAddressDetai = (AutoCompleteTextView) findViewById(R.id.add_address_detailaddr);
+		mAddressDetai = (TextView) findViewById(R.id.add_address_detailaddr);
 		mAddressDetaiNum = (EditText) findViewById(R.id.add_address_detail_number);
 		mRequestAddButton = (Button) findViewById(R.id.add_address_request_button);
 		mRequestSettingDefaultButton = (Button) findViewById(R.id.add_address_setting_default);
 		
 		mAddressCityIcon = (ImageView) findViewById(R.id.add_address_city_icon);
 		mAddressCountryIcon = (ImageView) findViewById(R.id.add_address_country_icon);
+		mAddressDetailIcon = (ImageView) findViewById(R.id.add_address_detailaddr_icon);
 		
 		if(mAddressInfo != null){
 			mReceiveName.setText(mAddressInfo.getReceiveName());
@@ -143,70 +137,20 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mRequestSettingDefaultButton.setVisibility(View.VISIBLE);
 			mAddressCityIcon.setVisibility(View.INVISIBLE);
 			mAddressCountryIcon.setVisibility(View.INVISIBLE);
+			mAddressDetailIcon.setVisibility(View.INVISIBLE);
 			mReceiveName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			mMobileNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-			mAddressDetai.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			mAddressDetaiNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 		}else{
 			findViewById(R.id.add_canton_button).setOnClickListener(this);
 			findViewById(R.id.add_city_button).setOnClickListener(this);
+			mAddressDetai.setOnClickListener(this);
 			mRequestAddButton.setText("添加");
 			mRequestSettingDefaultButton.setVisibility(View.GONE);
-			mAddressDetai.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					
-				}
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
-					
-				}
-				@Override
-				public void afterTextChanged(Editable s) {
-					if(mCountryId == -1){
-						ToastUtil.showToast(AddAddressActivity.this, "请先选择所在区");
-						requestCatonList();
-					}
-				}
-			});
 		}
 		
 		mRequestAddButton.setOnClickListener(this);
 		mRequestSettingDefaultButton.setOnClickListener(this);
-	}
-	
-	/**
-	 * 请求关键词
-	 */
-	private void requestAddressBuilding(){
-		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
-		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/address/listBuilding")
-		.setParams("token", token)
-		.setParams("countyId", mCountryId);
-		HttpManager.getInstance(AddAddressActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mKeyWords = gson.fromJson(response, new TypeToken<List<KeyWord>>() { }.getType());
-					handler.sendEmptyMessage(HAND_KEYWORD_COMPLETED);
-				}
-			});
-	}
-	
-	/**
-	 * 添加关键字
-	 */
-	private void addKeyWordToText(){
-		List<String> keyWords = new ArrayList<String>();
-		for(int i = 0; i < mKeyWords.size(); i++){
-			keyWords.add(mKeyWords.get(i).getBuildingName());
-		}
-		mAddressDetai.setAdapter(new ArrayAdapter<String>(
-				AddAddressActivity.this, R.layout.list_keyword_item_cell, keyWords));
 	}
 
 	@Override
@@ -218,6 +162,15 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.add_canton_button:   //请求区列表
 			requestCatonList();
+			break;
+		case R.id.add_address_detailaddr:  //请求小区、楼宇
+			if(mCountryId == -1){
+				ToastUtil.showToast(AddAddressActivity.this, "请先选择区");
+				return;
+			}
+			Intent intent = new Intent(AddAddressActivity.this, ChooseDetailActivity.class);
+			intent.putExtra("countryId", mCountryId);
+			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.add_address_setting_default: //设为默认
 			if(valideRequestAddress()){
@@ -441,12 +394,15 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == REQUEST_CODE && data != null){
 			Bundle bundle = data.getExtras();
-			mCountryId = bundle.getInt("areaId");
-			String areaName = bundle.getString("areaName");
-			mAddressCountry.setText(areaName);
-			mAddressDetai.setText("");
-			handler.sendEmptyMessage(HAND_CHOOSED_COUNTRY);
-			ToastUtil.showToast(AddAddressActivity.this, areaName);
+			if(resultCode == 0){
+				mCountryId = bundle.getInt("areaId");
+				String areaName = bundle.getString("areaName");
+				mAddressCountry.setText(areaName);
+			}else if(resultCode == 1){
+				LogUtil.e("onActivityResult");
+				String detail = bundle.getString("addrDetail");
+				mAddressDetai.setText(detail);
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

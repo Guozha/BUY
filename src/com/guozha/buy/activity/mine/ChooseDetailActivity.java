@@ -6,10 +6,14 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android.volley.Response.Listener;
@@ -35,21 +39,33 @@ public class ChooseDetailActivity extends BaseActivity{
 	
 	public static final String BUNDLE_DATA = "countrys";
 	private List<KeyWord> mKeyWords = null;
+	private List<String> mShowWords = null;
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	private ListView mCantonList;	
 	private int mCountryId;
+	private EditText mDetailText;
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
-				if(mCantonList == null) return;
-				List<String> cantons = new ArrayList<String>();
-				for(int i = 0; i < mKeyWords.size(); i++){
-					cantons.add(mKeyWords.get(i).getBuildingName());
+				String key = (String)msg.obj;
+				if(mCantonList == null || mKeyWords == null) return;
+				mShowWords = new ArrayList<String>();
+				if(key == null || "".equals(key.trim())){
+					for(int i = 0; i < mKeyWords.size(); i++){
+						mShowWords.add(mKeyWords.get(i).getBuildingName());
+					}
+				}else{
+					for(int i = 0; i < mKeyWords.size(); i++){
+						String keyWords = mKeyWords.get(i).getBuildingName();
+						if(keyWords.contains(key)){
+							mShowWords.add(keyWords);
+						}
+					}
 				}
 				mCantonList.setAdapter(new ArrayAdapter<String>(
-						ChooseDetailActivity.this, R.layout.list_canton_item_cell, cantons));
+						ChooseDetailActivity.this, R.layout.list_canton_item_cell, mShowWords));
 				break;
 			}
 		};
@@ -59,8 +75,8 @@ public class ChooseDetailActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_choose_canton);
-		customActionBarStyle("行政区");
+		setContentView(R.layout.activity_choose_detail);
+		customActionBarStyle("小区、楼宇");
 
 		Intent intent = getIntent();
 		if(intent != null){
@@ -90,6 +106,23 @@ public class ChooseDetailActivity extends BaseActivity{
 				ChooseDetailActivity.this.finish();
 			}
 		});
+		
+		mDetailText = (EditText) findViewById(R.id.choose_detail_text);
+		mDetailText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence charSeq, int start, int before, int count) {
+				String text = charSeq.toString();
+				Message message = new Message();
+				message.what = HAND_DATA_COMPLETED;
+				message.obj = text;
+				handler.sendMessage(message);
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+			@Override
+			public void afterTextChanged(Editable s) {}
+		});
 	}
 	
 	/**
@@ -108,7 +141,10 @@ public class ChooseDetailActivity extends BaseActivity{
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mKeyWords = gson.fromJson(response, new TypeToken<List<KeyWord>>() { }.getType());
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+					Message message = new Message();
+					message.what = HAND_DATA_COMPLETED;
+					message.obj = null;
+					handler.sendMessage(message);
 				}
 			});
 	}

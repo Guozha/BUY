@@ -81,6 +81,27 @@
 	        android:src="@drawable/login_wrong_state" />
     </LinearLayout>
     
+    <!-- 同意协议 -->
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="40dip"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/regist_protocal_affirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+               android:checked="true"/>
+        <TextView 
+            android:id="@+id/regist_licence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/app_base_text_color"
+            android:text="@string/activity_regist_protocol_affirm_text"/>
+    </LinearLayout>
+    
     <!-- 登录按钮 -->
     <Button
         android:id="@+id/login_button"
@@ -93,31 +114,4 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dip"
         android:background="@drawable/nomal_button_nomal_bg"/>
-    
-    <!-- 引导注册、忘记密码 -->
-    <RelativeLayout 
-        android:layout_marginTop="20dip"
-        android:layout_width="match_parent"
-        android:layout_height="50dip">
-        <TextView 
-            android:id="@+id/login_toregist_tv"
-            android:layout_width="80dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textColor="@color/color_app_base_2"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/dimen_global_14sp"
-            android:text="@string/activity_login_remind_regist_text"
-            android:textStyle="italic"/>
-        <TextView
-            android:id="@+id/login_tofindpwd_tv"
-            android:layout_width="80dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/color_app_base_2"
-            android:textSize="@dimen/dimen_global_14sp"
-            android:text="@string/activity_login_remind_findpwd_text"
-            android:textStyle="italic"/>
-    </RelativeLayout>
 </LinearLayout>

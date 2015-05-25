@@ -70,9 +70,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		
 		mLoginButton = (Button) findViewById(R.id.login_button);
 		
-		findViewById(R.id.login_toregist_tv).setOnClickListener(this);
-		findViewById(R.id.login_tofindpwd_tv).setOnClickListener(this);
-		
 		mPhoneNumIcon.setOnClickListener(this);
 		mPwdIcon.setOnClickListener(this);
 		mLoginButton.setOnClickListener(this);
@@ -83,7 +80,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View view) {
-		Intent intent;
 		String phoneNum;
 		String pwd;
 		switch (view.getId()) {
@@ -110,14 +106,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			//请求登录
 			requestLogin(phoneNum, pwd);
 			
-			break;
-		case R.id.login_toregist_tv:
-			intent = new Intent(LoginActivity.this, RegistActivity.class);
-			startActivityForResult(intent, REQUEST_CODE);
-			break;
-		case R.id.login_tofindpwd_tv:
-			intent = new Intent(LoginActivity.this, FindPwdActivity.class);
-			startActivity(intent);
 			break;
 		default:
 			break;

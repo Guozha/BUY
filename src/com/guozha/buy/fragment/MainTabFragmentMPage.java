@@ -8,7 +8,6 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,20 +17,15 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.activity.global.ChooseMenuActivity;
-import com.guozha.buy.activity.global.FindPwdActivity;
 import com.guozha.buy.activity.market.ClickMarketMenuListener;
 import com.guozha.buy.activity.market.ListVegetableActivity;
 import com.guozha.buy.activity.mpage.PlanMenuActivity;
 import com.guozha.buy.activity.mpage.PreSpecialActivity;
 import com.guozha.buy.activity.mpage.SeasonActivity;
-import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnClickListener{
