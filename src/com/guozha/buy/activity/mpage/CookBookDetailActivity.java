@@ -25,6 +25,7 @@ import com.guozha.buy.activity.CustomApplication;
 import com.guozha.buy.activity.global.BaseActivity;
 import com.guozha.buy.adapter.DetailMaterialListAdapter;
 import com.guozha.buy.adapter.DetailSeasonListAdapter;
+import com.guozha.buy.adapter.DetailStepListAdapter;
 import com.guozha.buy.entry.mpage.plan.CookBookDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
@@ -53,8 +54,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	
 	private ListView mMaterialList;//食材
 	private ListView mSeasonList;  //调料
-	//private ListView mStepList;    //做法步骤
-	private WebView mStepWebView;
+	private ListView mStepList;    //做法步骤
+	//private WebView mStepWebView;
 	
 	private String mStepWebUrl;
 	
@@ -75,7 +76,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 				updateView();
 				break;
 			case HAND_DATA_STEP_COMPLETED:
-				setWebViewStep();
+				//setWebViewStep();
 				break;
 			}
 		};
@@ -102,7 +103,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 	private void initView(){
 		mMaterialList = (ListView) findViewById(R.id.cookbook_detail_material);
 		mSeasonList = (ListView) findViewById(R.id.cookbook_detail_seasoning);
-		//mStepList = (ListView) findViewById(R.id.cookbook_detail_step);
+		mStepList = (ListView) findViewById(R.id.cookbook_detail_step);
+		/*
 		mStepWebView = (WebView) findViewById(R.id.cookbook_detail_step_webview);
 		mStepWebView.setWebViewClient(new WebViewClient(){
 			@Override
@@ -110,7 +112,8 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 				view.loadUrl(url);
 				return true;
 			}
-		});
+		})
+		*/
 		//解决scrollview进入时位置不在最顶部问题
 		/*
 		mMaterialList.post(new Runnable() {
@@ -130,9 +133,11 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		findViewById(R.id.cookbook_add_collection_button).setOnClickListener(this);
 	}
 	
+	/*
 	private void setWebViewStep(){
 		mStepWebView.loadUrl(HttpManager.URL + mStepWebUrl);
 	}
+	*/
 	
 	@Override
 	public void onClick(View view) {
@@ -231,6 +236,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		/*
 		 * 3.0.1 菜谱步骤新接口
 		 */
+		/*
 		paramPath = new RequestParam("menuplan/step");
 		paramPath.setParams("menuId", mMenuId);
 		HttpManager.getInstance(CookBookDetailActivity.this).volleyJsonRequestByPost(
@@ -246,6 +252,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 					}
 				}
 		});
+		*/
 	}
 	
 	private void updateView(){
@@ -276,7 +283,7 @@ public class CookBookDetailActivity extends BaseActivity implements OnClickListe
 		**/
 		mMaterialList.setAdapter(new DetailMaterialListAdapter(this, mCookBookDetail.getMenuGoods()));
 		mSeasonList.setAdapter(new DetailSeasonListAdapter(this, mCookBookDetail.getSeasonings()));
-		//mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps(), mBitmapCache));
+		mStepList.setAdapter(new DetailStepListAdapter(this, mCookBookDetail.getMenuSteps(), mBitmapCache));
 	}
 	
 	@Override

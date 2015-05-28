@@ -173,19 +173,21 @@
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_16sp"/>
 
-	    <!-- 
+	    
 	    <com.guozha.buy.view.MultiListView 
 	        android:id="@+id/cookbook_detail_step"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:divider="@null"/>
-	    -->
+	    
 	</LinearLayout>
 	
+	<!-- 
     <WebView 
     android:id="@+id/cookbook_detail_step_webview"
     android:layout_width="match_parent"
     android:background="@color/color_app_base_6"
     android:layout_height="wrap_content"/>
+     -->
 </LinearLayout>
 </ScrollView>

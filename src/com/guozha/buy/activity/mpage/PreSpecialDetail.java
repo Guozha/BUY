@@ -101,10 +101,10 @@ public class PreSpecialDetail extends BaseActivity{
 		
 		mPreSpecialTitle = (TextView) findViewById(R.id.prespecial_detial_descript);
 		
-		SpannableStringBuilder builder = new SpannableStringBuilder(mPreSpecialTitle.getText());
-		builder.setSpan(  
-	            new ImageSpan(this, R.drawable.sale_tag_02, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mPreSpecialTitle.setText(builder);
+		//SpannableStringBuilder builder = new SpannableStringBuilder(mPreSpecialTitle.getText());
+		//builder.setSpan(  
+	    //       new ImageSpan(this, R.drawable.sale_tag_02, DynamicDrawableSpan.ALIGN_BOTTOM), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		//mPreSpecialTitle.setText(builder);
 		
 		mWebView = (WebView) findViewById(R.id.prespecail_detail_webview);
 		mWebView.setWebViewClient(new WebViewClient(){
