@@ -7,7 +7,6 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,8 +103,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private View mItemHeaderView;
 	private RefreshableView mRefreshableView;
-	private int mCurrentAddressId = 
-			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -134,8 +131,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
-		
-		LogUtil.e("第一次进来的地址id = " + mCurrentAddressId);
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
 		
 		//菜单出入动画
@@ -487,6 +482,23 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		}
 	}
 	
+	/**
+	 * 判断菜单是否展开
+	 * @return
+	 */
+	public boolean isMenuExpanded(){
+		String tag = (String) mTopExpandMenuButton.getTag();	
+		if("expand".equals(tag)) return true;
+		else return false;
+	}
+	
+	public void closeExpandMenu(){
+		mMenuList.setVisibility(View.GONE);
+		mTopExpandMenuButton.setTag("unexpand");
+		mMenuArrowIcon.setImageResource(R.drawable.main_menu_down);
+		mMenuList.startAnimation(mOutAnimation);
+	}
+	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -506,14 +518,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	@Override
 	public void onResume() {
 		super.onResume();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		//如果地址发生变化则改变数据
-		if(mCurrentAddressId != addressId){
-			MainPageInitDataManager.mMarketItemUpdated = true;
-			MainPageInitDataManager.mCartItemsUpdated = true;
-			mDataManager.getMarketHomePage(handler, 1, 4);
-			mCurrentAddressId = addressId;
-		}
+		MainPageInitDataManager.mMarketItemUpdated = true;
+		MainPageInitDataManager.mCartItemsUpdated = true;
+		mDataManager.getMarketHomePage(handler, 1, 4);
 	}
 	
 	/**
@@ -550,7 +558,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		}
 		
 	}
-
+	
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {

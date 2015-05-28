@@ -30,6 +30,7 @@ import com.guozha.buy.fragment.MainTabFragmentMine;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.share.ShareManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ChangeColorIconWithText;
 import com.guozha.buy.view.CustomViewPager;
@@ -194,6 +195,8 @@ public class MainActivity extends FragmentActivity{
 		
 	}
 	
+	
+	private MainTabFragmentMarket mMarketFragment;
 	/**
 	 * 初始化Fragment
 	 */
@@ -212,8 +215,9 @@ public class MainActivity extends FragmentActivity{
 		mPage.setOnClickMarketMenuListener(clickMarketMenuListener);
 		MainTabFragmentCart mCart = new MainTabFragmentCart();
 		mCart.setOnClickMarketMenuListener(clickMarketMenuListener);
+		mMarketFragment = new MainTabFragmentMarket();
 		mFragments.add(mPage);
-		mFragments.add(new MainTabFragmentMarket());
+		mFragments.add(mMarketFragment);
 		mFragments.add(mCart);
 		mFragments.add(new MainTabFragmentMine());
 	}
@@ -471,6 +475,10 @@ public class MainActivity extends FragmentActivity{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		//按下了物理返回键
 		if(KeyEvent.KEYCODE_BACK == keyCode){
+			if(mCurrentItem == 1 && mMarketFragment.isMenuExpanded()){
+				mMarketFragment.closeExpandMenu();
+				return true;
+			}
 			if(mCurrentItem != 0){
 				resetOtherTabs();
 				mCurrentItem = 0;

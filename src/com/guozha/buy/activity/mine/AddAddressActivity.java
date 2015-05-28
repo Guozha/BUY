@@ -191,6 +191,10 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.add_address_request_button:
 			if(mAddressInfo != null){
+				if(mAddressSize <= 1){
+					ToastUtil.showToast(AddAddressActivity.this, "不允许地址全部删除");
+					return;
+				}
 				final CustomDialog dialog = 
 						new CustomDialog(AddAddressActivity.this, R.layout.dialog_delete_notify);
 				dialog.setDismissButtonId(R.id.cancel_button);
@@ -309,9 +313,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 					try {
 						String returnCode = response.getString("returnCode");
 						if("1".equals(returnCode)){
-							if(mAddressSize <= 1){
-								ConfigManager.getInstance().setChoosedAddressId(-1);
-							}
 							handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 						}else{
 							ToastUtil.showToast(AddAddressActivity.this, "删除失败");
