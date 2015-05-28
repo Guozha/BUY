@@ -311,6 +311,7 @@ com.guozha.buy.R$drawable: int circle_selected
 com.guozha.buy.R$drawable: int coupon_empty
 com.guozha.buy.R$drawable: int default_icon
 com.guozha.buy.R$drawable: int default_icon_large
+com.guozha.buy.R$drawable: int dialog_g
 com.guozha.buy.R$drawable: int dialogue_background
 com.guozha.buy.R$drawable: int dialogue_icon_01
 com.guozha.buy.R$drawable: int dialogue_icon_02
@@ -351,6 +352,7 @@ com.guozha.buy.R$drawable: int main_coupon_stamp
 com.guozha.buy.R$drawable: int main_dialog_background
 com.guozha.buy.R$drawable: int main_dialog_left_background
 com.guozha.buy.R$drawable: int main_dialog_right_background
+com.guozha.buy.R$drawable: int main_dialog_right_background_pressed
 com.guozha.buy.R$drawable: int main_emoticons_angry_normal
 com.guozha.buy.R$drawable: int main_emoticons_angry_selected
 com.guozha.buy.R$drawable: int main_emoticons_cool_normal
@@ -569,6 +571,7 @@ com.guozha.buy.R$id: int add_address_country
 com.guozha.buy.R$id: int add_address_country_icon
 com.guozha.buy.R$id: int add_address_detail_number
 com.guozha.buy.R$id: int add_address_detailaddr
+com.guozha.buy.R$id: int add_address_detailaddr_icon
 com.guozha.buy.R$id: int add_address_mobileno
 com.guozha.buy.R$id: int add_address_receivename
 com.guozha.buy.R$id: int add_address_request_button
@@ -610,6 +613,9 @@ com.guozha.buy.R$id: int child_grade_face1
 com.guozha.buy.R$id: int child_grade_face2
 com.guozha.buy.R$id: int child_grade_face3
 com.guozha.buy.R$id: int choose_address_list
+com.guozha.buy.R$id: int choose_detail_clear
+com.guozha.buy.R$id: int choose_detail_input_area
+com.guozha.buy.R$id: int choose_detail_text
 com.guozha.buy.R$id: int choose_menu_custom
 com.guozha.buy.R$id: int choose_menu_list
 com.guozha.buy.R$id: int choose_menu_list_cell1
@@ -626,7 +632,6 @@ com.guozha.buy.R$id: int collection_recipe_modify_list
 com.guozha.buy.R$id: int collection_vegetable_list
 com.guozha.buy.R$id: int colloection_menu_button
 com.guozha.buy.R$id: int come_in_button
-com.guozha.buy.R$id: int confirm_button
 com.guozha.buy.R$id: int cook_book_collection
 com.guozha.buy.R$id: int cook_book_imag
 com.guozha.buy.R$id: int cook_book_material
@@ -656,18 +661,6 @@ com.guozha.buy.R$id: int expandable_cart_list
 com.guozha.buy.R$id: int expandable_order_detail_list
 com.guozha.buy.R$id: int feadback_button
 com.guozha.buy.R$id: int feadback_text
-com.guozha.buy.R$id: int findpwd_obtain_validenum
-com.guozha.buy.R$id: int findpwd_phone_input_area
-com.guozha.buy.R$id: int findpwd_phonenum
-com.guozha.buy.R$id: int findpwd_phonenum_clear
-com.guozha.buy.R$id: int findpwd_pwd
-com.guozha.buy.R$id: int findpwd_pwd_clear
-com.guozha.buy.R$id: int findpwd_pwd_input_area
-com.guozha.buy.R$id: int findpwd_repeat_pwd
-com.guozha.buy.R$id: int findpwd_repeat_pwd_clear
-com.guozha.buy.R$id: int findpwd_repeat_pwd_input_area
-com.guozha.buy.R$id: int findpwd_validenum
-com.guozha.buy.R$id: int findpwd_validenum_input_area
 com.guozha.buy.R$id: int fragment_mpage_season
 com.guozha.buy.R$id: int goods_icon
 com.guozha.buy.R$id: int goods_name
@@ -700,14 +693,16 @@ com.guozha.buy.R$id: int list_paging_bottom_text
 com.guozha.buy.R$id: int list_vegetable
 com.guozha.buy.R$id: int loading
 com.guozha.buy.R$id: int login_button
+com.guozha.buy.R$id: int login_invitation
+com.guozha.buy.R$id: int login_invitation_input_area
+com.guozha.buy.R$id: int login_licence
+com.guozha.buy.R$id: int login_obtain_validenum
 com.guozha.buy.R$id: int login_phone_input_area
 com.guozha.buy.R$id: int login_phonenum
 com.guozha.buy.R$id: int login_phonenum_clear
-com.guozha.buy.R$id: int login_pwd
-com.guozha.buy.R$id: int login_pwd_clear
-com.guozha.buy.R$id: int login_pwd_input_area
-com.guozha.buy.R$id: int login_tofindpwd_tv
-com.guozha.buy.R$id: int login_toregist_tv
+com.guozha.buy.R$id: int login_protocal_affirm
+com.guozha.buy.R$id: int login_validenum
+com.guozha.buy.R$id: int login_validenum_input_area
 com.guozha.buy.R$id: int logo_icon
 com.guozha.buy.R$id: int main_mpage_add_plan_icon
 com.guozha.buy.R$id: int main_mpage_add_plan_text
@@ -775,6 +770,8 @@ com.guozha.buy.R$id: int order_product_count
 com.guozha.buy.R$id: int order_status
 com.guozha.buy.R$id: int order_time
 com.guozha.buy.R$id: int order_unfinished_list
+com.guozha.buy.R$id: int other_addr_area
+com.guozha.buy.R$id: int other_addr_button
 com.guozha.buy.R$id: int pay_button
 com.guozha.buy.R$id: int pay_can_use_bean
 com.guozha.buy.R$id: int pay_can_use_bean_icon
@@ -873,20 +870,6 @@ com.guozha.buy.R$id: int quick_time_choose_text
 com.guozha.buy.R$id: int recipe_collection_descript
 com.guozha.buy.R$id: int recipe_collection_img
 com.guozha.buy.R$id: int recipe_collection_name
-com.guozha.buy.R$id: int regist_button
-com.guozha.buy.R$id: int regist_invitation
-com.guozha.buy.R$id: int regist_invitation_input_area
-com.guozha.buy.R$id: int regist_licence
-com.guozha.buy.R$id: int regist_obtain_validenum
-com.guozha.buy.R$id: int regist_phone_input_area
-com.guozha.buy.R$id: int regist_phonenum
-com.guozha.buy.R$id: int regist_phonenum_clear
-com.guozha.buy.R$id: int regist_protocal_affirm
-com.guozha.buy.R$id: int regist_pwd
-com.guozha.buy.R$id: int regist_pwd_clear
-com.guozha.buy.R$id: int regist_pwd_input_area
-com.guozha.buy.R$id: int regist_validenum
-com.guozha.buy.R$id: int regist_validenum_input_area
 com.guozha.buy.R$id: int rule_text
 com.guozha.buy.R$id: int scrollview
 com.guozha.buy.R$id: int search_button
@@ -1052,12 +1035,12 @@ com.guozha.buy.R$layout: int activity_advice_praise
 com.guozha.buy.R$layout: int activity_alipay
 com.guozha.buy.R$layout: int activity_answer_question
 com.guozha.buy.R$layout: int activity_choose_canton
+com.guozha.buy.R$layout: int activity_choose_detail
 com.guozha.buy.R$layout: int activity_choose_menu
 com.guozha.buy.R$layout: int activity_choose_ticket
 com.guozha.buy.R$layout: int activity_cookbook_detail
 com.guozha.buy.R$layout: int activity_debug
 com.guozha.buy.R$layout: int activity_feadback
-com.guozha.buy.R$layout: int activity_findpwd
 com.guozha.buy.R$layout: int activity_grad_order_detail
 com.guozha.buy.R$layout: int activity_guide
 com.guozha.buy.R$layout: int activity_licence
@@ -1076,7 +1059,6 @@ com.guozha.buy.R$layout: int activity_planmenu
 com.guozha.buy.R$layout: int activity_pre_special
 com.guozha.buy.R$layout: int activity_prespecial_detail
 com.guozha.buy.R$layout: int activity_prespecial_pay
-com.guozha.buy.R$layout: int activity_regist
 com.guozha.buy.R$layout: int activity_search
 com.guozha.buy.R$layout: int activity_search_result
 com.guozha.buy.R$layout: int activity_season
@@ -1352,9 +1334,6 @@ com.guozha.buy.activity.cart.PreSpecialPayActivity$PayWay: com.guozha.buy.activi
 com.guozha.buy.activity.global.BaseActivity: BaseActivity()
 com.guozha.buy.activity.global.ChooseMenuActivity
 com.guozha.buy.activity.global.ChooseMenuActivity: ChooseMenuActivity()
-com.guozha.buy.activity.global.FindPwdActivity
-com.guozha.buy.activity.global.FindPwdActivity: FindPwdActivity()
-com.guozha.buy.activity.global.FindPwdActivity: void onClick(android.view.View)
 com.guozha.buy.activity.global.GuideActivity
 com.guozha.buy.activity.global.GuideActivity: GuideActivity()
 com.guozha.buy.activity.global.LicenceActivity
@@ -1364,9 +1343,6 @@ com.guozha.buy.activity.global.LoginActivity: LoginActivity()
 com.guozha.buy.activity.global.LoginActivity: void onClick(android.view.View)
 com.guozha.buy.activity.global.MainActivity
 com.guozha.buy.activity.global.MainActivity: MainActivity()
-com.guozha.buy.activity.global.RegistActivity
-com.guozha.buy.activity.global.RegistActivity: RegistActivity()
-com.guozha.buy.activity.global.RegistActivity: void onClick(android.view.View)
 com.guozha.buy.activity.global.SearchActivity
 com.guozha.buy.activity.global.SearchActivity: SearchActivity()
 com.guozha.buy.activity.global.SearchResultActivity
@@ -1426,8 +1402,6 @@ com.guozha.buy.activity.mpage.PreSpecialDetail
 com.guozha.buy.activity.mpage.PreSpecialDetail: PreSpecialDetail()
 com.guozha.buy.activity.mpage.SeasonActivity
 com.guozha.buy.activity.mpage.SeasonActivity: SeasonActivity()
-com.guozha.buy.alarm.AlarmReceiver
-com.guozha.buy.alarm.AlarmReceiver: AlarmReceiver()
 com.guozha.buy.debug.DebugActivity
 com.guozha.buy.debug.DebugActivity: DebugActivity()
 com.guozha.buy.debug.DebugActivity: void onClick(android.view.View)

@@ -69,6 +69,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private int defaultFlag = 0;  //是否默认地址
 	
 	private AddressInfo mAddressInfo = null;
+	private int mAddressSize = 0;
 	
 	private Button mRequestAddButton;
 	private Button mRequestSettingDefaultButton;
@@ -98,6 +99,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		if(bundle != null){
 			mAddressInfo = 
 					(AddressInfo) bundle.getSerializable("addressInfo");
+			mAddressSize = bundle.getInt("addressSize");
 		}
 		initView();
 		MainPageInitDataManager.mAddressUpdated = true; //设置地址列表发生了变化
@@ -142,6 +144,10 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mMobileNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			mAddressDetaiNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 		}else{
+			String mobileNum = ConfigManager.getInstance().getMobileNum();
+			if(mobileNum != null){
+				mMobileNum.setText(mobileNum);
+			}
 			findViewById(R.id.add_canton_button).setOnClickListener(this);
 			findViewById(R.id.add_city_button).setOnClickListener(this);
 			mAddressDetai.setOnClickListener(this);
@@ -170,6 +176,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			}
 			Intent intent = new Intent(AddAddressActivity.this, ChooseDetailActivity.class);
 			intent.putExtra("countryId", mCountryId);
+			intent.putExtra("addrDetail", mAddressDetai.getText());
 			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.add_address_setting_default: //设为默认
@@ -251,7 +258,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 									}
 								}
 								
-								
 							}else{
 								ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
 							}
@@ -303,6 +309,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 					try {
 						String returnCode = response.getString("returnCode");
 						if("1".equals(returnCode)){
+							if(mAddressSize <= 1){
+								ConfigManager.getInstance().setChoosedAddressId(-1);
+							}
 							handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 						}else{
 							ToastUtil.showToast(AddAddressActivity.this, "删除失败");
@@ -402,6 +411,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				LogUtil.e("onActivityResult");
 				String detail = bundle.getString("addrDetail");
 				mAddressDetai.setText(detail);
+				mAddressDetaiNum.requestFocus();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

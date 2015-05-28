@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.activity.CustomApplication;
-import com.guozha.buy.debug.DebugActivity;
 import com.guozha.buy.util.NetManager;
 import com.guozha.buy.util.ToastUtil;
 

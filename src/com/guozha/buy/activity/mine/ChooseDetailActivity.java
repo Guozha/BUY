@@ -10,10 +10,12 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.Response.Listener;
@@ -45,6 +47,9 @@ public class ChooseDetailActivity extends BaseActivity{
 	private ListView mCantonList;	
 	private int mCountryId;
 	private EditText mDetailText;
+	private String mAddrDetail;
+	private ImageView mChooseDetailIcon;
+	private View mOtherAddr;
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -66,6 +71,11 @@ public class ChooseDetailActivity extends BaseActivity{
 				}
 				mCantonList.setAdapter(new ArrayAdapter<String>(
 						ChooseDetailActivity.this, R.layout.list_canton_item_cell, mShowWords));
+				if(mShowWords.isEmpty()){
+					mOtherAddr.setVisibility(View.VISIBLE);
+				}else{
+					mOtherAddr.setVisibility(View.GONE);
+				}
 				break;
 			}
 		};
@@ -83,6 +93,9 @@ public class ChooseDetailActivity extends BaseActivity{
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mCountryId = bundle.getInt("countryId");
+				mAddrDetail = bundle.getString("addrDetail");
+				if("其他地址".equals(mAddrDetail))
+					mAddrDetail = "";
 			}
 		}
 		initView();
@@ -101,17 +114,35 @@ public class ChooseDetailActivity extends BaseActivity{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = getIntent();
-				intent.putExtra("addrDetail", mKeyWords.get(position).getBuildingName());
+				intent.putExtra("addrDetail", mShowWords.get(position));
 				setResult(1, intent);
 				ChooseDetailActivity.this.finish();
 			}
 		});
 		
 		mDetailText = (EditText) findViewById(R.id.choose_detail_text);
+		mChooseDetailIcon = (ImageView) findViewById(R.id.choose_detail_clear);
+		mChooseDetailIcon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mDetailText.setText("");
+			}
+		});
+		if(mAddrDetail != null && !mAddrDetail.isEmpty()){
+			mDetailText.setText(mAddrDetail);
+			mDetailText.setSelection(mAddrDetail.length());
+			mChooseDetailIcon.setVisibility(View.VISIBLE);
+		}
 		mDetailText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence charSeq, int start, int before, int count) {
 				String text = charSeq.toString();
+				if(text.length() == 0){
+					mChooseDetailIcon.setVisibility(View.INVISIBLE);
+				}else{
+					mChooseDetailIcon.setVisibility(View.VISIBLE);
+				}
 				Message message = new Message();
 				message.what = HAND_DATA_COMPLETED;
 				message.obj = text;
@@ -122,6 +153,17 @@ public class ChooseDetailActivity extends BaseActivity{
 					int after) {}
 			@Override
 			public void afterTextChanged(Editable s) {}
+		});
+		
+		mOtherAddr = findViewById(R.id.other_addr_area);
+		findViewById(R.id.other_addr_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = getIntent();
+				intent.putExtra("addrDetail", "其他地址");
+				setResult(1, intent);
+				ChooseDetailActivity.this.finish();
+			}
 		});
 	}
 	

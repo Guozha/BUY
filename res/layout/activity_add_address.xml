@@ -177,7 +177,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint=""
+            android:hint="金地自在城"
             android:textColorHint="@color/color_app_base_8"
             android:textColor="@color/color_app_base_9"
             android:textSize="@dimen/dimen_global_16sp"/>

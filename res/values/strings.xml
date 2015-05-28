@@ -21,7 +21,7 @@
     <string name="activity_regist_phonenum_hint">输入手机号码</string>
     <string name="activity_regist_verify_num_hint">输入验证码</string>
     <string name="activity_regist_pwd_hint">输入密码</string>
-    <string name="activity_regist_obtain_verify_button_text">获取</string>
+    <string name="activity_regist_obtain_verify_button_text">获取验证码</string>
     <string name="activity_regist_protocol_affirm_text">我已阅读并同意《用户协议》</string>
     <string name="activity_regist_button_text">注册</string>
     
