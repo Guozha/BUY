@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		customActionBarStyle("登录");
+		customActionBarStyle("一键登录");
 		Bundle bundle = getIntent().getExtras();
 		if(bundle != null){
 			mSuccessIntent = bundle.getString(SUCCESS_TURN_INTENT);

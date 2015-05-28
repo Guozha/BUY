@@ -13,7 +13,7 @@
     <!-- activity_login -->
     <string name="activity_login_phonenum_hint">输入手机号码</string>
     <string name="activity_login_pwd_hint">输入密码</string>
-    <string name="activity_login_button_text">登录</string>
+    <string name="activity_login_button_text">一键登录</string>
     <string name="activity_login_remind_regist_text"><u>去注册</u></string>
     <string name="activity_login_remind_findpwd_text"><u>忘记密码？</u></string>
     
