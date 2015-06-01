@@ -33,8 +33,8 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.ui.BaseFragment;
 import com.guozha.buy.ui.CustomApplication;
-import com.guozha.buy.ui.best.CookBookDetailActivity;
 import com.guozha.buy.ui.dialog.CustomDialog;
+import com.guozha.buy.ui.found.MenuDetailActivity;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
@@ -88,7 +88,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 					int groupPosition, int childPosition, long id) {
 				//TODO 跳到菜谱详情界面
 				Intent intent = new Intent(
-						CollectionRecipeFragment.this.getActivity(), CookBookDetailActivity.class);
+						CollectionRecipeFragment.this.getActivity(), MenuDetailActivity.class);
 				intent.putExtra("menuId", 
 						mCollectionDir.get(groupPosition).getMenuInfoList().get(childPosition).getMenuId());
 				startActivity(intent);

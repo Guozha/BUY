@@ -33,8 +33,8 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.ui.BaseActivity;
 import com.guozha.buy.ui.CustomApplication;
-import com.guozha.buy.ui.best.CookBookDetailActivity;
 import com.guozha.buy.ui.dialog.WeightSelectDialog;
+import com.guozha.buy.ui.found.MenuDetailActivity;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -106,7 +106,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 					int position, long id) {
 				if(position <= 0) return;
 				RelationRecipe recipe = mRelationRecipes.get(position - 1);
-				Intent intent = new Intent(VegetableDetailActivity.this, CookBookDetailActivity.class);
+				Intent intent = new Intent(VegetableDetailActivity.this, MenuDetailActivity.class);
 				if(recipe != null){
 					intent.putExtra("menuId", recipe.getMenuId());
 				}

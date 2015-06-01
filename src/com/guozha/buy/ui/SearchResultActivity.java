@@ -26,8 +26,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.ui.best.CookBookDetailActivity;
 import com.guozha.buy.ui.dialog.WeightSelectDialog;
+import com.guozha.buy.ui.found.MenuDetailActivity;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -133,7 +133,7 @@ public class SearchResultActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(SearchResultActivity.this, CookBookDetailActivity.class);
+				Intent intent = new Intent(SearchResultActivity.this, MenuDetailActivity.class);
 				intent.putExtra("menuId", mSearchRelateList.get(position).getMenuId());
 				startActivity(intent);
 			}

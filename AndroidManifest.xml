@@ -123,11 +123,6 @@
             android:name="com.guozha.buy.ui.found.FoundSubjectDetailActivity"
             android:screenOrientation="portrait"/>
         
-        <!-- 菜谱详情 -->
-        <activity
-            android:name="com.guozha.buy.ui.best.CookBookDetailActivity"
-            android:screenOrientation="portrait"/>
-        
         <activity 
             android:name="com.guozha.buy.ui.found.MenuDetailActivity"
             android:screenOrientation="portrait"/>
