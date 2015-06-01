@@ -78,23 +78,9 @@
             
         </activity>
         
-        <!-- 注册界面 -->
-        <activity 
-            android:name="com.guozha.buy.ui.RegistActivity"
-            android:screenOrientation="portrait">
-            
-        </activity>
-        
         <!-- 登录界面 -->
         <activity 
             android:name="com.guozha.buy.ui.LoginActivity"
-            android:screenOrientation="portrait">
-            
-        </activity>
-        
-        <!-- 找回密码 -->
-        <activity
-            android:name="com.guozha.buy.ui.FindPwdActivity"
             android:screenOrientation="portrait">
             
         </activity>
