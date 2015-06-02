@@ -19,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
-import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.entry.market.MarketHomePage;
@@ -41,11 +41,9 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.ui.CustomApplication;
 import com.guozha.buy.ui.dialog.ChooseAddressDialog;
-import com.guozha.buy.ui.market.ChooseMenuActivity;
 import com.guozha.buy.ui.market.ListVegetableActivity;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
-import com.guozha.buy.view.CustomListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
 import com.umeng.analytics.MobclickAgent;
@@ -58,10 +56,7 @@ import com.umeng.analytics.MobclickAgent;
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnScrollListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
-	private static final int HANDLER_MENU_ITEM_MSG_WHAT = 0x0001;
 	private static final int HAND_DATA_COMPLETED = 0x0002; 
-	private static final int HAND_BEGIN_REFRESH = 0x00010;	//开始刷新
-	private static final int HAND_END_REFRESH = 0x0004;		//刷新完成
 	public static final int REQUEST_CODE_ADDRESS = 10;
 	public static final int REQUEST_CODE_CART = 11;
 	
@@ -77,14 +72,12 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private List<GoodsItemType> mGoodsItemTypes;  //菜品类目菜单数据
 	private List<MarketHomeItem> mMarketHomeItems = new ArrayList<MarketHomeItem>();	//逛菜场主页的列表
 	
-	private CustomListView mItemList;
-	private int mFirstVisibleItem;  //屏幕上可见的第一条
+	private ListView mItemList;
 	
 	private Animation mInAnimation;
 	private Animation mOutAnimation;
 	
 	private ImageView mMenuArrowIcon;
-	private View mQuickInView;
 	
 	private int mTotalPageSize;
 	
@@ -95,12 +88,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
 	
-	private List<TextView> mQuickMenus; //快捷菜单列表
 	private List<AddressInfo> mAddressInfos; //地址列表
 	private TextView mActionBarAddress; 
 	private View mActionBarView;
 	
-	private View mItemHeaderView;
 	private RefreshableView mRefreshableView;
 	private int mCurrentAddressId = 
 			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
@@ -110,16 +101,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateItemList();
-				break;
-			case HAND_BEGIN_REFRESH:
-				if(mQuickInView == null) return;
-				mQuickInView.setVisibility(View.GONE);
-				mItemList.removeHeaderView(mItemHeaderView);
-				break;
-			case HAND_END_REFRESH:
-				if(mQuickInView == null) return;
-				mQuickInView.setVisibility(View.VISIBLE);
-				mItemList.addHeaderView(mItemHeaderView);
 				break;
 			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
 				setMarketHomeData();
@@ -133,7 +114,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
 		
-		LogUtil.e("第一次进来的地址id = " + mCurrentAddressId);
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
 		
 		//菜单出入动画
@@ -142,7 +122,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		initActionBar("逛菜场");
 		initView(mView);
-		initQuickMenusData();
 		
 		return mView;
 	}
@@ -167,8 +146,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		//菜单类目可展开列表
 		mMenuList = (AnimatedExpandableListView) view.findViewById(R.id.market_item_menu_list);
-		//mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
-		//mMenuList.setAdapter(mMenuExpandListAapter);
 		mMenuList.setOnGroupClickListener(new OnGroupClickListener() {
 
             @Override
@@ -205,12 +182,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		setGoodsItemTypeData();
 		
-		mItemHeaderView = LayoutInflater.from(this.getActivity())
-				.inflate(R.layout.market_list_item_header, null);
 		//界面分类列表
-		mItemList = (CustomListView) view.findViewById(R.id.market_itemlist);
+		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
 		mItemList.setItemsCanFocus(true);
-		mItemList.addHeaderView(mItemHeaderView);
 		mBottomLoadingView = getActivity().getLayoutInflater().inflate(R.layout.list_paging_bottom, null);
 		mLoadText = (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
@@ -226,34 +200,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
-		mQuickInView = view.findViewById(R.id.market_quick_in_view);
-		
-		mItemList.setOnListViewEventListener(new CustomListView.OnListViewEventListener() {
-			
-			@Override
-			public void upDownEvent(boolean isUp) {
-				if(isUp){
-					mQuickInView.setVisibility(View.INVISIBLE);
-				}else{
-					mQuickInView.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-		
-		view.findViewById(R.id.choose_menu_custom).setOnClickListener(this);
-		
-		
-		//快捷菜单设置
-		mQuickMenus = new ArrayList<TextView>();
-		mQuickMenus.add((TextView)view.findViewById(R.id.market_quick_menu_1));
-		mQuickMenus.add((TextView)view.findViewById(R.id.market_quick_menu_2));
-		mQuickMenus.add((TextView)view.findViewById(R.id.market_quick_menu_3));
-		mQuickMenus.add((TextView)view.findViewById(R.id.market_quick_menu_4));
-		mQuickMenus.add((TextView)view.findViewById(R.id.market_quick_menu_5));
-		
-		for(int i = 0; i < mQuickMenus.size(); i++){
-			mQuickMenus.get(i).setOnClickListener(this);
-		}
 		
 		/**
 		 * 刷新相关
@@ -262,7 +208,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mRefreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() {
-				handler.sendEmptyMessage(HAND_BEGIN_REFRESH);
 				if(mDataManager == null){
 					mDataManager = MainPageInitDataManager.getInstance();
 				}
@@ -275,37 +220,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 					e.printStackTrace();
 				}
 				mRefreshableView.finishRefreshing();
-				handler.sendEmptyMessage(HAND_END_REFRESH);
 			}
 		}, 0);
-	}
-	
-	/**
-	 * 初始化快捷菜单数据
-	 */
-	private void initQuickMenusData(){
-		if(mQuickMenus == null) return;
-		List<QuickMenu> quickMenus = ConfigManager.getInstance().getQuickMenus();
-		
-		if(quickMenus == null) {
-			for(int i = 0; i < 5; i++){
-				mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_edit);
-				mQuickMenus.get(i).setTag("-1");
-				mQuickMenus.get(i).setText("");
-			}
-			return;
-		}
-		for(int i = 0; i < quickMenus.size(); i++){
-			mQuickMenus.get(i).setText(quickMenus.get(i).getName());
-			mQuickMenus.get(i).setTag(quickMenus.get(i).getMenuId() + ":" + quickMenus.get(i).getName());
-			mQuickMenus.get(i).setBackgroundResource(R.drawable.market_tag_background);
-		}
-		
-		for(int i = 0; i < 5 - quickMenus.size(); i++){
-			mQuickMenus.get(i).setBackgroundResource(R.drawable.main_tag_edit_round);
-			mQuickMenus.get(i).setTag("-1");
-			mQuickMenus.get(i).setText("");
-		}
 	}
 	
 	@Override
@@ -426,44 +342,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		case R.id.market_expand_menu_button:
 			expandMenuAction(view);
 			break;
-		case R.id.choose_menu_custom:
-			intent = new Intent(getActivity(), ChooseMenuActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.market_quick_menu_1:
-		case R.id.market_quick_menu_2:
-		case R.id.market_quick_menu_3:
-		case R.id.market_quick_menu_4:
-		case R.id.market_quick_menu_5:
-			clickQuickMneuEvent(view);
-			break;
 		case R.id.actionbar_address: //点击ActionBar地址按钮
 			intent = new Intent(getActivity(), ChooseAddressDialog.class);
 			getActivity().startActivityForResult(intent, REQUEST_CODE_ADDRESS);
 			break;
-		}
-	}
-	
-	/**
-	 * 点击快捷菜单
-	 * @param view
-	 */
-	private void clickQuickMneuEvent(View view) {
-		String tag = String.valueOf(view.getTag());
-		Intent intent;
-		if("-1".equals(tag)){
-			intent = new Intent(MainTabFragmentMarket.this.getActivity(), ChooseMenuActivity.class);
-			startActivity(intent);
-		}else{
-			if(view == null) return;
-			String[] itemType = tag.split(":");
-			intent = new Intent(getActivity(), ListVegetableActivity.class);
-			//将商品类别传给列表
-			if(itemType.length == 2){
-				intent.putExtra("frontTypeId", itemType[0]);
-				intent.putExtra("frontTypeName", itemType[1]);
-			}
-			startActivity(intent);
 		}
 	}
 
@@ -513,17 +395,11 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mCurrentAddressId = addressId;
 		}
 	}
-
 	
 	private int mLastVisibleIndex;  //可见的最后一条数据
 	private int mMaxDateNum;		//最大数据数
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		//当滑动到最顶部后显示快捷菜单
-		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-				&& mFirstVisibleItem == 0){
-			mQuickInView.setVisibility(View.VISIBLE);
-		}
 		
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
 				&& mLastVisibleIndex == mMarketItemListAdapter.getCount() + 1 //加了viewHead
@@ -538,8 +414,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
-		mFirstVisibleItem = firstVisibleItem;
-		
 		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;  
 		//所有的条目已经和最大数相等，则移除底部的view
 		if(totalItemCount >= mMaxDateNum + 2){	//加了viewHead和viewFooter
@@ -553,7 +427,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	public void onStart() {
 		super.onStart();
 		//更新快捷菜单
-		initQuickMenusData();
 		if(mMarketHomeItems == null || mMarketHomeItems.size() == 0){
 			setMarketHomeData();
 		}

@@ -16,7 +16,6 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
-import com.guozha.buy.entry.global.QuickMenu;
 import com.guozha.buy.entry.market.GoodsItemType;
 import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.entry.market.MarketHomePage;
@@ -56,7 +55,6 @@ public class MainPageInitDataManager {
 	private AccountInfo mAccountInfo;
 	private ArrayList<GoodsItemType> mGoodsItemTypes;
 	private MarketHomePage mMarketHomePage;
-	private List<QuickMenu> mQuickMenus;
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
 	private TodayInfo mTodayInfo = null;
@@ -98,7 +96,6 @@ public class MainPageInitDataManager {
 		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
 		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
 		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
-		mInitDataManager.getQuickMenus(handler);	//获取一级菜单
 		mInitDataManager.getAddressInfos(handler);  //获取地址列表
 		mInitDataManager.getCartItems(handler);		//获取购物车数据
 	}
@@ -132,22 +129,6 @@ public class MainPageInitDataManager {
 			}
 		}
 		return mGoodsItemTypes;
-	}
-	
-	/**
-	 * 获取一级类目
-	 * @param handler
-	 * @return
-	 */
-	public List<QuickMenu> getQuickMenus(Handler handler){
-		if(mQuickMenus == null){
-			requestFirstItemClass(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_FIRST_CATEGORY);
-			}
-		}
-		return mQuickMenus;
 	}
 	
 	/**
@@ -341,41 +322,6 @@ public class MainPageInitDataManager {
 			List<GoodsSecondItemType> secondItemList = itemType.getFrontTypeList();
 			secondItemList.add(0, secondItemType);
 		}
-	}
-	
-	/**
-	 * 获取一级类目
-	 */
-	private void requestFirstItemClass(final Handler handler){
-		String paramsPath = "goods/frontType/typeList?frontTypeId=";
-		HttpManager.getInstance(mContext).volleyRequestByPost(
-				HttpManager.URL + paramsPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				List<GoodsItemType> goodsItemTypes = 
-						gson.fromJson(response, new TypeToken<List<GoodsItemType>>() { }.getType());
-				QuickMenu quickMenu;
-				if(goodsItemTypes == null) return;
-				mQuickMenus = new ArrayList<QuickMenu>();
-				for(int i = 0; i < goodsItemTypes.size(); i++){
-					int id = goodsItemTypes.get(i).getFrontTypeId();
-					String shortName = goodsItemTypes.get(i).getShortName();
-					quickMenu = new QuickMenu(id, shortName);
-					mQuickMenus.add(quickMenu);
-				}
-				if(mQuickMenus == null) return;
-				List<QuickMenu> defaultQuickMenu = new ArrayList<QuickMenu>();
-				for(int i = 0; i < mQuickMenus.size(); i++){
-					if(i >= 5) break;
-					defaultQuickMenu.add(mQuickMenus.get(i));
-				}
-				ConfigManager.getInstance().setQuickMenus(defaultQuickMenu);
-				if(handler != null){
-					handler.sendEmptyMessage(HAND_INITDATA_MSG_FIRST_CATEGORY);
-				}
-			}
-		});
 	}
 	
 	/**

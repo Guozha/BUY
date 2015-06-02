@@ -34,8 +34,6 @@ public class ConfigManager{
 	
 	private Map<String, Map<String, String>> mConstantXML; //常量配置文件
 	
-	private List<QuickMenu> mQuickMenus;				   //快捷菜单列表
-	
 	private int mUserId;
 	private String mUserToken;
 	private String mUserPwd;
@@ -100,56 +98,6 @@ public class ConfigManager{
 				
 			};
 		}.start();
-	}
-	
-	/**
-	 * 设置快捷菜单
-	 * @param quickMenus
-	 */
-	public void setQuickMenus(List<QuickMenu> quickMenus){
-		if(quickMenus.isEmpty()){
-			mQuickMenus = null;
-		}else{
-			mQuickMenus = quickMenus;
-		}
-		StringBuffer quickBuf = new StringBuffer();
-		for(int i = 0; i < quickMenus.size(); i++){
-			QuickMenu quickMenuId = quickMenus.get(i);
-			if(quickMenuId == null) continue;
-			quickBuf.append(quickMenuId.getMenuId());
-			quickBuf.append(":");
-			quickBuf.append(quickMenuId.getName());
-			quickBuf.append(",");
-		}
-		String quickStr;
-		if(quickBuf.length() >= 1){
-			quickStr = quickBuf.deleteCharAt(quickBuf.length() -1).toString();
-		}else{
-			quickStr = null;
-		}
-		Editor editor = sharedPreference.edit();
-		editor.putString("quickMenusId", quickStr);
-		editor.commit();
-	}
-	
-	/**
-	 * 获取快捷菜单
-	 * @return
-	 */
-	public List<QuickMenu> getQuickMenus(){
-		if(mQuickMenus != null) return mQuickMenus;
-		String quickStr = sharedPreference.getString("quickMenusId", null);
-		if(quickStr == null) return null;
-		String[] menus = quickStr.split(",");
-		List<QuickMenu> quickMenus = new ArrayList<QuickMenu>();
-		QuickMenu quickMenu;
-		for(int i = 0; i < menus.length; i++){
-			String[] quickMenusArr = menus[i].split(":");
-			if(quickMenusArr.length != 2) continue;
-			quickMenu = new QuickMenu(Integer.parseInt(quickMenusArr[0]), quickMenusArr[1]);
-			quickMenus.add(quickMenu);
-		}
-		return quickMenus;
 	}
 	
 	/**

@@ -85,14 +85,6 @@
             
         </activity>
         
-        <!-- 自定义快捷菜单 -->
-        <activity 
-            android:label="快捷设置"
-            android:name="com.guozha.buy.ui.market.ChooseMenuActivity"
-            android:screenOrientation="portrait">
-            
-        </activity>
-        
         <!-- 菜品详情 -->
         <activity 
             android:name="com.guozha.buy.ui.market.VegetableDetailActivity"

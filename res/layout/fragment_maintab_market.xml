@@ -50,7 +50,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent">
 		    <!-- 菜品展示 -->
-	   		<com.guozha.buy.view.CustomListView 
+	   		<ListView 
 	   		    android:id="@+id/market_itemlist"
 	   		    android:footerDividersEnabled="false"
 	   		    android:headerDividersEnabled="false"
@@ -61,98 +61,7 @@
 	   		    android:layout_width="match_parent"
 	   		    android:layout_height="match_parent"/>
    		</com.guozha.buy.view.RefreshableView>
-   		
-   		<!-- 快捷入口 -->
-   		<LinearLayout 
-   		    android:id="@+id/market_quick_in_view"
-   		    android:layout_width="match_parent"
-   		    android:layout_height="66dip"
-   		    android:layout_marginLeft="8dip"
-   		    android:layout_marginRight="8dip"
-   		    android:layout_marginTop="4dip"
-   		    android:gravity="center_vertical"
-   		    android:background="@drawable/main_background_selector"
-   		    android:orientation="horizontal">
-   		    <Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-   		    <TextView 
-   		        android:id="@+id/market_quick_menu_1"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/market_tag_background"
-   		        android:textColor="@color/color_app_base_2"
-   		        android:textSize="@dimen/dimen_global_14sp"
-   		        android:gravity="center"
-   		        android:text="水果"/>
-   		    <Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-			<TextView 
-			    android:id="@+id/market_quick_menu_2"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/market_tag_background"
-   		        android:textColor="@color/color_app_base_2"
-   		        android:textSize="@dimen/dimen_global_14sp"
-   		        android:gravity="center"
-   		        android:text="水果"/>
-			<Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-			<TextView 
-			    android:id="@+id/market_quick_menu_3"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/market_tag_background"
-   		        android:textColor="@color/color_app_base_2"
-   		        android:textSize="@dimen/dimen_global_14sp"
-   		        android:gravity="center"
-   		        android:text="水果"/>
-			<Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-			<TextView 
-			    android:id="@+id/market_quick_menu_4"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/market_tag_background"
-   		        android:textColor="@color/color_app_base_2"
-   		        android:textSize="@dimen/dimen_global_14sp"
-   		        android:gravity="center"
-   		        android:text="水果"/>
-			<Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-			<TextView 
-			    android:id="@+id/market_quick_menu_5"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/market_tag_background"
-   		        android:textColor="@color/color_app_base_2"
-   		        android:textSize="@dimen/dimen_global_14sp"
-   		        android:gravity="center"
-   		        android:text="水果"/>
-			<Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-			<TextView 
-			    android:id="@+id/choose_menu_custom"
-   		        android:layout_width="45dip"
-   		        android:layout_height="45dip"
-   		        android:background="@drawable/main_tag_edit_round"/>
-			<Space 
-			    android:layout_width="0dip"
-			    android:layout_weight="1"
-			    android:layout_height="match_parent"/>
-   		</LinearLayout>
-		
+ 
    		<!-- 可展开菜单 -->
 		<com.guozha.buy.view.AnimatedExpandableListView 
 	        android:id="@+id/market_item_menu_list"

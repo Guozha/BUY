@@ -68,51 +68,46 @@
         android:background="@color/color_app_base_7"/>
     <RelativeLayout 
         android:layout_width="match_parent"
-        android:layout_height="94dip"
+        android:layout_height="50dip"
         android:background="@color/color_app_base_5">
 		
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="18dip"
-            android:orientation="vertical">
+
             
-            <TextView 
-                android:id="@+id/cart_total_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="共计0件  合计￥0.00"
-                android:textSize="@dimen/dimen_global_14sp"
-                android:textColor="@color/color_app_base_4"/>
-            
-            <TextView
-                android:id="@+id/cart_server_money" 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="预计服务费0元"
-                android:layout_marginTop="5dip"
-                android:textSize="@dimen/dimen_global_14sp"
-                android:textColor="@color/color_app_base_4"/>
-            
-            <TextView 
-                android:id="@+id/cart_free_money_gap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:text="离免服务费还差0元"
-                android:textSize="@dimen/dimen_global_14sp"
-                android:textColor="@color/color_app_base_4"/>
-        </LinearLayout>
+         <TextView 
+             android:id="@+id/cart_total_message"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="合计￥0.00"
+             android:textSize="@dimen/dimen_global_14sp"
+             android:textColor="@color/color_app_base_4"/>
+         
+         <TextView
+             android:id="@+id/cart_server_money" 
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="预计服务费0元"
+             android:layout_marginTop="5dip"
+             android:layout_below="@id/cart_total_message"
+             android:textSize="@dimen/dimen_global_14sp"
+             android:textColor="@color/color_app_base_4"/>
+         
+         <TextView 
+             android:id="@+id/cart_free_money_gap"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="5dip"
+             android:text="离免服务费还差0元"
+             android:layout_alignBottom="@id/cart_server_money"
+             android:layout_toRightOf="@id/cart_server_money"
+             android:textSize="@dimen/dimen_global_14sp"
+             android:textColor="@color/color_app_base_4"/>
         
         <Button 
             android:id="@+id/cart_to_order_button"
             android:layout_width="112dip"
-            android:layout_height="40dip"
+            android:layout_height="match_parent"
             android:text="选好了"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="31dip"
             android:background="@drawable/nomal_button_nomal_bg"
             android:textColor="@color/color_app_base_5"/>
     </RelativeLayout>

@@ -156,8 +156,6 @@ public class SplashActivity extends Activity{
 		if(mobileNum != null && pwd != null){
 			requestLogin(mobileNum, pwd);
 		}
-		//获取一级类目
-		initDataManager.getQuickMenus(null);
 		//获取地址列表
 		initDataManager.getAddressInfos(null);
 		//获取账户信息
