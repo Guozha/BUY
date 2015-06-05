@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.ui.SetWarnTimeActivity;
-import com.guozha.buy.ui.SetWarnTimeActivity.WarnTime;
+import com.guozha.buy.controller.SetWarnTimeActivity;
+import com.guozha.buy.controller.SetWarnTimeActivity.WarnTime;
 
 /**
  * 提醒设置时间列表适配器

@@ -14,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.best.fragment.MainTabFragmentMarket;
+import com.guozha.buy.controller.dialog.WeightSelectDialog;
+import com.guozha.buy.controller.market.ListVegetableActivity;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.ui.best.fragment.MainTabFragmentMarket;
-import com.guozha.buy.ui.dialog.WeightSelectDialog;
-import com.guozha.buy.ui.market.ListVegetableActivity;
 import com.guozha.buy.util.UnitConvertUtil;
 
 /**

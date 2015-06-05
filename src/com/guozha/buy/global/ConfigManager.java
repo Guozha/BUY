@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.CustomApplication;
+import com.guozha.buy.controller.dialog.CustomDialog;
+import com.guozha.buy.controller.dialog.RemindLoginDialog;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.global.QuickMenu;
-import com.guozha.buy.ui.CustomApplication;
-import com.guozha.buy.ui.dialog.CustomDialog;
-import com.guozha.buy.ui.dialog.RemindLoginDialog;
-import com.guozha.buy.ui.mine.AddAddressActivity;
 import com.guozha.buy.util.XMLUtil;
 
 /**

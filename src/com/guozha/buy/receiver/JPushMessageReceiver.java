@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import cn.jpush.android.api.JPushInterface;
 
-import com.guozha.buy.ui.SplashActivity;
+import com.guozha.buy.controller.SplashActivity;
 
 /**
  * 接收极光推送的消息

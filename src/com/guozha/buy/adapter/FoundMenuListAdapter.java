@@ -17,7 +17,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.ui.found.MenuItemListActivity;
+import com.guozha.buy.controller.found.MenuItemListActivity;
 
 /**
  * 发现-菜谱 适配器

@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog;
+import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.entry.mine.collection.Material;
 import com.guozha.buy.entry.mine.collection.RecipeListItem;
@@ -23,8 +25,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
-import com.guozha.buy.ui.dialog.CollectionRecipeModifyDialog;
-import com.guozha.buy.ui.dialog.CustomDialog;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
