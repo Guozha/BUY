@@ -487,6 +487,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * @return
 	 */
 	public boolean isMenuExpanded(){
+		if(mTopExpandMenuButton == null) return false;
 		String tag = (String) mTopExpandMenuButton.getTag();	
 		if("expand".equals(tag)) return true;
 		else return false;
