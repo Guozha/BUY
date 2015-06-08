@@ -23,11 +23,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.market.VegetableDetailActivity;
+import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.entry.global.WeightOption;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.ShopCartModel.ShopCartModelInterface;
+import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -59,6 +63,8 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	private String mUnitPrice = null;
 	private String mUnit = null;
 	
+	private ShopCartModel mShopCartModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -75,7 +81,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		setContentView(R.layout.dialog_weight_select);
 		//让Dialog全屏
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
@@ -197,33 +203,8 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		String token = ConfigManager.getInstance().getUserToken(WeightSelectDialog.this);
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		
-		RequestParam paramPath = new RequestParam("cart/insert")
-		.setParams("userId", userId)
-		.setParams("id", mGoodsId)
-		.setParams("productType", "02")  //02是商品
-		.setParams("amount", quantity)
-		.setParams("token", token)
-		.setParams("addressId", addressId);
-		
-		LogUtil.e(HttpManager.URL + paramPath);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode)){
-						ToastUtil.showToast(WeightSelectDialog.this, "已添加到购物车");
-						MainPageInitDataManager.mCartItemsUpdated = true;
-						WeightSelectDialog.this.finish();
-					}else{
-						ToastUtil.showToast(WeightSelectDialog.this, response.getString("msg"));
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		mShopCartModel.requestAddCart(this, userId, 
+				Integer.parseInt(mGoodsId), "02", quantity, token, addressId);
 	}
 	
 	private void requestWeightData(){
@@ -292,6 +273,18 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestAddCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(WeightSelectDialog.this, "已添加到购物车");
+				WeightSelectDialog.this.finish();
+			}else{
+				ToastUtil.showToast(WeightSelectDialog.this, msg);
+			}
+		}
 	}
 
 }

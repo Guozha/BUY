@@ -23,6 +23,9 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
@@ -38,12 +41,14 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter implements OnClic
 	private LayoutInflater mInflater;
 	private BitmapCache mBitmapCache;
 	private Context mContext;
+	private ShopCartModel mShopCartModel;
 	
 	public SearchRelateRecipeListAdapter(Context context, List<SearchRecipe> searchRecipItems, BitmapCache bitmapCache){
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mRecipeListItem = searchRecipItems;
 		mBitmapCache = bitmapCache;
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	}
 
 	@Override
@@ -116,29 +121,17 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter implements OnClic
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		String token = ConfigManager.getInstance().getUserToken(mContext);
-		RequestParam paramPath = new RequestParam("cart/insert")
-		.setParams("userId"	, userId)
-		.setParams("addressId", addressId)
-		.setParams("token", token)
-		.setParams("id", menuId)
-		.setParams("productType", "01")
-		.setParams("amount", 1);
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String retunCode = response.getString("returnCode");
-						if("1".equals(retunCode)){
-							ToastUtil.showToast(mContext, "添加购物车成功");
-							MainPageInitDataManager.mCartItemsUpdated = true;
-						}else{
-							ToastUtil.showToast(mContext, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mShopCartModel.requestAddCart(mContext, userId, menuId, "01", 1, token, addressId);
+	}
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestAddCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(mContext, "添加购物车成功");
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
+		}
 	}
 }

@@ -104,7 +104,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//重新获取一下服务器时间
-		MainPageInitDataManager.getInstance().getTodayInfo(null);
+		MainPageInitDataManager.getInstance().getTodayInfo();
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		
 		//设置地址信息
 		List<AddressInfo> addressInfos = 
-				MainPageInitDataManager.getInstance().getAddressInfos(null);
+				MainPageInitDataManager.getInstance().getAddressInfos();
 		if(addressInfos != null){
 			for(int i = 0; i < addressInfos.size(); i++){
 				AddressInfo addressInfo = addressInfos.get(i);
@@ -346,7 +346,6 @@ public class PlanceOrderActivity extends BaseActivity{
 				intent.putExtra("orderId", orderId);
 				intent.putExtra("serverPrice", mServicePrice);
 				startActivity(intent);
-				MainPageInitDataManager.mCartItemsUpdated = true;
 				PlanceOrderActivity.this.finish();
 			}else{
 				ToastUtil.showToast(PlanceOrderActivity.this, msg);

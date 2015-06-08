@@ -97,7 +97,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		if(mDataManager == null) {
 			mDataManager = MainPageInitDataManager.getInstance();
 		}
-		AccountInfo accountInfo = mDataManager.getAccountInfo(null);
+		AccountInfo accountInfo = mDataManager.getAccountInfo();
 		if(accountInfo == null) {
 			mAccountInfoArea.setVisibility(View.GONE);
 			return;
@@ -112,18 +112,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		if(mMineRemainMoney == null) return;
 		mMineRemainMoney.setText("我的余额 ￥" + UnitConvertUtil.getSwitchedMoney(accountInfo.getBalance()));
 		setTextColor();
-	}
-	
-	@Override
-	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		switch (handlerType) {
-		case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
-			this.mDataManager = dataManager;
-			setInfos();
-			break;
-		default:
-			break;
-		}
 	}
 	
 	/**

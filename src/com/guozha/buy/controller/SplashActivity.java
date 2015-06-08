@@ -158,15 +158,7 @@ public class SplashActivity extends Activity{
 			mUserModel.requestPwdLogin(SplashActivity.this, mobileNum, pwd);
 		}
 		//获取地址列表
-		initDataManager.getAddressInfos(null);
-		//获取账户信息
-		initDataManager.getAccountInfo(null);
-		//获取菜单信息
-		initDataManager.getGoodsItemType(null);
-		//获取逛菜场首页数据
-		initDataManager.getMarketHomePage(null, 1, 4);
-		//获取系统当前时间
-		initDataManager.getSystemTime(null);
+		initDataManager.initPageData();
 		//设置别名和标签
 		//Set<String> tags = new HashSet<String>();
 		int userId = ConfigManager.getInstance().getUserId();

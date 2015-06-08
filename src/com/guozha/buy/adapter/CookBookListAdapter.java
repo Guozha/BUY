@@ -2,9 +2,6 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +11,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.market.RelationRecipeMaterial;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
@@ -32,11 +28,13 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 	private List<RelationRecipe> mRelationRecipe;
 	private Context mContext;
 	private BitmapCache mBitmapCache;
+	private ShopCartModel mShopCartModel;
 	public CookBookListAdapter(Context context, List<RelationRecipe> relationRecipe, BitmapCache bitmapCache){
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mRelationRecipe = relationRecipe;
 		mBitmapCache = bitmapCache;
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	}
 
 	@Override
@@ -97,14 +95,12 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 		return buffer.toString();
 	}
 	
-	
     static class ViewHolder{
     	private ImageView image;
     	private TextView name;
     	private TextView material;
     	private ImageView collectionButton;
     }
-
 
 	@Override
 	public void onClick(View view) {
@@ -124,30 +120,17 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 		String token = ConfigManager.getInstance().getUserToken(mContext);
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("cart/insert")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("id", menuId)
-		.setParams("addressId", addressId)
-		.setParams("amount", 1)
-		.setParams("productType", "01");
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							ToastUtil.showToast(mContext, "添加成功");
-							MainPageInitDataManager.mCartItemsUpdated = true;
-						}else{
-							ToastUtil.showToast(mContext, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mShopCartModel.requestAddCart(mContext, userId, menuId, "01", 1, token, addressId);
 	}
-
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestAddCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(mContext, "添加成功");
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
+		}
+	}
 }

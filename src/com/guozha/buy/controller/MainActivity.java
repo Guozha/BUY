@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -46,37 +45,6 @@ public class MainActivity extends FragmentActivity{
 			new ArrayList<TabBarItem>();
 	private MainPageInitDataManager mInitDataManager;
 	
-	private Handler handler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			MainTabBaseFragment fragment = null;
-			switch (msg.what) {
-			case MainPageInitDataManager.HAND_INITDATA_MSG_FIRST_CATEGORY:
-			case MainPageInitDataManager.HAND_INITDATA_MSG_TODAY_INFO:
-			case MainPageInitDataManager.HAND_INITDATA_MSG_PLAN_MENU_STATUS:
-				fragment = mFragments.get(0);
-				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:
-			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
-			case MainPageInitDataManager.HAND_INTTDATA_MSG_ADDRESS_LIST:
-				fragment = mFragments.get(1);
-				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
-				if(!mTabIndicators.isEmpty()){
-					//mTabIndicators.get(2).setTextNum(mInitDataManager.getCartItemsNum());
-				}
-				fragment = mFragments.get(2);
-				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_ACCOUNTINFO:
-				fragment = mFragments.get(3);
-				break;
-			}
-			
-			if(fragment != null){
-				fragment.loadDataCompleted(mInitDataManager, msg.what);
-			}
-		};
-	};
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,7 +54,6 @@ public class MainActivity extends FragmentActivity{
 		getSupportFragmentManager().beginTransaction()
 			.add(R.id.fragment_container, mFragments.get(0)).commit();
 		initTabIndicators();
-		MainPageInitDataManager.getInstance().initPageData(handler);
 		initYoumeng();
 	}
 	
@@ -99,15 +66,7 @@ public class MainActivity extends FragmentActivity{
 		//友盟静默更新
 		//UmengUpdateAgent.silentUpdate(this);
 	}
-	
-	/**
-	 * 获取Handler
-	 * @return
-	 */
-	public Handler getHandler(){
-		return handler;
-	}
-	
+
 	/**
 	 * 初始化Fragment
 	 */
@@ -266,25 +225,4 @@ public class MainActivity extends FragmentActivity{
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case MainTabFragmentMarket.REQUEST_CODE_ADDRESS:
-			mInitDataManager.getAddressInfos(handler);  //获取地址列表
-			break;
-		case MainTabFragmentMarket.REQUEST_CODE_CART:   //购物车
-			updateCartItemData();
-			break;
-		}
-	}
-	
-	/**
-	 * 重新请求购物车数据
-	 */
-	public void updateCartItemData(){
-		mInitDataManager.getCartItems(handler);
-	}
-	
 }

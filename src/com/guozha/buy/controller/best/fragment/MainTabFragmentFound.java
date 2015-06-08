@@ -30,12 +30,6 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
-
-	@Override
-	public void loadDataCompleted(MainPageInitDataManager dataManager,
-			int handerType) {
-		
-	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,

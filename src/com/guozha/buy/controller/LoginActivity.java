@@ -340,12 +340,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				ConfigManager.getInstance().setUserToken(userInfor.getUserToken());
 				ConfigManager.getInstance().setUserPwd(userInfor.getPassword());
 				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
-				//请求地址数据
-				MainPageInitDataManager.getInstance().getAddressInfos(null);
-				MainPageInitDataManager.mAccountUpdated = true;	//允许用户账户信息变化
-				MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
-				MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
-				MainPageInitDataManager.getInstance().getAddressInfos(null);
 				LoginActivity.this.finish();
 			}else{
 				ToastUtil.showToast(LoginActivity.this, msg);

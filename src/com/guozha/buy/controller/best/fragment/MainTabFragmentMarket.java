@@ -102,9 +102,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			case HAND_DATA_COMPLETED:
 				updateItemList();
 				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME:
-				setMarketHomeData();
-				break;
 			}
 		};
 	};
@@ -112,17 +109,12 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		
-		
 		mView = inflater.inflate(R.layout.fragment_maintab_market, container, false);
-		
 		//菜单出入动画
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
-		
 		initActionBar("逛菜场");
 		initView(mView);
-		
 		return mView;
 	}
 	
@@ -212,8 +204,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 					mDataManager = MainPageInitDataManager.getInstance();
 				}
 				//让全部更新
-				MainPageInitDataManager.mMarketItemUpdated = true;
-				mDataManager.getMarketHomePage(handler, 1, 4);
+				mDataManager.getMarketHomePage(1, 4);
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -224,22 +215,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		}, 0);
 	}
 	
-	@Override
-	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		mDataManager = dataManager;
-		switch (handlerType) {
-		case MainPageInitDataManager.HAND_INITDATA_MSG_ITEMTYPE:  //菜单
-			setGoodsItemTypeData();
-			break;
-		case MainPageInitDataManager.HAND_INITDATA_MSG_MARKETHOME: //列表
-			setMarketHomeData();
-			break;
-		case MainPageInitDataManager.HAND_INTTDATA_MSG_ADDRESS_LIST: //地址列表
-			setAddressInfoData();
-			break;
-		}
-	}
-	
 	/**
 	 * 设置地址列表数据
 	 */
@@ -247,7 +222,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mDataManager == null){
 			mDataManager = MainPageInitDataManager.getInstance();
 		}
-		mAddressInfos = mDataManager.getAddressInfos(null);
+		mAddressInfos = mDataManager.getAddressInfos();
 		//TODO 设置ActionBar上面的显示
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
@@ -274,7 +249,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mDataManager == null) {
 			return;
 		}
-		mGoodsItemTypes = mDataManager.getGoodsItemType(null);
+		mGoodsItemTypes = mDataManager.getGoodsItemType();
 		if(mGoodsItemTypes == null) return;
 		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
 		if(mMenuList == null) return;
@@ -288,7 +263,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		if(mDataManager == null){
 			return;
 		}
-		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(null, 1, 4);
+		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(1, 4);
 		if(marketHomePage == null) return;
 		mTotalPageSize = marketHomePage.getPageCount();
 		currentPage = 1;
@@ -389,9 +364,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		//如果地址发生变化则改变数据
 		if(mCurrentAddressId != addressId){
-			MainPageInitDataManager.mMarketItemUpdated = true;
-			MainPageInitDataManager.mCartItemsUpdated = true;
-			mDataManager.getMarketHomePage(handler, 1, 4);
+			mDataManager.getMarketHomePage(1, 4);
 			mCurrentAddressId = addressId;
 		}
 	}

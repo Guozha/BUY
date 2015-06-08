@@ -107,7 +107,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 					(AddressInfo) bundle.getSerializable("addressInfo");
 		}
 		initView();
-		MainPageInitDataManager.mAddressUpdated = true; //设置地址列表发生了变化
 	}
 
 	/**

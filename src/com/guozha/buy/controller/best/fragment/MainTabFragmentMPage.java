@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MPageListAdapter;
 import com.guozha.buy.controller.found.MenuDetailActivity;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
@@ -67,11 +66,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 				startActivity(intent);
 			}
 		});
-	}
-	
-	@Override
-	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		
 	}
 	
 	@Override

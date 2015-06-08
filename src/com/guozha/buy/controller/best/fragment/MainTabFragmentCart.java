@@ -29,6 +29,8 @@ import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -56,17 +58,13 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private int mFreeGap = 0;		//还差多少免服务费
 	private int mCurrentAddressId = 
 			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
-	
+	private ShopCartModel mShopCartModel;
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateViewData();
 				break;
-			case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:
-				setCartItemsData();
-				break;
-
 			default:
 				break;
 			}
@@ -79,6 +77,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
 		initActionBar("购物车");
 		initView(view);
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 		setCartItemsData();
 		return view;
 	}
@@ -193,16 +192,6 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		setTextColor();
 	}
 	
-	@Override
-	public void loadDataCompleted(MainPageInitDataManager dataManager, int handlerType) {
-		mDataManager = dataManager;
-		switch (handlerType) {
-		case MainPageInitDataManager.HAND_INITDATA_MSG_CART_ITEM:  //购物车数据
-			setCartItemsData();
-			break;
-		}
-	}
-	
 	/**
 	 * 设置购物车列表数据
 	 */
@@ -210,7 +199,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		if(mDataManager == null) {
 			mDataManager = MainPageInitDataManager.getInstance();
 		}
-		CartTotalData cartTotalData = mDataManager.getCartItems(null);
+		CartTotalData cartTotalData = mDataManager.getCartItems();
 		if(cartTotalData == null) return;
 		int totalPrice = cartTotalData.getTotalPrice();
 		int freePrice = cartTotalData.getServiceFeePrice();
@@ -260,7 +249,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			}
 			if(mCurrentAddressId != addressId){
 				mDataManager = MainPageInitDataManager.getInstance();
-				mDataManager.getCartItems(handler);
+				mDataManager.getCartItems();
 				mCurrentAddressId = addressId;
 			}
 			//友盟页面统计
@@ -287,5 +276,9 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		actionbar.setCustomView(R.layout.actionbar_base_view);
 		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
 		title.setText("购物车");
+	}
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		
 	}
 }

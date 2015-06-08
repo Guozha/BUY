@@ -2,9 +2,6 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -15,18 +12,16 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartCookMaterial;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
@@ -42,11 +37,14 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	private Activity mContext;
 	private List<CartBaseItem> mCartItems;
 	
+	private ShopCartModel mShopCartModel;
+	
 	public CartItemListAdapter(Activity context, List<CartBaseItem> cartItems){
 		mResource = context.getResources();
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mCartItems = cartItems;
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	}
 
 	@Override
@@ -236,39 +234,21 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(mContext);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("cart/update")
-		.setParams("cartId", cartBaseItem.getCartId())
-		.setParams("userId", userId)
-		.setParams("token", token);
 		int gap = 1;
 		if("01".equals(cartBaseItem.getUnit())){
 			gap = UnitConvertUtil.getPlusAmount(cartBaseItem.getAmount(), 
 					UnitConvertUtil.getSwichedUnit(cartBaseItem.getAmount(), cartBaseItem.getUnit()));
 		}
+		int amount;
 		if(plus){
-			paramPath.setParams("amount", cartBaseItem.getAmount() + gap);
+			amount = cartBaseItem.getAmount() + gap;
 		}else{
 			int minAmount = cartBaseItem.getAmount() - gap;
 			if(minAmount < cartBaseItem.getMinAmount())
 				minAmount = cartBaseItem.getMinAmount();
-			paramPath.setParams("amount", minAmount);
+			amount = minAmount;
 		}
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							refreshCartItem();
-						}else{
-							ToastUtil.showToast(mContext, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		mShopCartModel.requestUpdateCart(mContext, cartBaseItem.getCartId(), amount, token, userId);
 	}
 
 	/**
@@ -300,38 +280,38 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			ToastUtil.showToast(mContext, "删除出错");
 			return;
 		}
-		RequestParam paramPath = new RequestParam("cart/delete")
-		.setParams("cartId", mCartItems.get(groupId).getCartId())
-		.setParams("userId", userId)
-		.setParams("token", token);
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode)){
-						//TODO 让购物车数据刷新
-						refreshCartItem();
-					}else{
-						ToastUtil.showToast(mContext, response.getString("msg"));
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		mShopCartModel.requestDeleteCart(mContext, 
+				mCartItems.get(groupId).getCartId(), userId, token);
 	}
 	
 	/**
 	 * 刷新购物车数据
 	 */
 	private void refreshCartItem() {
-		MainPageInitDataManager.mCartItemsUpdated = true;
-		if(mContext instanceof MainActivity){
-			MainActivity mainActivity = (MainActivity) mContext;
-			mainActivity.updateCartItemData();
+		//TODO 刷新购物车数据
+		///if(mContext instanceof MainActivity){
+		//	MainActivity mainActivity = (MainActivity) mContext;
+		//	mainActivity.updateCartItemData();
+		//}
+	}
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestUpdateCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				refreshCartItem();
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
+		}
+		
+		@Override
+		public void requestDeleteCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				refreshCartItem();
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
 		}
 	}
-
 }

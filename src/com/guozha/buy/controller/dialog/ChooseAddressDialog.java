@@ -85,7 +85,7 @@ public class ChooseAddressDialog extends Activity{
 	 */
 	private void initData(){
 		mAddressInfos = 
-				MainPageInitDataManager.getInstance().getAddressInfos(null);
+				MainPageInitDataManager.getInstance().getAddressInfos();
 		mChooseAddressList.setAdapter(new ChooseAddressListAdapter(this, mAddressInfos));
 	}
 }

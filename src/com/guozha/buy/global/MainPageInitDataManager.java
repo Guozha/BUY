@@ -25,6 +25,8 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.ShopCartModelResult;
 
 /**
  * 主界面数据管理类
@@ -32,21 +34,6 @@ import com.guozha.buy.global.net.RequestParam;
  *
  */
 public class MainPageInitDataManager {
-	
-	public static final int HAND_INITDATA_MSG_ACCOUNTINFO = 0x0001;  //账户信息
-	public static final int HAND_INITDATA_MSG_ITEMTYPE = 0x0002;  	 //菜单
-	public static final int HAND_INITDATA_MSG_MARKETHOME = 0x0003;	 //逛菜场的主页数据
-	public static final int HAND_INITDATA_MSG_FIRST_CATEGORY = 0x004;//一级类目
-	public static final int HAND_INITDATA_MSG_CART_ITEM = 0x0005;	 //购物车
-	public static final int HAND_INTTDATA_MSG_ADDRESS_LIST = 0x0006; //地址列表
-	public static final int HAND_INITDATA_MSG_TODAY_INFO = 0x0007;	 //今日时间
-	public static final int HAND_INITDATA_MSG_CURRENT_TIME = 0x0008;	 //获取当前时间
-	public static final int HAND_INITDATA_MSG_PLAN_MENU_STATUS = 0x0009;	//今日菜票计划状态
-	
-	public static boolean mAccountUpdated = false;  //用户账户信息发生了变化
-	public static boolean mAddressUpdated = false; 	//地址信息是否发生了变化
-	public static boolean mCartItemsUpdated = false; //购物车是否发生了变化
-	public static boolean mMarketItemUpdated = false; //商品条目是否发生了变化
 	
 	private Context mContext;  //注意，这里是全局的context
 	
@@ -58,12 +45,17 @@ public class MainPageInitDataManager {
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
 	private TodayInfo mTodayInfo = null;
+	private long mSystemTime;
+	
+	private ShopCartModel mShopCartModel;
+	
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
 	private MainPageInitDataManager(Context context){
 		this.mContext = context;
 		this.mGson = new GsonBuilder().enableComplexMapKeySerialization().create(); 
+		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	}
 	
 	/**
@@ -87,31 +79,26 @@ public class MainPageInitDataManager {
 		}
 	}
 	
-	///////////////////////////////GET-方法//////////////////////////////
 	/**
 	 * 初始化界面数据
 	 * @param handler
 	 */
-	public void initPageData(Handler handler){
-		mInitDataManager.getAccountInfo(handler);  	//获取账户信息（F4)
-		mInitDataManager.getGoodsItemType(handler);  //获取商品分类（F2)
-		mInitDataManager.getMarketHomePage(handler, 1, 6); //获取逛菜场首页数据
-		mInitDataManager.getAddressInfos(handler);  //获取地址列表
-		mInitDataManager.getCartItems(handler);		//获取购物车数据
+	public void initPageData(){
+		requestSystemTime();		//请求系统当前时间
+		requestCartItemsData();		//请求购物车信息
+		requestAccountInfo();   	//获取用户信息
+		requestGoodsItemTypedData(); //获取菜单条目列表数据
+		requestGoodsBriefItemData(1, 4); //获取(简要：6条）菜品信息
+		requestAdressInfoListData();   //请求地址信息列表
 	}
+	
+	///////////////////////////////GET-方法//////////////////////////////
 	
 	/**
 	 * 获取账号信息
 	 * @return
 	 */
-	public AccountInfo getAccountInfo(Handler handler){
-		if(mAccountInfo == null || mAccountUpdated){
-			requestAccountInfo(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_ACCOUNTINFO);
-			}
-		}
+	public AccountInfo getAccountInfo(){
 		return mAccountInfo;
 	}
 	
@@ -120,14 +107,7 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 * @return
 	 */
-	public ArrayList<GoodsItemType> getGoodsItemType(Handler handler){
-		if(mGoodsItemTypes == null){
-			requestGoodsItemTypedData(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_ITEMTYPE);
-			}
-		}
+	public ArrayList<GoodsItemType> getGoodsItemType(){
 		return mGoodsItemTypes;
 	}
 	
@@ -138,14 +118,7 @@ public class MainPageInitDataManager {
 	 * @param pageSize
 	 * @return
 	 */
-	public MarketHomePage getMarketHomePage(Handler handler, int pageNum, int pageSize){
-		if(mMarketHomePage == null || mMarketItemUpdated){
-			requestGoodsBriefItemData(handler, pageNum, pageSize);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_MARKETHOME);
-			}
-		}
+	public MarketHomePage getMarketHomePage(int pageNum, int pageSize){
 		return mMarketHomePage;
 	}
 	
@@ -155,12 +128,7 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 * @return
 	 */
-	public TodayInfo getTodayInfo(Handler handler) {
-		// 每次进来都重新请求
-		requestMPageTodayMessage(handler);
-		if (mTodayInfo != null && handler != null) {
-			handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
-		}
+	public TodayInfo getTodayInfo() {
 		return mTodayInfo;
 	}
 	
@@ -169,14 +137,7 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 * @return
 	 */
-	public List<AddressInfo> getAddressInfos(Handler handler){
-		if(mAddressInfos == null || mAddressUpdated){
-			requestAdressInfoListData(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
-			}
-		}
+	public List<AddressInfo> getAddressInfos(){
 		return mAddressInfos;
 	}
 	
@@ -185,14 +146,7 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 * @return
 	 */
-	public CartTotalData getCartItems(Handler handler){
-		if(mCartTotalData == null || mCartItemsUpdated){
-			requestCartItemsData(handler);
-		}else{
-			if(handler != null){
-				handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
-			}
-		}
+	public CartTotalData getCartItems(){
 		return mCartTotalData;
 	}
 	
@@ -214,11 +168,16 @@ public class MainPageInitDataManager {
 		return num;
 	}
 	
+	public long getSystemTime(){
+		return mSystemTime;
+	}
+
+	//////////////////////////////HTTP-请求////////////////////////////////
+	
 	/**
-	 * 获取系统当前时间
-	 * @param handler
+	 * 请求系统当前时间
 	 */
-	public void getSystemTime(final Handler handler){
+	private void requestSystemTime() {
 		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
 			HttpManager.URL + "system/date", new Listener<JSONObject>() {
 				@Override
@@ -226,8 +185,7 @@ public class MainPageInitDataManager {
 					try {
 						long currentdate = response.getLong("gregorianDate");
 						ConfigManager.getInstance().setTodayDate(currentdate);
-						if(handler == null) return;
-						handler.sendEmptyMessage(HAND_INITDATA_MSG_CURRENT_TIME);
+						mSystemTime = currentdate;
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -235,42 +193,25 @@ public class MainPageInitDataManager {
 		});
 	}
 	
-	//////////////////////////////HTTP-请求////////////////////////////////
-	
 	/**
 	 * 请求购物车数据
 	 * @param handler
 	 */
-	private void requestCartItemsData(final Handler handler){
+	private void requestCartItemsData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("cart/list")
-		.setParams("userId", userId)
-		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
-		HttpManager.getInstance(mContext).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				mCartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
-				if(handler != null && mCartTotalData != null){
-					mCartItemsUpdated = false;
-					handler.sendEmptyMessage(HAND_INITDATA_MSG_CART_ITEM);
-				}
-			}
-		});
+		
+		mShopCartModel.requestListCartItem(mContext, userId, addressId);
 	}
-	
-
 	
 	/**
 	 * 获取用户信息
 	 * @param 
 	 * @return 
 	 */
-	private void requestAccountInfo(final Handler handler) {
+	private void requestAccountInfo() {
 		ConfigManager configManager = ConfigManager.getInstance();
 		HttpManager httpManager = HttpManager.getInstance(mContext);
 		String token = configManager.getUserToken();
@@ -283,10 +224,6 @@ public class MainPageInitDataManager {
 			@Override
 			public void onResponse(String response) {
 				mAccountInfo = mGson.fromJson(response, AccountInfo.class);
-				if(handler != null && mAccountInfo != null){
-					mAccountUpdated = false;
-					handler.sendEmptyMessage(HAND_INITDATA_MSG_ACCOUNTINFO);
-				}
 			}
 		});
 	}
@@ -294,7 +231,7 @@ public class MainPageInitDataManager {
 	/**
 	 * 获取菜单条目列表数据
 	 */
-	private void requestGoodsItemTypedData(final Handler handler){
+	private void requestGoodsItemTypedData(){
 		HttpManager.getInstance(mContext).volleyRequestByPost(
 				HttpManager.URL + "goods/frontType/list", new Listener<String>() {
 			@Override
@@ -303,9 +240,6 @@ public class MainPageInitDataManager {
 				mGoodsItemTypes = gson.fromJson(response, new TypeToken<ArrayList<GoodsItemType>>() { }.getType());
 				if(mGoodsItemTypes != null){
 					formatGoodsItemTypes();
-				}
-				if(handler != null && mGoodsItemTypes != null){
-					handler.sendEmptyMessage(HAND_INITDATA_MSG_ITEMTYPE);
 				}
 			}
 		});
@@ -328,7 +262,7 @@ public class MainPageInitDataManager {
 	 * 获取(简要：6条）菜品信息
 	 * @param handler
 	 */
-	private void requestGoodsBriefItemData(final Handler handler, int pageNum, int pageSize){
+	private void requestGoodsBriefItemData(int pageNum, int pageSize){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		RequestParam paramPath = new RequestParam("goods/general/list")
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId))
@@ -340,10 +274,6 @@ public class MainPageInitDataManager {
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					mMarketHomePage = gson.fromJson(response, new TypeToken<MarketHomePage>() { }.getType());
-					if(handler != null && mMarketHomePage != null){
-						mMarketItemUpdated = false;
-						handler.sendEmptyMessage(HAND_INITDATA_MSG_MARKETHOME);
-					}
 				}
 			});
 	}
@@ -352,7 +282,7 @@ public class MainPageInitDataManager {
 	 * 请求地址信息列表
 	 * @param handler
 	 */
-	private void requestAdressInfoListData(final Handler handler){
+	private void requestAdressInfoListData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		RequestParam paramPath = new RequestParam("account/address/list")
 		.setParams("userId", userId);
@@ -364,13 +294,7 @@ public class MainPageInitDataManager {
 					mAddressInfos = gson.fromJson(response, 
 							new TypeToken<List<AddressInfo>>() { }.getType());
 					setDefaultAddressChoosed();
-					if(handler != null && mAddressInfos != null){
-						mAddressUpdated = false;
-						handler.sendEmptyMessage(HAND_INTTDATA_MSG_ADDRESS_LIST);
-					}
 				}
-
-				
 		});
 	}
 	
@@ -387,31 +311,11 @@ public class MainPageInitDataManager {
 		}
 	}
 	
-	/**
-	 * 请求MPage的当日信息
-	 */
-	private void requestMPageTodayMessage(final Handler handler) {
-		RequestParam paramPath = new RequestParam("menuplan/todayInfo");
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						try {
-							String calendarSolar = response.getString("today");
-							String calendarLunar = response
-									.getString("lunarToday");
-							String todayDescript = response
-									.getString("dayDesc");
-							mTodayInfo = new TodayInfo(calendarSolar,
-									calendarLunar, todayDescript);
-							if (handler != null && mTodayInfo != null) {
-								handler.sendEmptyMessage(HAND_INITDATA_MSG_TODAY_INFO);
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestListCartItemResult(CartTotalData cartTotalData) {
+			mCartTotalData = cartTotalData;
+		}
 	}
 	
 }

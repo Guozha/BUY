@@ -183,8 +183,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		initView();
 		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initData();
-		//允许我的账户数据更新
-		MainPageInitDataManager.mAccountUpdated = true;
 	}
 	
 	private ImageView payZhifubaoIcon;
@@ -235,7 +233,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		
 		//获取账户信息(菜豆、菜票）
 		AccountInfo accountInfo = 
-				MainPageInitDataManager.getInstance().getAccountInfo(null);
+				MainPageInitDataManager.getInstance().getAccountInfo();
 		if(accountInfo != null){
 			mAccountRemain = accountInfo.getBalance();
 			mBeanNum = accountInfo.getBeanAmount();
