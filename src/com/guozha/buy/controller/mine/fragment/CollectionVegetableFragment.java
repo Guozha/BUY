@@ -29,6 +29,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -49,6 +51,8 @@ public class CollectionVegetableFragment extends BaseFragment{
 	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	private View mEmptyView;
 	
+	private CollectionModel mCollectionModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -65,6 +69,7 @@ public class CollectionVegetableFragment extends BaseFragment{
 		
 		View view = inflater.inflate(R.layout.fragment_collection_vegetable, container, false);
 		initView(view);
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 		initData();
 		return view;
 	}
@@ -100,21 +105,7 @@ public class CollectionVegetableFragment extends BaseFragment{
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("account/myfavo/listGoodsFavo")
-		.setParams("userId", userId)
-		.setParams("addressId", addressId);
-		
-		HttpManager.getInstance(getActivity()).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					List<GoodsListItem> goods = gson.fromJson(response, new TypeToken<List<GoodsListItem>>() { }.getType());
-					mGoodsListItems.clear();
-					mGoodsListItems.addAll(goods);
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			});
+		mCollectionModel.requestGoodsCollectList(getActivity(), userId, addressId);
 	}
 	
 	/**
@@ -158,4 +149,12 @@ public class CollectionVegetableFragment extends BaseFragment{
 		}
 	}
 	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestGoodsCollectList(List<GoodsListItem> goodsListItem) {
+			mGoodsListItems.clear();
+			mGoodsListItems.addAll(goodsListItem);
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
+	}
 }

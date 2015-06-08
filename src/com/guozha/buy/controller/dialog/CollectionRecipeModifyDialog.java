@@ -27,6 +27,9 @@ import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -43,7 +46,7 @@ public class CollectionRecipeModifyDialog extends Activity{
 	private List<CollectionDir> mCollectionDir = new ArrayList<CollectionDir>();
 	private CollectionRecipeModifyListAdapter mCollectionRecipeModifyAdapter;
 	private int mMenuId;	//要移动的菜谱ID
-	
+	private CollectionModel mCollectionModel;
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -66,8 +69,8 @@ public class CollectionRecipeModifyDialog extends Activity{
 				mMenuId = bundle.getInt("menuId");
 			}
 		}
-		
 		initView();
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 		requestCollectionRecipeData();
 	}
 
@@ -109,26 +112,7 @@ public class CollectionRecipeModifyDialog extends Activity{
 	private void requestModifyCollectionFolder(int dirId){
 		String token = ConfigManager.getInstance().getUserToken(CollectionRecipeModifyDialog.this);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/myfavo/adjustMenuFavo")
-		.setParams("token", token)
-		.setParams("myMenuId", mMenuId)
-		.setParams("myDirId", dirId);
-		HttpManager.getInstance(CollectionRecipeModifyDialog.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							CollectionRecipeModifyDialog.this.finish();
-						}else{
-							ToastUtil.showToast(CollectionRecipeModifyDialog.this, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		mCollectionModel.requestModifyCollectFolder(this, token, mMenuId, dirId);
 	}
 	
 	/**
@@ -157,19 +141,24 @@ public class CollectionRecipeModifyDialog extends Activity{
 	private void requestCollectionRecipeData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("account/myfavo/listMenuFavo")
-		.setParams("userId", userId)
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(CollectionRecipeModifyDialog.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					List<CollectionDir> collectionDir = gson.fromJson(response, new TypeToken<List<CollectionDir>>() { }.getType());
-					mCollectionDir.clear();
-					mCollectionDir.addAll(collectionDir);
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			});
+		mCollectionModel.requestMenuCollectList(this, userId, addressId);
+	}
+	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestMenuCollectList(List<CollectionDir> collectionDir) {
+			mCollectionDir.clear();
+			mCollectionDir.addAll(collectionDir);
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
+		
+		@Override
+		public void requestModifyCollectFolder(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				CollectionRecipeModifyDialog.this.finish();
+			}else{
+				ToastUtil.showToast(CollectionRecipeModifyDialog.this, msg);
+			}
+		}
 	}
 }

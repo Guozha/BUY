@@ -35,7 +35,10 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
 import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -66,6 +69,8 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	
 	private GoodsModel mGoodsModel;
 	
+	private CollectionModel mCollectionModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -93,6 +98,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		}
 		initView();
 		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 		initData();
 	}
 	
@@ -155,27 +161,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private void requestCollectionVegetable() {
 		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("account/myfavo/insertGoodsFavo")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("goodsId", mGoodsId);
-		HttpManager.getInstance(VegetableDetailActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							ToastUtil.showToast(VegetableDetailActivity.this, "收藏成功");
-						}else{
-							ToastUtil.showToast(VegetableDetailActivity.this, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					
-				}
-		});
+		mCollectionModel.requestCollectionGoods(this, token, userId, Integer.parseInt(mGoodsId));
 	}
 	
 	private void initData(){
@@ -257,6 +243,17 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		public void requestGoodsDetailResult(GoodsDetail goodsDetail) {
 			mGoodsDetails = goodsDetail;
 			handler.sendEmptyMessage(HAND_DATA_COMPLTED);
+		}
+	}
+	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestCollectionGoodsResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(VegetableDetailActivity.this, "收藏成功");
+			}else{
+				ToastUtil.showToast(VegetableDetailActivity.this, msg);
+			}
 		}
 	}
 }

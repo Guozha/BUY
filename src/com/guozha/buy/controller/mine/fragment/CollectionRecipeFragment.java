@@ -35,6 +35,9 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.umeng.analytics.MobclickAgent;
@@ -56,6 +59,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 	private List<CollectionDir> mCollectionDir = new ArrayList<CollectionDir>();
 	private CollectionRecipeExpandAdapter mCollectionRecipeAdapter;
 	private View mEmptyView;
+	private CollectionModel mCollectionModel;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -74,6 +78,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 		
 		View view = inflater.inflate(R.layout.fragment_collection_recipe, container, false);
 		initView(view);
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 		return view;
 	}
 	
@@ -152,20 +157,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 	private void requestCollectionRecipeData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("account/myfavo/listMenuFavo")
-		.setParams("userId", userId)
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(getActivity()).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					List<CollectionDir> collectionDir = gson.fromJson(response, new TypeToken<List<CollectionDir>>() { }.getType());
-					mCollectionDir.clear();
-					mCollectionDir.addAll(collectionDir);
-					handler.sendEmptyMessage(HAND_DIR_DATA_COMPLETED);
-				}
-			});
+		mCollectionModel.requestMenuCollectList(getActivity(), userId, addressId);
 	}
 	
 	/**
@@ -175,25 +167,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 	private void requestDeleteCollectionFolder(int dirId){
 		String token = ConfigManager.getInstance().getUserToken(getActivity());
 		if(token == null)return;
-		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyDir")
-		.setParams("token", token)
-		.setParams("myDirId", dirId);
-		HttpManager.getInstance(getActivity()).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							requestCollectionRecipeData();
-						}else{
-							ToastUtil.showToast(getActivity(), response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		mCollectionModel.requestDeleCollectDir(getActivity(), token, dirId);
 	}
 	
 	@Override
@@ -221,5 +195,23 @@ public class CollectionRecipeFragment extends BaseFragment{
 	public void onPause() {
 		super.onPause();
 		mBitmapCache.fluchCache();
+	}
+	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestMenuCollectList(List<CollectionDir> collectionDir) {
+			mCollectionDir.clear();
+			mCollectionDir.addAll(collectionDir);
+			handler.sendEmptyMessage(HAND_DIR_DATA_COMPLETED);
+		}
+		
+		@Override
+		public void requestDeleCollectDirResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				requestCollectionRecipeData();
+			}else{
+				ToastUtil.showToast(getActivity(), msg);
+			}
+		}
 	}
 }

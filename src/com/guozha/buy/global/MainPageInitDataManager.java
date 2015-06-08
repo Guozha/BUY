@@ -1,6 +1,5 @@
 package com.guozha.buy.global;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;

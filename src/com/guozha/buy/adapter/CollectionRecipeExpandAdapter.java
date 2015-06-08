@@ -2,9 +2,6 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog;
 import com.guozha.buy.controller.dialog.CustomDialog;
@@ -23,8 +19,9 @@ import com.guozha.buy.entry.mine.collection.Material;
 import com.guozha.buy.entry.mine.collection.RecipeListItem;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
@@ -44,6 +41,8 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 	private List<CollectionDir> mCollectionDir;
 	private BitmapCache mBitmapCache;
 	
+	private CollectionModel mCollectionModel;
+	
 	public CollectionRecipeExpandAdapter(Context context, List<CollectionDir> collectionDir, BitmapCache bitmapCache){
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
@@ -51,6 +50,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		mModifyClickListener = new ModifyClickListener();
 		mDeleteClickListener = new DeleteClickListener();
 		mBitmapCache = bitmapCache;
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 	}
 
 	@Override
@@ -218,28 +218,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 	 */
 	private void requestDeleteRecipeItem(int menuId){
 		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyMenu")
-		.setParams("token", token)
-		.setParams("myMenuId", menuId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							if(mUpdateRecipeListener != null){
-								mUpdateRecipeListener.update();
-							}
-						}else{
-							ToastUtil.showToast(context, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					
-				}
-			});
+		mCollectionModel.requestDeleMenuCollectItem(context, token, menuId);
 	}
 	
 	private UpdateRecipeListener mUpdateRecipeListener;
@@ -250,5 +229,19 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 	
 	public interface UpdateRecipeListener {
 		public void update();
+	}
+	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestDeleMenuCollectItemResult(String returnCode,
+				String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				if(mUpdateRecipeListener != null){
+					mUpdateRecipeListener.update();
+				}
+			}else{
+				ToastUtil.showToast(context, msg);
+			}
+		}
 	}
 }

@@ -22,6 +22,9 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
@@ -38,6 +41,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 	private List<GoodsListItem> mGoodsListItems;
 	private Context mContext;
 	private BitmapCache mBitmapCache;
+	private CollectionModel mCollectionModel;
 	
 	public CollectionVegetableListAdapter(Context context, List<GoodsListItem> goodsListItems, BitmapCache bitmapCache){
 		mContext = context;
@@ -45,6 +49,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		mGoodsListItems = goodsListItems;
 		mInflater = LayoutInflater.from(context);
 		mBitmapCache = bitmapCache;
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 	}
 
 	@Override
@@ -124,27 +129,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 	 */
 	private void requestDeleteVegetable(final int goodsId) {
 		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyGoods")
-		.setParams("token", token)
-		.setParams("myGoodsId", goodsId);
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							if(mUpdateRecipeListener != null){
-								mUpdateRecipeListener.update();
-							}
-						}else{
-							ToastUtil.showToast(mContext, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mCollectionModel.requestDeletGoodsCollect(mContext, token, goodsId);
 	}
 	
 	private UpdateVegetableListener mUpdateRecipeListener;
@@ -157,4 +142,16 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		this.mUpdateRecipeListener = updateVegetableListener;
 	}
 
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestDeletGoodsCollectResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				if(mUpdateRecipeListener != null){
+					mUpdateRecipeListener.update();
+				}
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
+		}
+	}
 }

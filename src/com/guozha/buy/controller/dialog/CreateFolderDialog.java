@@ -14,6 +14,9 @@ import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -24,6 +27,7 @@ import com.guozha.buy.util.ToastUtil;
 public class CreateFolderDialog extends Activity implements OnClickListener{
 	
 	private EditText newFolderName;
+	private CollectionModel mCollectionModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class CreateFolderDialog extends Activity implements OnClickListener{
 		setContentView(R.layout.dialog_create_newfolder);
 		setResult(0);
 		initView();
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 	}
 	
 	private void initView(){
@@ -68,25 +73,17 @@ public class CreateFolderDialog extends Activity implements OnClickListener{
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(CreateFolderDialog.this);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/myfavo/insertDir")
-		.setParams("userId", userId)
-		.setParams("token", token)
-		.setParams("dirName", folderName);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode)){
-						CreateFolderDialog.this.finish();
-					}else{
-						ToastUtil.showToast(CreateFolderDialog.this, response.getString("msg"));
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+		mCollectionModel.requestAddCollectDir(this, userId, token, folderName);
+	}
+	
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestAddCollectDirResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				CreateFolderDialog.this.finish();
+			}else{
+				ToastUtil.showToast(CreateFolderDialog.this, msg);
 			}
-		});
+		}
 	}
 }
