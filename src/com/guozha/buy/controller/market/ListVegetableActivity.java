@@ -27,6 +27,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.result.GoodsModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -57,6 +59,8 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	
 	private String mFrontTypeId;		//菜谱类别id
 	private String mFrontTypeName;		//菜谱类别名称
+	
+	private GoodsModel mGoodsModel;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -95,7 +99,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		mListView.addFooterView(mBottomLoadingView);
 		mListView.setAdapter(mVegetableAdapter);
 		mListView.setOnScrollListener(this);
-		
+		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 		requestNewData();
 	}
 	
@@ -152,26 +156,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	 */
 	private void requestNewData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("goods/general/typeList")
-		.setParams("frontTypeId", mFrontTypeId)
-		.setParams("addressId", addressId)
-		.setParams("pageNum", mCurrentPage + 1)
-		.setParams("pageSize", PAGE_ITEM_COUNT);
-		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
-
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				ItemSaleInfoPage itemSaleInfoPage = gson.fromJson(response, new TypeToken<ItemSaleInfoPage>() { }.getType());
-				if(itemSaleInfoPage == null) return;
-				mMaxDateNum = itemSaleInfoPage.getTotalCount();
-				itemSaleInfoPage.getPageCount();
-				List<ItemSaleInfo> vegetables = itemSaleInfoPage.getGoodsList();
-				if(vegetables == null) return;
-				mCurrentPage++;
-				addFormatData(vegetables);
-			}
-		});
+		mGoodsModel.requestTypeGoodsList(this, Integer.parseInt(mFrontTypeId), addressId, mCurrentPage + 1, PAGE_ITEM_COUNT);
 	}
 	
 	private int mCurrentPage = 0;
@@ -219,5 +204,18 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 		//友盟页面统计代码
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyGoodsModelResult extends GoodsModelResult{
+		@Override
+		public void requestTypeGoodsListResult(ItemSaleInfoPage itemSaleInfoPage) {
+			if(itemSaleInfoPage == null) return;
+			mMaxDateNum = itemSaleInfoPage.getTotalCount();
+			itemSaleInfoPage.getPageCount();
+			List<ItemSaleInfo> vegetables = itemSaleInfoPage.getGoodsList();
+			if(vegetables == null) return;
+			mCurrentPage++;
+			addFormatData(vegetables);
+		}
 	}
 }

@@ -42,6 +42,8 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
@@ -96,6 +98,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private int mCurrentAddressId = 
 			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
 	
+	private GoodsModel mGoodsModel;
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -115,6 +118,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
 		initActionBar("逛菜场");
 		initView(mView);
+		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 		return mView;
 	}
 	
@@ -278,28 +282,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private static int currentPage = 0;
 	private static final int PAGE_SIZE = 4;
 	private void loadNewDataAndUpdate(){
-		String addressId = "";
-		RequestParam paramPath = new RequestParam("goods/general/list")
-		.setParams("addressId", addressId)
-		.setParams("pageNum", currentPage + 1)
-		.setParams("pageSize", PAGE_SIZE);
-		HttpManager.getInstance(getActivity()).volleyRequestByPost(HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					MarketHomePage marketHomePage = gson.fromJson(response, new TypeToken<MarketHomePage>() { }.getType());
-					if(marketHomePage == null) return;
-					mTotalPageSize = marketHomePage.getPageCount();
-					mMaxDateNum = marketHomePage.getTotalCount();
-					currentPage++;
-					List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
-					if(marketHomeItems == null) return;
-					mMarketHomeItems.addAll(marketHomeItems);
-					
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			});
+		mGoodsModel.requestGoodsList(getActivity(), -1, currentPage + 1, PAGE_SIZE);
 	}
 	
 	/**
@@ -409,5 +392,20 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	public void onPause() {
 		super.onPause();
 		mBitmapCache.fluchCache();
+	}
+	
+	class MyGoodsModelResult extends GoodsModelResult{
+		@Override
+		public void requestGoodsListResult(MarketHomePage marketHomePage) {
+			if(marketHomePage == null) return;
+			mTotalPageSize = marketHomePage.getPageCount();
+			mMaxDateNum = marketHomePage.getTotalCount();
+			currentPage++;
+			List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
+			if(marketHomeItems == null) return;
+			mMarketHomeItems.addAll(marketHomeItems);
+			
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
 	}
 }

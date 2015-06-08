@@ -29,8 +29,10 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.ShopCartModel.ShopCartModelInterface;
+import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
@@ -64,6 +66,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	private String mUnit = null;
 	
 	private ShopCartModel mShopCartModel;
+	private GoodsModel mGoodsModel;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -82,6 +85,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		//让Dialog全屏
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
+		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
@@ -208,19 +212,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	}
 	
 	private void requestWeightData(){
-		RequestParam paramPath = new RequestParam("goods/amount")
-		.setParams("goodsId", mGoodsId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				options = gson.fromJson(response, new TypeToken<List<WeightOption>>() { }.getType());
-				if(options != null){
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			}
-		});
+		mGoodsModel.requestWeightPrice(this, Integer.parseInt(mGoodsId));
 	}
 	
 	private class WeightOptionAdapter extends AbstractWheelTextAdapter {
@@ -283,6 +275,16 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 				WeightSelectDialog.this.finish();
 			}else{
 				ToastUtil.showToast(WeightSelectDialog.this, msg);
+			}
+		}
+	}
+	
+	class MyGoodsModelResult extends GoodsModelResult{
+		@Override
+		public void requestWeightPriceResult(List<WeightOption> options) {
+			WeightSelectDialog.this.options = options;
+			if(options != null){
+				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 			}
 		}
 	}

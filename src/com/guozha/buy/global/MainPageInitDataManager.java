@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.os.Handler;
 
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
@@ -25,7 +24,9 @@ import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
 
 /**
@@ -40,7 +41,7 @@ public class MainPageInitDataManager {
 	private Gson mGson;
 	
 	private AccountInfo mAccountInfo;
-	private ArrayList<GoodsItemType> mGoodsItemTypes;
+	private List<GoodsItemType> mGoodsItemTypes;
 	private MarketHomePage mMarketHomePage;
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
@@ -48,6 +49,7 @@ public class MainPageInitDataManager {
 	private long mSystemTime;
 	
 	private ShopCartModel mShopCartModel;
+	private GoodsModel mGoodsModel;
 	
 	
 	private static MainPageInitDataManager mInitDataManager;
@@ -55,7 +57,12 @@ public class MainPageInitDataManager {
 	private MainPageInitDataManager(Context context){
 		this.mContext = context;
 		this.mGson = new GsonBuilder().enableComplexMapKeySerialization().create(); 
+		initModel();
+	}
+	
+	private void initModel(){
 		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
+		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 	}
 	
 	/**
@@ -107,7 +114,7 @@ public class MainPageInitDataManager {
 	 * @param handler
 	 * @return
 	 */
-	public ArrayList<GoodsItemType> getGoodsItemType(){
+	public List<GoodsItemType> getGoodsItemType(){
 		return mGoodsItemTypes;
 	}
 	
@@ -232,17 +239,7 @@ public class MainPageInitDataManager {
 	 * 获取菜单条目列表数据
 	 */
 	private void requestGoodsItemTypedData(){
-		HttpManager.getInstance(mContext).volleyRequestByPost(
-				HttpManager.URL + "goods/frontType/list", new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				mGoodsItemTypes = gson.fromJson(response, new TypeToken<ArrayList<GoodsItemType>>() { }.getType());
-				if(mGoodsItemTypes != null){
-					formatGoodsItemTypes();
-				}
-			}
-		});
+		mGoodsModel.requestGoodsTypes(mContext);
 	}
 	
 	/**
@@ -264,18 +261,7 @@ public class MainPageInitDataManager {
 	 */
 	private void requestGoodsBriefItemData(int pageNum, int pageSize){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("goods/general/list")
-		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId))
-		.setParams("pageNum", pageNum)
-		.setParams("pageSize", pageSize);
-		HttpManager.getInstance(mContext).volleyRequestByPost(HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mMarketHomePage = gson.fromJson(response, new TypeToken<MarketHomePage>() { }.getType());
-				}
-			});
+		mGoodsModel.requestGoodsList(mContext, addressId, pageNum, pageSize);
 	}
 	
 	/**
@@ -315,6 +301,21 @@ public class MainPageInitDataManager {
 		@Override
 		public void requestListCartItemResult(CartTotalData cartTotalData) {
 			mCartTotalData = cartTotalData;
+		}
+	}
+	
+	class MyGoodsModelResult extends GoodsModelResult{
+		@Override
+		public void requestGoodsTypesResult(List<GoodsItemType> goodsItemTypes) {
+			mGoodsItemTypes = goodsItemTypes;
+			if(mGoodsItemTypes != null){
+				formatGoodsItemTypes();
+			}
+		}
+		
+		@Override
+		public void requestGoodsListResult(MarketHomePage marketHomePage) {
+			mMarketHomePage = marketHomePage;
 		}
 	}
 	

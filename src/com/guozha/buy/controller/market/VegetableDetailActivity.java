@@ -35,6 +35,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -62,6 +64,8 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	
 	private String mGoodsId = null;
 	
+	private GoodsModel mGoodsModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -88,6 +92,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 			}
 		}
 		initView();
+		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 		initData();
 	}
 	
@@ -176,20 +181,9 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private void initData(){
 		//2.1.4接口
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("goods/general/detail")
-		.setParams("goodsId", mGoodsId)
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(this).volleyRequestByPost(HttpManager.URL + paramPath, 
-				new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				mGoodsDetails = gson.fromJson(response, new TypeToken<GoodsDetail>() { }.getType());
-				handler.sendEmptyMessage(HAND_DATA_COMPLTED);
-			}
-		});
+		mGoodsModel.requestGoodsDetail(this, Integer.parseInt(mGoodsId), addressId);
 		//7.4接口
-		paramPath = new RequestParam("menuplan/goodsMenuList")
+		RequestParam paramPath = new RequestParam("menuplan/goodsMenuList")
 		.setParams("goodsId", mGoodsId);
 		HttpManager.getInstance(this).volleyRequestByPost(
 				HttpManager.URL + paramPath, new Listener<String>() {
@@ -258,4 +252,11 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 
+	class MyGoodsModelResult extends GoodsModelResult{
+		@Override
+		public void requestGoodsDetailResult(GoodsDetail goodsDetail) {
+			mGoodsDetails = goodsDetail;
+			handler.sendEmptyMessage(HAND_DATA_COMPLTED);
+		}
+	}
 }
