@@ -2,9 +2,6 @@ package com.guozha.buy.controller.cart;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +28,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
 import com.guozha.buy.util.ToastUtil;
@@ -88,6 +87,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private List<PayWayEntry> mPayWayList;  //支付方式
 	
 	private PayOrderMesg mPayOrderMesg;		//支付信息
+	
+	private OrderModel mOrderModel;
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -180,6 +181,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		setResult(0);
 		initView();
+		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initData();
 		//允许我的账户数据更新
 		MainPageInitDataManager.mAccountUpdated = true;
@@ -229,24 +231,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	 * 初始化数据
 	 */
 	private void initData(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		//请求主单信息
-		RequestParam paramPath = new RequestParam("order/info")
-		.setParams("orderId", mOrderId);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						//mOrderNum = response.getString("orderNo");  //订单号
-						mTotalPrice = response.getInt("totalPrice");//商品金额
-						mServicePrice = response.getInt("serviceFee");				//服务费
-						mHandler.sendEmptyMessage(HAND_MAIN_SIGNLE_COMPLETED);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mOrderModel.requestOrderInfo(this, mOrderId);
 		
 		//获取账户信息(菜豆、菜票）
 		AccountInfo accountInfo = 
@@ -259,8 +244,9 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			mCanUseBeanText.setText("可用菜豆数" + mBeanNum + "个" + UnitConvertUtil.getBeanMoney(mBeanNum) + "元"); //菜豆数
 		}
 		
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		//获取支付方式
-		paramPath = new RequestParam("payment/listPayWay")
+		RequestParam paramPath = new RequestParam("payment/listPayWay")
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(this).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
@@ -566,5 +552,14 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyOrderModelResult extends OrderModelResult{
+		@Override
+		public void requestOrderInforResult(int totalPrice, int serviceFee) {
+			mTotalPrice = totalPrice;
+			mServicePrice = serviceFee;
+			mHandler.sendEmptyMessage(HAND_MAIN_SIGNLE_COMPLETED);			
+		}
 	}
 }

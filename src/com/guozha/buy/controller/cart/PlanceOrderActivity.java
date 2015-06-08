@@ -5,9 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.cart.PointTime;
@@ -31,8 +24,9 @@ import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -70,6 +64,8 @@ public class PlanceOrderActivity extends BaseActivity{
 	private View mQuickTimeChoose;
 	private String mTodayEarliestTime = null;  //当天最早的时间
 	
+	private OrderModel mOrderModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -103,8 +99,10 @@ public class PlanceOrderActivity extends BaseActivity{
 				mServicePrice = bundle.getInt("serverPrice");
 			}
 		}
+		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initView();
-		initData();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mOrderModel.requestOrderTimes(this, addressId);
 		//重新获取一下服务器时间
 		MainPageInitDataManager.getInstance().getTodayInfo(null);
 	}
@@ -261,74 +259,11 @@ public class PlanceOrderActivity extends BaseActivity{
 			calendar.add(Calendar.DATE, 1);
 		}
 		String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
-		RequestParam paramPath = new RequestParam("order/insert")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("addressId", addressId)
-		.setParams("wantUpTime", timeStr + "$" + pointTime.getFromTime())
-		.setParams("wantDownTime", timeStr + "$" + pointTime.getToTime())
-		.setParams("memo", mLeaveMessage.getText().toString());
-		
-		HttpManager.getInstance(PlanceOrderActivity.this).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode)){
-						Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
-						intent.putExtra("orderId", response.getInt("orderId"));
-						intent.putExtra("serverPrice", mServicePrice);
-						startActivity(intent);
-						MainPageInitDataManager.mCartItemsUpdated = true;
-						PlanceOrderActivity.this.finish();
-					}else{
-						ToastUtil.showToast(PlanceOrderActivity.this, response.getString("msg"));
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-	}
-	
-	/**
-	 * 添加数据
-	 */
-	private void initData(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("order/times")
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				TimeList timeList = gson.fromJson(response, new TypeToken<TimeList>() { }.getType());
-				if(timeList != null){
-					List<PointTime> todayPointTime = timeList.getTodayTimeList();
-					if(todayPointTime == null || todayPointTime.isEmpty()){
-						handler.sendEmptyMessage(HAND_CHANGE_QUICK_MENU);
-					}else{
-					mTodayEarliestTime = null;
-					for(int i = 0; i < todayPointTime.size(); i++){
-							if(i == 0){
-								mTodayEarliestTime = todayPointTime.get(i).getFromTime();
-							}
-							mShowTimes.add(new ShowTime("今天", 
-									todayPointTime.get(i).getFromTime(), todayPointTime.get(i).getToTime()));
-						}
-					}
-					List<PointTime> tomorrowPointTime = timeList.getTomorrowTimeList();
-					for(int i = 0; i < tomorrowPointTime.size(); i++){
-						mShowTimes.add(new ShowTime("明天", 
-								tomorrowPointTime.get(i).getFromTime(), tomorrowPointTime.get(i).getToTime()));
-					}
-					handler.sendEmptyMessage(HAND_TIMES_DATA_COMPLETED);
-				}
-			}
-		});
+
+		mOrderModel.requestSubmitOrder(this, token, userId, addressId, 
+				timeStr + "$" + pointTime.getFromTime(), 
+				timeStr + "$" + pointTime.getToTime(), 
+				mLeaveMessage.getText().toString());
 	}
 	
 	private class TimeOptionAdapter extends AbstractWheelTextAdapter{
@@ -374,5 +309,48 @@ public class PlanceOrderActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyOrderModelResult extends OrderModelResult{
+
+		@Override
+		public void requestOrderTimesResult(TimeList timeList) {
+			if(timeList != null){
+				List<PointTime> todayPointTime = timeList.getTodayTimeList();
+				if(todayPointTime == null || todayPointTime.isEmpty()){
+					handler.sendEmptyMessage(HAND_CHANGE_QUICK_MENU);
+				}else{
+				mTodayEarliestTime = null;
+				for(int i = 0; i < todayPointTime.size(); i++){
+						if(i == 0){
+							mTodayEarliestTime = todayPointTime.get(i).getFromTime();
+						}
+						mShowTimes.add(new ShowTime("今天", 
+								todayPointTime.get(i).getFromTime(), todayPointTime.get(i).getToTime()));
+					}
+				}
+				List<PointTime> tomorrowPointTime = timeList.getTomorrowTimeList();
+				for(int i = 0; i < tomorrowPointTime.size(); i++){
+					mShowTimes.add(new ShowTime("明天", 
+							tomorrowPointTime.get(i).getFromTime(), tomorrowPointTime.get(i).getToTime()));
+				}
+				handler.sendEmptyMessage(HAND_TIMES_DATA_COMPLETED);
+			}
+		}
+
+		@Override
+		public void requestSubmitOrderResult(String returnCode, String msg,
+				int orderId) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
+				intent.putExtra("orderId", orderId);
+				intent.putExtra("serverPrice", mServicePrice);
+				startActivity(intent);
+				MainPageInitDataManager.mCartItemsUpdated = true;
+				PlanceOrderActivity.this.finish();
+			}else{
+				ToastUtil.showToast(PlanceOrderActivity.this, msg);
+			}
+		}
 	}
 }

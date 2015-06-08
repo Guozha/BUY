@@ -2,9 +2,6 @@ package com.guozha.buy.controller;
 
 import java.util.Set;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
@@ -17,12 +14,14 @@ import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.entry.global.UserInfor;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.UserModel.UserModelInterface;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
@@ -43,6 +42,7 @@ public class SplashActivity extends Activity{
 	
 	private long mInitStartTime;
 	private boolean mHasInit;
+	private UserModel mUserModel;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -70,6 +70,7 @@ public class SplashActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		mHasInit = false;
+		mUserModel = new UserModel(new MyUserModelResult());
 		initJPush();
 		//友盟统计设置为debug模式
 		//TODO 在发布的时候注意修改
@@ -154,7 +155,7 @@ public class SplashActivity extends Activity{
 		String mobileNum = ConfigManager.getInstance().getMobileNum();
 		String pwd = ConfigManager.getInstance().getUserPwd();
 		if(mobileNum != null && pwd != null){
-			requestLogin(mobileNum, pwd);
+			mUserModel.requestPwdLogin(SplashActivity.this, mobileNum, pwd);
 		}
 		//获取地址列表
 		initDataManager.getAddressInfos(null);
@@ -178,38 +179,6 @@ public class SplashActivity extends Activity{
 		});
 	}
 	
-	/**
-	 * 请求登录
-	 * @param phoneNum
-	 * @param pwd
-	 */
-	private void requestLogin(String phoneNum, String pwd) {
-		RequestParam paramPath = new RequestParam("account/login")
-		.setParams("mobileNo", phoneNum)
-		.setParams("passwd", pwd);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode.trim())){
-						Integer userId = response.getInt("userId");
-						String userToken = response.getString("token");
-						String mobileNum = response.getString("mobileNo");
-						ConfigManager.getInstance().setUserId(userId);
-						ConfigManager.getInstance().setUserToken(userToken);
-						ConfigManager.getInstance().setMobileNum(mobileNum);
-					}else{
-						//String msg = response.getString("msg");
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}     
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -224,5 +193,20 @@ public class SplashActivity extends Activity{
 		
 		//极光推送
 		JPushInterface.onPause(this);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+
+		@Override
+		public void requestPasswordLogin(String returnCode, String msg,
+				UserInfor userInfor) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode) && userInfor != null){
+				ConfigManager.getInstance().setUserId(userInfor.getUserId());
+				ConfigManager.getInstance().setUserToken(userInfor.getUserToken());
+				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
+			}else{
+				ToastUtil.showToast(SplashActivity.this, msg);
+			}
+		}
 	}
 }

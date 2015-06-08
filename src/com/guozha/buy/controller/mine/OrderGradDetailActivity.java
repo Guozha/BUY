@@ -23,13 +23,19 @@ import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.OrderDetailMenusListAdapter;
 import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.ExpandListData;
 import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.entry.mine.order.OrderDetailMenus;
+import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.OrderModel.OrderModelInterface;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -68,6 +74,8 @@ public class OrderGradDetailActivity extends BaseActivity{
 	private Button mFeadBackButton;
 	private int mOrderId; 
 	
+	private OrderModel mOrderModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -93,6 +101,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 			}
 		}
 		initView();
+		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initData();
 	}
 	
@@ -122,27 +131,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 		String feadback = mFeadBackText.getText().toString();
 		if(feadback.isEmpty()) return;
 		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("order/orderMark")
-		.setParams("token", token)
-		.setParams("orderId", mOrderId)
-		.setParams("commentDesc", feadback)
-		.setParams("serviceStar", "");
-		HttpManager.getInstance(OrderGradDetailActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							ToastUtil.showToast(OrderGradDetailActivity.this, "评价成功");
-							setResult(1);
-							OrderGradDetailActivity.this.finish();
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mOrderModel.requestOrderMark(this, token, mOrderId, feadback);
 	}
 	
 	private void updateView(){
@@ -167,60 +156,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		RequestParam paramPath = new RequestParam("order/detail")
-		.setParams("orderId", mOrderId);
-		
-		HttpManager.getInstance(this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
-					if(orderDetail == null) return;
-					
-					mOrderNum = "订单号：" + orderDetail.getOrderNo();
-					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
-					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
-					mOrderAddressDetail = orderDetail.getReceiveAddr();
-					mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
-					
-					if(mExpandListDatas == null){
-						mExpandListDatas = new ArrayList<ExpandListData>();
-					}
-					
-					if(orderDetail.getGoodsInfoList() != null){
-						for(int i = 0; i < orderDetail.getGoodsInfoList().size(); i++){
-							OrderDetailGoods orderDetailGoods = orderDetail.getGoodsInfoList().get(i);
-							ExpandListData expandListData = new ExpandListData();
-							expandListData.setId(orderDetailGoods.getGoodsId());
-							expandListData.setName(orderDetailGoods.getGoodsName());
-							expandListData.setUnit(orderDetailGoods.getUnit());
-							expandListData.setAmount(orderDetailGoods.getAmount());
-							expandListData.setPrice(orderDetailGoods.getPrice());
-							expandListData.setType(1);
-							//TODO 设置价格等
-							mExpandListDatas.add(expandListData);
-						}
-					}
-					
-					if(orderDetail.getMenuInfoList() != null){
-						for(int i = 0; i < orderDetail.getMenuInfoList().size(); i++){
-							OrderDetailMenus orderDetailMenus = orderDetail.getMenuInfoList().get(i);
-							ExpandListData expandListData = new ExpandListData();
-							expandListData.setId(orderDetailMenus.getMenuId());
-							expandListData.setName(orderDetailMenus.getMenuName());
-							expandListData.setAmount(orderDetailMenus.getAmount());
-							expandListData.setUnit("8");
-							expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
-							expandListData.setPrice(orderDetailMenus.getPrice());
-							expandListData.setType(0);
-							mExpandListDatas.add(expandListData);
-						}
-					}
-					handler.sendEmptyMessage(HAND_DATA_COMPLTED);
-				}
-		});
-		//TODO 参考购物车显示
+		mOrderModel.requestOrderDetail(this, mOrderId);
 	}
 	
 	@Override
@@ -239,5 +175,63 @@ public class OrderGradDetailActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyOrderModelResult extends OrderModelResult{
+
+		@Override
+		public void requestOrderDetailResult(OrderDetail orderDetail) {
+			if(orderDetail == null) return;
+			
+			mOrderNum = "订单号：" + orderDetail.getOrderNo();
+			mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
+			mOrderAddressDetail = orderDetail.getReceiveAddr();
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+			
+			if(mExpandListDatas == null){
+				mExpandListDatas = new ArrayList<ExpandListData>();
+			}
+			
+			if(orderDetail.getGoodsInfoList() != null){
+				for(int i = 0; i < orderDetail.getGoodsInfoList().size(); i++){
+					OrderDetailGoods orderDetailGoods = orderDetail.getGoodsInfoList().get(i);
+					ExpandListData expandListData = new ExpandListData();
+					expandListData.setId(orderDetailGoods.getGoodsId());
+					expandListData.setName(orderDetailGoods.getGoodsName());
+					expandListData.setUnit(orderDetailGoods.getUnit());
+					expandListData.setAmount(orderDetailGoods.getAmount());
+					expandListData.setPrice(orderDetailGoods.getPrice());
+					expandListData.setType(1);
+					//TODO 设置价格等
+					mExpandListDatas.add(expandListData);
+				}
+			}
+			
+			if(orderDetail.getMenuInfoList() != null){
+				for(int i = 0; i < orderDetail.getMenuInfoList().size(); i++){
+					OrderDetailMenus orderDetailMenus = orderDetail.getMenuInfoList().get(i);
+					ExpandListData expandListData = new ExpandListData();
+					expandListData.setId(orderDetailMenus.getMenuId());
+					expandListData.setName(orderDetailMenus.getMenuName());
+					expandListData.setAmount(orderDetailMenus.getAmount());
+					expandListData.setUnit("8");
+					expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
+					expandListData.setPrice(orderDetailMenus.getPrice());
+					expandListData.setType(0);
+					mExpandListDatas.add(expandListData);
+				}
+			}
+			handler.sendEmptyMessage(HAND_DATA_COMPLTED);
+		}
+		
+		@Override
+		public void requestOrderMarkResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(OrderGradDetailActivity.this, "评价成功");
+				setResult(1);
+				OrderGradDetailActivity.this.finish();
+			}
+		}
 	}
 }

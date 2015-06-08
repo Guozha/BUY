@@ -15,11 +15,17 @@ import android.widget.TextView;
 
 import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.ExpandListData;
+import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
+import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.OrderModel.OrderModelInterface;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.UnitConvertUtil;
 
 public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
@@ -29,6 +35,7 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 	private boolean mShowFace;
 	private Context mContext;
 	private int mOrderId = -1;
+	private OrderModel mOrderModel;
 	
 	public OrderDetailMenusListAdapter(Context context, List<ExpandListData> expandListData, boolean showFace, int orderId){
 		this(context, expandListData, showFace);
@@ -40,6 +47,7 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 		mExpandListDatas = expandListData;
 		mShowFace = showFace;
 		mContext = context;
+		mOrderModel = new OrderModel(new OrderModelResult());
 	}
 
 	@Override
@@ -211,38 +219,9 @@ public class OrderDetailMenusListAdapter extends BaseExpandableListAdapter{
 				break;
 			}
 			if(marketType == -1 || goodsStar == -2) return;
-			requestGradeProduct(id, marketType, goodsStar);
+			String token = ConfigManager.getInstance().getUserToken();
+			mOrderModel.requestGradeProduct(
+					mContext, id, mOrderId, token, marketType, goodsStar);
 		}
 	}
-
-	private void requestGradeProduct(int id, int marketType, int goodsStar){
-		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("order/goodsMark")
-		.setParams("token", token)
-		.setParams("orderId", mOrderId)
-		.setParams("markType", marketType)
-		.setParams("goodsStar", goodsStar);
-		if(marketType == 1){
-			paramPath.setParams("orderMenuGoodsId", id);
-			paramPath.setParams("orderGoodsId", "");
-		}else{
-			paramPath.setParams("orderGoodsId", id);
-			paramPath.setParams("orderMenuGoodsId", "");
-		}
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					/*
-					try {
-						String returnCode = response.getString("returnCode");
-						String msg = response.getString("msg");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					*/
-				}
-		});
-	}
-
 }

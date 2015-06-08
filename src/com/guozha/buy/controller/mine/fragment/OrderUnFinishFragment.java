@@ -27,11 +27,16 @@ import com.guozha.buy.adapter.OrderListAdapter;
 import com.guozha.buy.controller.BaseFragment;
 import com.guozha.buy.controller.mine.OrderPayedDetailActivity;
 import com.guozha.buy.controller.mine.OrderUnPayDetailActivity;
+import com.guozha.buy.entry.cart.TimeList;
+import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.OrderModel.OrderModelInterface;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.ConstantUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -57,6 +62,7 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 	private ProgressBar mLoadProgressBar;
 	private OrderListAdapter mOrderListAdapter;
 	private View mEmptyView;
+	private OrderModel mOrderModel;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -72,11 +78,17 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		
 		View view = inflater.inflate(R.layout.fragment_order_unfinished, container, false);
 		initView(view);
-		loadData();
+		mOrderModel = new OrderModel(new MyOrderModelResult());
+		requestListOrder();
 		return view;
+	}
+	
+	private void requestListOrder(){
+		int userId = ConfigManager.getInstance().getUserId();
+		if(userId == -1) return;
+		mOrderModel.requestListOrder(getActivity(), userId, OrderModel.ORDRE_UNFINISH, mCurrentPage + 1, PAGE_SIZE);
 	}
 	
 	/**
@@ -150,43 +162,11 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 	}
 	
 	
-	private static final String PAGE_SIZE = "10";
+	private static final int PAGE_SIZE = 10;
 	private int mMaxDateNum;   			//最大数据
 	private int mMaxPageSize;
 	private int mCurrentPage = 0;		//当前页
 	
-	/**
-	 * 从网络获取数据
-	 */
-	private void loadData(){
-		int userId = ConfigManager.getInstance().getUserId();
-		if(userId == -1) return;
-		RequestParam paramPath = new RequestParam("order/list")
-		.setParams("userId", userId)
-		.setParams("searchType", "1")
-		.setParams("pageNum", mCurrentPage + 1)
-		.setParams("pageSize", PAGE_SIZE);
-		HttpManager.getInstance(getActivity()).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mOrderSummaryPage = gson.fromJson(response, new TypeToken<OrderSummaryPage>() { }.getType());
-					mCurrentPage++;
-					//TODO 设置总页数
-					mMaxDateNum = mOrderSummaryPage.getTotalCount();
-					mMaxPageSize = mOrderSummaryPage.getPageCount();
-					List<OrderSummary> orderSummary = mOrderSummaryPage.getOrderList();
-					if(orderSummary == null)return;
-					if(mOrderList == null){
-						mOrderList = new ArrayList<OrderSummary>();
-					}
-					mOrderList.addAll(orderSummary);
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			});
-	}
-
 	private int mLastVisibleIndex;		//最后一条可见项
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -196,7 +176,7 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 				&& mCurrentPage < mMaxPageSize){
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			mLoadText.setVisibility(View.GONE);
-			loadData();
+			requestListOrder();
 		}
 	}
 	
@@ -234,7 +214,25 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 				mOrderList.clear();
 			}
 			mCurrentPage = 0;
-			loadData();
+			requestListOrder();
+		}
+	}
+	
+	class MyOrderModelResult extends OrderModelResult{
+		@Override
+		public void requestListOrderResult(OrderSummaryPage orderSummaryPage) {
+			mOrderSummaryPage = orderSummaryPage;
+			mCurrentPage++;
+			//TODO 设置总页数
+			mMaxDateNum = mOrderSummaryPage.getTotalCount();
+			mMaxPageSize = mOrderSummaryPage.getPageCount();
+			List<OrderSummary> orderSummary = mOrderSummaryPage.getOrderList();
+			if(orderSummary == null)return;
+			if(mOrderList == null){
+				mOrderList = new ArrayList<OrderSummary>();
+			}
+			mOrderList.addAll(orderSummary);
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
 		}
 	}
 }

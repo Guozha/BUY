@@ -3,9 +3,6 @@ package com.guozha.buy.controller;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -20,12 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
+import com.guozha.buy.entry.global.UserInfor;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.UserModel.UserModelInterface;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.receiver.SMSBroadcastReceiver;
 import com.guozha.buy.server.ValidNumTimer;
 import com.guozha.buy.server.ValidNumTimer.TimerObserver;
@@ -58,7 +57,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	private Button mObtainValiNumBtton;
 	private Button mLoginButton;
 	
-	private String mSuccessIntent = null;
+	private UserModel mUserModel;
 	
 	private int mTimeCount = 0;
 	
@@ -119,10 +118,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		customActionBarStyle("一键登录");
-		Bundle bundle = getIntent().getExtras();
-		if(bundle != null){
-			mSuccessIntent = bundle.getString(SUCCESS_TURN_INTENT);
-		}
+		mUserModel = new UserModel(new MyUserModelResult());
 		initView();
 		textChangeWatch();
 	}
@@ -224,18 +220,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				return;
 			}
 			//请求登录
-			//TODO 这里成了验证码了
-			requestLogin(phoneNum, validNum);
-			
+			String invitateCode = mEditInvitation.getText().toString();
+			mUserModel.requestCheckLogin(LoginActivity.this, phoneNum, validNum, invitateCode);
 			break;
 		case R.id.login_obtain_validenum:
 			phoneNum = mEditPhoneNum.getText().toString(); 
 			if(!isValidatePhoneNum(phoneNum)){
-				//TODO 提示填写有误
 				ToastUtil.showToast(this, "手机号码不正确");
 				return;
 			}
-			obtainPoneValidate(phoneNum);
+			mUserModel.obtainPhoneValidate(LoginActivity.this, phoneNum);
 			break;
 		case R.id.login_licence:
 			Intent intent = new Intent(LoginActivity.this, LicenceActivity.class);
@@ -246,92 +240,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		}
 	}
 	
-	/**
-	 * 获取验证码
-	 * 
-	 * @param phoneNum
-	 */
-	private void obtainPoneValidate(String phoneNum) {
-		RequestParam paramPath = new RequestParam(
-				"account/checkCodeForOnekeyLogin").setParams("mobileNo", phoneNum);
-		
-		LogUtil.e("path = " + HttpManager.URL + paramPath);
-		
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response
-								.getString("returnCode");
-						if ("1".equals(returnCode.trim())) {
-							ToastUtil.showToast(LoginActivity.this,
-									"验证码已发送");
-							mHandler.sendEmptyMessage(HAND_VALID_NUM_SEND);
-						} else {
-							String msg = response.getString("msg");
-							ToastUtil.showToast(LoginActivity.this, msg);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-	}
 
-	/**
-	 * 请求登录
-	 * @param phoneNum
-	 * @param pwd
-	 */
-	private void requestLogin(String phoneNum, final String checkCode) {
-		String invitationNum = mEditInvitation.getText().toString();
-		RequestParam paramPaht = new RequestParam("account/onekeyLogin")
-		.setParams("mobileNo", phoneNum)
-		.setParams("checkCode", checkCode)
-		.setParams("inviteCode", invitationNum);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPaht, new Listener<JSONObject>() {
-			@Override
-			public void onResponse(JSONObject response) {
-				try {
-					String returnCode = response.getString("returnCode");
-					if("1".equals(returnCode.trim())){
-						Integer userId = response.getInt("userId");
-						String userToken = response.getString("token");
-						String mobileNum = response.getString("mobileNo");
-						String pwd = response.getString("passwd");
-						ConfigManager.getInstance().setUserId(userId);
-						ConfigManager.getInstance().setUserToken(userToken);
-						ConfigManager.getInstance().setUserPwd(pwd);
-						ConfigManager.getInstance().setMobileNum(mobileNum);
-						ToastUtil.showToast(LoginActivity.this, "登录成功");
-						//请求地址数据
-						MainPageInitDataManager.getInstance().getAddressInfos(null);
-						if(mSuccessIntent != null){
-							try {
-								Intent intent = new Intent(LoginActivity.this, Class.forName(mSuccessIntent));
-								startActivity(intent);
-							} catch (ClassNotFoundException e) {
-								e.printStackTrace();
-							}
-						}
-						MainPageInitDataManager.mAccountUpdated = true;	//允许用户账户信息变化
-						MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
-						MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
-						MainPageInitDataManager.getInstance().getAddressInfos(null);
-						LoginActivity.this.finish();
-					}else{
-						String msg = response.getString("msg");
-						ToastUtil.showToast(LoginActivity.this, msg);
-					}
-				} catch (JSONException e) {
-					ToastUtil.showToast(LoginActivity.this, "数据解析异常");
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	/**
 	 * 检测文字变化
@@ -407,6 +316,39 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 						LoginActivity.this.finish();
 					}
 				}
+			}
+		}
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+
+		@Override
+		public void obtainPhoneValidateResult(String returnCode, String msg) {
+			if (BaseModel.REQUEST_SUCCESS.equals(returnCode.trim())) {
+				ToastUtil.showToast(LoginActivity.this,
+						"验证码已发送");
+				mHandler.sendEmptyMessage(HAND_VALID_NUM_SEND);
+			} else {
+				ToastUtil.showToast(LoginActivity.this, msg);
+			}
+		}
+
+		@Override
+		public void requestCheckLogin(String returnCode, String msg, UserInfor userInfor) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode) && userInfor != null){
+				ConfigManager.getInstance().setUserId(userInfor.getUserId());
+				ConfigManager.getInstance().setUserToken(userInfor.getUserToken());
+				ConfigManager.getInstance().setUserPwd(userInfor.getPassword());
+				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
+				//请求地址数据
+				MainPageInitDataManager.getInstance().getAddressInfos(null);
+				MainPageInitDataManager.mAccountUpdated = true;	//允许用户账户信息变化
+				MainPageInitDataManager.mCartItemsUpdated = true; //允许更新购物车数据
+				MainPageInitDataManager.mAddressUpdated = true;   //允许更新地址数据
+				MainPageInitDataManager.getInstance().getAddressInfos(null);
+				LoginActivity.this.finish();
+			}else{
+				ToastUtil.showToast(LoginActivity.this, msg);
 			}
 		}
 	}

@@ -9,10 +9,6 @@ import android.os.Handler;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.OrderDetailMenusListAdapter;
 import com.guozha.buy.controller.BaseActivity;
@@ -20,8 +16,8 @@ import com.guozha.buy.entry.mine.order.ExpandListData;
 import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.entry.mine.order.OrderDetailMenus;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -56,6 +52,8 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	
 	private List<ExpandListData> mExpandListDatas;
 	
+	private OrderModel mOrderModel;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -81,6 +79,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 			}
 		}
 		initView();
+		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initData();
 	}
 	
@@ -119,55 +118,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		RequestParam paramPath = new RequestParam("order/detail")
-		.setParams("orderId", mOrderId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					OrderDetail orderDetail = gson.fromJson(response, new TypeToken<OrderDetail>() { }.getType());
-					if(orderDetail == null) return;
-					mOrderNum = "订单号：" + orderDetail.getOrderNo();
-					mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
-					mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
-					mOrderAddressDetail = orderDetail.getReceiveAddr();
-					mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
-					if(mExpandListDatas == null){
-						mExpandListDatas = new ArrayList<ExpandListData>();
-					}
-					
-					if(orderDetail.getGoodsInfoList() != null){
-						for(int i = 0; i < orderDetail.getGoodsInfoList().size(); i++){
-							OrderDetailGoods orderDetailGoods = orderDetail.getGoodsInfoList().get(i);
-							ExpandListData expandListData = new ExpandListData();
-							expandListData.setId(orderDetailGoods.getGoodsId());
-							expandListData.setName(orderDetailGoods.getGoodsName());
-							expandListData.setUnit(orderDetailGoods.getUnit());
-							expandListData.setAmount(orderDetailGoods.getAmount());
-							expandListData.setPrice(orderDetailGoods.getPrice());
-							//TODO 设置价格等
-							mExpandListDatas.add(expandListData);
-						}
-					}
-					
-					if(orderDetail.getMenuInfoList() != null){
-						for(int i = 0; i < orderDetail.getMenuInfoList().size(); i++){
-							OrderDetailMenus orderDetailMenus = orderDetail.getMenuInfoList().get(i);
-							ExpandListData expandListData = new ExpandListData();
-							expandListData.setId(orderDetailMenus.getMenuId());
-							expandListData.setName(orderDetailMenus.getMenuName());
-							expandListData.setAmount(orderDetailMenus.getAmount());
-							expandListData.setUnit("8");
-							expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
-							expandListData.setPrice(orderDetailMenus.getPrice());
-							mExpandListDatas.add(expandListData);
-						}
-					}
-					handler.sendEmptyMessage(HAND_DATA_COMPLTED);
-				}
-		});
-		//TODO 参考购物车显示
+		mOrderModel.requestOrderDetail(this, mOrderId);
 	}
 	
 	@Override
@@ -186,5 +137,50 @@ public class OrderPayedDetailActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyOrderModelResult extends OrderModelResult{
+
+		@Override
+		public void requestOrderDetailResult(OrderDetail orderDetail) {
+			if(orderDetail == null) return;
+			mOrderNum = "订单号：" + orderDetail.getOrderNo();
+			mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
+			mOrderAddressDetail = orderDetail.getReceiveAddr();
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+			if(mExpandListDatas == null){
+				mExpandListDatas = new ArrayList<ExpandListData>();
+			}
+			
+			if(orderDetail.getGoodsInfoList() != null){
+				for(int i = 0; i < orderDetail.getGoodsInfoList().size(); i++){
+					OrderDetailGoods orderDetailGoods = orderDetail.getGoodsInfoList().get(i);
+					ExpandListData expandListData = new ExpandListData();
+					expandListData.setId(orderDetailGoods.getGoodsId());
+					expandListData.setName(orderDetailGoods.getGoodsName());
+					expandListData.setUnit(orderDetailGoods.getUnit());
+					expandListData.setAmount(orderDetailGoods.getAmount());
+					expandListData.setPrice(orderDetailGoods.getPrice());
+					//TODO 设置价格等
+					mExpandListDatas.add(expandListData);
+				}
+			}
+			
+			if(orderDetail.getMenuInfoList() != null){
+				for(int i = 0; i < orderDetail.getMenuInfoList().size(); i++){
+					OrderDetailMenus orderDetailMenus = orderDetail.getMenuInfoList().get(i);
+					ExpandListData expandListData = new ExpandListData();
+					expandListData.setId(orderDetailMenus.getMenuId());
+					expandListData.setName(orderDetailMenus.getMenuName());
+					expandListData.setAmount(orderDetailMenus.getAmount());
+					expandListData.setUnit("8");
+					expandListData.setMenuslist(orderDetailMenus.getGoodsInfoList());
+					expandListData.setPrice(orderDetailMenus.getPrice());
+					mExpandListDatas.add(expandListData);
+				}
+			}
+			handler.sendEmptyMessage(HAND_DATA_COMPLTED);
+		}
 	}
 }
