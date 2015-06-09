@@ -28,7 +28,6 @@ import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -58,7 +57,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private int mFreeGap = 0;		//还差多少免服务费
 	private int mCurrentAddressId = 
 			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
-	private ShopCartModel mShopCartModel;
+	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -77,8 +76,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
 		initActionBar("购物车");
 		initView(view);
-		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
-		setCartItemsData();
+		initData();
 		return view;
 	}
 
@@ -192,25 +190,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		setTextColor();
 	}
 	
-	/**
-	 * 设置购物车列表数据
-	 */
-	private void setCartItemsData(){
-		if(mDataManager == null) {
-			mDataManager = MainPageInitDataManager.getInstance();
-		}
-		CartTotalData cartTotalData = mDataManager.getCartItems();
-		if(cartTotalData == null) return;
-		int totalPrice = cartTotalData.getTotalPrice();
-		int freePrice = cartTotalData.getServiceFeePrice();
-		//数量
-		mQuantity = cartTotalData.getQuantity();
-		mTotalPrice = cartTotalData.getTotalPrice();
-		mServiceFree = cartTotalData.getCurrServiceFee();
-		mFreeGap = freePrice > totalPrice ? freePrice - totalPrice : 0;
-		exchangeDataFormat(cartTotalData);
+	private void initData(){
+		int userId = ConfigManager.getInstance().getUserId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mShopCartModel.requestListCartItem(getActivity(), userId, addressId);
 	}
-
+	
 	/**
 	 * 设置文字颜色
 	 */
@@ -243,15 +228,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			int addressId =ConfigManager.getInstance().getChoosedAddressId();
-			if(mDataManager == null){
-				mDataManager = MainPageInitDataManager.getInstance();
-			}
-			if(mCurrentAddressId != addressId){
-				mDataManager = MainPageInitDataManager.getInstance();
-				mDataManager.getCartItems();
-				mCurrentAddressId = addressId;
-			}
+			
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
@@ -279,6 +256,17 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	}
 	
 	class MyShopCartModelResult extends ShopCartModelResult{
-		
+		@Override
+		public void requestListCartItemResult(CartTotalData cartTotalData) {
+			if(cartTotalData == null) return;
+			int totalPrice = cartTotalData.getTotalPrice();
+			int freePrice = cartTotalData.getServiceFeePrice();
+			//数量
+			mQuantity = cartTotalData.getQuantity();
+			mTotalPrice = cartTotalData.getTotalPrice();
+			mServiceFree = cartTotalData.getCurrServiceFee();
+			mFreeGap = freePrice > totalPrice ? freePrice - totalPrice : 0;
+			exchangeDataFormat(cartTotalData);
+		}
 	}
 }

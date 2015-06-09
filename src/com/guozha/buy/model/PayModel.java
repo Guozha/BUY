@@ -8,16 +8,12 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.controller.cart.ChooseTicketActivity;
-import com.guozha.buy.controller.cart.PayActivity;
 import com.guozha.buy.entry.cart.PayValidateResult;
 import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.mine.UsefulTicket;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.PayModelResult;
-import com.guozha.buy.util.ToastUtil;
 
 public class PayModel {
 	

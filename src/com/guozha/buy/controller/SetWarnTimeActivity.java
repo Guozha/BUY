@@ -3,9 +3,6 @@ package com.guozha.buy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,12 +10,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.WarnTimeListAdapter;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.SystemModel;
 import com.guozha.buy.model.result.SystemModelResult;

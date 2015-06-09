@@ -3,9 +3,6 @@ package com.guozha.buy.controller.mine;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.SettingListAdapter;
 import com.guozha.buy.controller.BaseActivity;
@@ -23,8 +19,9 @@ import com.guozha.buy.controller.LicenceActivity;
 import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,7 +37,7 @@ public class SettingActivity extends BaseActivity{
 	private ListView mSettingList;
 	
 	private List<String> mSettingItems;
-
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -140,33 +137,7 @@ public class SettingActivity extends BaseActivity{
 		if(token == null){
 			return;
 		}
-		RequestParam paramPath = new RequestParam("account/logout")
-		.setParams("token", token);
-		HttpManager.getInstance(SettingActivity.this)
-			.volleyJsonRequestByPost(HttpManager.URL + paramPath,
-				new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							//清空用户相关信息
-							ConfigManager.getInstance().clearUserInfor();
-							ToastUtil.showToast(SettingActivity.this, "退出成功");
-							//跳到登录界面
-							Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-							startActivity(intent);
-							SettingActivity.this.finish();
-						}else{
-							String message = response.getString("msg");
-							ToastUtil.showToast(SettingActivity.this, message);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					
-				}
-		});
+		mUserModel.requestLoginOut(this, token);
 	}
 	
 	/**
@@ -203,5 +174,22 @@ public class SettingActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestLoginOutResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				//清空用户相关信息
+				ConfigManager.getInstance().clearUserInfor();
+				ToastUtil.showToast(SettingActivity.this, "退出成功");
+				//跳到登录界面
+				Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+				startActivity(intent);
+				SettingActivity.this.finish();
+			}else{
+				ToastUtil.showToast(SettingActivity.this, msg);
+			}
+		}
 	}
 }

@@ -19,7 +19,6 @@ import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 选择地址对话框
@@ -55,9 +54,7 @@ public class ChooseAddressDialog extends Activity{
 					int position, long id) {
 				if(mAddressInfos != null){
 					int addressId = mAddressInfos.get(position).getAddressId();
-					LogUtil.e("改变的地址 = " + addressId);
 					ConfigManager.getInstance().setChoosedAddressId(addressId);
-					LogUtil.e("设置后的地址 = " + addressId);
 					ChooseAddressDialog.this.finish();
 				}
 			}

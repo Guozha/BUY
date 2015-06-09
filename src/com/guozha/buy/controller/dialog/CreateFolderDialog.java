@@ -1,19 +1,13 @@
 package com.guozha.buy.controller.dialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.CollectionModel;
 import com.guozha.buy.model.result.CollectionModelResult;

@@ -40,8 +40,6 @@ public class CrashHandler implements UncaughtExceptionHandler{
 	// 用于格式化日期,作为日志文件名的一部分
 	private SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
 	
-	
-	
 	/**
 	 * 单例
 	 */

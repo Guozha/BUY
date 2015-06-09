@@ -3,9 +3,6 @@ package com.guozha.buy.controller.mine;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,25 +13,16 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.OrderDetailMenusListAdapter;
 import com.guozha.buy.controller.BaseActivity;
-import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.ExpandListData;
 import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
 import com.guozha.buy.entry.mine.order.OrderDetailMenus;
-import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
-import com.guozha.buy.model.OrderModel.OrderModelInterface;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;

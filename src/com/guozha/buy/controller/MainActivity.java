@@ -22,7 +22,6 @@ import com.guozha.buy.controller.best.fragment.MainTabFragmentMarket;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentMine;
 import com.guozha.buy.controller.mine.SettingActivity;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.TabBarItem;
@@ -43,7 +42,6 @@ public class MainActivity extends FragmentActivity{
 	
 	private List<TabBarItem> mTabIndicators = 
 			new ArrayList<TabBarItem>();
-	private MainPageInitDataManager mInitDataManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

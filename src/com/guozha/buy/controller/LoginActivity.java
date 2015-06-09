@@ -20,15 +20,12 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.entry.global.UserInfor;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.UserModel;
-import com.guozha.buy.model.UserModel.UserModelInterface;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.receiver.SMSBroadcastReceiver;
 import com.guozha.buy.server.ValidNumTimer;
 import com.guozha.buy.server.ValidNumTimer.TimerObserver;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -138,9 +135,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
         mSMSBroadcastReceiver.setOnReceivedMessageListener(new SMSBroadcastReceiver.MessageListener() {
             @Override
             public void onReceived(String message) {
-            	LogUtil.e("message = " + message);
             	ToastUtil.showToast(LoginActivity.this, message);
-            	
             	mEditValidNum.setText(getNumbers(message));
             }
         });

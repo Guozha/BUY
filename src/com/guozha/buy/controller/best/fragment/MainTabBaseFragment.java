@@ -5,10 +5,6 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseFragment;
-import com.guozha.buy.controller.DebugActivity;
-import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.util.ToastUtil;
 
 /**
  * MainActivity的Fragment抽象类
@@ -16,8 +12,6 @@ import com.guozha.buy.util.ToastUtil;
  *
  */
 public abstract class MainTabBaseFragment extends BaseFragment{
-	
-	protected MainPageInitDataManager mDataManager = null;
 	
 	/**
 	 * 初始化ActionBar

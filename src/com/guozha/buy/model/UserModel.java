@@ -11,10 +11,8 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.controller.mine.AddAddressActivity;
-import com.guozha.buy.controller.mine.ChooseCantonActivity;
-import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.entry.global.UserInfor;
+import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mine.address.Country;
@@ -23,7 +21,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.UserModelResult;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -112,6 +109,19 @@ public class UserModel extends BaseModel{
 		 * @param msg
 		 */
 		public void requestDefaultAddressResult(String returnCode, String msg);
+		
+		/**
+		 * 退出登录
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestLoginOutResult(String returnCode, String msg);
+		
+		/**
+		 * 获取我的菜票列表
+		 * @param marketTickets
+		 */
+		public void requestMyTicketResult(List<MarketTicket> marketTickets);
 	}
 
 	
@@ -124,9 +134,6 @@ public class UserModel extends BaseModel{
 	public void obtainPhoneValidate(final Context context, String phoneNum) {
 		RequestParam paramPath = new RequestParam(
 				"account/checkCodeForOnekeyLogin").setParams("mobileNo", phoneNum);
-		
-		LogUtil.e("path = " + HttpManager.URL + paramPath);
-		
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
 			HttpManager.URL + paramPath, new Listener<JSONObject>() {
 				@Override
@@ -236,6 +243,29 @@ public class UserModel extends BaseModel{
 				AccountInfo accountInfo = gson.fromJson(response, AccountInfo.class);
 				mInterface.requestAccountInfoResult(accountInfo);
 			}
+		});
+	}
+	
+	/**
+	 * 请求退出登录
+	 */
+	public void requestLoginOut(final Context context, String token) {
+		RequestParam paramPath = new RequestParam("account/logout")
+		.setParams("token", token);
+		HttpManager.getInstance(context)
+			.volleyJsonRequestByPost(HttpManager.URL + paramPath,
+				new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						String msg = response.getString("msg");
+						mInterface.requestLoginOutResult(returnCode, msg);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
+				}
 		});
 	}
 	
@@ -383,6 +413,24 @@ public class UserModel extends BaseModel{
 						}
 					}
 				});
+	}
+	
+	/**
+	 * 获取并设置我的菜票
+	 */
+	public void requestMyTicket(final Context context, int suerId){
+		int userId = ConfigManager.getInstance().getUserId();
+		RequestParam paramPath = new RequestParam("account/ticket/list")
+		.setParams("userId", userId);
+		HttpManager.getInstance(context).volleyRequestByPost(
+				HttpManager.URL + paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				List<MarketTicket> marketTickets = gson.fromJson(response, new TypeToken<List<MarketTicket>>() { }.getType());
+				mInterface.requestMyTicketResult(marketTickets);
+			}
+		});
 	}
 	
 }

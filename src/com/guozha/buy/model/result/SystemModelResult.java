@@ -23,4 +23,23 @@ public class SystemModelResult implements SystemModelInterface{
 		
 	}
 
+	@Override
+	public void requestFeadbackResult(String returnCode, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestInviteShareResult(String returnCode, int inviteId,
+			String shareUrl, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestInviteInfoResult(int drawAmount, int usedAmount,
+			int awardPrice) {
+		// TODO Auto-generated method stub
+		
+	}
 }

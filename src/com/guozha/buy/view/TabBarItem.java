@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * TabBar的按钮控件
@@ -74,7 +73,6 @@ public class TabBarItem extends LinearLayout{
 				new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, DimenUtil.dp2px(context, ICON_HEIGHT)));
 		
 		mBtnText = new TextView(context);
-		LogUtil.e("mTextSize = " + mTextSize);
 		mBtnText.setText(mTextContent);
 		mBtnText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
 		mBtnText.setLayoutParams(

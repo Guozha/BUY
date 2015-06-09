@@ -92,6 +92,7 @@ public class MyOrderActivity extends FragmentActivity{
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{
 		
+		@SuppressWarnings("rawtypes")
 		private Class[] fragments;
 		
 		public ViewPagerAdapter(FragmentManager fm) {

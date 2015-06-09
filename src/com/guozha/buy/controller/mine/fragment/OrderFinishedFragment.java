@@ -3,6 +3,7 @@ package com.guozha.buy.controller.mine.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,24 +19,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.OrderListAdapter;
 import com.guozha.buy.controller.BaseFragment;
 import com.guozha.buy.controller.mine.OrderGradDetailActivity;
 import com.guozha.buy.controller.mine.OrderPayedDetailActivity;
-import com.guozha.buy.entry.cart.TimeList;
-import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderSummary;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.OrderModel;
-import com.guozha.buy.model.OrderModel.OrderModelInterface;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.ConstantUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -97,6 +89,7 @@ public class OrderFinishedFragment extends BaseFragment implements OnScrollListe
 	 * 初始化View
 	 * @param view
 	 */
+	@SuppressLint("InflateParams") 
 	private void initView(View view){
 		mEmptyView = view.findViewById(R.id.empty_view);
 		mOrderFinishedList = (ListView) view.findViewById(R.id.order_finished_list);

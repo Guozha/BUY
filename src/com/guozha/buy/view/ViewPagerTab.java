@@ -1,7 +1,5 @@
 package com.guozha.buy.view;
 
-import com.guozha.buy.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
@@ -9,6 +7,8 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.Scroller;
+
+import com.guozha.buy.R;
 
 /**
  * 

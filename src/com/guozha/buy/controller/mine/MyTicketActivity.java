@@ -7,17 +7,13 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ListView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.TicketListAdapter;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -35,6 +31,7 @@ public class MyTicketActivity extends BaseActivity{
 	private List<MarketTicket> mMarketTickets;
 	
 	private View mEmptyView;
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -77,17 +74,7 @@ public class MyTicketActivity extends BaseActivity{
 	 */
 	private void setTicketData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("account/ticket/list")
-		.setParams("userId", userId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				mMarketTickets = gson.fromJson(response, new TypeToken<List<MarketTicket>>() { }.getType());
-				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-			}
-		});
+		mUserModel.requestMyTicket(this, userId);
 	}
 	
 	@Override
@@ -106,5 +93,13 @@ public class MyTicketActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestMyTicketResult(List<MarketTicket> marketTickets) {
+			mMarketTickets = marketTickets;
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
 	}
 }

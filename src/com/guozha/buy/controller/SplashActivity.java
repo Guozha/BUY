@@ -20,7 +20,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.UserModel;
-import com.guozha.buy.model.UserModel.UserModelInterface;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;

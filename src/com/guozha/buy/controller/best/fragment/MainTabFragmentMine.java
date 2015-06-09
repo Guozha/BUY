@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
@@ -28,12 +29,13 @@ import com.guozha.buy.controller.dialog.RemindLoginDialog;
 import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.controller.mine.MyCollectionActivity;
 import com.guozha.buy.controller.mine.MyOrderActivity;
-import com.guozha.buy.controller.mine.MySellerActivity;
 import com.guozha.buy.controller.mine.MyTicketActivity;
 import com.guozha.buy.controller.mine.SharePraiseActivity;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.BitmapUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -41,6 +43,8 @@ import com.umeng.analytics.MobclickAgent;
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
 	
 	private static final String PAGE_NAME = "MinePage";
+	
+	private static final int HAND_ACCOUNT_INFO_COMPLETED = 0x0001;
 	
 	private ImageView mMineHeadImg;
 	
@@ -51,12 +55,29 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	
 	private View mAccountInfoArea;
 	
+	private AccountInfo mAccountInfo;
+	
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
+	
+	private Handler mHandle = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_ACCOUNT_INFO_COMPLETED:
+				setInfos();
+				break;
+			default:
+				break;
+			}
+		};
+	};
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_mine, container, false);
 		initActionBar("我的");
 		initView(view);
+		initData();
 		return view;
 	}
 	
@@ -83,34 +104,27 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		view.findViewById(R.id.mine_address).setOnClickListener(this);
 		view.findViewById(R.id.mine_buyer).setOnClickListener(this);
 		
-		setInfos();
+		mAccountInfoArea.setVisibility(View.GONE);
+	}
+	
+	private void initData(){
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
+		mUserModel.requestAccountInfo(getActivity(), token, userId);
+		
 	}
 	
 	private void setInfos(){
-		if(mAccountInfoArea == null) return;
+		if(mAccountInfo == null) return;
 		mAccountInfoArea.setVisibility(View.VISIBLE);
-		
-		if(ConfigManager.getInstance().getUserToken() == null){
-			mAccountInfoArea.setVisibility(View.GONE);
-			return;
-		}
-		if(mDataManager == null) {
-			mDataManager = MainPageInitDataManager.getInstance();
-		}
-		AccountInfo accountInfo = mDataManager.getAccountInfo();
-		if(accountInfo == null) {
-			mAccountInfoArea.setVisibility(View.GONE);
-			return;
-		}
-		
 		if(mMinePhoneNum == null) return;
-		mMinePhoneNum.setText(accountInfo.getMobileNo());
+		mMinePhoneNum.setText(mAccountInfo.getMobileNo());
 		if(mMineTickes == null) return;
-		mMineTickes.setText("菜票 " + accountInfo.getTicketAmount() + "张");
+		mMineTickes.setText("菜票 " + mAccountInfo.getTicketAmount() + "张");
 		if(mMineBeans == null) return;
-		mMineBeans.setText("菜豆 " + accountInfo.getBeanAmount() + "个");
+		mMineBeans.setText("菜豆 " + mAccountInfo.getBeanAmount() + "个");
 		if(mMineRemainMoney == null) return;
-		mMineRemainMoney.setText("我的余额 ￥" + UnitConvertUtil.getSwitchedMoney(accountInfo.getBalance()));
+		mMineRemainMoney.setText("我的余额 ￥" + UnitConvertUtil.getSwitchedMoney(mAccountInfo.getBalance()));
 		setTextColor();
 	}
 	
@@ -181,8 +195,8 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			startActivity(intent);
 			break;
 		case R.id.mine_buyer:		//我的卖家
-			intent = new Intent(getActivity(), MySellerActivity.class);
-			startActivity(intent);
+			//intent = new Intent(getActivity(), MySellerActivity.class);
+			//startActivity(intent);
 			break;	
 		default:
 			break;
@@ -340,6 +354,14 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		actionbar.setCustomView(R.layout.actionbar_base_view);
 		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
 		title.setText("我的");
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestAccountInfoResult(AccountInfo accountInfo) {
+			mAccountInfo = accountInfo;
+			mHandle.sendEmptyMessage(HAND_ACCOUNT_INFO_COMPLETED);
+		}
 	}
 
 }

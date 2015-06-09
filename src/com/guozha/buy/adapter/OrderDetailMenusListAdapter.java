@@ -2,8 +2,6 @@ package com.guozha.buy.adapter;
 
 import java.util.List;
 
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +11,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
-import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.ExpandListData;
-import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderDetailGoods;
-import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.OrderModel;
-import com.guozha.buy.model.OrderModel.OrderModelInterface;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.UnitConvertUtil;
 

@@ -10,18 +10,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.ChooseTicketListAdapter;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.entry.mine.UsefulTicket;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.PayModel;
 import com.guozha.buy.model.result.PayModelResult;

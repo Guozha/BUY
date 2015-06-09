@@ -180,11 +180,6 @@
             android:name="com.guozha.buy.controller.cart.PlanceOrderActivity"
             android:screenOrientation="portrait"></activity>
         
-        <!-- 我的卖家 -->
-        <activity 
-            android:name="com.guozha.buy.controller.mine.MySellerActivity"
-            android:screenOrientation="portrait"></activity>
-            
         <!-- Debug界面 -->
         <activity
             android:name="com.guozha.buy.controller.DebugActivity"

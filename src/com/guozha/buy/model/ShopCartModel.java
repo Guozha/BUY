@@ -9,14 +9,10 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.cart.CartTotalData;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 
 public class ShopCartModel extends BaseModel{
 	
@@ -92,7 +88,6 @@ public class ShopCartModel extends BaseModel{
 		.setParams("amount", quantity)
 		.setParams("token", token)
 		.setParams("addressId", addressId);
-		LogUtil.e(HttpManager.URL + paramPath);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

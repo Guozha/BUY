@@ -1,8 +1,5 @@
 package com.guozha.buy.controller.mine;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,13 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.controller.dialog.ActiveRuleActivity;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -42,6 +39,8 @@ public class SharePraiseActivity extends BaseActivity{
 	private int mDrawAmount;
 	private int mUsedAmount;
 	private int mAwardPrice;
+	
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -99,27 +98,7 @@ public class SharePraiseActivity extends BaseActivity{
 			public void onClick(View v) {
 				int userId = ConfigManager.getInstance().getUserId();
 				String token = ConfigManager.getInstance().getUserToken();
-				RequestParam paramPath = new RequestParam("account/invite/insert")
-				.setParams("userId", userId)
-				.setParams("token", token);
-				HttpManager.getInstance(SharePraiseActivity.this).volleyJsonRequestByPost(
-					HttpManager.URL + paramPath, new Listener<JSONObject>() {
-						@Override
-						public void onResponse(JSONObject response) {
-							try {
-								String returnCode = response.getString("returnCode");
-								if("1".equals(returnCode)){
-									mInviteId = response.getInt("inviteId");
-									mShareUrl = response.getString("shareUrl");
-									handler.sendEmptyMessage(HAND_INVITEID_COMPLTED);
-								}else{
-									ToastUtil.showToast(SharePraiseActivity.this, response.getString("msg"));
-								}
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
-				});
+				mSystemModel.requestInviteShare(SharePraiseActivity.this, userId, token);
 			}
 		});
 		
@@ -137,22 +116,7 @@ public class SharePraiseActivity extends BaseActivity{
 	 */
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("account/invite/info")
-		.setParams("userId", userId);
-		HttpManager.getInstance(this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						mDrawAmount = response.getInt("drawAmount");
-						mUsedAmount = response.getInt("usedAmount");
-						mAwardPrice = response.getInt("awardPrice");
-						handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mSystemModel.requestInviteInfo(this, userId);
 	}
 	
 	@Override
@@ -171,5 +135,28 @@ public class SharePraiseActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestInviteShareResult(String returnCode, int inviteId,
+				String shareUrl, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				mInviteId = inviteId;
+				mShareUrl = shareUrl;
+				handler.sendEmptyMessage(HAND_INVITEID_COMPLTED);
+			}else{
+				ToastUtil.showToast(SharePraiseActivity.this, msg);
+			}
+		}
+		
+		@Override
+		public void requestInviteInfoResult(int drawAmount, int usedAmount,
+				int awardPrice) {
+			mDrawAmount = drawAmount;
+			mUsedAmount = usedAmount;
+			mAwardPrice = awardPrice;
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
 	}
 }

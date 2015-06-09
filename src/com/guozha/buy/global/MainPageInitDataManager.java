@@ -2,15 +2,8 @@ package com.guozha.buy.global;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
@@ -21,8 +14,6 @@ import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mpage.TodayInfo;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.SystemModel;
@@ -48,23 +39,16 @@ public class MainPageInitDataManager {
 	private TodayInfo mTodayInfo = null;
 	private long mSystemTime;
 	
-	private ShopCartModel mShopCartModel;
-	private GoodsModel mGoodsModel;
-	private UserModel mUserModel;
-	private SystemModel mSystemModel;
+	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
+	private GoodsModel mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
 	private MainPageInitDataManager(Context context){
 		this.mContext = context;
-		initModel();
-	}
-	
-	private void initModel(){
-		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
-		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
-		mUserModel = new UserModel(new MyUserModelResult());
 	}
 	
 	/**

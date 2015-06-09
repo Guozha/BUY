@@ -1,19 +1,16 @@
 package com.guozha.buy.controller.mine;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -27,6 +24,8 @@ public class FeadbackActivity extends BaseActivity{
 	private TextView mFeadBackText;
 	
 	private static final String PAGE_NAME = "FeadbackPage";
+	
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,24 +55,7 @@ public class FeadbackActivity extends BaseActivity{
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(FeadbackActivity.this);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/opinion/insert")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("opinion", feadback);
-		HttpManager.getInstance(FeadbackActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							ToastUtil.showToast(FeadbackActivity.this, "反馈成功");
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		mSystemModel.requestFeadback(this, token, userId, feadback);
 	}
 	
 	@Override
@@ -92,5 +74,14 @@ public class FeadbackActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestFeadbackResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(FeadbackActivity.this, "反馈成功");
+			}
+		}
 	}
 }

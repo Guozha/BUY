@@ -11,14 +11,11 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.entry.mine.collection.GoodsListItem;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.CollectionModelResult;
-import com.guozha.buy.util.ToastUtil;
 
 public class CollectionModel {
 	

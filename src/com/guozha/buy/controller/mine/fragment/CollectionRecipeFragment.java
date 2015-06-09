@@ -3,9 +3,6 @@ package com.guozha.buy.controller.mine.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,10 +16,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CollectionRecipeExpandAdapter;
 import com.guozha.buy.adapter.CollectionRecipeExpandAdapter.UpdateRecipeListener;
@@ -33,8 +26,6 @@ import com.guozha.buy.controller.found.MenuDetailActivity;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.CollectionModel;
 import com.guozha.buy.model.result.CollectionModelResult;

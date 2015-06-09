@@ -3,6 +3,7 @@ package com.guozha.buy.model.result;
 import java.util.List;
 
 import com.guozha.buy.entry.global.UserInfor;
+import com.guozha.buy.entry.mine.MarketTicket;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mine.address.Country;
@@ -70,6 +71,18 @@ public class UserModelResult implements UserModelInterface{
 
 	@Override
 	public void requestAccountInfoResult(AccountInfo accountInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestLoginOutResult(String returnCode, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestMyTicketResult(List<MarketTicket> marketTickets) {
 		// TODO Auto-generated method stub
 		
 	}

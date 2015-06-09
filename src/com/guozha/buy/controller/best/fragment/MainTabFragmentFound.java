@@ -17,8 +17,6 @@ import android.widget.LinearLayout;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.found.fragment.FoundMenuFragment;
 import com.guozha.buy.controller.found.fragment.FoundSubjectFragment;
-import com.guozha.buy.global.MainPageInitDataManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.ViewPagerTab;
 
 /**
@@ -34,7 +32,6 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		LogUtil.e("onCreateView");
 		View view = inflater.inflate(R.layout.fragment_maintab_found, container, false);
 		initActionBar("发现");
 		initView(view); 
@@ -48,7 +45,6 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 		view.findViewById(R.id.found_frag1_tab).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LogUtil.e("getCurrentItem == " + mViewPager.getCurrentItem());
 				if(mViewPager.getCurrentItem() == 0) return;
 				mViewPager.setCurrentItem(0);
 			}
@@ -57,7 +53,6 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 		view.findViewById(R.id.found_frag2_tab).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LogUtil.e("getCurrentItem == " + mViewPager.getCurrentItem());
 				if(mViewPager.getCurrentItem() == 1) return;
 				mViewPager.setCurrentItem(1);
 			}

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.guozha.buy.util.LogUtil;
-
 public class ValidNumTimer extends Timer{
 	
 	private Timer mTimer;
@@ -30,7 +28,6 @@ public class ValidNumTimer extends Timer{
 				@Override
 				public void run() {
 					mTimeCount--;
-					LogUtil.e("mTimeCount == " + mTimeCount);
 					for(TimerObserver observer : observers){
 						observer.timeChanged(mTimeCount);
 					}

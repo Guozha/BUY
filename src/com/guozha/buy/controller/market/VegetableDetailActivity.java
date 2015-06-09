@@ -2,9 +2,6 @@ package com.guozha.buy.controller.market;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,10 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CookBookListAdapter;
 import com.guozha.buy.controller.BaseActivity;
@@ -34,12 +27,13 @@ import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.CollectionModel;
 import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.model.result.GoodsModelResult;
+import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -66,10 +60,9 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
 	
 	private String mGoodsId = null;
-	
-	private GoodsModel mGoodsModel;
-	
-	private CollectionModel mCollectionModel;
+	private GoodsModel mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+	private CollectionModel mCollectionModel = new CollectionModel(new MyCollectionModelResult());
+	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -97,8 +90,6 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 			}
 		}
 		initView();
-		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
-		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
 		initData();
 	}
 	
@@ -169,19 +160,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mGoodsModel.requestGoodsDetail(this, Integer.parseInt(mGoodsId), addressId);
 		//7.4接口
-		RequestParam paramPath = new RequestParam("menuplan/goodsMenuList")
-		.setParams("goodsId", mGoodsId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-				mRelationRecipes = gson.fromJson(response, new TypeToken<List<RelationRecipe>>() { }.getType());
-				handler.sendEmptyMessage(HAND_RELATION_RECIPE_COMPLETED);
-			}
-		});
-		
-		
+		mMenuModel.requestMenusByGoods(this, Integer.parseInt(mGoodsId));
 	}
 	
 	/**
@@ -254,6 +233,15 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 			}else{
 				ToastUtil.showToast(VegetableDetailActivity.this, msg);
 			}
+		}
+	}
+	
+	class MyMenuModelResult extends MenuModelResult{
+		@Override
+		public void requestMenuByGoodsResult(
+				List<RelationRecipe> relationRecipes) {
+			mRelationRecipes = relationRecipes;
+			handler.sendEmptyMessage(HAND_RELATION_RECIPE_COMPLETED);
 		}
 	}
 }

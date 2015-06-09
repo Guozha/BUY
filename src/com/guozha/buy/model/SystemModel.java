@@ -9,13 +9,10 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.guozha.buy.controller.SetWarnTimeActivity;
 import com.guozha.buy.entry.global.SearchResult;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.SystemModelResult;
-import com.guozha.buy.util.ToastUtil;
 
 public class SystemModel {
 	
@@ -49,6 +46,27 @@ public class SystemModel {
 		 */
 		public void requestWarnPlanResult(String returnCode, String msg);
 		
+		/**
+		 * 用户反馈
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestFeadbackResult(String returnCode, String msg);
+		
+		/**
+		 * 邀请有奖结果
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestInviteShareResult(String returnCode, int inviteId, String shareUrl, String msg);
+	
+		/**
+		 * 邀请有奖汇总信息
+		 * @param drawAmount
+		 * @param usedAmount
+		 * @param awardPrice
+		 */
+		public void requestInviteInfoResult(int drawAmount, int usedAmount, int awardPrice);
 	}
 	
 	/**
@@ -108,6 +126,77 @@ public class SystemModel {
 						e.printStackTrace();
 					}
 					
+				}
+		});
+	}
+	
+	/**
+	 * 反馈
+	 * @param feadback
+	 */
+	public void requestFeadback(final Context context, String token, int userId, String feadback){
+		RequestParam paramPath = new RequestParam("account/opinion/insert")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("opinion", feadback);
+		HttpManager.getInstance(context).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						String msg = response.getString("msg");
+						mInterface.requestFeadbackResult(returnCode, msg);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+	}
+	
+	/**
+	 * 推荐有奖
+	 * @param context
+	 */
+	public void requestInviteShare(final Context context, int userId, String token){
+		RequestParam paramPath = new RequestParam("account/invite/insert")
+		.setParams("userId", userId)
+		.setParams("token", token);
+		HttpManager.getInstance(context).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						String returnCode = response.getString("returnCode");
+						String msg = response.getString("msg");
+						int inviteId = response.getInt("inviteId");
+						String shareUrl = response.getString("shareUrl");
+						mInterface.requestInviteShareResult(returnCode, inviteId, shareUrl, msg);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+		});
+	}
+	
+	/***
+	 * 推荐有奖信息
+	 */
+	public void requestInviteInfo(final Context context, int userId){
+		RequestParam paramPath = new RequestParam("account/invite/info")
+		.setParams("userId", userId);
+		HttpManager.getInstance(context).volleyJsonRequestByPost(
+			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				@Override
+				public void onResponse(JSONObject response) {
+					try {
+						int drawAmount = response.getInt("drawAmount");
+						int usedAmount = response.getInt("usedAmount");
+						int awardPrice = response.getInt("awardPrice");
+						mInterface.requestInviteInfoResult(drawAmount, usedAmount, awardPrice);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
 		});
 	}

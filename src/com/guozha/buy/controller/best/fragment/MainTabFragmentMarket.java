@@ -23,10 +23,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
@@ -38,13 +34,11 @@ import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.GoodsModel;
+import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.GoodsModelResult;
-import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
@@ -58,7 +52,9 @@ import com.umeng.analytics.MobclickAgent;
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnScrollListener{
 	
 	private static final String PAGE_NAME = "MarketPage";
-	private static final int HAND_DATA_COMPLETED = 0x0002; 
+	private static final int HAND_GOODS_DATA_COMPLETED = 0x0002; 
+	private static final int HAND_GOODS_TYPE_COMPLETED = 0x0003;
+	private static final int HAND_ADRESS_COMPLETED = 0x0004;
 	public static final int REQUEST_CODE_ADDRESS = 10;
 	public static final int REQUEST_CODE_CART = 11;
 	
@@ -81,7 +77,14 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private ImageView mMenuArrowIcon;
 	
-	private int mTotalPageSize;
+	/**
+	 * 分页相关
+	 */
+	private int mTotalPageSize;     //总的页数
+	private int mLastVisibleIndex;  //可见的最后一条数据
+	private int mMaxDateNum;		//最大数据数
+	private static int currentPage = 0;
+	private static final int PAGE_SIZE = 4;
 	
 	/**
 	 * 分页加载底部view相关
@@ -93,17 +96,20 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private List<AddressInfo> mAddressInfos; //地址列表
 	private TextView mActionBarAddress; 
 	private View mActionBarView;
-	
 	private RefreshableView mRefreshableView;
-	private int mCurrentAddressId = 
-			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
-	
-	private GoodsModel mGoodsModel;
+	private GoodsModel mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case HAND_DATA_COMPLETED:
+			case HAND_GOODS_DATA_COMPLETED:
 				updateItemList();
+				break;
+			case HAND_GOODS_TYPE_COMPLETED:
+				setGoodsItemTypeData();
+				break;
+			case HAND_ADRESS_COMPLETED:
+				setAddressInfoData();
 				break;
 			}
 		};
@@ -118,7 +124,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
 		initActionBar("逛菜场");
 		initView(mView);
-		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+		initData();
 		return mView;
 	}
 	
@@ -160,7 +166,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View view,
 					int groupPosition, int childPosition, long id) {
-				//TODO 暂时这样写着，为了测试接口
 				View tagView = view.findViewById(R.id.menu_list_child_cell_text);
 				String tag = String.valueOf(tagView.getTag());
 				String[] itemType = tag.split(":");
@@ -174,9 +179,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				return false;
 			}
 		});
-		
-		
-		setGoodsItemTypeData();
 		
 		//界面分类列表
 		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
@@ -192,7 +194,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mMarketItemListAdapter.notifyDataSetChanged();
 		}
 		mItemList.setAdapter(mMarketItemListAdapter);
-		setMarketHomeData();
 		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
@@ -204,11 +205,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mRefreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() {
-				if(mDataManager == null){
-					mDataManager = MainPageInitDataManager.getInstance();
-				}
-				//让全部更新
-				mDataManager.getMarketHomePage(1, 4);
+				initData();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -219,15 +216,25 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		}, 0);
 	}
 	
+	private void initData(){
+		mTotalPageSize = 0;     //总的页数
+		mLastVisibleIndex = 0;  //可见的最后一条数据
+		mMaxDateNum = 0;		//最大数据数
+		currentPage = 0;
+		mMarketHomeItems.clear();
+		
+		int userId = ConfigManager.getInstance().getUserId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		
+		mUserModel.requestListAddress(getActivity(), userId);
+		mGoodsModel.requestGoodsTypes(getActivity());
+		mGoodsModel.requestGoodsList(getActivity(), addressId, 1, 4);
+	}
+	
 	/**
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
-		if(mDataManager == null){
-			mDataManager = MainPageInitDataManager.getInstance();
-		}
-		mAddressInfos = mDataManager.getAddressInfos();
-		//TODO 设置ActionBar上面的显示
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
 		if(mActionBarAddress != null){
@@ -250,37 +257,12 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 获取菜单条目列表数据
 	 */
 	private void setGoodsItemTypeData(){
-		if(mDataManager == null) {
-			return;
-		}
-		mGoodsItemTypes = mDataManager.getGoodsItemType();
 		if(mGoodsItemTypes == null) return;
 		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
 		if(mMenuList == null) return;
 		mMenuList.setAdapter(mMenuExpandListAapter);
 	}
 	
-	/**
-	 * 设置逛菜场首页数据（第一页数据）
-	 */
-	private void setMarketHomeData(){
-		if(mDataManager == null){
-			return;
-		}
-		MarketHomePage marketHomePage = mDataManager.getMarketHomePage(1, 4);
-		if(marketHomePage == null) return;
-		mTotalPageSize = marketHomePage.getPageCount();
-		currentPage = 1;
-		mMarketHomeItems.clear();
-		LogUtil.e("clear");
-		mMaxDateNum = marketHomePage.getTotalCount();
-		List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
-		mMarketHomeItems.addAll(marketHomeItems);
-		handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-	}
-	
-	private static int currentPage = 0;
-	private static final int PAGE_SIZE = 4;
 	private void loadNewDataAndUpdate(){
 		mGoodsModel.requestGoodsList(getActivity(), -1, currentPage + 1, PAGE_SIZE);
 	}
@@ -342,19 +324,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		//如果地址发生变化则改变数据
-		if(mCurrentAddressId != addressId){
-			mDataManager.getMarketHomePage(1, 4);
-			mCurrentAddressId = addressId;
-		}
-	}
-	
-	private int mLastVisibleIndex;  //可见的最后一条数据
-	private int mMaxDateNum;		//最大数据数
-	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
@@ -380,15 +349,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	}
 	
 	@Override
-	public void onStart() {
-		super.onStart();
-		//更新快捷菜单
-		if(mMarketHomeItems == null || mMarketHomeItems.size() == 0){
-			setMarketHomeData();
-		}
-	}
-	
-	@Override
 	public void onPause() {
 		super.onPause();
 		mBitmapCache.fluchCache();
@@ -404,8 +364,21 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 			if(marketHomeItems == null) return;
 			mMarketHomeItems.addAll(marketHomeItems);
-			
-			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+			handler.sendEmptyMessage(HAND_GOODS_DATA_COMPLETED);
+		}
+		
+		@Override
+		public void requestGoodsTypesResult(List<GoodsItemType> goodsItemTypes) {
+			mGoodsItemTypes = goodsItemTypes;
+			handler.sendEmptyMessage(HAND_GOODS_TYPE_COMPLETED);
+		}
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			mAddressInfos = addressInfos;
+			handler.sendEmptyMessage(HAND_ADRESS_COMPLETED);
 		}
 	}
 }
