@@ -33,7 +33,6 @@ import com.guozha.buy.controller.mine.MyTicketActivity;
 import com.guozha.buy.controller.mine.SharePraiseActivity;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.BitmapUtil;

@@ -39,6 +39,7 @@ import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.UserModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
@@ -139,7 +140,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mActionBarAddress = (TextView) mActionBarView.findViewById(R.id.actionbar_address);
 		mActionBarAddress.setVisibility(View.GONE);
 		mActionBarAddress.setOnClickListener(this);
-		setAddressInfoData();
 		
 		if(view == null) return;
 		//顶部按钮
@@ -206,26 +206,23 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			@Override
 			public void onRefresh() {
 				initData();
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				loadNewDataAndUpdate();
 				mRefreshableView.finishRefreshing();
 			}
 		}, 0);
 	}
 	
+	/**
+	 * 初始化数据
+	 */
 	private void initData(){
 		mTotalPageSize = 0;     //总的页数
 		mLastVisibleIndex = 0;  //可见的最后一条数据
 		mMaxDateNum = 0;		//最大数据数
 		currentPage = 0;
 		mMarketHomeItems.clear();
-		
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		
 		mUserModel.requestListAddress(getActivity(), userId);
 		mGoodsModel.requestGoodsTypes(getActivity());
 		mGoodsModel.requestGoodsList(getActivity(), addressId, 1, 4);
@@ -235,6 +232,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
+		LogUtil.e("setAdressInfo");
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
 		if(mActionBarAddress != null){
@@ -251,6 +249,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				mActionBarAddress.setVisibility(View.GONE);
 			}
 		}
+		
+		mActionBarAddress.setVisibility(View.VISIBLE);
+		mActionBarAddress.setText("xxxxx");
 	}
 	
 	/**
@@ -264,7 +265,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	}
 	
 	private void loadNewDataAndUpdate(){
-		mGoodsModel.requestGoodsList(getActivity(), -1, currentPage + 1, PAGE_SIZE);
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mGoodsModel.requestGoodsList(getActivity(), addressId, currentPage + 1, PAGE_SIZE);
 	}
 	
 	/**
@@ -325,15 +327,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-				&& mLastVisibleIndex == mMarketItemListAdapter.getCount() + 1 //加了viewHead
+				&& mLastVisibleIndex == mMarketItemListAdapter.getCount()
 				&& currentPage < mTotalPageSize){
 			mLoadText.setVisibility(View.GONE);
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			loadNewDataAndUpdate();
 		}
-		
 	}
 
 	@Override

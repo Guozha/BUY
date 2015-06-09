@@ -167,12 +167,12 @@
         
         <!-- 行政区选择 -->
         <activity 
-            android:name="com.guozha.buy.controller.mine.ChooseCantonActivityt"
+            android:name="com.guozha.buy.controller.mine.ChooseCantonActivity"
             android:screenOrientation="portrait"></activity>
         
         <!-- 我的地址 -->
         <activity
-            android:name="com.guozha.buy.controller.mine.MyAddressActivityt"
+            android:name="com.guozha.buy.controller.mine.MyAddressActivity"
             android:screenOrientation="portrait"/>
         
         <!-- 下单界面 -->

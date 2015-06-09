@@ -52,8 +52,6 @@
 		    <!-- 菜品展示 -->
 	   		<ListView 
 	   		    android:id="@+id/market_itemlist"
-	   		    android:footerDividersEnabled="false"
-	   		    android:headerDividersEnabled="false"
 	   		    android:divider="@null"
 	   		    android:focusableInTouchMode="false"
 	   		    android:listSelector="@color/transparent"
