@@ -21,6 +21,8 @@ import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.mine.address.Country;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -37,6 +39,7 @@ public class ChooseCantonActivity extends BaseActivity{
 	private static final int HAND_AREA_COMPLETED = 0x0001;
 	private List<Country> mCountrys;
 	private ListView mCantonList;	
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -88,18 +91,7 @@ public class ChooseCantonActivity extends BaseActivity{
 	 * 请求区列表
 	 */
 	private void requestCountryList(){
-		RequestParam paramPath = new RequestParam("account/address/listArea")
-		.setParams("parentAreaId", 2);
-		HttpManager.getInstance(ChooseCantonActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mCountrys = gson.fromJson(response, new TypeToken<List<Country>>() { }.getType());
-					handler.sendEmptyMessage(HAND_AREA_COMPLETED);
-				}
-			});
+		mUserModel.requestCountryList(this);
 	}
 	
 	@Override
@@ -123,5 +115,13 @@ public class ChooseCantonActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestCountryListResult(List<Country> countrys) {
+			mCountrys = countrys;
+			handler.sendEmptyMessage(HAND_AREA_COMPLETED);
+		}
 	}
 }

@@ -12,10 +12,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.SearchRelateRecipeListAdapter;
 import com.guozha.buy.adapter.SearchResultListAdapter;
@@ -26,8 +22,8 @@ import com.guozha.buy.entry.global.SearchResult;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -56,6 +52,8 @@ public class SearchResultActivity extends BaseActivity{
 	private Intent mIntent;
 	
 	private TextView mSearchResultCount;
+	
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -145,31 +143,7 @@ public class SearchResultActivity extends BaseActivity{
 	 */
 	private void initSearchedData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		RequestParam paramPath = new RequestParam("search")
-		.setParams("word", mKeyWord)
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					SearchResult searchResult = gson.fromJson(response, new TypeToken<SearchResult>() { }.getType());
-					if(searchResult == null){
-						return;
-					}
-					if(searchResult.getGoodsList() == null && searchResult.getMenuList() == null){
-						return;
-					}
-					if(searchResult.getGoodsList() != null){
-						mSearchResultList = searchResult.getGoodsList();
-						handler.sendEmptyMessage(HAND_RESULT_DATA_COMPLETED);
-					}
-					if(searchResult.getMenuList() != null){
-						mSearchRelateList = searchResult.getMenuList();
-						handler.sendEmptyMessage(HAND_RELATE_DATA_COMPLETED);
-					}
-				}
-		});
+		mSystemModel.requestSystemSearched(this, mKeyWord, addressId);
 	}
 	
 	@Override
@@ -187,5 +161,25 @@ public class SearchResultActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestSystemSearch(SearchResult searchResult) {
+			if(searchResult == null){
+				return;
+			}
+			if(searchResult.getGoodsList() == null && searchResult.getMenuList() == null){
+				return;
+			}
+			if(searchResult.getGoodsList() != null){
+				mSearchResultList = searchResult.getGoodsList();
+				handler.sendEmptyMessage(HAND_RESULT_DATA_COMPLETED);
+			}
+			if(searchResult.getMenuList() != null){
+				mSearchRelateList = searchResult.getMenuList();
+				handler.sendEmptyMessage(HAND_RELATE_DATA_COMPLETED);
+			}
+		}
 	}
 }

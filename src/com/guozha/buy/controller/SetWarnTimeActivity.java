@@ -19,6 +19,9 @@ import com.guozha.buy.adapter.WarnTimeListAdapter;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.Switch;
 import com.guozha.buy.view.Switch.OnChangedListener;
@@ -36,6 +39,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 	private ListView mWarnList;
 	private TextView mSettingWarnTime;
 	private List<WarnTime> mWarnTimes;
+	private SystemModel mSystemModel = new SystemModel(new SystemModelResult());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,25 +100,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 	private void requestMenuPlan(String valueTime) {
 		String token = ConfigManager.getInstance().getUserToken(SetWarnTimeActivity.this);
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("menuplan/alert")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("planNotiTime", valueTime);
-		HttpManager.getInstance(SetWarnTimeActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						String returnCode = response.getString("returnCode");
-						if(!"1".equals(returnCode)){
-							ToastUtil.showToast(SetWarnTimeActivity.this, response.getString("msg"));
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					
-				}
-		});
+		mSystemModel.requestWarnPlan(this, token, userId, valueTime);
 	}
 	
 	public class WarnTime{
@@ -174,6 +160,15 @@ public class SetWarnTimeActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestWarnPlanResult(String returnCode, String msg) {
+			if(!BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(SetWarnTimeActivity.this, msg);
+			}
+		}
 	}
 	
 }

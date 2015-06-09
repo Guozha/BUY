@@ -22,6 +22,8 @@ import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -39,6 +41,7 @@ public class ChooseDetailActivity extends BaseActivity{
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	private ListView mCantonList;	
 	private int mCountryId;
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -98,19 +101,7 @@ public class ChooseDetailActivity extends BaseActivity{
 	private void requestAddressBuilding(){
 		String token = ConfigManager.getInstance().getUserToken(ChooseDetailActivity.this);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/address/listBuilding")
-		.setParams("token", token)
-		.setParams("countyId", mCountryId);
-		HttpManager.getInstance(ChooseDetailActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mKeyWords = gson.fromJson(response, new TypeToken<List<KeyWord>>() { }.getType());
-					handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-				}
-			});
+		mUserModel.requestAddressBuilding(this, token, mCountryId);
 	}
 	
 	@Override
@@ -134,5 +125,13 @@ public class ChooseDetailActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestAddressBuilding(List<KeyWord> keyWords) {
+			mKeyWords = keyWords;
+			handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+		}
 	}
 }

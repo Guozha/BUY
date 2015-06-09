@@ -29,7 +29,9 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.PayModel;
 import com.guozha.buy.model.result.OrderModelResult;
+import com.guozha.buy.model.result.PayModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
 import com.guozha.buy.util.ToastUtil;
@@ -88,7 +90,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	
 	private PayOrderMesg mPayOrderMesg;		//支付信息
 	
-	private OrderModel mOrderModel;
+	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
+	private PayModel mPayModel = new PayModel(new MyPayModelResult());
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -181,7 +184,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		setResult(0);
 		initView();
-		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initData();
 	}
 	
@@ -244,17 +246,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		//获取支付方式
-		RequestParam paramPath = new RequestParam("payment/listPayWay")
-		.setParams("addressId", addressId);
-		HttpManager.getInstance(this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mPayWayList= gson.fromJson(response, new TypeToken<List<PayWayEntry>>() { }.getType());
-					mHandler.sendEmptyMessage(HAND_PAY_WAY_COMPLETED);
-				}
-		});
+		mPayModel.requestPayWays(this, addressId);
 	}
 	
 	private long mBeginTimeMillis; //防止重复提交的时间记录
@@ -379,51 +371,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("payment/preparePay")
-		.setParams("token", token)
-		.setParams("userId", userId)
-		.setParams("orderId", mOrderId)
-		.setParams("useTicketId", mTicketId == -1 ? "0": String.valueOf(mTicketId))
-		.setParams("payWayId", payWayId)
-		.setParams("balanceDecPrice", mAccountRemainDeduct)
-		.setParams("useBeanAmount", mBeanrDeduct);
-		
-		HttpManager.getInstance(this).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					PayValidateResult payValidateResult = 
-							gson.fromJson(response, new TypeToken<PayValidateResult>() { }.getType());
-					if(payValidateResult != null){
-						String resultCode = payValidateResult.getReturnCode();
-						if("1".equals(resultCode)){
-							String flag = payValidateResult.getNeedPayFlag();
-							if("0".equals(flag)){
-								mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
-							}else if("1".equals(flag)){
-								mPayOrderMesg = payValidateResult.getOrder();
-								if(mPayOrderMesg != null){
-									if(mPayOrderMesg.getPayPrice() <= 0){
-										ToastUtil.showToast(PayActivity.this, "支付金额必须大于0");
-									}else{
-										mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
-									}
-								}else{
-									ToastUtil.showToast(PayActivity.this, "订单信息获取失败");
-								}
-							}else{
-								ToastUtil.showToast(PayActivity.this, "获取的支付码未定义");
-							}
-						}else{
-							ToastUtil.showToast(PayActivity.this, payValidateResult.getMsg());
-						}
-					}else{
-						ToastUtil.showToast(PayActivity.this, "验证订单失败");
-					}
-				}
-		});
- 
+		mPayModel.requestPreparePay(this, token, userId, mOrderId, mTicketId, Integer.parseInt(payWayId), mAccountRemainDeduct, mBeanrDeduct);
 	}
 
 	/**
@@ -558,6 +506,44 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			mTotalPrice = totalPrice;
 			mServicePrice = serviceFee;
 			mHandler.sendEmptyMessage(HAND_MAIN_SIGNLE_COMPLETED);			
+		}
+	}
+	
+	class MyPayModelResult extends PayModelResult{
+		@Override
+		public void requestPayWaysResult(List<PayWayEntry> payWayList) {
+			mPayWayList = payWayList;
+			mHandler.sendEmptyMessage(HAND_PAY_WAY_COMPLETED);
+		}
+		
+		@Override
+		public void requestPreparePayResult(PayValidateResult payValidateResult) {
+			if(payValidateResult != null){
+				String resultCode = payValidateResult.getReturnCode();
+				if("1".equals(resultCode)){
+					String flag = payValidateResult.getNeedPayFlag();
+					if("0".equals(flag)){
+						mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
+					}else if("1".equals(flag)){
+						mPayOrderMesg = payValidateResult.getOrder();
+						if(mPayOrderMesg != null){
+							if(mPayOrderMesg.getPayPrice() <= 0){
+								ToastUtil.showToast(PayActivity.this, "支付金额必须大于0");
+							}else{
+								mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
+							}
+						}else{
+							ToastUtil.showToast(PayActivity.this, "订单信息获取失败");
+						}
+					}else{
+						ToastUtil.showToast(PayActivity.this, "获取的支付码未定义");
+					}
+				}else{
+					ToastUtil.showToast(PayActivity.this, payValidateResult.getMsg());
+				}
+			}else{
+				ToastUtil.showToast(PayActivity.this, "验证订单失败");
+			}
 		}
 	}
 }

@@ -22,6 +22,9 @@ import com.guozha.buy.entry.mine.UsefulTicket;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.PayModel;
+import com.guozha.buy.model.result.PayModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,6 +43,8 @@ public class ChooseTicketActivity extends BaseActivity{
 	private List<MarketTicket> mMarketTickets;
 	
 	private int mMoney;
+	
+	private PayModel mPayModel = new PayModel(new MyPayModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -92,29 +97,7 @@ public class ChooseTicketActivity extends BaseActivity{
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
-		RequestParam paramPath = new RequestParam("account/ticket/listValid")
-		.setParams("userId", userId)
-		.setParams("money", mMoney)
-		.setParams("token", token);
-
-		HttpManager.getInstance(ChooseTicketActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					UsefulTicket userfulTicket = gson.fromJson(response, new TypeToken<UsefulTicket>() { }.getType());
-					if(userfulTicket == null) {
-						ToastUtil.showToast(ChooseTicketActivity.this, "获取数据失败");
-						return;
-					}
-					if("1".equals(userfulTicket.getReturnCode())){
-						mMarketTickets = userfulTicket.getTickets();
-						handler.sendEmptyMessage(HAND_DATA_COMPLETED);
-					}else{
-						ToastUtil.showToast(ChooseTicketActivity.this, userfulTicket.getMsg());
-					}
-				}
-		});
+		mPayModel.requestValidTicket(this, token, userId, mMoney);
 	}
 	
 	
@@ -138,5 +121,21 @@ public class ChooseTicketActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyPayModelResult extends PayModelResult{
+		@Override
+		public void requestValidTicketResult(UsefulTicket userfulTicket) {
+			if(userfulTicket == null) {
+				ToastUtil.showToast(ChooseTicketActivity.this, "获取数据失败");
+				return;
+			}
+			if(BaseModel.REQUEST_SUCCESS.equals(userfulTicket.getReturnCode())){
+				mMarketTickets = userfulTicket.getTickets();
+				handler.sendEmptyMessage(HAND_DATA_COMPLETED);
+			}else{
+				ToastUtil.showToast(ChooseTicketActivity.this, userfulTicket.getMsg());
+			}
+		}
 	}
 }

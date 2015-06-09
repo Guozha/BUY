@@ -2,9 +2,6 @@ package com.guozha.buy.controller.dialog;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,24 +14,15 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.market.VegetableDetailActivity;
-import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.entry.global.WeightOption;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
-import com.guozha.buy.model.ShopCartModel.ShopCartModelInterface;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;

@@ -25,8 +25,12 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
+import com.guozha.buy.model.result.SystemModelResult;
+import com.guozha.buy.model.result.UserModelResult;
 
 /**
  * 主界面数据管理类
@@ -36,9 +40,6 @@ import com.guozha.buy.model.result.ShopCartModelResult;
 public class MainPageInitDataManager {
 	
 	private Context mContext;  //注意，这里是全局的context
-	
-	private Gson mGson;
-	
 	private AccountInfo mAccountInfo;
 	private List<GoodsItemType> mGoodsItemTypes;
 	private MarketHomePage mMarketHomePage;
@@ -49,19 +50,21 @@ public class MainPageInitDataManager {
 	
 	private ShopCartModel mShopCartModel;
 	private GoodsModel mGoodsModel;
+	private UserModel mUserModel;
+	private SystemModel mSystemModel;
 	
 	
 	private static MainPageInitDataManager mInitDataManager;
 	
 	private MainPageInitDataManager(Context context){
 		this.mContext = context;
-		this.mGson = new GsonBuilder().enableComplexMapKeySerialization().create(); 
 		initModel();
 	}
 	
 	private void initModel(){
 		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 		mGoodsModel = new GoodsModel(new MyGoodsModelResult());
+		mUserModel = new UserModel(new MyUserModelResult());
 	}
 	
 	/**
@@ -184,19 +187,7 @@ public class MainPageInitDataManager {
 	 * 请求系统当前时间
 	 */
 	private void requestSystemTime() {
-		HttpManager.getInstance(mContext).volleyJsonRequestByPost(
-			HttpManager.URL + "system/date", new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					try {
-						long currentdate = response.getLong("gregorianDate");
-						ConfigManager.getInstance().setTodayDate(currentdate);
-						mSystemTime = currentdate;
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+		mSystemModel.requestSystemTime(mContext);
 	}
 	
 	/**
@@ -219,19 +210,10 @@ public class MainPageInitDataManager {
 	 */
 	private void requestAccountInfo() {
 		ConfigManager configManager = ConfigManager.getInstance();
-		HttpManager httpManager = HttpManager.getInstance(mContext);
 		String token = configManager.getUserToken();
 		int userId = configManager.getUserId();
 		if(token == null || userId == -1) return;
-	    RequestParam paramPath = new RequestParam("account/info")
-	    .setParams("token", token)
-	    .setParams("userId", userId);
-		httpManager.volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				mAccountInfo = mGson.fromJson(response, AccountInfo.class);
-			}
-		});
+		mUserModel.requestAccountInfo(mContext, token, userId);
 	}
 	
 	/**
@@ -269,18 +251,7 @@ public class MainPageInitDataManager {
 	 */
 	private void requestAdressInfoListData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		RequestParam paramPath = new RequestParam("account/address/list")
-		.setParams("userId", userId);
-		HttpManager.getInstance(mContext).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mAddressInfos = gson.fromJson(response, 
-							new TypeToken<List<AddressInfo>>() { }.getType());
-					setDefaultAddressChoosed();
-				}
-		});
+		mUserModel.requestListAddress(mContext, userId);
 	}
 	
 	/**
@@ -318,4 +289,25 @@ public class MainPageInitDataManager {
 		}
 	}
 	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			mAddressInfos = addressInfos;
+			setDefaultAddressChoosed();
+		}
+		
+		@Override
+		public void requestAccountInfoResult(AccountInfo accountInfo) {
+			mAccountInfo = accountInfo;
+		}
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		
+		@Override
+		public void requestSystemTime(long systemTime) {
+			ConfigManager.getInstance().setTodayDate(systemTime);
+			mSystemTime = systemTime;
+		}
+	}
 }

@@ -11,17 +11,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.android.volley.Response.Listener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MyAdressListAdapter;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
-import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -43,6 +39,7 @@ public class MyAddressActivity extends BaseActivity{
 	
 	private List<AddressInfo> mAdressInfos = null;
 	private View mEmptyView;
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -105,18 +102,7 @@ public class MyAddressActivity extends BaseActivity{
 		if(userId == -1){
 			ToastUtil.showToast(MyAddressActivity.this, "您的身份验证存在问题");
 		}
-		RequestParam paramPath = new RequestParam("account/address/list")
-		.setParams("userId", userId);
-		HttpManager.getInstance(MyAddressActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mAdressInfos = gson.fromJson(response, 
-							new TypeToken<List<AddressInfo>>() { }.getType());
-					mHandler.sendEmptyMessage(HAND_REQUEST_ADDRESS_COMPLETED);
-				}
-		});
+		mUserModel.requestListAddress(this, userId);
 	}
 	
 	/**
@@ -158,5 +144,13 @@ public class MyAddressActivity extends BaseActivity{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestListAddressResult(List<AddressInfo> adressInfos) {
+			mAdressInfos = adressInfos;
+			mHandler.sendEmptyMessage(HAND_REQUEST_ADDRESS_COMPLETED);
+		}
 	}
 }

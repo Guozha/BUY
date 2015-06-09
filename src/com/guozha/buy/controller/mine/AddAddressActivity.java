@@ -30,9 +30,11 @@ import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -71,6 +73,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	
 	private Button mRequestAddButton;
 	private Button mRequestSettingDefaultButton;
+	
+	private UserModel mUserModel = new UserModel(new UserModelResult());
 	
 	private Handler handler = new Handler(){
 		
@@ -181,19 +185,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private void requestAddressBuilding(){
 		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
 		if(token == null) return;
-		RequestParam paramPath = new RequestParam("account/address/listBuilding")
-		.setParams("token", token)
-		.setParams("countyId", mCountryId);
-		HttpManager.getInstance(AddAddressActivity.this).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
-				@Override
-				public void onResponse(String response) {
-					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
-					mKeyWords = gson.fromJson(response, new TypeToken<List<KeyWord>>() { }.getType());
-					handler.sendEmptyMessage(HAND_KEYWORD_COMPLETED);
-				}
-			});
+		mUserModel.requestAddressBuilding(this, token, mCountryId);
 	}
 	
 	/**
@@ -263,49 +255,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		if(userId == -1 || userToken == null){
 			return;
 		}
-		RequestParam paramPath = new RequestParam("account/address/insert")
-		.setParams("token", userToken)
-		.setParams("userId", String.valueOf(userId))
-		.setParams("receiveName", mReceiveName.getText().toString())
-		.setParams("mobileNo", mMobileNum.getText().toString())
-		.setParams("provinceId", "1")
-		.setParams("cityId", "2")
-		.setParams("countyId", String.valueOf(mCountryId))
-		.setParams("buildingName", mAddressDetai.getText().toString())
-		.setParams("detailAddr", mAddressDetaiNum.getText().toString())
-		.setParams("defaultFlag", String.valueOf(defaultFlag));
-		HttpManager.getInstance(
-			AddAddressActivity.this).volleyJsonRequestByGet(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						try {
-							String returnCode = response.getString("returnCode");
-							if("1".equals(returnCode)){
-								String buildingFlag = response.getString("buildingFlag");
-								
-								if(mAddressInfo != null){
-									//请求删除旧的（这个相当于修改）
-									//handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
-									ToastUtil.showToast(AddAddressActivity.this, "成功处理");
-								}else{
-									if("0".equals(buildingFlag)){//未覆盖
-										showNotCoveredDialog();
-									}else{
-										ToastUtil.showToast(AddAddressActivity.this, "成功添加");
-										handler.sendEmptyMessage(HAND_FINISH_WINDOW);
-									}
-								}
-								
-								
-							}else{
-								ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+		mUserModel.requestAddAddress(this, userToken, userId, mReceiveName.getText().toString(),
+				mMobileNum.getText().toString(), mCountryId, mAddressDetai.getText().toString(), 
+				mAddressDetaiNum.getText().toString(), String.valueOf(defaultFlag));
 	}
 	
 	/**
@@ -336,28 +288,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
 		int userId = ConfigManager.getInstance().getUserId();
 		if(token == null || userId == -1) return;
-		RequestParam paramPath = new RequestParam("account/address/delete")
-		.setParams("userId", userId)
-		.setParams("token", token)
-		.setParams("addressId", mAddressInfo.getAddressId());
-		HttpManager.getInstance(AddAddressActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<JSONObject>() {
-				@Override
-				public void onResponse(JSONObject response) {
-					//相当于修改，没有判断的必要
-					try {
-						String returnCode = response.getString("returnCode");
-						if("1".equals(returnCode)){
-							handler.sendEmptyMessage(HAND_FINISH_WINDOW);
-						}else{
-							ToastUtil.showToast(AddAddressActivity.this, "删除失败");
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		mUserModel.requestDeleteAddress(this, userId, token, mAddressInfo.getAddressId());
 	}
 	
 	/**
@@ -414,26 +345,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		if(token == null){
 			return;
 		}
-		RequestParam paramPath = new RequestParam("account/address/default")
-		.setParams("token", token)
-		.setParams("addressId", mAddressInfo.getAddressId())
-		.setParams("userId", userId);
-		HttpManager.getInstance(AddAddressActivity.this).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
-					@Override
-					public void onResponse(JSONObject response) {
-						try {
-							String returnCode = response.getString("returnCode");
-							if("1".equals(returnCode)){
-								ToastUtil.showToast(AddAddressActivity.this, "默认地址已修改");
-							}else{
-								ToastUtil.showToast(AddAddressActivity.this, "修改失败");
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+		mUserModel.requestDefaultAddress(this, token, mAddressInfo.getAddressId(), userId);
 	}
 	
 	@Override
@@ -466,5 +378,52 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestAddressBuilding(List<KeyWord> keyWords) {
+			mKeyWords = keyWords;
+			handler.sendEmptyMessage(HAND_KEYWORD_COMPLETED);
+		}
+		
+		@Override
+		public void requestAddAddressResult(String returnCode,
+				String buildFlag, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				if(mAddressInfo != null){
+					//请求删除旧的（这个相当于修改）
+					//handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
+					ToastUtil.showToast(AddAddressActivity.this, "成功处理");
+				}else{
+					if("0".equals(buildFlag)){//未覆盖
+						showNotCoveredDialog();
+					}else{
+						ToastUtil.showToast(AddAddressActivity.this, "成功添加");
+						handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+					}
+				}
+			}else{
+				ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
+			}
+		}
+		
+		@Override
+		public void requestDeleteAddressResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+			}else{
+				ToastUtil.showToast(AddAddressActivity.this, "删除失败");
+			}
+		}
+		
+		@Override
+		public void requestDefaultAddressResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(AddAddressActivity.this, "默认地址已修改");
+			}else{
+				ToastUtil.showToast(AddAddressActivity.this, "修改失败");
+			}
+		}
 	}
 }
