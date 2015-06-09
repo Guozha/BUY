@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,10 +124,24 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		//菜单出入动画
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
-		initActionBar("逛菜场");
+		initActionBar(getActivity().getActionBar());
 		initView(mView);
 		initData();
 		return mView;
+	}
+	
+	/**
+	 * 初始化ActionBar
+	 * @param actionbar
+	 */
+	private void initActionBar(ActionBar actionbar){
+		if(actionbar == null) return;
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayShowHomeEnabled(false);
+		actionbar.setDisplayShowTitleEnabled(false);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(mActionBarView);
 	}
 	
 	/**
@@ -138,7 +153,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mActionBarView = LayoutInflater.from(getActivity())
 				.inflate(R.layout.actionbar_market_custom_view, null);
 		mActionBarAddress = (TextView) mActionBarView.findViewById(R.id.actionbar_address);
-		mActionBarAddress.setVisibility(View.GONE);
 		mActionBarAddress.setOnClickListener(this);
 		
 		if(view == null) return;
@@ -232,7 +246,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
-		LogUtil.e("setAdressInfo");
+		LogUtil.e("setAddressInfo");
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
 		if(mActionBarAddress != null){
@@ -249,9 +263,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				mActionBarAddress.setVisibility(View.GONE);
 			}
 		}
-		
-		mActionBarAddress.setVisibility(View.VISIBLE);
-		mActionBarAddress.setText("xxxxx");
 	}
 	
 	/**
