@@ -92,7 +92,8 @@ public class SetWarnTimeActivity extends BaseActivity{
 	 * @param warnTime
 	 */
 	private void requestMenuPlan(String valueTime) {
-		String token = ConfigManager.getInstance().getUserToken(SetWarnTimeActivity.this);
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return;  //TODO 先登录
 		int userId = ConfigManager.getInstance().getUserId();
 		mSystemModel.requestWarnPlan(this, token, userId, valueTime);
 	}

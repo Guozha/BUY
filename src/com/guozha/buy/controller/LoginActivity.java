@@ -37,11 +37,15 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class LoginActivity extends BaseActivity implements OnClickListener, TimerObserver{
 	
+	private static final String PAGE_NAME = "LoginPage";
+	
 	private static final int HAND_VALID_NUM_SEND = 0x0001;
 	private static final int HAND_REFRESH_BUTTON = 0x0002;
 	private static final int HAND_SEND_COMPLETED = 0x0003;
-	private static final String PAGE_NAME = "LoginPage";
-	private static final int REQUEST_CODE = 0;		//请求状态码		
+	private static final int HAND_LOGIN_SUCCESSS = 0x0004;
+	
+	public static final String LOGIN_STATUS = "login_status";
+	public static final int RESULT_CODE_LOGIN = 0;		//请求状态码		
 	
 	//登录成功后 跳转控制器的 路径
 	public static final String SUCCESS_TURN_INTENT = "success_turn_intent";
@@ -74,6 +78,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				break;
 			case HAND_SEND_COMPLETED:
 				buttonChangeNomal("重新获取");
+				break;
+			case HAND_LOGIN_SUCCESSS:
+				Intent data = LoginActivity.this.getIntent();
+				data.putExtra(LOGIN_STATUS, true);
+				setResult(RESULT_CODE_LOGIN, data);
+				LoginActivity.this.finish();
 				break;
 			}
 		}
@@ -118,6 +128,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		mUserModel = new UserModel(new MyUserModelResult());
 		initView();
 		textChangeWatch();
+		setResult(RESULT_CODE_LOGIN);
 	}
 	
 	@Override
@@ -300,21 +311,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == REQUEST_CODE){
-			if(data != null){
-				Bundle bundle = data.getExtras();
-				if(bundle != null){
-					if(bundle.getBoolean("successed")){
-						LoginActivity.this.finish();
-					}
-				}
-			}
-		}
-	}
-	
 	class MyUserModelResult extends UserModelResult{
 
 		@Override
@@ -335,7 +331,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				ConfigManager.getInstance().setUserToken(userInfor.getUserToken());
 				ConfigManager.getInstance().setUserPwd(userInfor.getPassword());
 				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
-				LoginActivity.this.finish();
+				//登录成功
+				mHandler.sendEmptyMessage(HAND_LOGIN_SUCCESSS);
 			}else{
 				ToastUtil.showToast(LoginActivity.this, msg);
 			}

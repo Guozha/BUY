@@ -174,8 +174,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 请求关键词
 	 */
 	private void requestAddressBuilding(){
-		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
+		String token = ConfigManager.getInstance().getUserToken();
 		if(token == null) return;
+		//TODO 先登录
 		mUserModel.requestAddressBuilding(this, token, mCountryId);
 	}
 	
@@ -242,8 +243,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void requestAddAddress() {
 		int userId = ConfigManager.getInstance().getUserId();
-		String userToken = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
+		String userToken = ConfigManager.getInstance().getUserToken();
 		if(userId == -1 || userToken == null){
+			//TODO 先登录
 			return;
 		}
 		mUserModel.requestAddAddress(this, userToken, userId, mReceiveName.getText().toString(),
@@ -276,9 +278,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 删除旧的地址
 	 */
 	private void deleteOldAddress(){
-		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
+		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		if(token == null || userId == -1) return;
+		if(token == null || userId == -1) return; //TODO 先登录
 		mUserModel.requestDeleteAddress(this, userId, token, mAddressInfo.getAddressId());
 	}
 	
@@ -331,9 +333,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 请求设置为默认地址
 	 */
 	private void requestDefaultAddress(){
-		String token = ConfigManager.getInstance().getUserToken(AddAddressActivity.this);
+		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		if(token == null){
+		if(token == null){ //TODO 先登录
 			return;
 		}
 		mUserModel.requestDefaultAddress(this, token, mAddressInfo.getAddressId(), userId);

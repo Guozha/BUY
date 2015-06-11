@@ -25,17 +25,16 @@
 	                android:id="@+id/address_receivename"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="李小强"
-	                android:textColor="@color/color_app_base_9"
+	                android:textColor="@color/color_app_base_25"
 	                android:textSize="@dimen/dimen_global_16sp"/>
 	            
 	            <TextView 
 	                android:id="@+id/address_mobileno"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="18347233234"
 	                android:layout_alignParentRight="true"
-	                android:textColor="@color/color_app_base_9"
+	                android:layout_marginRight="40dip"
+	                android:textColor="@color/color_app_base_25"
 	                android:textSize="@dimen/dimen_global_16sp"/>
 	        </RelativeLayout>
 	        <TextView 
@@ -44,10 +43,9 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:textSize="@dimen/dimen_global_14sp"
-	            android:textColor="@color/color_app_base_4"
+	            android:textColor="@color/color_app_base_26"
 	            android:singleLine="true"
-	            android:ellipsize="end"
-	            android:text="金地自在城几幢几单元610"/>
+	            android:ellipsize="end"/>
 	    </LinearLayout>
 	    
 	    <LinearLayout 
@@ -60,8 +58,8 @@
 	            android:id="@+id/address_default"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="默认"
-	            android:textColor="@color/color_app_base_2"
+	            android:text="当前"
+	            android:textColor="@color/color_app_base_30"
 	            android:textSize="@dimen/dimen_global_14sp"/>
 	        
 	        <ImageView 
@@ -69,7 +67,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:scaleType="centerInside"
-	            android:src="@drawable/main_right_arrow"/>
+	            android:src="@drawable/button_next"/>
 	    </LinearLayout>
 	</LinearLayout>
 </LinearLayout>

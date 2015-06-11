@@ -60,7 +60,7 @@ public class MyAdressListAdapter extends BaseAdapter{
 		AddressInfo addressInfo = mAddressInfos.get(position);
 		holder.receiveName.setText(addressInfo.getReceiveName());
 		holder.mobileNo.setText(addressInfo.getMobileNo());
-		holder.detailAddress.setText(addressInfo.getBuildingName() + addressInfo.getDetailAddr());
+		holder.detailAddress.setText(addressInfo.getCountyName() + addressInfo.getBuildingName() + addressInfo.getDetailAddr());
 		if("1".equals(addressInfo.getDefaultFlag())){
 			holder.defaultAdress.setVisibility(View.VISIBLE);
 		}else{

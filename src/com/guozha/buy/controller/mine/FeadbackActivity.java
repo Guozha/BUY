@@ -1,8 +1,11 @@
 package com.guozha.buy.controller.mine;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -22,6 +25,7 @@ import com.umeng.analytics.MobclickAgent;
 public class FeadbackActivity extends BaseActivity{
 	
 	private TextView mFeadBackText;
+	private Button mButton;
 	
 	private static final String PAGE_NAME = "FeadbackPage";
 	
@@ -38,23 +42,47 @@ public class FeadbackActivity extends BaseActivity{
 	
 	private void initView(){
 		mFeadBackText = (TextView) findViewById(R.id.feadback_text);
-		findViewById(R.id.feadback_button).setOnClickListener(new OnClickListener() {
+		mButton = (Button) findViewById(R.id.feadback_button);
+		mButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				String feadback = mFeadBackText.getText().toString();
-				if(feadback.length() < 10){
-					ToastUtil.showToast(FeadbackActivity.this, "不能少于10个字");
+				if(feadback.length() < 5){
+					ToastUtil.showToast(FeadbackActivity.this, "不能少于5个字");
 				}else{
 					requestFeadback(feadback);
 				}
+			}
+		});
+		
+		mFeadBackText.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(!s.toString().isEmpty()){
+					mButton.setEnabled(true);
+				}else{
+					mButton.setEnabled(false);
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				
 			}
 		});
 	}
 	
 	private void requestFeadback(String feadback){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken(FeadbackActivity.this);
-		if(token == null) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //TODO 先登录
 		mSystemModel.requestFeadback(this, token, userId, feadback);
 	}
 	

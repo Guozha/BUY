@@ -113,7 +113,8 @@ public class SearchRelateRecipeListAdapter extends BaseAdapter implements OnClic
 		int menuId = (Integer) view.getTag();
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		String token = ConfigManager.getInstance().getUserToken(mContext);
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return;  //TODO 先登录
 		mShopCartModel.requestAddCart(mContext, userId, menuId, "01", 1, token, addressId);
 	}
 	

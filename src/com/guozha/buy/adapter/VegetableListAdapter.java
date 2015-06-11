@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.dialog.RemindLoginDialog;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
@@ -110,9 +110,10 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken(mContext) == null){
-			intent = new Intent(mContext, RemindLoginDialog.class);
+		if(ConfigManager.getInstance().getUserToken() == null){
+			intent = new Intent(mContext, LoginActivity.class);
 			mContext.startActivity(intent);
+			//TODO 刷新数据。。。
 			return;
 		}
 		//TODO 再判断当前选择的地址是否为NULL

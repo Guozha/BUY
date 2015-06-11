@@ -117,7 +117,8 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 	 * @param menuId
 	 */
 	private void requestCollectionRecipe(int menuId) {
-		String token = ConfigManager.getInstance().getUserToken(mContext);
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return;  //TODO 先登录
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mShopCartModel.requestAddCart(mContext, userId, menuId, "01", 1, token, addressId);

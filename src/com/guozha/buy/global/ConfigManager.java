@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.dialog.CustomDialog;
-import com.guozha.buy.controller.dialog.RemindLoginDialog;
 import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.util.XMLUtil;
 
@@ -200,19 +199,6 @@ public class ConfigManager{
 	
 	public String getUserToken(){
 		return mUserToken;
-	}
-	
-	/**
-	 * 获取用户Token
-	 * @return
-	 */
-	public String getUserToken(Context context){
-		//如果是Null提醒登录
-		if(mUserToken == null){
-			Intent intent = new Intent(context, RemindLoginDialog.class);
-			context.startActivity(intent);
-		}
-		return getUserToken();
 	}
 	
 	/**

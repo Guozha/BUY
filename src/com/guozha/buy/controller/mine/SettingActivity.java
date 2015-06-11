@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.SettingListAdapter;
@@ -33,8 +35,11 @@ import com.umeng.analytics.MobclickAgent;
 public class SettingActivity extends BaseActivity{
 	
 	private static final String PAGE_NAME = "SettingPage";
+	private static final int RESULT_CODE_SETTING = 0;
 	
 	private ListView mSettingList;
+	private Button mLogoutButton;
+	private TextView mVersionNameText;
 	
 	private List<String> mSettingItems;
 	private UserModel mUserModel = new UserModel(new MyUserModelResult());
@@ -45,6 +50,7 @@ public class SettingActivity extends BaseActivity{
 		customActionBarStyle("设置");
 		initData();
 		initView();
+		setResult(RESULT_CODE_SETTING);
 	}
 	
 	/**
@@ -54,20 +60,27 @@ public class SettingActivity extends BaseActivity{
 		mSettingItems = new ArrayList<String>();
 		mSettingItems.add("意见反馈");
 		//mSettingItems.add("常见问题");
-		mSettingItems.add("在线客服");
+		mSettingItems.add("系统更新");
 		//mSettingItems.add("系统更新");
 		mSettingItems.add("关于我们");
-		mSettingItems.add("服务协议");
+		mSettingItems.add("用户协议");
 	}
 	
 	private void initView(){
-		findViewById(R.id.setting_login_out_button).setOnClickListener(new OnClickListener() {
-			
+		mLogoutButton = (Button) findViewById(R.id.setting_login_out_button);
+		mVersionNameText = (TextView) findViewById(R.id.setting_version_name);
+		String versionName = ConfigManager.getInstance().getVersionName();
+		mVersionNameText.setText("当前版本号：" + versionName);
+		mLogoutButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				requestLoginOut();
 			}
 		});
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null){
+			mLogoutButton.setVisibility(View.GONE);
+		}
 		
 		mSettingList = (ListView) findViewById(R.id.setting_list);
 		mSettingList.setAdapter(new SettingListAdapter(this, mSettingItems));
@@ -83,14 +96,8 @@ public class SettingActivity extends BaseActivity{
 					intent = new Intent(SettingActivity.this, FeadbackActivity.class);
 					startActivity(intent);
 					break;
-				/*
-				case 1:		//常见问题
-					intent = new Intent(SettingActivity.this, AnswerQuestionActivity.class);
-					startActivity(intent);
-					break;
-				*/
-				case 1:     //在线客服
-					dialServerTelephone();
+				case 1:     //系统更新
+					//dialServerTelephone();
 					break;
 			    /*
 				case 3:     //系统更新
@@ -133,29 +140,11 @@ public class SettingActivity extends BaseActivity{
 	 * 请求退出登录
 	 */
 	private void requestLoginOut() {
-		String token = ConfigManager.getInstance().getUserToken(SettingActivity.this);
-		if(token == null){
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null){ //TODO 先登录
 			return;
 		}
 		mUserModel.requestLoginOut(this, token);
-	}
-	
-	/**
-	 * 拨打客服电话
-	 */
-	private void dialServerTelephone() {
-		final CustomDialog dialDialog = 
-			new CustomDialog(SettingActivity.this, R.layout.dialog_dial_telephone);
-		dialDialog.setDismissButtonId(R.id.cancel_button);
-		dialDialog.getViewById(R.id.dial_tel_button).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				dialDialog.dismiss();
-				String phoneNum = "0571-86021150";
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
-				SettingActivity.this.startActivity(intent);
-			}
-		});
 	}
 	
 	@Override

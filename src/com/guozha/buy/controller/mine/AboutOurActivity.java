@@ -24,6 +24,7 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String PAGE_NAME = "AboutOurPage";
 	private TextView mVersionNameText;
+	private TextView mBottomVersionText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,10 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	
 	private void initView(){
 		mVersionNameText = (TextView) findViewById(R.id.about_our_version_name);
-		mVersionNameText.setText("爱掌勺" + ConfigManager.getInstance().getVersionName());
+		mBottomVersionText = (TextView) findViewById(R.id.bottom_verson_message);
+		String versionName = ConfigManager.getInstance().getVersionName();
+		mVersionNameText.setText("爱掌勺" + versionName);
+		mBottomVersionText.setText("版本信息：" + versionName);
 		
 		findViewById(R.id.logo_icon).setOnClickListener(this);
 		

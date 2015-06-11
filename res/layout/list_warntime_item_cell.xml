@@ -14,7 +14,7 @@
             android:id="@+id/warn_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_app_base_4"
+            android:textColor="@color/color_app_base_26"
             android:textSize="@dimen/dimen_global_16sp"
             android:layout_marginLeft="40dip"
             android:gravity="center_vertical"/>

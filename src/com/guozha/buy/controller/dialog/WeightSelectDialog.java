@@ -192,9 +192,12 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	 */
 	private void requestAddCart(int quantity) {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken(WeightSelectDialog.this);
+		String token = ConfigManager.getInstance().getUserToken();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		
+		if(token == null){
+			//TODO 先登录
+			return;
+		}
 		mShopCartModel.requestAddCart(this, userId, 
 				Integer.parseInt(mGoodsId), "02", quantity, token, addressId);
 	}

@@ -93,8 +93,8 @@ public class ChooseDetailActivity extends BaseActivity{
 	 * 请求关键词
 	 */
 	private void requestAddressBuilding(){
-		String token = ConfigManager.getInstance().getUserToken(ChooseDetailActivity.this);
-		if(token == null) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //TODO 先登录
 		mUserModel.requestAddressBuilding(this, token, mCountryId);
 	}
 	

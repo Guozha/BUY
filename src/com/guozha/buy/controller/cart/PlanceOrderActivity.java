@@ -246,8 +246,8 @@ public class PlanceOrderActivity extends BaseActivity{
 			return;
 		}
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken(PlanceOrderActivity.this);
-		if(token == null) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //先登录
 		int addressId = ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this);
 		if(addressId == -1) return;
 		long todayDate = ConfigManager.getInstance().getTodayDate();

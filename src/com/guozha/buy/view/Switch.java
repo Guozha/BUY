@@ -32,7 +32,7 @@ public class Switch extends ImageView implements OnClickListener{
 	}
 	
 	private void init(Context context) {
-		setImageResource(R.drawable.main_switch_off);
+		setImageResource(R.drawable.button_bell_off);
 		setOnClickListener(this);
 	}
 
@@ -46,9 +46,9 @@ public class Switch extends ImageView implements OnClickListener{
 	public void setCheckStyle(boolean checked){
 		isCheck = checked;
 		if(checked){
-			setImageResource(R.drawable.main_switch_on);
+			setImageResource(R.drawable.button_bell_on);
 		}else{
-			setImageResource(R.drawable.main_switch_off);
+			setImageResource(R.drawable.button_bell_off);
 		}
 		
 	}

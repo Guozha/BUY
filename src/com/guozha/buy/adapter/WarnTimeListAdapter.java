@@ -61,7 +61,7 @@ public class WarnTimeListAdapter extends BaseAdapter{
 		WarnTime warnTime = mWarnTimes.get(position);
 		warnTimeText.setText(warnTime.getShowTime());
 		if(warnTime.getValueTime().equals(mChoosedTime)){
-			choosedIcon.setImageResource(R.drawable.main_plan_selected);
+			choosedIcon.setImageResource(R.drawable.button_tick);
 		}else{
 			choosedIcon.setImageResource(0);
 		}

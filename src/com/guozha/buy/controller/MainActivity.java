@@ -3,6 +3,7 @@ package com.guozha.buy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -33,6 +34,12 @@ import com.umeng.update.UmengUpdateAgent;
  *
  */
 public class MainActivity extends FragmentActivity{
+	
+	private static final int FRAGMENT_BEST_INDEX = 0;
+	private static final int FRAGMENT_FOUND_INDEX = 1;
+	private static final int FRAGMENT_MARKET_INDEX = 2;
+	private static final int FRAGMENT_CART_INDEX = 3;
+	private static final int FRAGMENT_MINE_INDEX = 4;
 	
 	private int mCurrentItem = 0;
 	
@@ -180,11 +187,14 @@ public class MainActivity extends FragmentActivity{
 			shareManager.showSharePlatform(this);
 			break;
 		case R.id.action_setting: //设置
-			if(ConfigManager.getInstance().getUserToken(MainActivity.this) == null){
-				return super.onMenuItemSelected(featureId, item);
-			}
+			MainTabBaseFragment fragment = mFragments.get(FRAGMENT_MINE_INDEX);
 			intent = new Intent(MainActivity.this, SettingActivity.class);
-			startActivity(intent);
+			if(fragment != null){
+				fragment.startActivityForResult(
+						intent, MainTabFragmentMine.REQUEST_CODE_SETTING);
+			}else{
+				startActivity(intent);
+			}
 			break;
 		default:
 			break;

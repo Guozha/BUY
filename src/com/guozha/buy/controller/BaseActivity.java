@@ -16,7 +16,7 @@ import com.guozha.buy.util.ToastUtil;
  *
  */
 public abstract class BaseActivity extends Activity{
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

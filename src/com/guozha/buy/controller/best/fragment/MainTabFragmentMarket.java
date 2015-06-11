@@ -35,6 +35,7 @@ import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.UserModel;
@@ -57,6 +58,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private static final int HAND_GOODS_DATA_COMPLETED = 0x0002; 
 	private static final int HAND_GOODS_TYPE_COMPLETED = 0x0003;
 	private static final int HAND_ADRESS_COMPLETED = 0x0004;
+	private static final int HAND_REFRESH_DATA = 0x0005;
 	public static final int REQUEST_CODE_ADDRESS = 10;
 	public static final int REQUEST_CODE_CART = 11;
 	
@@ -101,7 +103,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private RefreshableView mRefreshableView;
 	private GoodsModel mGoodsModel = new GoodsModel(new MyGoodsModelResult());
 	private UserModel mUserModel = new UserModel(new MyUserModelResult());
-	private Handler handler = new Handler(){
+	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_GOODS_DATA_COMPLETED:
@@ -112,6 +114,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				break;
 			case HAND_ADRESS_COMPLETED:
 				setAddressInfoData();
+				break;
+			case HAND_REFRESH_DATA:
+				initData();
 				break;
 			}
 		};
@@ -124,8 +129,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		//菜单出入动画
 		mInAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_in_anim);
 		mOutAnimation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.market_menu_out_anim);
+		initView(mView);			
+		//初始化ActionBar
 		initActionBar(getActivity().getActionBar());
-		initView(mView);
 		initData();
 		return mView;
 	}
@@ -198,16 +204,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mItemList = (ListView) view.findViewById(R.id.market_itemlist);
 		mItemList.setItemsCanFocus(true);
 		mBottomLoadingView = getActivity().getLayoutInflater().inflate(R.layout.list_paging_bottom, null);
-		mLoadText = (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
+		mLoadText =  (TextView) mBottomLoadingView.findViewById(R.id.list_paging_bottom_text);
 		mLoadProgressBar = (ProgressBar) mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		mItemList.addFooterView(mBottomLoadingView);
 		mItemList.setOnScrollListener(this);
-		if(mMarketItemListAdapter == null){
-			mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
-		}else{
-			mMarketItemListAdapter.notifyDataSetChanged();
-		}
-		mItemList.setAdapter(mMarketItemListAdapter);
 		
 		//箭头
 		mMenuArrowIcon = (ImageView) view.findViewById(R.id.market_menu_item_arrow_icon);
@@ -219,8 +219,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mRefreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() {
-				initData();
-				loadNewDataAndUpdate();
+				mHandler.sendEmptyMessage(HAND_REFRESH_DATA);
 				mRefreshableView.finishRefreshing();
 			}
 		}, 0);
@@ -234,7 +233,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mLastVisibleIndex = 0;  //可见的最后一条数据
 		mMaxDateNum = 0;		//最大数据数
 		currentPage = 0;
-		mMarketHomeItems.clear();
+		mMarketHomeItems = new ArrayList<MarketHomeItem>();
+		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
+		mItemList.setAdapter(mMarketItemListAdapter);
+		
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mUserModel.requestListAddress(getActivity(), userId);
@@ -246,7 +248,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
-		LogUtil.e("setAddressInfo");
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
 		String addressName = "";
 		if(mActionBarAddress != null){
@@ -297,8 +298,16 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			break;
 		case R.id.actionbar_address: //点击ActionBar地址按钮
 			intent = new Intent(getActivity(), ChooseAddressDialog.class);
-			getActivity().startActivityForResult(intent, REQUEST_CODE_ADDRESS);
+			this.startActivityForResult(intent, REQUEST_CODE_ADDRESS);
 			break;
+		}
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQUEST_CODE_ADDRESS){
+			initData();
 		}
 	}
 
@@ -326,7 +335,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		super.setUserVisibleHint(isVisibleToUser);
 		if(getUserVisibleHint()){
 			//View可见
-			//初始化ActionBar
 			//友盟页面统计
 			MobclickAgent.onPageStart(PAGE_NAME);
 		}else{
@@ -375,13 +383,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 			if(marketHomeItems == null) return;
 			mMarketHomeItems.addAll(marketHomeItems);
-			handler.sendEmptyMessage(HAND_GOODS_DATA_COMPLETED);
+			mHandler.sendEmptyMessage(HAND_GOODS_DATA_COMPLETED);
 		}
 		
 		@Override
 		public void requestGoodsTypesResult(List<GoodsItemType> goodsItemTypes) {
 			mGoodsItemTypes = goodsItemTypes;
-			handler.sendEmptyMessage(HAND_GOODS_TYPE_COMPLETED);
+			mHandler.sendEmptyMessage(HAND_GOODS_TYPE_COMPLETED);
 		}
 	}
 	
@@ -389,7 +397,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		@Override
 		public void requestListAddressResult(List<AddressInfo> addressInfos) {
 			mAddressInfos = addressInfos;
-			handler.sendEmptyMessage(HAND_ADRESS_COMPLETED);
+			mHandler.sendEmptyMessage(HAND_ADRESS_COMPLETED);
 		}
 	}
 }

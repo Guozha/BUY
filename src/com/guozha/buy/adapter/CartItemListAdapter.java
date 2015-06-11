@@ -232,8 +232,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		int position  = (Integer) view.getTag();
 		CartBaseItem cartBaseItem = mCartItems.get(position);
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken(mContext);
-		if(token == null) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //TODO 先登录
 		int gap = 1;
 		if("01".equals(cartBaseItem.getUnit())){
 			gap = UnitConvertUtil.getPlusAmount(cartBaseItem.getAmount(), 
@@ -274,8 +274,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	private void requestDeleteCartItem(final View view) {
 		int groupId = (Integer)view.getTag();
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken(mContext);
-		if(token == null) return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //TODO 先登录
 		if(mCartItems == null || mCartItems.size() <= groupId) {
 			ToastUtil.showToast(mContext, "删除出错");
 			return;

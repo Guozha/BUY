@@ -160,8 +160,8 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken(mContext) == null){
-			return;
+		if(ConfigManager.getInstance().getUserToken() == null){
+			return;  //TODO 先登录
 		}
 		//TODO 再判断当前选择的地址是否为NULL
 		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1) return;

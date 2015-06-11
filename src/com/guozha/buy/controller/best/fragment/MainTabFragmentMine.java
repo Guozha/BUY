@@ -1,41 +1,34 @@
 package com.guozha.buy.controller.best.fragment;
 
-import java.io.File;
-
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.LoginActivity;
+import com.guozha.buy.controller.SetWarnTimeActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
-import com.guozha.buy.controller.dialog.RemindLoginDialog;
 import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.controller.mine.MyCollectionActivity;
 import com.guozha.buy.controller.mine.MyOrderActivity;
 import com.guozha.buy.controller.mine.MyTicketActivity;
+import com.guozha.buy.controller.mine.SettingActivity;
 import com.guozha.buy.controller.mine.SharePraiseActivity;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.BitmapUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -43,15 +36,18 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	
 	private static final String PAGE_NAME = "MinePage";
 	
+	public static final int REQUEST_CODE_LOGIN = 0;
+	public static final int REQUEST_CODE_SETTING = 1;
+	
 	private static final int HAND_ACCOUNT_INFO_COMPLETED = 0x0001;
 	
 	private ImageView mMineHeadImg;
-	
 	private TextView mMinePhoneNum;
 	private TextView mMineRemainMoney;
 	private TextView mMineTickes;
 	private TextView mMineBeans;
 	
+	private View mHeadArea;
 	private View mAccountInfoArea;
 	
 	private AccountInfo mAccountInfo;
@@ -96,19 +92,26 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		mMineBeans = (TextView) view.findViewById(R.id.mine_msg_bean);
 		
 		mAccountInfoArea = view.findViewById(R.id.mine_top_account_message_area);
-		view.findViewById(R.id.mine_orderform).setOnClickListener(this);
-		view.findViewById(R.id.mine_advice_active).setOnClickListener(this);
-		view.findViewById(R.id.mine_collection).setOnClickListener(this);
-		view.findViewById(R.id.mine_ticket).setOnClickListener(this);
-		view.findViewById(R.id.mine_address).setOnClickListener(this);
-		view.findViewById(R.id.mine_buyer).setOnClickListener(this);
-		
+		mHeadArea = view.findViewById(R.id.mine_head_area);
+		view.findViewById(R.id.mine_order_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_warn_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_invitation_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_collection_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_ticket_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_address_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_online_service__button).setOnClickListener(this);
 		mAccountInfoArea.setVisibility(View.GONE);
 	}
 	
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null || userId == -1) {
+			mAccountInfoArea.setVisibility(View.GONE);
+			mHeadArea.setBackgroundResource(R.drawable.background_personal);
+			mMineHeadImg.setImageResource(R.drawable.button_login);
+			return;
+		}
 		mUserModel.requestAccountInfo(getActivity(), token, userId);
 		
 	}
@@ -116,133 +119,68 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private void setInfos(){
 		if(mAccountInfo == null) return;
 		mAccountInfoArea.setVisibility(View.VISIBLE);
+		mHeadArea.setBackgroundColor(getResources().getColor(R.color.color_app_base_24));
+		mMineHeadImg.setImageResource(R.drawable.tag_personal);
+		
 		if(mMinePhoneNum == null) return;
 		mMinePhoneNum.setText(mAccountInfo.getMobileNo());
 		if(mMineTickes == null) return;
-		mMineTickes.setText("菜票 " + mAccountInfo.getTicketAmount() + "张");
+		mMineTickes.setText(String.valueOf(mAccountInfo.getTicketAmount()));
 		if(mMineBeans == null) return;
-		mMineBeans.setText("菜豆 " + mAccountInfo.getBeanAmount() + "个");
+		mMineBeans.setText(String.valueOf(mAccountInfo.getBeanAmount()));
 		if(mMineRemainMoney == null) return;
-		mMineRemainMoney.setText("我的余额 ￥" + UnitConvertUtil.getSwitchedMoney(mAccountInfo.getBalance()));
-		setTextColor();
-	}
-	
-	/**
-	 * 设置文字颜色
-	 */
-	private void setTextColor() {
-		String msgRemainMoney = mMineRemainMoney.getText().toString();
-		SpannableStringBuilder builder = new SpannableStringBuilder(msgRemainMoney);
-		
-		ForegroundColorSpan redSpan = new ForegroundColorSpan(
-				getResources().getColor(R.color.color_app_base_1));
-		int totalSpanSart = msgRemainMoney.indexOf("￥");
-		builder.setSpan(redSpan, 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		builder.setSpan(redSpan, totalSpanSart, msgRemainMoney.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mMineRemainMoney.setText(builder);
-		
-		String msgTickes = mMineTickes.getText().toString();
-		builder.clear();
-		builder.append(msgTickes);
-		builder.setSpan(redSpan, msgTickes.indexOf(" "), msgTickes.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mMineTickes.setText(builder);
-		
-		String msgBeans = mMineBeans.getText().toString();
-		builder.clear();
-		builder.append(msgBeans);
-		builder.setSpan(redSpan, msgBeans.indexOf(" "), msgBeans.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		mMineBeans.setText(builder);
+		mMineRemainMoney.setText(String.valueOf(UnitConvertUtil.getSwitchedMoney(mAccountInfo.getBalance())));
 	}
 
 	@Override
 	public void onClick(View view) {
+		Intent intent;
 		//如果没有登录
-		if(ConfigManager.getInstance().getUserToken(getActivity()) == null){
+		if(ConfigManager.getInstance().getUserToken() == null){
+			intent = new Intent(getActivity(), LoginActivity.class);
+			this.startActivityForResult(intent, REQUEST_CODE_LOGIN);
 			return;
 		}
-		loginedStatuEvent(view);
-	}
-
-	/**
-	 * 登录状态的事件处理
-	 * @param view
-	 */
-	private void loginedStatuEvent(View view) {
-		Intent intent;
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
 			//showChooseImageMethodDialog();
 			break;
-		case R.id.mine_orderform: 	//我的订单
+		case R.id.mine_order_button: 	//我的订单
 			intent = new Intent(getActivity(), MyOrderActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.mine_advice_active: //推荐有奖
+		case R.id.mine_warn_button:
+			intent = new Intent(getActivity(), SetWarnTimeActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.mine_invitation_button: //推荐有奖
 			intent = new Intent(getActivity(), SharePraiseActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.mine_collection: 	//我的收藏
+		case R.id.mine_collection_button: 	//我的收藏
 			intent = new Intent(getActivity(), MyCollectionActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.mine_ticket: 		//我的菜票
+		case R.id.mine_ticket_button: 		//我的菜票
 			intent = new Intent(getActivity(), MyTicketActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.mine_address:		//我的地址
+		case R.id.mine_address_button:		//我的地址
 			intent = new Intent(getActivity(), MyAddressActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.mine_buyer:		//我的卖家
-			//intent = new Intent(getActivity(), MySellerActivity.class);
-			//startActivity(intent);
-			break;	
+		case R.id.mine_online_service__button:
+			dialServerTelephone();
+			break;
 		default:
 			break;
 		}
-	}
-
-	/**
-	 * 没有登录状态的事件处理
-	 * @param view
-	 */
-	private void outLoginStatuEvent(View view) {
-		Intent intent;
-		if(view.getId() == R.id.mine_head_img){
-			intent = new Intent(getActivity(), LoginActivity.class);
-			startActivity(intent);
-			return;
-		}
-		String turnActivityName = null;
-		switch (view.getId()) {
-		case R.id.mine_orderform: 	//我的订单
-			turnActivityName = "com.guozha.buy.activity.mine.MyOrderActivity";
-			break;
-		case R.id.mine_advice_active: //推荐有奖
-			turnActivityName = "com.guozha.buy.activity.mine.AdvicePraiseActivity";
-			break;
-		case R.id.mine_collection: 	//我的收藏
-			turnActivityName = "com.guozha.buy.activity.mine.MyCollectionActivity";
-			break;
-		case R.id.mine_ticket: 		//我的菜票
-			turnActivityName = "com.guozha.buy.activity.mine.MyTicketActivity";
-			break;
-		case R.id.mine_address:		//我的地址
-			turnActivityName = "com.guozha.buy.activity.mine.MyAddressActivity";
-			break;
-		case R.id.mine_buyer:		//我的卖家
-			turnActivityName = "com.guozha.buy.activity.mine.MySellerActivity";
-			break;	
-		}
-		if(turnActivityName == null) return;
-		intent = new Intent(getActivity(), RemindLoginDialog.class);
-		startActivity(intent);
-		return;
 	}
 	
 	/**
 	 * 显示选择图片方式对话框
 	 */
+	/*
 	private void showChooseImageMethodDialog(){
 		final CustomDialog setHeadDialog = new CustomDialog(getActivity(), R.layout.dialog_set_head);
 		Button albumButton = (Button) setHeadDialog.getViewById(R.id.album_button);
@@ -269,11 +207,24 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			}
 		});
 	}
+	*/
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		LogUtil.e("onActivityResult..");
+		initData(); 
+		/*
 		switch (requestCode) {
+		case 0: //请求登录
+			if(resultCode == LoginActivity.RESULT_CODE_LOGIN){
+				if(data != null && data.getBooleanExtra(LoginActivity.LOGIN_STATUS, false)){
+					
+				}
+			}
+			break;
+	
+		
 		case 1: //从相册获取
 			if(data == null) return;
 			startPhotoZoom(data.getData());
@@ -287,9 +238,11 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 				setPicToView(data);
 			}
 			break;
+			
 		default:
 			break;
 		}
+		*/
 	}
 	
 	/**
@@ -324,6 +277,24 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		}
 	}
 	
+	/**
+	 * 拨打客服电话
+	 */
+	private void dialServerTelephone() {
+		final CustomDialog dialDialog = 
+			new CustomDialog(getActivity(), R.layout.dialog_dial_telephone);
+		dialDialog.setDismissButtonId(R.id.cancel_button);
+		dialDialog.getViewById(R.id.dial_tel_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dialDialog.dismiss();
+				String phoneNum = "0571-86021150";
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
+				MainTabFragmentMine.this.startActivity(intent);
+			}
+		});
+	}
+	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -338,23 +309,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			MobclickAgent.onPageEnd(PAGE_NAME);
 		}
 	}
-	
-	/**
-	 * 初始化ActionBar
-	 * @param actionbar
-	 */
-	private void initActionBar(ActionBar actionbar) {
-		if(actionbar == null) return;
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(false);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(true);
-		actionbar.setCustomView(R.layout.actionbar_base_view);
-		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
-		title.setText("我的");
-	}
-	
+
 	class MyUserModelResult extends UserModelResult{
 		@Override
 		public void requestAccountInfoResult(AccountInfo accountInfo) {

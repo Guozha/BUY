@@ -40,4 +40,20 @@
 	<color name="color_app_base_10">#f0f5f5</color>
 	<color name="color_app_base_11">#89cccc</color>
 	<color name="color_app_base_12">#44000000</color>
+	
+	<color name="color_app_base_21">#df3411</color>
+	<color name="color_app_base_22">#878787</color>
+	<color name="color_app_base_23">#f7f7f7</color>
+	<color name="color_app_base_24">#ffffff</color>
+	<color name="color_app_base_25">#383838</color>
+	<color name="color_app_base_26">#787878</color>
+	<color name="color_app_base_27">#e6e6e6</color>
+	<color name="color_app_base_28">#e0e0e0</color>
+	<color name="color_app_base_29">#5cb531</color>
+	<color name="color_app_base_30">#ba9590</color>
+	<color name="color_app_base_31">#e6e6e6</color>
+	<color name="color_app_base_32">#991a00</color>
+	<color name="color_app_base_33">#4b000000</color>
+	<color name="color_app_base_34">#32000000</color>
+	<color name="color_app_base_35">#1a000000</color>
 </resources>

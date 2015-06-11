@@ -77,4 +77,19 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">right</item>
     </style>
+    
+    <!-- 我的界面列表 -->
+    <style name="mine_menu_list_area">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:background">@drawable/nomal_list_item_bg</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="mine_menu_list_text">
+        <item name="android:textSize">@dimen/dimen_global_14sp</item>
+        <item name="android:textColor">@color/color_app_base_26</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">8dip</item>
+    </style>
 </resources>

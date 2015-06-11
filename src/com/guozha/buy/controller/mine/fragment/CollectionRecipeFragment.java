@@ -156,8 +156,8 @@ public class CollectionRecipeFragment extends BaseFragment{
 	 * @param dirId
 	 */
 	private void requestDeleteCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken(getActivity());
-		if(token == null)return;
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null)return; //先登录
 		mCollectionModel.requestDeleCollectDir(getActivity(), token, dirId);
 	}
 	

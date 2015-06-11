@@ -8,7 +8,7 @@
     <dimen name="app_base_text_size">18sp</dimen>
     <dimen name="actionbar_title_size">18sp</dimen>
 
-    
+    <dimen name="dimen_global_10sp">10sp</dimen>
     <dimen name="dimen_global_12sp">12sp</dimen>
     <dimen name="dimen_global_14sp">14sp</dimen>
     <dimen name="dimen_global_16sp">16sp</dimen>

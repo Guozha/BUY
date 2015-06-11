@@ -9,9 +9,14 @@
 	    android:id="@+id/my_address_list"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:divider="@color/color_app_base_7"
-	    android:background="@color/color_app_base_6"
-	    android:dividerHeight="1dip"/>
+	    android:divider="@color/color_app_base_27"
+	    android:background="@color/color_app_base_24"
+	    android:dividerHeight="1px"/>
+	<View 
+	    android:layout_below="@id/my_address_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	
 	<Button 
 	    android:id="@+id/myaddress_add_button"
@@ -19,10 +24,16 @@
 	    android:layout_height="48dip"
 	    android:text="添加新地址"
 	    android:textSize="@dimen/dimen_global_16sp"
-	    android:textColor="@color/color_app_base_2"
-	    android:layout_marginTop="8dip"
+	    android:textColor="@color/color_app_base_21"
 	    android:layout_alignParentBottom="true"
 	    android:background="@color/color_app_base_5"/>
+	
+	<View 
+	    android:layout_above="@id/myaddress_add_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:layout_marginTop="8dip"
+	    android:background="@color/color_app_base_27"/>
 	
 	<LinearLayout 
 	    android:id="@+id/empty_view"

@@ -242,7 +242,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="18dip"
-            android:src="@drawable/main_right_arrow"/>
+            android:src="@drawable/button_next"/>
     </RelativeLayout>
     
     <!-- 还需支付 -->

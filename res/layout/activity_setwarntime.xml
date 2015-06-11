@@ -22,9 +22,9 @@
 	        <TextView 
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="今天在家吃吗？到点买菜了"
+		        android:text="到点买菜了哟！！"
 		        android:textSize="@dimen/dimen_global_16sp"
-		        android:textColor="@color/color_app_base_4"/>
+		        android:textColor="@color/color_app_base_26"/>
 	    
 		    <TextView 
 		        android:id="@+id/setting_warn_time"
@@ -32,8 +32,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="10dip"
 		        android:textSize="@dimen/dimen_global_30sp"
-		        android:textColor="@color/color_app_base_4"
-		        android:text="16:00"/>
+		        android:textColor="@color/color_app_base_26"/>
 	    </LinearLayout>
 
 	    
