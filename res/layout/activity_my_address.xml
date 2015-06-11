@@ -26,7 +26,7 @@
 	    android:textSize="@dimen/dimen_global_16sp"
 	    android:textColor="@color/color_app_base_21"
 	    android:layout_alignParentBottom="true"
-	    android:background="@color/color_app_base_5"/>
+	    android:background="@drawable/nomal_list_item_bg"/>
 	
 	<View 
 	    android:layout_above="@id/myaddress_add_button"

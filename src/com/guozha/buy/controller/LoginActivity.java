@@ -236,6 +236,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				return;
 			}
 			mUserModel.obtainPhoneValidate(LoginActivity.this, phoneNum);
+			mEditValidNum.requestFocus();
 			break;
 		case R.id.login_licence:
 			Intent intent = new Intent(LoginActivity.this, LicenceActivity.class);
