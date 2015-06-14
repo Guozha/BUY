@@ -27,7 +27,9 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
+import com.guozha.buy.model.SystemModel;
 import com.guozha.buy.model.result.OrderModelResult;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -66,7 +68,8 @@ public class PlanceOrderActivity extends BaseActivity{
 	private View mQuickTimeChoose;
 	private String mTodayEarliestTime = null;  //当天最早的时间
 	
-	private OrderModel mOrderModel;
+	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -101,13 +104,11 @@ public class PlanceOrderActivity extends BaseActivity{
 				mServicePrice = bundle.getInt("serverPrice");
 			}
 		}
-		mOrderModel = new OrderModel(new MyOrderModelResult());
 		initView();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
-		
-		//MainPageInitDataManager.getInstance().getTodayInfo();
+		mSystemModel.requestSystemTime(this);
 	}
 	
 	/**
@@ -355,6 +356,13 @@ public class PlanceOrderActivity extends BaseActivity{
 			}else{
 				ToastUtil.showToast(PlanceOrderActivity.this, msg);
 			}
+		}
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestSystemTime(long systemTime) {
+			ConfigManager.getInstance().setTodayDate(systemTime);
 		}
 	}
 }
