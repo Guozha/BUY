@@ -103,8 +103,9 @@ public class PlanceOrderActivity extends BaseActivity{
 		initView();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mOrderModel.requestOrderTimes(this, addressId);
-		//重新获取一下服务器时间
-		MainPageInitDataManager.getInstance().getTodayInfo();
+		//TODO 重新获取一下服务器时间
+		
+		//MainPageInitDataManager.getInstance().getTodayInfo();
 	}
 	
 	/**

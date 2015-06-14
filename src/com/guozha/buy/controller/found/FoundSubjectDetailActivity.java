@@ -1,5 +1,8 @@
 package com.guozha.buy.controller.found;
 
+import java.util.List;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -9,6 +12,10 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.FoundSubjectDetailListAdapter;
 import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.entry.found.FoundSubjectPage;
+import com.guozha.buy.entry.found.SubjectDetail;
+import com.guozha.buy.model.FoundModel;
+import com.guozha.buy.model.result.FoundModelResult;
 import com.guozha.buy.util.DimenUtil;
 
 /**
@@ -23,14 +30,27 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 	private TextView mHeadDescript; //头部描述
 	private ListView mDetailList;
 	
+	private int mSubjectId;
+	private String mSubjectName;
+	private String mSubjectDescript;
+	
+	private FoundModel mFoundModel = new FoundModel(new FoundModelResult());
+	
 	private FoundSubjectDetailListAdapter mSubjectDetailAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_found_subject_detail);
-		
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		if(bundle != null){
+			mSubjectId = bundle.getInt("subjectId");
+			mSubjectName = bundle.getString("subjectName");
+			mSubjectDescript = bundle.getString("subjectDescript");
+		}
 		initView();
+		initData();
 		
 	}
 	
@@ -49,13 +69,20 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 		mSubjectDetailAdapter = new FoundSubjectDetailListAdapter(this);
 		
 		mHeadImage.setImageResource(R.drawable.temp_subject_item_imag);
-		mHeadTitle.setText("[端午]远归的自己，回家给爸妈做顿饭");
-		mHeadDescript.setText("端午节起源于中国，最初是中国人民祛病防疫的节日，吴越之地春秋之前有在农历五月初五以龙舟竞渡形式举行部落图腾祭祀的习俗；后因诗人屈原在这一天死去，便成了中国汉族人民纪念屈原的传统节日；部分地区也有纪念伍子胥、曹娥等说法。");
+		mHeadTitle.setText(mSubjectName);
+		mHeadDescript.setText(mSubjectDescript);
 		
 		mDetailList.setAdapter(mSubjectDetailAdapter);
-		
-		
 	}
 	
+	private void initData(){
+		mFoundModel.requestFoundSubjectDetail(this, mSubjectId);
+	}
 	
+	class MyFoundModelResult extends FoundModelResult{
+		@Override
+		public void requestFoundSubjectDetailResult(
+				List<SubjectDetail> subjectDetails) {
+		}
+	}
 }

@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.found.MenuItemListActivity;
+import com.guozha.buy.entry.found.MenuFirstType;
+import com.guozha.buy.entry.found.MenuSecondType;
 
 /**
  * 发现-菜谱 适配器
@@ -28,8 +30,10 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 	private LayoutInflater mInflater;
 	private Context mContext;
 	private List<String> tempData;
+	private List<MenuFirstType> mMenuFirstTypes;
 	
-	public FoundMenuListAdapter(Context context){
+	public FoundMenuListAdapter(Context context, List<MenuFirstType> menuFirstType){
+		mMenuFirstTypes = menuFirstType;
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		tempData = new ArrayList<String>();
@@ -47,20 +51,18 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 10;
+		if(mMenuFirstTypes == null) return 0;
+		return mMenuFirstTypes.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mMenuFirstTypes.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -76,7 +78,8 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.title.setText("-当季热门-");
+		MenuFirstType menuFirstType = mMenuFirstTypes.get(position);
+		holder.title.setText(menuFirstType.getMenuTypeName());
 		holder.gridTags.setAdapter(new ArrayAdapter<String>(
 				mContext, R.layout.list_found_menu_item_grid_item, tempData));
 		return convertView;

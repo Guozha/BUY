@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.controller.CustomApplication;
+import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
 
@@ -32,7 +33,7 @@ public class HttpManager {
 	 * 服务器路径
 	 */
 	//正式服
-	public static String URL = "http://120.24.211.45:8080/BUY_SERVER/";
+	public static String URL = DebugActivity.TEST_URL;
 	//public static String IMG_URL = URL;
 	
 	private RequestQueue mQueue;	//请求队列

@@ -1,17 +1,24 @@
 package com.guozha.buy.adapter;
 
+import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.mpage.BestMenuItem;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 主界面列表适配器
@@ -22,34 +29,34 @@ public class MPageListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private int mScreenWidth;
-	
-	public MPageListAdapter(Context context){
+	private Resources mResources;
+	private List<BestMenuItem> mMenuItems;
+	private BitmapCache mBitmapCache;
+	public MPageListAdapter(Context context, List<BestMenuItem> menuItems, BitmapCache bitmapCache){
+		mMenuItems = menuItems;
 		mInflater = LayoutInflater.from(context);
 		//TODO 获取屏幕宽度可以放到ConfigManager中
 		mScreenWidth = DimenUtil.getScreenWidth(context);
+		mResources = context.getResources();
+		mBitmapCache = bitmapCache;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 50;
+		if(mMenuItems == null) return 0;
+		return mMenuItems.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mMenuItems.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
-	Random random = new Random();
-	int [] imags = new int[]{R.drawable.temp_mpage_img1, R.drawable.temp_mpage_img2, R.drawable.temp_mpage_img3};
-	int [] tags = new int[]{R.drawable.temp_mpage_tag1, R.drawable.temp_mpage_tag2, R.drawable.temp_mpage_tag3};
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -59,6 +66,9 @@ public class MPageListAdapter extends BaseAdapter{
 			holder.leftImage= (ImageView) convertView.findViewById(R.id.mpage_item_left);
 			holder.centerView = convertView.findViewById(R.id.mpage_item_center);
 			holder.rightImage = (ImageView) convertView.findViewById(R.id.mpage_item_right);
+			holder.centerIcon = (ImageView) convertView.findViewById(R.id.mpage_item_center_image);
+			holder.centerTitle = (TextView) convertView.findViewById(R.id.mpage_item_center_title);
+			holder.centerDescript = (TextView) convertView.findViewById(R.id.mpage_item_center_descript);
 			LayoutParams params = new LayoutParams(mScreenWidth / 2, mScreenWidth / 2);
 			holder.centerView.setLayoutParams(params);
 			holder.leftImage.setLayoutParams(params);
@@ -80,14 +90,15 @@ public class MPageListAdapter extends BaseAdapter{
 			holder.leftImage.setVisibility(View.GONE);
 		}
 		
-		
-		int rand1 = random.nextInt(3);
-		int rand2 = random.nextInt(3);
-		
-		
-		
-		imageView.setImageResource(imags[rand1]);
-		holder.centerView.setBackgroundResource(tags[rand2]);
+		BestMenuItem menuItem = mMenuItems.get(position);
+		mBitmapCache.loadBitmaps(imageView, menuItem.getMenuImg());
+		holder.centerView.setBackgroundColor(menuItem.getBgColor());
+		holder.centerIcon.setImageResource(R.drawable.icon_drink_color);
+		mBitmapCache.loadBitmaps(holder.centerIcon, menuItem.getPickImg());
+		holder.centerTitle.setText(menuItem.getMenuName());
+		holder.centerTitle.setTextColor(menuItem.getFontColor());
+		holder.centerDescript.setText(menuItem.getPickDesc());
+		holder.centerDescript.setTextColor(menuItem.getFontColor());
 		return convertView;
 	}
 	
@@ -95,6 +106,10 @@ public class MPageListAdapter extends BaseAdapter{
 		private ImageView leftImage;
 		private View centerView;
 		private ImageView rightImage;
+		
+		private ImageView centerIcon;
+		private TextView centerTitle;
+		private TextView centerDescript;
 	}
 
 }

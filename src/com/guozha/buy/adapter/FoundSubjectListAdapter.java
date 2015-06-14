@@ -1,5 +1,7 @@
 package com.guozha.buy.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.found.FoundSubject;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
 
 /**
@@ -24,8 +28,12 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 	private int mScreenWidth;
 	private int mMargin;
 	private int mBgColor;
+	private List<FoundSubject> mSubjectItems;
+	private BitmapCache mBitmapCache;
 	
-	public FoundSubjectListAdapter(Context context){
+	public FoundSubjectListAdapter(Context context, List<FoundSubject> subjectItems, BitmapCache bitmapCache){
+		mSubjectItems = subjectItems;
+		mBitmapCache = bitmapCache;
 		mInflater = LayoutInflater.from(context);
 		mScreenWidth = DimenUtil.getScreenWidth(context);
 		mMargin = DimenUtil.dp2px(context, 3);
@@ -34,20 +42,18 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 10;
+		if(mSubjectItems == null) return 0;
+		return mSubjectItems.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mSubjectItems.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -67,10 +73,12 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.image.setImageResource(R.drawable.temp_subject_item_imag);
+		FoundSubject foundSubject = mSubjectItems.get(position);
+		holder.image.setImageResource(R.drawable.default_icon_large);
+		mBitmapCache.loadBitmaps(holder.image, foundSubject.getSubjectImg());
 		holder.tag.setBackgroundResource(R.drawable.temp_subject_item_tag);
-		holder.tag.setText("活动");
-		holder.title.setText("[端午]远归的自己，回家给爸妈做饭");
+		holder.tag.setText(foundSubject.getSubjectType());
+		holder.title.setText(foundSubject.getSubjectName());
 		return convertView;
 	}
 	
@@ -79,5 +87,4 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 		private TextView tag;
 		private TextView title;
 	}
-
 }

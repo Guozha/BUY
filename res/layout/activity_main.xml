@@ -28,12 +28,12 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:checked_item="true"
-            hyman:nomal_icon="@drawable/tab_bar_home_normal"
-            hyman:check_icon="@drawable/tab_bar_home_current"
+            hyman:nomal_icon="@drawable/tab_bar_icon01_normal"
+            hyman:check_icon="@drawable/tab_bar_icon01_current"
             hyman:text="@string/activity_main_tab1_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_2"
-            hyman:check_color="@color/color_app_base_1"/>
+            hyman:nomal_color="@color/color_app_base_26"
+            hyman:check_color="@color/color_app_base_21"/>
         
         <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_two"
@@ -41,12 +41,12 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:checked_item="false"
-            hyman:nomal_icon="@drawable/tab_bar_market_normal"
-            hyman:check_icon="@drawable/tab_bar_market_current"
+            hyman:nomal_icon="@drawable/tab_bar_icon02_normal"
+            hyman:check_icon="@drawable/tab_bar_icon02_current"
             hyman:text="@string/activity_main_tab2_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_2"
-            hyman:check_color="@color/color_app_base_1"/>
+            hyman:nomal_color="@color/color_app_base_26"
+            hyman:check_color="@color/color_app_base_21"/>
 
         <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_three"
@@ -54,12 +54,12 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:checked_item="false"
-            hyman:nomal_icon="@drawable/tab_bar_market_normal"
-            hyman:check_icon="@drawable/tab_bar_market_current"
+            hyman:nomal_icon="@drawable/tab_bar_icon03_normal"
+            hyman:check_icon="@drawable/tab_bar_icon03_current"
             hyman:text="@string/activity_main_tab3_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_2"
-            hyman:check_color="@color/color_app_base_1"/>
+            hyman:nomal_color="@color/color_app_base_26"
+            hyman:check_color="@color/color_app_base_21"/>
 
         <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_four"
@@ -67,12 +67,12 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:checked_item="false"
-            hyman:nomal_icon="@drawable/tab_bar_basket_normal"
-            hyman:check_icon="@drawable/tab_bar_basket_current"
+            hyman:nomal_icon="@drawable/tab_bar_icon04_normal"
+            hyman:check_icon="@drawable/tab_bar_icon04_current"
             hyman:text="@string/activity_main_tab4_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_2"
-            hyman:check_color="@color/color_app_base_1"/>
+            hyman:nomal_color="@color/color_app_base_26"
+            hyman:check_color="@color/color_app_base_21"/>
 
         <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_five"
@@ -80,11 +80,11 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             hyman:checked_item="false"
-            hyman:nomal_icon="@drawable/tab_bar_personal_normal"
-            hyman:check_icon="@drawable/tab_bar_personal_current"
+            hyman:nomal_icon="@drawable/tab_bar_icon05_normal"
+            hyman:check_icon="@drawable/tab_bar_icon05_current"
             hyman:text="@string/activity_main_tab5_title"
             hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_2"
-            hyman:check_color="@color/color_app_base_1"/>
+            hyman:nomal_color="@color/color_app_base_26"
+            hyman:check_color="@color/color_app_base_21"/>
     </LinearLayout>
 </LinearLayout>

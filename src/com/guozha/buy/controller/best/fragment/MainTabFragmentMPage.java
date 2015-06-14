@@ -1,7 +1,11 @@
 package com.guozha.buy.controller.best.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +20,41 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MPageListAdapter;
+import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.found.MenuDetailActivity;
+import com.guozha.buy.entry.mpage.BestMenuItem;
+import com.guozha.buy.entry.mpage.BestMenuPage;
+import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.model.MenuModel;
+import com.guozha.buy.model.result.MenuModelResult;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
 	
 	private static final String PAGE_NAME = "MainPage";
+	
+	private static final int HAND_BEST_LIST_COMPLETED = 0x0001;
 	private ListView mListView;
 	private MPageListAdapter mMPageListAdpater;
 	
 	private View mBottomLoadingView; 		//底部刷新视图
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
+	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private List<BestMenuItem> mBestMenuItems = new ArrayList<BestMenuItem>();
+	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_BEST_LIST_COMPLETED:
+				if(mMPageListAdpater != null){
+					mMPageListAdpater.notifyDataSetChanged();
+				}
+				break;
+			}
+		};
+	};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -35,6 +62,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 		View view = inflater.inflate(R.layout.fragment_maintab_mpage, container, false);
 		initActionBar("爱掌勺");
 		initView(view);
+		initData();
 		return view;
 	}
 	
@@ -55,7 +83,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 				mBottomLoadingView.findViewById(R.id.list_paging_bottom_progressbar);
 		mListView.addFooterView(mBottomLoadingView);
 		
-		mMPageListAdpater = new MPageListAdapter(getActivity());
+		mMPageListAdpater = new MPageListAdapter(getActivity(), mBestMenuItems, mBitmapCache);
 		mListView.setAdapter(mMPageListAdpater);
 		
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -66,6 +94,10 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 				startActivity(intent);
 			}
 		});
+	}
+	
+	private void initData(){
+		mMenuModel.requestBestMenuList(getActivity(), 1, 4);
 	}
 	
 	@Override
@@ -122,4 +154,21 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 		
 	}
 	//////////////////////////--分页加载END--/////////////////////////////
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
+	}
+	class MyMenuModelResult extends MenuModelResult{
+		@Override
+		public void requestBestMenuPageResult(BestMenuPage bestMenuPage) {
+			if(bestMenuPage == null) return;
+			List<BestMenuItem> bestMenuItem = bestMenuPage.getMenuPickList();
+			if(bestMenuItem == null) return;
+			
+			mBestMenuItems.addAll(bestMenuItem);
+			mHandler.sendEmptyMessage(HAND_BEST_LIST_COMPLETED);
+		}
+	}
 }

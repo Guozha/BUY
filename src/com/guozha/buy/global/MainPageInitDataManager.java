@@ -13,7 +13,6 @@ import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.address.AddressInfo;
-import com.guozha.buy.entry.mpage.TodayInfo;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.SystemModel;
@@ -36,7 +35,6 @@ public class MainPageInitDataManager {
 	private MarketHomePage mMarketHomePage;
 	private List<AddressInfo> mAddressInfos;
 	private CartTotalData mCartTotalData;
-	private TodayInfo mTodayInfo = null;
 	private long mSystemTime;
 	
 	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
@@ -113,16 +111,6 @@ public class MainPageInitDataManager {
 	 */
 	public MarketHomePage getMarketHomePage(int pageNum, int pageSize){
 		return mMarketHomePage;
-	}
-	
-	/**
-	 * 获取今日信息
-	 * 
-	 * @param handler
-	 * @return
-	 */
-	public TodayInfo getTodayInfo() {
-		return mTodayInfo;
 	}
 	
 	/**
