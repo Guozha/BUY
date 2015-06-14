@@ -2,6 +2,7 @@ package com.guozha.buy.controller.cart;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -27,6 +28,7 @@ import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
+import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -259,8 +261,10 @@ public class PlanceOrderActivity extends BaseActivity{
 		if("明天".equals(pointTime.getDayname())){
 			calendar.add(Calendar.DATE, 1);
 		}
-		String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
-
+		long timeInMillis = calendar.getTimeInMillis();
+		//String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
+		Date date = new Date(timeInMillis);
+		String timeStr = DimenUtil.getStringDate(date);
 		mOrderModel.requestSubmitOrder(this, token, userId, addressId, 
 				timeStr + "$" + pointTime.getFromTime(), 
 				timeStr + "$" + pointTime.getToTime(), 
