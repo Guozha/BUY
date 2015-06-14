@@ -111,7 +111,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		initData();
 		//重新获取一下服务器时间
 		MainPageInitDataManager.getInstance(
-				CustomApplication.getContext()).getTodayInfo(null);
+				CustomApplication.getContext()).getSystemTime(null);
 	}
 	
 	/**
