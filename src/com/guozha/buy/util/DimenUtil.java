@@ -67,4 +67,9 @@ public class DimenUtil {
 		return df.format(time);
 	}
 	
+	public static String getStringDate(Date time){
+		if(time == null) return null;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(time);
+	}
 }

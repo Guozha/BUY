@@ -445,13 +445,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * @param view
 	 */
 	private void clickQuickMneuEvent(View view) {
+		if(view == null) return;
 		String tag = String.valueOf(view.getTag());
 		Intent intent;
 		if("-1".equals(tag)){
 			intent = new Intent(MainTabFragmentMarket.this.getActivity(), ChooseMenuActivity.class);
 			startActivity(intent);
 		}else{
-			if(view == null) return;
 			String[] itemType = tag.split(":");
 			intent = new Intent(getActivity(), ListVegetableActivity.class);
 			//将商品类别传给列表
@@ -557,7 +557,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			loadNewDataAndUpdate();
 		}
-		
 	}
 	
 	@Override

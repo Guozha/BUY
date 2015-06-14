@@ -84,7 +84,6 @@ public class PreSpecialActivity extends BaseActivity implements OnScrollListener
 				addFormatData(preSpecialPage);
 			}
 		});
-		
 	}
 	
 	private void addFormatData(PreSpecialPage preSpecialPage){

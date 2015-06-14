@@ -2,6 +2,7 @@ package com.guozha.buy.activity.cart;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -34,6 +35,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -262,7 +265,12 @@ public class PlanceOrderActivity extends BaseActivity{
 		if("明天".equals(pointTime.getDayname())){
 			calendar.add(Calendar.DATE, 1);
 		}
-		String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
+		long timeMillis = calendar.getTimeInMillis();
+		Date date = new Date(timeMillis);
+		String timeStr = DimenUtil.getStringDate(date);
+		if(timeStr == null) return;
+		//String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
+		
 		RequestParam paramPath = new RequestParam("order/insert")
 		.setParams("token", token)
 		.setParams("userId", userId)
@@ -271,6 +279,7 @@ public class PlanceOrderActivity extends BaseActivity{
 		.setParams("wantDownTime", timeStr + "$" + pointTime.getToTime())
 		.setParams("memo", mLeaveMessage.getText().toString());
 		
+		LogUtil.e("timeStr == " + timeStr);
 		HttpManager.getInstance(PlanceOrderActivity.this).volleyJsonRequestByPost(
 				HttpManager.URL + paramPath, new Listener<JSONObject>() {
 			@Override

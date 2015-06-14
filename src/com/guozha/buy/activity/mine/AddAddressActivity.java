@@ -248,7 +248,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 							String returnCode = response.getString("returnCode");
 							if("1".equals(returnCode)){
 								String buildingFlag = response.getString("buildingFlag");
-								
 								if(mAddressInfo != null){
 									//请求删除旧的（这个相当于修改）
 									//handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
@@ -261,7 +260,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 										handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 									}
 								}
-								
 							}else{
 								ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
 							}
