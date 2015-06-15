@@ -57,10 +57,9 @@ public class MenuModel extends BaseModel{
 	 * @param pageNum
 	 * @param pageSize
 	 */
-	public void requestBestMenuList(final Context context, int pageNum, int pageSize){
+	public void requestBestMenuList(final Context context, int pageNum){
 		RequestParam paramPath = new RequestParam("/v31/pick/list")
-		.setParams("pageNum", pageNum)
-		.setParams("pageSize", pageSize);
+		.setParams("pageNum", pageNum);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			HttpManager.URL + paramPath, new Listener<String>() {
 				@Override

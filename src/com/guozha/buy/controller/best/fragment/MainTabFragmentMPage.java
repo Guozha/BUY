@@ -27,6 +27,7 @@ import com.guozha.buy.entry.mpage.BestMenuPage;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
@@ -85,7 +86,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 		
 		mMPageListAdpater = new MPageListAdapter(getActivity(), mBestMenuItems, mBitmapCache);
 		mListView.setAdapter(mMPageListAdpater);
-		
+		mListView.setOnScrollListener(this);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -97,7 +98,16 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	}
 	
 	private void initData(){
-		mMenuModel.requestBestMenuList(getActivity(), 1, 4);
+		mMaxPageSize = 0;     //总的页数
+		mMaxDateNum = 0;		//最大数据数
+		mCurrentPage = 0;
+		mLastVisibleIndex = 0;  //可见的最后一条数据
+		mBestMenuItems.clear();
+		requestBestMenuList();
+	}
+	
+	private void requestBestMenuList(){
+		mMenuModel.requestBestMenuList(getActivity(), mCurrentPage + 1);
 	}
 	
 	@Override
@@ -117,7 +127,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	}
 	
 	//////////////////////////--分页加载相关--/////////////////////////////
-	private int mLastVisibaleIndex; //可见的最大索引
+	private int mLastVisibleIndex; //可见的最大索引
 	private int mMaxDateNum;		//最大条数
 	private int mMaxPageSize;		//最大页数
 	private int mCurrentPage;		//当前页
@@ -125,7 +135,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-					&& mLastVisibaleIndex == mMPageListAdpater.getCount() 
+					&& mLastVisibleIndex == mMPageListAdpater.getCount() 
 					&& mCurrentPage < mMaxPageSize){
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			mLoadText.setVisibility(View.GONE);
@@ -137,7 +147,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		//计算最后可见条目的索引
-		mLastVisibaleIndex = firstVisibleItem + visibleItemCount - 1;
+		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
 		
 		//如果现有条目和最大数相等，则移除底部
 		if(totalItemCount == mMaxDateNum + 1){
@@ -151,7 +161,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	 * 加载下一页数据
 	 */
 	private void loadNextPageData(){
-		
+		requestBestMenuList();
 	}
 	//////////////////////////--分页加载END--/////////////////////////////
 	
@@ -166,8 +176,10 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 			if(bestMenuPage == null) return;
 			List<BestMenuItem> bestMenuItem = bestMenuPage.getMenuPickList();
 			if(bestMenuItem == null) return;
-			
 			mBestMenuItems.addAll(bestMenuItem);
+			mCurrentPage++;
+			mMaxPageSize = bestMenuPage.getPageCount();
+			mMaxDateNum = bestMenuPage.getTotalCount();
 			mHandler.sendEmptyMessage(HAND_BEST_LIST_COMPLETED);
 		}
 	}

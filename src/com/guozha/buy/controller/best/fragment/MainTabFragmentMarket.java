@@ -87,7 +87,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private int mTotalPageSize;     //总的页数
 	private int mLastVisibleIndex;  //可见的最后一条数据
 	private int mMaxDateNum;		//最大数据数
-	private static int currentPage = 0;
+	private static int mCurrentPage = 0;
 	private static final int PAGE_SIZE = 4;
 	
 	/**
@@ -232,7 +232,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mTotalPageSize = 0;     //总的页数
 		mLastVisibleIndex = 0;  //可见的最后一条数据
 		mMaxDateNum = 0;		//最大数据数
-		currentPage = 0;
+		mCurrentPage = 0;
 		mMarketHomeItems = new ArrayList<MarketHomeItem>();
 		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
 		mItemList.setAdapter(mMarketItemListAdapter);
@@ -278,7 +278,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private void loadNewDataAndUpdate(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mGoodsModel.requestGoodsList(getActivity(), addressId, currentPage + 1, PAGE_SIZE);
+		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1, PAGE_SIZE);
 	}
 	
 	/**
@@ -348,7 +348,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
 				&& mLastVisibleIndex == mMarketItemListAdapter.getCount()
-				&& currentPage < mTotalPageSize){
+				&& mCurrentPage < mTotalPageSize){
 			mLoadText.setVisibility(View.GONE);
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			loadNewDataAndUpdate();
@@ -379,7 +379,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			if(marketHomePage == null) return;
 			mTotalPageSize = marketHomePage.getPageCount();
 			mMaxDateNum = marketHomePage.getTotalCount();
-			currentPage++;
+			mCurrentPage++;
 			List<MarketHomeItem> marketHomeItems = marketHomePage.getFrontTypeList();
 			if(marketHomeItems == null) return;
 			mMarketHomeItems.addAll(marketHomeItems);

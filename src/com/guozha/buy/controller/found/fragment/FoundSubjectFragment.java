@@ -43,6 +43,14 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 	private ListView mSubjectListView;
 	private FoundSubjectListAdapter mSubjectListAdapter;
 	
+	/**
+	 * 分页相关
+	 */
+	private int mLastVisibleIndex;  //可见的最后一条数据
+	private int mMaxDateNum;		//最大数据数
+	private int mMaxPageSize;		//最大页数
+	private int mCurrentPage;		//当前页
+	
 	private View mBottomLoadingView; 		//底部刷新视图
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
@@ -85,7 +93,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 		
 		mSubjectListAdapter = new FoundSubjectListAdapter(getActivity(), mSubjectItems, mBitmapCache);
 		mSubjectListView.setAdapter(mSubjectListAdapter);
-		
+		mSubjectListView.setOnScrollListener(this);
 		mSubjectListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -101,19 +109,24 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 	}
 	
 	private void initData(){
-		mFoundModel.requestFoundSubjectList(getActivity(), 1);
+		mLastVisibleIndex = 0;  //可见的最后一条数据
+		mMaxDateNum = 0;		//最大数据数
+		mMaxPageSize = 0;
+		mCurrentPage = 0;
+		mSubjectItems.clear();
+		requestFoundSubjectList();
+	}
+	
+	private void requestFoundSubjectList(){
+		mFoundModel.requestFoundSubjectList(getActivity(), mCurrentPage + 1);
 	}
 	
 	//////////////////////////--分页加载相关--/////////////////////////////
-	private int mLastVisibaleIndex; //可见的最大索引
-	private int mMaxDateNum;		//最大条数
-	private int mMaxPageSize;		//最大页数
-	private int mCurrentPage;		//当前页
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-					&& mLastVisibaleIndex == mSubjectListAdapter.getCount() 
+					&& mLastVisibleIndex == mSubjectListAdapter.getCount() 
 					&& mCurrentPage < mMaxPageSize){
 			mLoadProgressBar.setVisibility(View.VISIBLE);
 			mLoadText.setVisibility(View.GONE);
@@ -125,7 +138,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		//计算最后可见条目的索引
-		mLastVisibaleIndex = firstVisibleItem + visibleItemCount - 1;
+		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
 		
 		//如果现有条目和最大数相等，则移除底部
 		if(totalItemCount == mMaxDateNum + 1){
@@ -139,7 +152,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 	 * 加载下一页数据
 	 */
 	private void loadNextPageData(){
-		
+		requestFoundSubjectList();
 	}
 	//////////////////////////--分页加载END--/////////////////////////////
 	
@@ -151,7 +164,11 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 			List<FoundSubject> foundSubjects = foundSubjectPage.getSubjectList();
 			if(foundSubjects == null) return;
 			mSubjectItems.addAll(foundSubjects);
-			LogUtil.e("mSubjectItemSize == " + mSubjectItems.size());
+			mCurrentPage++;
+			mMaxPageSize = foundSubjectPage.getPageCount();
+			mMaxDateNum = foundSubjectPage.getTotalCount();
+			LogUtil.e("maxDateNum == " + mMaxDateNum);
+			LogUtil.e("maxPageSize == " + mMaxPageSize);
 			mHander.sendEmptyMessage(HAND_SUBJECT_COMPLETED);
 		}
 	}
