@@ -53,7 +53,7 @@ public class FoundMenuFragment extends BaseFragment{
 	
 	private void initView(View view){
 		mFoundMenuList = (ListView) view.findViewById(R.id.found_menu_list);
-		mFoundMenuListAdapter = new FoundMenuListAdapter(getActivity(), mMenuFirstTyeps);
+		mFoundMenuListAdapter = new FoundMenuListAdapter(getActivity(), mMenuFirstTypes);
 		mFoundMenuList.setAdapter(mFoundMenuListAdapter);
 	}
 	
