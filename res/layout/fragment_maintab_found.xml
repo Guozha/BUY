@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/color_app_base_6"
+    android:background="@color/color_app_base_23"
     android:orientation="vertical">
     <LinearLayout 
         android:layout_width="match_parent"
@@ -19,8 +19,15 @@
 	            android:layout_height="40dip"
 	            android:gravity="center"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:textColor="@color/color_app_base_1"
+	            android:textColor="@color/color_app_base_22"
 	            android:text="专题"/>
+	        
+	        <ImageView 
+	            android:layout_width="1dip"
+	            android:layout_height="match_parent"
+	            android:src="@drawable/tabbar_gap_line"
+	            android:scaleType="centerInside"/>
+	        
 	        <TextView 
 	             android:id="@+id/found_frag2_tab"
 	            android:layout_width="0dip"
@@ -28,7 +35,7 @@
 	            android:layout_height="40dip"
 	            android:gravity="center"
 	            android:textSize="@dimen/dimen_global_16sp"
-	            android:textColor="@color/color_app_base_1"
+	            android:textColor="@color/color_app_base_22"
 	            android:text="菜谱"/>
 	    </LinearLayout>
 	    <com.guozha.buy.view.ViewPagerTab

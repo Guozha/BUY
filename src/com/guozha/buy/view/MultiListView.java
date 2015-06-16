@@ -10,7 +10,7 @@ import android.widget.ListView;
  *
  */
 public class MultiListView extends ListView{
-
+	
 	public MultiListView(Context context) {
 		super(context);
 	}
@@ -29,5 +29,4 @@ public class MultiListView extends ListView{
                 MeasureSpec.AT_MOST);  
         super.onMeasure(widthMeasureSpec, expandSpec);  
     }  
-
 }

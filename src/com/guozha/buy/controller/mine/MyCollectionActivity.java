@@ -1,5 +1,8 @@
 package com.guozha.buy.controller.mine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
@@ -29,14 +33,12 @@ public class MyCollectionActivity extends FragmentActivity{
 	private ViewPager mViewPager;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPagerTab mViewPagerTab;
-
+	private List<TextView> mTabTexts;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_collection);
 		setActionBar();
-		setUpViewPage();
-		setUpTab();
 		initView();
 	}
 
@@ -58,13 +60,7 @@ public class MyCollectionActivity extends FragmentActivity{
 	
 	private void setUpTab(){
 		mViewPagerTab = (ViewPagerTab) findViewById(R.id.viewpager_tab);
-		mViewPagerTab.setViewPager(mViewPager);
-		ImageView childView = new ImageView(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-		childView.setImageResource(R.drawable.main_favorite_background);
-		childView.setScaleType(ScaleType.FIT_XY);
-		childView.setLayoutParams(params);
-		mViewPagerTab.addView(childView);
+		mViewPagerTab.setViewPageAndTabTexts(mViewPager, mTabTexts);
 	}
 	
 	private void setUpViewPage(){
@@ -74,21 +70,11 @@ public class MyCollectionActivity extends FragmentActivity{
 	}
 	
 	private void initView(){
-		findViewById(R.id.my_collection_frag1_tab).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mViewPager.getCurrentItem() == 0) return;
-				mViewPager.setCurrentItem(0);
-			}
-		});
-		
-		findViewById(R.id.my_collection_frag2_tab).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mViewPager.getCurrentItem() == 1) return;
-				mViewPager.setCurrentItem(1);
-			}
-		});
+		setUpViewPage();
+		mTabTexts = new ArrayList<TextView>();
+		mTabTexts.add((TextView) findViewById(R.id.my_collection_frag1_tab));
+		mTabTexts.add((TextView) findViewById(R.id.my_collection_frag2_tab));
+		setUpTab();
 	}
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{

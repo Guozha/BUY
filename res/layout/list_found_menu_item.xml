@@ -10,7 +10,7 @@
 	    android:layout_height="wrap_content"
 	    android:padding="10dip"
 	    android:textSize="@dimen/dimen_global_14sp"
-	    android:textColor="@color/color_app_base_1"/>
+	    android:textColor="@color/color_app_base_30"/>
 	
 	<com.guozha.buy.view.MultiGridView 
 	    android:id="@+id/found_menu_item_tag_grid"

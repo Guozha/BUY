@@ -66,7 +66,7 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 		}
 		holder.gridTags.setTag(position);
 		MenuFirstType menuFirstType = mMenuFirstTypes.get(position);
-		holder.title.setText(menuFirstType.getMenuTypeName());
+		holder.title.setText("-" + menuFirstType.getMenuTypeName() + "-");
 		holder.gridTags.setAdapter(new FoundMenuSecondListAdapter(
 				mContext, menuFirstType.getMenuTypeList()));
 		return convertView;

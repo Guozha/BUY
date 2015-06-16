@@ -1,5 +1,8 @@
 package com.guozha.buy.controller.found;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
@@ -26,7 +30,7 @@ public class MenuDetailActivity extends FragmentActivity{
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
-
+	private List<TextView> mTabTexts;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,8 +41,11 @@ public class MenuDetailActivity extends FragmentActivity{
 	
 	private void initView(){
 		setUpViewPage();
+		mTabTexts = new ArrayList<TextView>();
+		mTabTexts.add((TextView) findViewById(R.id.menu_detail_frag1_tab));
+		mTabTexts.add((TextView) findViewById(R.id.menu_detail_frag2_tab));
+		mTabTexts.add((TextView) findViewById(R.id.menu_detail_frag3_tab));
 		setUpTab();
-		
 	}
 	
 	private void setUpViewPage(){
@@ -49,13 +56,7 @@ public class MenuDetailActivity extends FragmentActivity{
 	
 	private void setUpTab(){
 		mViewPagerTab = (ViewPagerTab) findViewById(R.id.viewpager_tab);
-		mViewPagerTab.setViewPager(mViewPager);
-		ImageView childView = new ImageView(this);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-		childView.setImageResource(R.drawable.main_favorite_background);
-		childView.setScaleType(ScaleType.FIT_XY);
-		childView.setLayoutParams(params);
-		mViewPagerTab.addView(childView);
+		mViewPagerTab.setViewPageAndTabTexts(mViewPager, mTabTexts);
 	}
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{

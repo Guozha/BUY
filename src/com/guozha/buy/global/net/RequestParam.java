@@ -81,10 +81,12 @@ public class RequestParam {
 		mParamsPath =  URL + mUri + HttpUtil.generatedAddress(mParams);
 		String resultPath = "";
 		try {
-			resultPath = new String(mParamsPath.getBytes("UTF-8"), "ISO-8859-1");
+			//ISO-8859-1
+			resultPath = new String(mParamsPath.getBytes(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return resultPath;
+		//return resultPath;
+		return mParamsPath;
 	}
 }

@@ -1,5 +1,8 @@
 package com.guozha.buy.controller.best.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,9 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.found.fragment.FoundMenuFragment;
@@ -28,6 +29,7 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
+	private List<TextView> mTabTexts;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -40,23 +42,10 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	
 	private void initView(View view){
 		setUpViewPage(view);
+		mTabTexts = new ArrayList<TextView>();
+		mTabTexts.add((TextView) view.findViewById(R.id.found_frag1_tab));
+		mTabTexts.add((TextView) view.findViewById(R.id.found_frag2_tab));
 		setUpTab(view);
-		
-		view.findViewById(R.id.found_frag1_tab).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mViewPager.getCurrentItem() == 0) return;
-				mViewPager.setCurrentItem(0);
-			}
-		});
-		
-		view.findViewById(R.id.found_frag2_tab).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mViewPager.getCurrentItem() == 1) return;
-				mViewPager.setCurrentItem(1);
-			}
-		});
 	}
 	
 	private void setUpViewPage(View view){
@@ -67,13 +56,7 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	
 	private void setUpTab(View view){
 		mViewPagerTab = (ViewPagerTab) view.findViewById(R.id.viewpager_tab);
-		mViewPagerTab.setViewPager(mViewPager);
-		ImageView childView = new ImageView(getActivity());
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-		childView.setImageResource(R.drawable.main_favorite_background);
-		childView.setScaleType(ScaleType.FIT_XY);
-		childView.setLayoutParams(params);
-		mViewPagerTab.addView(childView);
+		mViewPagerTab.setViewPageAndTabTexts(mViewPager, mTabTexts);
 	}
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{
