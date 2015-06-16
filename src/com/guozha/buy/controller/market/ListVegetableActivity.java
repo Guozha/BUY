@@ -38,7 +38,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private int mMaxDateNum; //最大数据数
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private ListView mListView;
 	private View mBottomLoadingView;  //底部刷新视图

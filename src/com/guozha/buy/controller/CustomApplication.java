@@ -14,7 +14,6 @@ import com.guozha.buy.global.net.BitmapCache;
 public class CustomApplication extends LitePalApplication{
 	
 	private static CustomApplication instance;
-	private static BitmapCache mBitmapCache;
     
 	@Override
 	public void onCreate() {
@@ -26,22 +25,10 @@ public class CustomApplication extends LitePalApplication{
 	}
 	
 	/**
-	 * 获取图片缓存器
-	 * @return
-	 */
-	public static BitmapCache getBitmapCache(){
-		if(mBitmapCache == null){
-			mBitmapCache = new BitmapCache(getContext());
-		}
-		return mBitmapCache;
-	}
-	
-	/**
 	 * 获取上下文实例
 	 * @return
 	 */
 	public static Context getContext(){
 		return instance.getApplicationContext();
 	}
-	
 }

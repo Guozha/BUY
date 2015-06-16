@@ -45,7 +45,7 @@ public class PayModel {
 		RequestParam paramPath = new RequestParam("payment/listPayWay")
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -66,7 +66,7 @@ public class PayModel {
 		.setParams("balanceDecPrice", balanceDecPrice)
 		.setParams("useBeanAmount", userBeanAmount);
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+				paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -87,7 +87,7 @@ public class PayModel {
 		.setParams("token", token);
 
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  

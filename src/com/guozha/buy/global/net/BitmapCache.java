@@ -25,6 +25,7 @@ import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.util.HttpUtil;
 
 /**
@@ -34,6 +35,7 @@ import com.guozha.buy.util.HttpUtil;
  */
 public class BitmapCache implements ImageCache{
 	
+	private static BitmapCache mBitmapCache;
 	/**
 	 * 图片硬盘缓存核心类。
 	 */
@@ -48,17 +50,11 @@ public class BitmapCache implements ImageCache{
 	
 	private Context mContext;
 	
-	public BitmapCache(){
-		// 获取应用程序最大可用内存
-		int maxMemory = (int) Runtime.getRuntime().maxMemory();
-		// 使用内存的1/8缓存图片
-		int cacheSize = maxMemory / 10; 
-		mLruCache = new LruCache<String, Bitmap>(cacheSize) {  
-            @Override  
-            protected int sizeOf(String key, Bitmap bitmap) {  
-                return bitmap.getByteCount();
-            }  
-        };  
+	public static BitmapCache getInstance(){
+		if(mBitmapCache == null){
+			mBitmapCache = new BitmapCache(CustomApplication.getContext());
+		}
+		return mBitmapCache;
 	}
 	
 	/**
@@ -74,7 +70,7 @@ public class BitmapCache implements ImageCache{
 		}
 	}
 	
-	public BitmapCache(Context context){
+	private BitmapCache(Context context){
 		mContext = context;
 		// 获取应用程序最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
@@ -151,7 +147,7 @@ public class BitmapCache implements ImageCache{
 	 */
 	public void loadBitmaps(ImageView imageView, String imageUrl) {
 		if(imageUrl == null) return;
-		imageUrl = HttpManager.URL + imageUrl;
+		imageUrl = RequestParam.URL + imageUrl;
 		try {
 			Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
 			if (bitmap == null) {

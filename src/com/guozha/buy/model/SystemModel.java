@@ -73,8 +73,9 @@ public class SystemModel {
 	 * 10.1 请求系统当前时间
 	 */
 	public void requestSystemTime(final Context context) {
+		RequestParam paramPath = new RequestParam("system/date");
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + "system/date", new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -95,7 +96,7 @@ public class SystemModel {
 		.setParams("word", keyWord)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -115,7 +116,7 @@ public class SystemModel {
 		.setParams("userId", userId)
 		.setParams("planNotiTime", valueTime);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -140,7 +141,7 @@ public class SystemModel {
 		.setParams("userId", userId)
 		.setParams("opinion", feadback);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -163,7 +164,7 @@ public class SystemModel {
 		.setParams("userId", userId)
 		.setParams("token", token);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -186,7 +187,7 @@ public class SystemModel {
 		RequestParam paramPath = new RequestParam("account/invite/info")
 		.setParams("userId", userId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {

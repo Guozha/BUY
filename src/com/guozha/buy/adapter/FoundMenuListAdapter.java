@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.found.MenuItemListActivity;
 import com.guozha.buy.entry.found.MenuFirstType;
+import com.guozha.buy.entry.found.MenuSecondType;
 
 /**
  * 发现-菜谱 适配器
@@ -63,6 +64,7 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		holder.gridTags.setTag(position);
 		MenuFirstType menuFirstType = mMenuFirstTypes.get(position);
 		holder.title.setText(menuFirstType.getMenuTypeName());
 		holder.gridTags.setAdapter(new FoundMenuSecondListAdapter(
@@ -78,7 +80,11 @@ public class FoundMenuListAdapter extends BaseAdapter implements OnItemClickList
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		int firstPosition = (Integer) parent.getTag();
+		MenuSecondType menuSecondType = mMenuFirstTypes.get(firstPosition).getMenuTypeList().get(position);
 		Intent intent = new Intent(mContext, MenuItemListActivity.class);
+		intent.putExtra("menuTypeId", menuSecondType.getMenuTypeId());
+		intent.putExtra("menuTypeName", menuSecondType.getMenuTypeName());
 		mContext.startActivity(intent);
 	}
 

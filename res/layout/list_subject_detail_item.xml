@@ -21,23 +21,10 @@
 	    android:textSize="@dimen/dimen_global_14sp"
 	    android:textColor="@color/color_app_base_9"/>
 	
-	<ImageView 
-	    android:id="@+id/subject_detail_item_pic1"
+	<com.guozha.buy.view.MultiListView
+	    android:id="@+id/subject_detail_item_list"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:scaleType="centerCrop"/>
-	
-	<ImageView 
-	    android:id="@+id/subject_detail_item_pic2"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:scaleType="centerCrop"/>
-		
-	<ImageView 
-	    android:id="@+id/subject_detail_item_pic3"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:scaleType="centerCrop"/>
+	    android:layout_height="wrap_content"/>
 	
 	<LinearLayout 
 	    android:layout_width="match_parent"

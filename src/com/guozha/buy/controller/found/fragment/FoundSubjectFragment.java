@@ -54,7 +54,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 	private View mBottomLoadingView; 		//底部刷新视图
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	private List<FoundSubject> mSubjectItems = new ArrayList<FoundSubject>();
 	private FoundModel mFoundModel = new FoundModel(new MyFoundModelResult());
 	

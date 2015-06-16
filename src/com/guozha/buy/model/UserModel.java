@@ -135,7 +135,7 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam(
 				"account/checkCodeForOnekeyLogin").setParams("mobileNo", phoneNum);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -162,7 +162,7 @@ public class UserModel extends BaseModel{
 		.setParams("checkCode", checkCode)
 		.setParams("inviteCode", invitateCode);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPaht, new Listener<JSONObject>() {
+			paramPaht, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
@@ -201,7 +201,7 @@ public class UserModel extends BaseModel{
 		.setParams("passwd", pwd);
 		final String password = pwd;
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
@@ -236,7 +236,8 @@ public class UserModel extends BaseModel{
 	    RequestParam paramPath = new RequestParam("account/info")
 	    .setParams("token", token)
 	    .setParams("userId", userId);
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -253,8 +254,8 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("account/logout")
 		.setParams("token", token);
 		HttpManager.getInstance(context)
-			.volleyJsonRequestByPost(HttpManager.URL + paramPath,
-				new Listener<JSONObject>() {
+			.volleyJsonRequestByPost(
+					paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -278,7 +279,7 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("account/address/list")
 		.setParams("userId", userId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -296,8 +297,7 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("account/address/listArea")
 		.setParams("parentAreaId", 2);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -315,8 +315,7 @@ public class UserModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("countyId", countryId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -343,8 +342,8 @@ public class UserModel extends BaseModel{
 		.setParams("buildingName", buildName)
 		.setParams("detailAddr", detailAddr)
 		.setParams("defaultFlag", flag);
-		HttpManager.getInstance(context).volleyJsonRequestByGet(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyJsonRequestByPost(
+				paramPath, new Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
@@ -372,8 +371,7 @@ public class UserModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, 
-			new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					//相当于修改，没有判断的必要
@@ -401,7 +399,7 @@ public class UserModel extends BaseModel{
 		.setParams("addressId", addressId)
 		.setParams("userId", userId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
@@ -423,7 +421,7 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("account/ticket/list")
 		.setParams("userId", userId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -432,5 +430,4 @@ public class UserModel extends BaseModel{
 			}
 		});
 	}
-	
 }

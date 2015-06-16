@@ -42,7 +42,7 @@ public class CollectionVegetableFragment extends BaseFragment{
 	private CollectionVegetableListAdapter mCollectionVegetableAdapter;
 	
 	private List<GoodsListItem> mGoodsListItems = new ArrayList<GoodsListItem>();
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	private View mEmptyView;
 	
 	private CollectionModel mCollectionModel;

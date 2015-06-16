@@ -68,8 +68,9 @@ public class GoodsModel extends BaseModel{
 	 * @param context
 	 */
 	public void requestGoodsTypes(final Context context){
+		RequestParam paramPath = new RequestParam("goods/frontType/list");
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + "goods/frontType/list", new Listener<String>() {
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -91,7 +92,7 @@ public class GoodsModel extends BaseModel{
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId))
 		.setParams("pageNum", pageNum)
 		.setParams("pageSize", pageSize);
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, 
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, 
 			new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
@@ -112,8 +113,8 @@ public class GoodsModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("goods/general/detail")
 		.setParams("goodsId", goodsId)
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, 
-				new Listener<String>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -132,7 +133,7 @@ public class GoodsModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("goods/amount")
 		.setParams("goodsId", goodsId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -151,7 +152,8 @@ public class GoodsModel extends BaseModel{
 		.setParams("addressId", addressId)
 		.setParams("pageNum", pageNum)
 		.setParams("pageSize", pageSize);
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 
 			@Override
 			public void onResponse(String response) {

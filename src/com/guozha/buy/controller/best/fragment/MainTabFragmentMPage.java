@@ -41,7 +41,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	private View mBottomLoadingView; 		//底部刷新视图
 	private TextView mLoadText;
 	private ProgressBar mLoadProgressBar;
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	private List<BestMenuItem> mBestMenuItems = new ArrayList<BestMenuItem>();
 	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
 	

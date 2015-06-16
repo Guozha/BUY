@@ -8,6 +8,7 @@ import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.guozha.buy.entry.found.FoundMenuPage;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.mpage.BestMenuPage;
 import com.guozha.buy.global.net.HttpManager;
@@ -35,13 +36,19 @@ public class MenuModel extends BaseModel{
 		 * @param bestMenuPage
 		 */
 		public void requestBestMenuPageResult(BestMenuPage bestMenuPage);
+		
+		/**
+		 * 12.4 查询某分类下的菜谱
+		 * @param foundMenuPage
+		 */
+		public void requestFoundMenuListResult(FoundMenuPage foundMenuPage);
 	}
 	
 	public void requestMenusByGoods(final Context context, int goodsId){
 		RequestParam paramPath = new RequestParam("menuplan/goodsMenuList")
 		.setParams("goodsId", goodsId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -61,13 +68,35 @@ public class MenuModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("/v31/pick/list")
 		.setParams("pageNum", pageNum);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 					BestMenuPage bestMenuPage = gson.fromJson(response, new TypeToken<BestMenuPage>() { }.getType());
 					mInterface.requestBestMenuPageResult(bestMenuPage);
 				}
+		});
+	}
+	
+	/**
+	 * 12.4 查看某分类下的菜谱
+	 * @param context
+	 * @param pageNum
+	 * @param pageSize
+	 * @param menuTypeId
+	 */
+	public void requestFoundMenuList(final Context context, int pageNum, int menuTypeId){
+		RequestParam paramPath = new RequestParam("v31/found/menuType/listMenu")
+		.setParams("pageNum", pageNum)
+		.setParams("menuTypeId", menuTypeId);
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				FoundMenuPage foundMenuPage = gson.fromJson(response, new TypeToken<FoundMenuPage>() { }.getType());
+				mInterface.requestFoundMenuListResult(foundMenuPage);
+			}
 		});
 	}
 }

@@ -40,8 +40,8 @@ public class FoundModel extends BaseModel{
 	public void requestFoundSubjectList(final Context context, int pageNum){
 		RequestParam paramPath = new RequestParam("v31/found/subject/list")
 		.setParams("pageNum", pageNum);
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, 
-			new Listener<String>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -55,7 +55,7 @@ public class FoundModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("v31/found/subject/detail")
 		.setParams("subjectId", subjectId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -67,7 +67,8 @@ public class FoundModel extends BaseModel{
 	
 	public void requestFoundMenuTypes(final Context context){
 		RequestParam paramPath = new RequestParam("v31/found/menuType/list");
-		HttpManager.getInstance(context).volleyRequestByPost(HttpManager.URL + paramPath, new Listener<String>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  

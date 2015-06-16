@@ -12,6 +12,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
@@ -58,7 +59,7 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 
 	private void switchHttpPathText() {
 		if(mCurrentHttpPath == null) return;
-		if(REAL_URL.equals(HttpManager.URL)){
+		if(REAL_URL.equals(RequestParam.URL)){
 			mCurrentHttpPath.setText("当前是正式服");
 		}else{
 			mCurrentHttpPath.setText("当前是测试服");
@@ -87,11 +88,11 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 			startActivity(intent);
 			break;
 		case R.id.switch_http_path:
-			if(REAL_URL.equals(HttpManager.URL)){
-				HttpManager.URL = TEST_URL;
+			if(REAL_URL.equals(RequestParam.URL)){
+				RequestParam.URL = TEST_URL;
 				AlipayManager.NOTIFY_URL = TEST_ALI_PAY_URL;
 			}else{
-				HttpManager.URL = REAL_URL;
+				RequestParam.URL = REAL_URL;
 				AlipayManager.NOTIFY_URL = REAL_ALI_PAY_URL;
 			}
 			ConfigManager.getInstance().clearUserInfor();

@@ -42,7 +42,7 @@ public class SearchResultActivity extends BaseActivity{
 	
 	private GridView mSearchResult;
 	private ListView mSearchRelate;
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private List<ItemSaleInfo> mSearchResultList;		
 	private List<SearchRecipe> mSearchRelateList;

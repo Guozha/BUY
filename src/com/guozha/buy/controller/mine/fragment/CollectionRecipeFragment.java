@@ -45,7 +45,7 @@ public class CollectionRecipeFragment extends BaseFragment{
 	
 	private AnimatedExpandableListView mCollectionRecipeList;
 	
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private List<CollectionDir> mCollectionDir = new ArrayList<CollectionDir>();
 	private CollectionRecipeExpandAdapter mCollectionRecipeAdapter;

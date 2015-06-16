@@ -57,7 +57,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private TextView mDetailName;
 	private TextView mDetailPrice;
 	private TextView mDetailDescript;
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private String mGoodsId = null;
 	private GoodsModel mGoodsModel = new GoodsModel(new MyGoodsModelResult());
@@ -168,9 +168,10 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	 */
 	private void updateHeadView(){
 		if(mGoodsDetails == null) return;
-		HttpManager.getInstance(this).volleyImageRequest(
-				HttpManager.URL + mGoodsDetails.getGoodsImg(), 
-				mDetailImage, R.drawable.default_icon, R.drawable.default_icon);
+		//HttpManager.getInstance(this).volleyImageRequest(
+		//		HttpManager.URL + mGoodsDetails.getGoodsImg(), 
+		//		mDetailImage, R.drawable.default_icon, R.drawable.default_icon);
+		mBitmapCache.loadBitmaps(mDetailImage, mGoodsDetails.getGoodsImg());
 		mDetailName.setText(mGoodsDetails.getGoodsName());
 		mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/" 
 				+ UnitConvertUtil.getSwichedUnit(1000, mGoodsDetails.getUnit()));

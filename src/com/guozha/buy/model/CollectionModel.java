@@ -97,7 +97,7 @@ public class CollectionModel {
 		.setParams("userId", userId)
 		.setParams("goodsId", goodsId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				paramPath.toString(), new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -119,9 +119,8 @@ public class CollectionModel {
 		RequestParam paramPath = new RequestParam("account/myfavo/listGoodsFavo")
 		.setParams("userId", userId)
 		.setParams("addressId", addressId);
-		
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath.toString(), new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -142,7 +141,7 @@ public class CollectionModel {
 		.setParams("userId", userId)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			HttpManager.URL + paramPath, new Listener<String>() {
+			paramPath.toString(), new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -165,7 +164,7 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("dirName", folderName);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
@@ -192,7 +191,7 @@ public class CollectionModel {
 		.setParams("myMenuId", menuId)
 		.setParams("myDirId", dirId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -217,7 +216,7 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("myDirId", dirId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -239,7 +238,7 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("myMenuId", menuId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -263,7 +262,7 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("myGoodsId", goodsId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {

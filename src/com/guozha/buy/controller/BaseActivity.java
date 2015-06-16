@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.guozha.buy.global.net.HttpManager;
+import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -93,7 +94,7 @@ public abstract class BaseActivity extends Activity{
 	protected void onStart() {
 		super.onStart();
 		//测试服提示
-		if(HttpManager.URL.equals(DebugActivity.TEST_URL)){
+		if(RequestParam.URL.equals(DebugActivity.TEST_URL)){
 			ToastUtil.showToast(this, "当前是测试服");
 		}
 	}

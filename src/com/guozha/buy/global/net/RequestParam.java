@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.util.HttpUtil;
 
 /**
@@ -13,6 +14,13 @@ import com.guozha.buy.util.HttpUtil;
  *
  */
 public class RequestParam {
+	
+	/**
+	 * 服务器路径
+	 */
+	//正式服
+	public static String URL = DebugActivity.TEST_URL;
+	//public static String IMG_URL = URL;
 	
 	private Map<String, String> mParams = new HashMap<String, String>();
 	
@@ -70,7 +78,7 @@ public class RequestParam {
 	
 	@Override
 	public String toString() {
-		mParamsPath = mUri + HttpUtil.generatedAddress(mParams);
+		mParamsPath =  URL + mUri + HttpUtil.generatedAddress(mParams);
 		String resultPath = "";
 		try {
 			resultPath = new String(mParamsPath.getBytes("UTF-8"), "ISO-8859-1");

@@ -64,7 +64,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private View mView;
 	
-	private BitmapCache mBitmapCache = CustomApplication.getBitmapCache();
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private View mTopExpandMenuButton;
 	private AnimatedExpandableListView mMenuList;

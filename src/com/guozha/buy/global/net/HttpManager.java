@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.controller.CustomApplication;
-import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
 
@@ -29,12 +28,6 @@ import com.guozha.buy.util.Util;
  *
  */
 public class HttpManager {
-	/**
-	 * 服务器路径
-	 */
-	//正式服
-	public static String URL = DebugActivity.TEST_URL;
-	//public static String IMG_URL = URL;
 	
 	private RequestQueue mQueue;	//请求队列
 	private Response.ErrorListener errorListener;  //错误消息监听
@@ -62,11 +55,11 @@ public class HttpManager {
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyRequestByGet(String url, Listener<String> responsListener){
-		StringRequest stringRequest = 
-				new StringRequest(url, responsListener, errorListener);
-		mQueue.add(stringRequest);
-	}
+	//public void volleyRequestByGet(String url, Listener<String> responsListener){
+	//	StringRequest stringRequest = 
+	//			new StringRequest(url, responsListener, errorListener);
+	//	mQueue.add(stringRequest);
+	//}
 	
 	/**
 	 * post方式请求string字符串
@@ -79,17 +72,26 @@ public class HttpManager {
 		mQueue.add(stringRequest);
 	}
 	
+	/**
+	 * post方式请求string字符串
+	 * @param url
+	 * @param responsListener
+	 */
+	public void volleyRequestByPost(RequestParam paramPath, Listener<String> responsListener){
+		volleyRequestByPost(paramPath.toString(), responsListener);
+	}
+	
 	
 	/**
 	 * get方式请求Json格式的数据
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyJsonRequestByGet(String url, Listener<JSONObject> responsListener){
-		JsonObjectRequest jsonObjectRequest = 
-				new JsonObjectRequest(url, null, responsListener, errorListener);
-		mQueue.add(jsonObjectRequest);
-	}
+	//public void volleyJsonRequestByGet(String url, Listener<JSONObject> responsListener){
+	//	JsonObjectRequest jsonObjectRequest = 
+	//			new JsonObjectRequest(url, null, responsListener, errorListener);
+	//	mQueue.add(jsonObjectRequest);
+	//}
 	
 	/**
 	 * post方式请求Json格式的数据
@@ -102,13 +104,21 @@ public class HttpManager {
 		mQueue.add(jsonObjectRequest);
 	}
 	
+	/**
+	 * post方式请求Json格式的数据
+	 * @param url
+	 * @param responsListener
+	 */
+	public void volleyJsonRequestByPost(RequestParam paramPath, Listener<JSONObject> responsListener){
+		volleyJsonRequestByPost(paramPath.toString(), responsListener);
+	}
 	
 	/**
 	 * 请求图片资源
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyImageRequest(String url, Listener<Bitmap> responsListener){
+	 void volleyImageRequest(String url, Listener<Bitmap> responsListener){
 		ImageRequest imageRequest = 		//第三、四个参数，如果设置为0则默认不压缩，否则会压缩
 				new ImageRequest(url, responsListener, 0, 0, Config.ARGB_8888, errorListener);
 		mQueue.add(imageRequest);
@@ -121,10 +131,9 @@ public class HttpManager {
 	 * @param defaultImageResId
 	 * @param errorImageResId
 	 */
-	
 	public void volleyImageRequest(String url, 
 			ImageView imageview, int defaultImageResId, int errorImageResId){
-		ImageLoader imageLoader = new ImageLoader(mQueue, new BitmapCache());
+		ImageLoader imageLoader = new ImageLoader(mQueue, BitmapCache.getInstance());
 		ImageListener listener = 
 				ImageLoader.getImageListener(
 						imageview, defaultImageResId, errorImageResId);
@@ -133,7 +142,6 @@ public class HttpManager {
 		if(url == null) return;
 		imageLoader.get(url, listener);
 	}
-	
 	
 	/**
 	 * 错误结果

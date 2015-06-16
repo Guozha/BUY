@@ -65,7 +65,7 @@ public class ShopCartModel extends BaseModel{
 		.setParams("userId", userId)
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
 		HttpManager.getInstance(context).volleyRequestByPost(
-				HttpManager.URL + paramPath, new Listener<String>() {
+				paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -89,7 +89,7 @@ public class ShopCartModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
@@ -118,7 +118,7 @@ public class ShopCartModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("amount", amount);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			HttpManager.URL + paramPath, new Listener<JSONObject>() {
+			paramPath, new Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
@@ -145,7 +145,7 @@ public class ShopCartModel extends BaseModel{
 		.setParams("userId", userId)
 		.setParams("token", token);
 		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				HttpManager.URL + paramPath, new Listener<JSONObject>() {
+				paramPath, new Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				try {
