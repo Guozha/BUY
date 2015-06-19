@@ -3,7 +3,8 @@ package com.guozha.buy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Fragment;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +25,7 @@ import com.guozha.buy.controller.best.fragment.MainTabFragmentMine;
 import com.guozha.buy.controller.mine.SettingActivity;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.server.ShareManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.TabBarItem;
 import com.umeng.update.UmengUpdateAgent;
@@ -35,13 +37,13 @@ import com.umeng.update.UmengUpdateAgent;
  */
 public class MainActivity extends FragmentActivity{
 	
-	private static final int FRAGMENT_BEST_INDEX = 0;
-	private static final int FRAGMENT_FOUND_INDEX = 1;
-	private static final int FRAGMENT_MARKET_INDEX = 2;
-	private static final int FRAGMENT_CART_INDEX = 3;
-	private static final int FRAGMENT_MINE_INDEX = 4;
+	public static final int FRAGMENT_FOUND_INDEX = 1;
+	public static final int FRAGMENT_MARKET_INDEX = 2;
+	public static final int FRAGMENT_CART_INDEX = 3;
+	public static final int FRAGMENT_MINE_INDEX = 4;
 	
 	private int mCurrentItem = 0;
+	private boolean isCanBack = false;
 	
 	private ClickTabItemListener mClickTabItemListener;
 	
@@ -55,9 +57,17 @@ public class MainActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initFragment();
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		if(bundle != null){
+			mCurrentItem = bundle.getInt("fragmentIndex");
+			isCanBack = bundle.getBoolean("canback");
+		}else{
+			mCurrentItem = 0;
+		}
 		//添加一个fragment
 		getSupportFragmentManager().beginTransaction()
-			.add(R.id.fragment_container, mFragments.get(0)).commit();
+			.add(R.id.fragment_container, mFragments.get(mCurrentItem)).commit();
 		initTabIndicators();
 		initYoumeng();
 	}
@@ -98,6 +108,7 @@ public class MainActivity extends FragmentActivity{
 		for(int i = 0; i < mTabIndicators.size(); i++){
 			mTabIndicators.get(i).setOnClickListener(mClickTabItemListener);
 		}
+		changeTabRefreshView(mCurrentItem);
 	}
 	
 	/**
@@ -221,8 +232,13 @@ public class MainActivity extends FragmentActivity{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		//按下了物理返回键
 		if(KeyEvent.KEYCODE_BACK == keyCode){
+			if(isCanBack){
+				finish();
+			}
 			if(mCurrentItem != 0){
-				changeTabRefreshView(0);
+				if(!mFragments.get(mCurrentItem).onKeyDownBack()){
+					changeTabRefreshView(0);
+				}
 				return true;
 			}
 			long currentTimes = System.currentTimeMillis();

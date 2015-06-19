@@ -2,12 +2,15 @@ package com.guozha.buy.controller.found.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MenuDetailStepListAdapter;
@@ -35,12 +38,15 @@ public class MenuDetailStepFragment extends BaseFragment{
 	private void initView(View view){
 		if(view == null) return;
 		mStepList = (ListView) view.findViewById(R.id.menu_detail_step_list);
-		View headAndFooter = new View(getActivity());
+		TextView headText = new TextView(getActivity());
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-				LayoutParams.MATCH_PARENT, DimenUtil.dp2px(getActivity(), 20));
-		headAndFooter.setLayoutParams(params);
-		mStepList.addHeaderView(headAndFooter);
-		//mStepList.addFooterView(headAndFooter);
+				LayoutParams.MATCH_PARENT, DimenUtil.dp2px(getActivity(), 56));
+		headText.setText("步骤");
+		headText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+		headText.setTextColor(getResources().getColor(R.color.color_app_base_25));
+		headText.setGravity(Gravity.CENTER);
+		headText.setLayoutParams(params);
+		mStepList.addHeaderView(headText);
 		
 		mStepListAdapter = new MenuDetailStepListAdapter(getActivity());
 		mStepList.setAdapter(mStepListAdapter);

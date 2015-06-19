@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/main_menu_down_arrow"
+                android:src="@drawable/arrow_next_down"
                 />
             <ProgressBar 
                 android:id="@+id/progress_bar"

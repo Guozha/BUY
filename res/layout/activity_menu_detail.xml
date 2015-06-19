@@ -46,7 +46,7 @@
 	       	android:id="@+id/viewpager_tab"
 	        android:layout_width="fill_parent"
 	        hyman:tab_num="num3"
-	   		android:layout_height="3dip"/>
+	   		android:layout_height="2dip"/>
 	    <View 
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"
@@ -57,20 +57,33 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="1"/>
-	
+	<View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_27"/>
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="50dip"
+	    android:layout_height="48dip"
 	    android:orientation="horizontal">
 	    <Button 
 	        android:layout_width="0dip"
 	        android:layout_weight="1"
 	        android:layout_height="match_parent"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/color_app_base_22"
+	        android:background="@drawable/nomal_list_item_bg"
 	        android:text="收藏菜谱"/>
+	    <View 
+	        android:layout_width="1px"
+	        android:layout_height="match_parent"
+	        android:background="@color/color_app_base_27"/>
 	    <Button 
 	        android:layout_width="0dip"
 	        android:layout_weight="1"
 	        android:layout_height="match_parent"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/color_app_base_21"
+	        android:background="@drawable/nomal_list_item_bg"
 	        android:text="加入购物车"/>
 	</LinearLayout>
 </LinearLayout>

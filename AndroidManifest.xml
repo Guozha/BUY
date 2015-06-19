@@ -96,6 +96,7 @@
         <activity 
             android:name="com.guozha.buy.controller.SearchActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Search"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
         </activity>   
@@ -229,6 +230,11 @@
         <!-- 选择有效菜票-->
         <activity 
             android:name="com.guozha.buy.controller.cart.ChooseTicketActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 输入邀请码 -->
+        <activity 
+            android:name="com.guozha.buy.controller.mine.MyInvateNumActivity"
             android:screenOrientation="portrait"></activity>
         
         <!-- 引导页 -->

@@ -9,18 +9,18 @@
         layout="@layout/list_item_small_cell"/>
     
     <View 
-        android:layout_width="1dip"
+        android:layout_width="1px"
         android:layout_height="match_parent"
-        android:background="@color/color_app_base_7"/>
+        android:background="@color/color_app_base_27"/>
     
     <include 
         android:id="@+id/list_item_small_cell2"
         layout="@layout/list_item_small_cell"/> 
         
     <View 
-        android:layout_width="1dip"
+        android:layout_width="1px"
         android:layout_height="match_parent"
-        android:background="@color/color_app_base_7"/>
+        android:background="@color/color_app_base_27"/>
         
     <include 
         android:id="@+id/list_item_small_cell3"

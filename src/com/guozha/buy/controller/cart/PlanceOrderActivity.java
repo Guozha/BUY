@@ -24,12 +24,13 @@ import com.guozha.buy.entry.cart.ShowTime;
 import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.model.result.SystemModelResult;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -52,6 +53,7 @@ public class PlanceOrderActivity extends BaseActivity{
 	
 	private static final int HAND_TIMES_DATA_COMPLETED = 0x0001;
 	private static final int HAND_CHANGE_QUICK_MENU = 0x0002;
+	private static final int HAND_ADDRESS_COMPLETED = 0x0003;
 	
 	private List<ShowTime> mShowTimes = new ArrayList<ShowTime>();
 	
@@ -67,9 +69,10 @@ public class PlanceOrderActivity extends BaseActivity{
 	private TextView mQuickTimeChooseText;
 	private View mQuickTimeChoose;
 	private String mTodayEarliestTime = null;  //当天最早的时间
-	
+	private AddressInfo mAddressInfo;
 	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
 	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -86,6 +89,12 @@ public class PlanceOrderActivity extends BaseActivity{
 				if(mQuickTimeChoose != null){
 					mQuickTimeChoose.setVisibility(View.GONE);
 				}
+				break;
+			case HAND_ADDRESS_COMPLETED:
+				if(mAddressInfo == null) return;
+				mOrderName.setText(mAddressInfo.getReceiveName());
+				mOrderPhone.setText(mAddressInfo.getMobileNo());
+				mOrderAddress.setText(mAddressInfo.getBuildingName() + mAddressInfo.getDetailAddr());
 				break;
 			}
 		};
@@ -105,10 +114,17 @@ public class PlanceOrderActivity extends BaseActivity{
 			}
 		}
 		initView();
+		initData();
+		
+	}
+	
+	private void initData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		int userId = ConfigManager.getInstance().getUserId();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
 		mSystemModel.requestSystemTime(this);
+		mUserModel.requestListAddress(this, userId);
 	}
 	
 	/**
@@ -151,20 +167,6 @@ public class PlanceOrderActivity extends BaseActivity{
 		mOrderName = (TextView) findViewById(R.id.order_name);
 		mOrderPhone = (TextView) findViewById(R.id.order_phone);
 		mOrderAddress = (TextView) findViewById(R.id.order_address);
-		
-		//设置地址信息
-		List<AddressInfo> addressInfos = 
-				MainPageInitDataManager.getInstance().getAddressInfos();
-		if(addressInfos != null){
-			for(int i = 0; i < addressInfos.size(); i++){
-				AddressInfo addressInfo = addressInfos.get(i);
-				if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId()){
-					mOrderName.setText(addressInfo.getReceiveName());
-					mOrderPhone.setText(addressInfo.getMobileNo());
-					mOrderAddress.setText(addressInfo.getBuildingName() + addressInfo.getDetailAddr());
-				}
-			}
-		}
 		
 		mLeaveMessage = (EditText) findViewById(R.id.leave_message);
 		mQuickTimeChooseIcon = (ImageView) findViewById(R.id.quick_time_choose_icon);
@@ -363,6 +365,22 @@ public class PlanceOrderActivity extends BaseActivity{
 		@Override
 		public void requestSystemTime(long systemTime) {
 			ConfigManager.getInstance().setTodayDate(systemTime);
+		}
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			//设置地址信息
+			if(addressInfos != null){
+				for(int i = 0; i < addressInfos.size(); i++){
+					AddressInfo addressInfo = addressInfos.get(i);
+					if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId()){
+						mAddressInfo = addressInfo;
+						handler.sendEmptyMessage(HAND_ADDRESS_COMPLETED);
+					}
+				}
+			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
- package com.guozha.buy.controller.best.fragment;
+package com.guozha.buy.controller.best.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +27,14 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MarketItemListAdapter;
 import com.guozha.buy.adapter.MenuExpandListAapter;
-import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.dialog.ChooseAddressDialog;
 import com.guozha.buy.controller.market.ListVegetableActivity;
 import com.guozha.buy.entry.market.GoodsItemType;
+import com.guozha.buy.entry.market.GoodsSecondItemType;
 import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.entry.market.MarketHomePage;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.UserModel;
@@ -71,7 +70,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private MenuExpandListAapter mMenuExpandListAapter;
 	private MarketItemListAdapter mMarketItemListAdapter;
 	
-	private List<GoodsItemType> mGoodsItemTypes;  //菜品类目菜单数据
+	private List<GoodsItemType> mGoodsItemTypes = new ArrayList<GoodsItemType>();  //菜品类目菜单数据
 	private List<MarketHomeItem> mMarketHomeItems = new ArrayList<MarketHomeItem>();	//逛菜场主页的列表
 	
 	private ListView mItemList;
@@ -107,10 +106,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_GOODS_DATA_COMPLETED:
-				updateItemList();
+				mMarketItemListAdapter.notifyDataSetChanged();
 				break;
 			case HAND_GOODS_TYPE_COMPLETED:
-				setGoodsItemTypeData();
+				mMenuExpandListAapter.notifyDataSetChanged();
 				break;
 			case HAND_ADRESS_COMPLETED:
 				setAddressInfoData();
@@ -223,6 +222,21 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 				mRefreshableView.finishRefreshing();
 			}
 		}, 0);
+		
+		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
+		mMenuList.setAdapter(mMenuExpandListAapter);
+		
+		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
+		mItemList.setAdapter(mMarketItemListAdapter);
+	}
+	
+	@Override
+	public boolean onKeyDownBack() {
+		if("expand".equals(mTopExpandMenuButton.getTag())){
+			expandMenuAction(mTopExpandMenuButton);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -233,15 +247,18 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mLastVisibleIndex = 0;  //可见的最后一条数据
 		mMaxDateNum = 0;		//最大数据数
 		mCurrentPage = 0;
-		mMarketHomeItems = new ArrayList<MarketHomeItem>();
-		mMarketItemListAdapter = new MarketItemListAdapter(this.getActivity(), mMarketHomeItems, mBitmapCache);
-		mItemList.setAdapter(mMarketItemListAdapter);
+		mMarketHomeItems.clear();
 		
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		
 		mUserModel.requestListAddress(getActivity(), userId);
 		mGoodsModel.requestGoodsTypes(getActivity());
-		mGoodsModel.requestGoodsList(getActivity(), addressId, 1, 4);
+		requestGoodsList();
+	}
+	
+	private void requestGoodsList(){
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1, PAGE_SIZE);
 	}
 	
 	/**
@@ -249,6 +266,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 */
 	private void setAddressInfoData(){
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
+		LogUtil.e("choosedId == " + choosedId);
 		String addressName = "";
 		if(mActionBarAddress != null){
 			if(mAddressInfos != null){
@@ -266,27 +284,8 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		}
 	}
 	
-	/**
-	 * 获取菜单条目列表数据
-	 */
-	private void setGoodsItemTypeData(){
-		if(mGoodsItemTypes == null) return;
-		mMenuExpandListAapter = new MenuExpandListAapter(getActivity(), mGoodsItemTypes);
-		if(mMenuList == null) return;
-		mMenuList.setAdapter(mMenuExpandListAapter);
-	}
-	
 	private void loadNewDataAndUpdate(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1, PAGE_SIZE);
-	}
-	
-	/**
-	 * 更新当前列表
-	 */
-	private void updateItemList(){
-		if(mItemList == null) return;
-		mMarketItemListAdapter.notifyDataSetChanged();
+		requestGoodsList();
 	}
 	
 	@Override
@@ -319,13 +318,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		String tag = (String) view.getTag();	
 		if("unexpand".equals(tag)){
 			mMenuList.setVisibility(View.VISIBLE);
-			mMenuArrowIcon.setImageResource(R.drawable.main_menu_up);
+			mMenuArrowIcon.setImageResource(R.drawable.arrow_up);
 			view.setTag("expand");
 			mMenuList.startAnimation(mInAnimation);
 		}else{
 			mMenuList.setVisibility(View.GONE);
 			view.setTag("unexpand");
-			mMenuArrowIcon.setImageResource(R.drawable.main_menu_down);
+			mMenuArrowIcon.setImageResource(R.drawable.arrow_down);
 			mMenuList.startAnimation(mOutAnimation);
 		}
 	}
@@ -373,6 +372,19 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mBitmapCache.fluchCache();
 	}
 	
+	/**
+	 * 转换格式
+	 */
+	private void formatGoodsItemTypes(){
+		for(int i = 0; i < mGoodsItemTypes.size(); i++){
+			GoodsItemType itemType = mGoodsItemTypes.get(i);
+			GoodsSecondItemType secondItemType = new GoodsSecondItemType(
+					itemType.getFrontTypeId(), itemType.getShortName(), "查看全部...");
+			List<GoodsSecondItemType> secondItemList = itemType.getFrontTypeList();
+			secondItemList.add(0, secondItemType);
+		}
+	}
+	
 	class MyGoodsModelResult extends GoodsModelResult{
 		@Override
 		public void requestGoodsListResult(MarketHomePage marketHomePage) {
@@ -388,7 +400,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		
 		@Override
 		public void requestGoodsTypesResult(List<GoodsItemType> goodsItemTypes) {
-			mGoodsItemTypes = goodsItemTypes;
+			if(goodsItemTypes == null) return;
+			mGoodsItemTypes.addAll(goodsItemTypes);
+			formatGoodsItemTypes();
 			mHandler.sendEmptyMessage(HAND_GOODS_TYPE_COMPLETED);
 		}
 	}

@@ -131,11 +131,12 @@ public class OrderModel extends BaseModel{
 		.setParams("wantUpTime", upTime)
 		.setParams("wantDownTime", downTime)
 		.setParams("memo", memo);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					int orderId = response.getInt("orderId");
 					String msg = response.getString("msg");
@@ -180,11 +181,12 @@ public class OrderModel extends BaseModel{
 		//请求主单信息
 		RequestParam paramPath = new RequestParam("order/info")
 		.setParams("orderId", orderId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						//mOrderNum = response.getString("orderNo");  //订单号
 						int totalPrice = response.getInt("totalPrice");//商品金额
 						int serviceFee = response.getInt("serviceFee");	//服务费
@@ -228,11 +230,12 @@ public class OrderModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("orderId", orderId)
 		.setParams("status", status);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestCancelOrderResult(returnCode, msg);
@@ -256,11 +259,12 @@ public class OrderModel extends BaseModel{
 		.setParams("orderId", orderId)
 		.setParams("commentDesc", commentDesc)
 		.setParams("serviceStar", "");
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestOrderMarkResult(returnCode, msg);
@@ -294,11 +298,12 @@ public class OrderModel extends BaseModel{
 			paramPath.setParams("orderGoodsId", id);
 			paramPath.setParams("orderMenuGoodsId", "");
 		}
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestGradeProductResult(returnCode, msg);

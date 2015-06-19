@@ -15,11 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CartItemListAdapter;
+import com.guozha.buy.adapter.CartItemListAdapter.CartItemChanged;
 import com.guozha.buy.controller.cart.PlanceOrderActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
@@ -28,8 +31,10 @@ import com.guozha.buy.entry.cart.CartCookItem;
 import com.guozha.buy.entry.cart.CartMarketItem;
 import com.guozha.buy.entry.cart.CartTotalData;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.ShopCartModelResult;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -42,6 +47,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	
 	private static final String PAGE_NAME = "CartPage";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
+	private static final int HAND_REFRESH_DATA = 0x0002;
 	
 	private ExpandableListView mCartList;
 	private TextView mMesgTotal;
@@ -51,18 +57,19 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	private CartItemListAdapter mCartItemListAdapter;
 	private View mCartEmptyBg;
 	
-	private int mQuantity = 0;		//总商品个数
+	//private int mQuantity = 0;		//总商品个数
 	private int mTotalPrice = 0;	//总额
 	private int mServiceFree = 0;	//服务费
 	private int mFreeGap = 0;		//还差多少免服务费
-	private int mCurrentAddressId = 
-			ConfigManager.getInstance().getChoosedAddressId();   //当前地址id(用来判断地址是否发生了改变）
 	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case HAND_DATA_COMPLETED:
 				updateViewData();
+				break;
+			case HAND_REFRESH_DATA:
+				initData();
 				break;
 			default:
 				break;
@@ -129,6 +136,54 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mCartItems = new ArrayList<CartBaseItem>();
 		mCartItemListAdapter = new CartItemListAdapter(getActivity(), mCartItems);
 		mCartList.setAdapter(mCartItemListAdapter);
+		mCartList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				clickDeleteButton(position);
+				return false;
+			}
+		});
+		mCartItemListAdapter.setCartItemChangedListener(new CartItemChanged() {
+			@Override
+			public void changed() {
+				handler.sendEmptyMessage(HAND_REFRESH_DATA);
+			}
+		});
+	}
+	
+	/**
+	 * 点击删除按钮
+	 * @param view
+	 */
+	private void clickDeleteButton(final int position) {
+		int id = mCartItems.get(position).getCartId();
+		if(id == -1) return;
+		final CustomDialog deleteDialog = new CustomDialog(getActivity(), R.layout.dialog_delete_notify);
+		deleteDialog.setDismissButtonId(R.id.cancel_button);
+		deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				deleteDialog.dismiss();
+				requestDeleteCartItem(position);
+			}
+		});
+	}
+	
+	/**
+	 * 请求删除数据
+	 * @param view
+	 */
+	private void requestDeleteCartItem(int position) {
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
+		if(token == null) return; //TODO 先登录
+		if(mCartItems == null || mCartItems.size() <= position) {
+			ToastUtil.showToast(getActivity(), "删除出错");
+			return;
+		}
+		mShopCartModel.requestDeleteCart(getActivity(), 
+				mCartItems.get(position).getCartId(), userId, token);
 	}
 
 	/**
@@ -162,7 +217,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		if(mCartList == null || mCartItems == null || mCartItems.isEmpty()) {
 			mCartEmptyBg.setVisibility(View.VISIBLE);
 			mCartList.setVisibility(View.GONE);
-			setBottomMessageText(0, 0, 0, 0);
+			setBottomMessageText(0, 0, 0);
 			return;
 		}
 		mCartEmptyBg.setVisibility(View.GONE);
@@ -179,18 +234,19 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		for (int i = 0; i < mCartItems.size(); i++) {
 		    mCartList.expandGroup(i);
 		}
-		setBottomMessageText(mQuantity, mTotalPrice, mServiceFree, mFreeGap);
+		setBottomMessageText(mTotalPrice, mServiceFree, mFreeGap);
 	}
 
-	private void setBottomMessageText(int quantity, int totalPrice, int serverFee, int gapFreeFee) {
-		mMesgTotal.setText("共计" + mQuantity + "件 合计￥" + UnitConvertUtil.getSwitchedMoney(totalPrice));
+	private void setBottomMessageText(int totalPrice, int serverFee, int gapFreeFee) {
+		mMesgTotal.setText("合计￥" + UnitConvertUtil.getSwitchedMoney(totalPrice));
 		mMesgServerMoney.setText("预计服务费￥" + UnitConvertUtil.getSwitchedMoney(serverFee));
 		gapFreeFee = gapFreeFee < 0 ? 0 : gapFreeFee;
-		mMesgFreeGap.setText("离免服务费还差￥" + UnitConvertUtil.getSwitchedMoney(gapFreeFee));
+		mMesgFreeGap.setText(",离免服务费还差￥" + UnitConvertUtil.getSwitchedMoney(gapFreeFee));
 		setTextColor();
 	}
 	
 	private void initData(){
+		mCartItems.clear();
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mShopCartModel.requestListCartItem(getActivity(), userId, addressId);
@@ -262,11 +318,20 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			int totalPrice = cartTotalData.getTotalPrice();
 			int freePrice = cartTotalData.getServiceFeePrice();
 			//数量
-			mQuantity = cartTotalData.getQuantity();
+			//mQuantity = cartTotalData.getQuantity();
 			mTotalPrice = cartTotalData.getTotalPrice();
 			mServiceFree = cartTotalData.getCurrServiceFee();
 			mFreeGap = freePrice > totalPrice ? freePrice - totalPrice : 0;
 			exchangeDataFormat(cartTotalData);
+		}
+		
+		@Override
+		public void requestDeleteCartResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				handler.sendEmptyMessage(HAND_REFRESH_DATA);
+			}else{
+				ToastUtil.showToast(getActivity(), msg);
+			}
 		}
 	}
 }

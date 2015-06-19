@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
 import com.guozha.buy.entry.cart.CartBaseItem.CartItemType;
 import com.guozha.buy.entry.cart.CartCookItem;
@@ -104,14 +104,12 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			convertView = mInflater.inflate(R.layout.list_item_cell_cart_list, null);
 			holder = new GroupViewHolder();
 			holder.title = (TextView) convertView.findViewById(R.id.cart_list_cell_title);
-			holder.minus = (ImageView) convertView.findViewById(R.id.cart_list_cell_minus);
+			holder.minus = (Button) convertView.findViewById(R.id.cart_list_cell_minus);
 			holder.num = (TextView) convertView.findViewById(R.id.cart_list_cell_num);
-			holder.plus = (ImageView) convertView.findViewById(R.id.cart_list_cell_plus);
+			holder.plus = (Button) convertView.findViewById(R.id.cart_list_cell_plus);
 			holder.price = (TextView) convertView.findViewById(R.id.cart_list_cell_price);
-			holder.close = (ImageView) convertView.findViewById(R.id.cart_list_cell_close);
 			holder.minus.setOnClickListener(this);
 			holder.plus.setOnClickListener(this);
-			holder.close.setOnClickListener(this);
 			convertView.setTag(holder);
 		}else{
 			holder = (GroupViewHolder) convertView.getTag();
@@ -124,7 +122,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.num.setVisibility(View.INVISIBLE);
 			holder.plus.setVisibility(View.INVISIBLE);
 			holder.price.setVisibility(View.INVISIBLE);
-			holder.close.setVisibility(View.INVISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_1));
 			holder.title.setText(baseItem.getGoodsName());
 		}else{
@@ -132,7 +129,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.num.setVisibility(View.VISIBLE);
 			holder.plus.setVisibility(View.VISIBLE);
 			holder.price.setVisibility(View.VISIBLE);
-			holder.close.setVisibility(View.VISIBLE);
 			holder.title.setTextColor(mResource.getColor(R.color.color_app_base_4));
 			holder.title.setText(baseItem.getGoodsName());
 			holder.num.setText(UnitConvertUtil.getSwitchedWeight(baseItem.getAmount(), baseItem.getUnit()));
@@ -141,7 +137,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			}else{
 				holder.price.setText("已下架");
 			}
-			holder.close.setTag(groupPosition);
 			holder.minus.setTag(groupPosition);
 			holder.plus.setTag(groupPosition);
 		}
@@ -181,11 +176,10 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	
 	static class GroupViewHolder{
 		private TextView title;
-		private ImageView minus;
+		private Button minus;
 		private TextView num;
-		private ImageView plus;
+		private Button plus;
 		private TextView price;
-		private ImageView close;
 	}
 	
 	static class ChildViewHolder{
@@ -195,9 +189,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	@Override
 	public void onClick(final View view) {
 		switch (view.getId()) {
-		case R.id.cart_list_cell_close:
-			clickDeleteButton(view);
-			break;
 		case R.id.cart_list_cell_minus:
 			clickMinusButton(view);
 			break;
@@ -250,68 +241,26 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		}
 		mShopCartModel.requestUpdateCart(mContext, cartBaseItem.getCartId(), amount, token, userId);
 	}
-
-	/**
-	 * 点击删除按钮
-	 * @param view
-	 */
-	private void clickDeleteButton(final View view) {
-		final CustomDialog deleteDialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
-		deleteDialog.setDismissButtonId(R.id.cancel_button);
-		deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				deleteDialog.dismiss();
-				requestDeleteCartItem(view);
-			}
-		});
-	}
-	
-	/**
-	 * 请求删除数据
-	 * @param view
-	 */
-	private void requestDeleteCartItem(final View view) {
-		int groupId = (Integer)view.getTag();
-		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null) return; //TODO 先登录
-		if(mCartItems == null || mCartItems.size() <= groupId) {
-			ToastUtil.showToast(mContext, "删除出错");
-			return;
-		}
-		mShopCartModel.requestDeleteCart(mContext, 
-				mCartItems.get(groupId).getCartId(), userId, token);
-	}
-	
-	/**
-	 * 刷新购物车数据
-	 */
-	private void refreshCartItem() {
-		//TODO 刷新购物车数据
-		///if(mContext instanceof MainActivity){
-		//	MainActivity mainActivity = (MainActivity) mContext;
-		//	mainActivity.updateCartItemData();
-		//}
-	}
 	
 	class MyShopCartModelResult extends ShopCartModelResult{
 		@Override
 		public void requestUpdateCartResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				refreshCartItem();
+				if(mItemChanged != null){
+					mItemChanged.changed();
+				}
 			}else{
 				ToastUtil.showToast(mContext, msg);
 			}
 		}
-		
-		@Override
-		public void requestDeleteCartResult(String returnCode, String msg) {
-			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				refreshCartItem();
-			}else{
-				ToastUtil.showToast(mContext, msg);
-			}
-		}
+	}
+	
+	private CartItemChanged mItemChanged;
+	
+	public void setCartItemChangedListener(CartItemChanged itemChanged){
+		mItemChanged = itemChanged;
+	}
+	public interface CartItemChanged{
+		public void changed();
 	}
 }

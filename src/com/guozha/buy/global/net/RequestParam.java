@@ -56,6 +56,14 @@ public class RequestParam {
 		mParams.put(key, String.valueOf(value));
 		return this;
 	}
+	
+	public Map<String, String> getParams(){
+		return mParams;
+	}
+	
+	public String getUrl(){
+		return URL + mUri;
+	}
 
 	
 	/**
@@ -81,12 +89,10 @@ public class RequestParam {
 		mParamsPath =  URL + mUri + HttpUtil.generatedAddress(mParams);
 		String resultPath = "";
 		try {
-			//ISO-8859-1
-			resultPath = new String(mParamsPath.getBytes(), "UTF-8");
+			resultPath = new String(mParamsPath.getBytes(), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		//return resultPath;
-		return mParamsPath;
+		return resultPath;
 	}
 }

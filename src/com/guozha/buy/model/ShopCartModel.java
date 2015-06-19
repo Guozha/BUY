@@ -88,11 +88,12 @@ public class ShopCartModel extends BaseModel{
 		.setParams("amount", quantity)
 		.setParams("token", token)
 		.setParams("addressId", addressId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					mInterface.requestAddCartResult(returnCode, msg);
@@ -117,11 +118,12 @@ public class ShopCartModel extends BaseModel{
 		.setParams("userId", userId)
 		.setParams("token", token)
 		.setParams("amount", amount);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestUpdateCartResult(returnCode, msg);
@@ -144,11 +146,12 @@ public class ShopCartModel extends BaseModel{
 		.setParams("cartId", cartId)
 		.setParams("userId", userId)
 		.setParams("token", token);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					mInterface.requestDeleteCartResult(returnCode, msg);

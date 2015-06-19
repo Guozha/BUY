@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.alipay.sdk.data.Response;
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -74,11 +75,12 @@ public class SystemModel {
 	 */
 	public void requestSystemTime(final Context context) {
 		RequestParam paramPath = new RequestParam("system/date");
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						long currentdate = response.getLong("gregorianDate");
 						mInterface.requestSystemTime(currentdate);
 					} catch (JSONException e) {
@@ -115,11 +117,12 @@ public class SystemModel {
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("planNotiTime", valueTime);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestWarnPlanResult(returnCode, msg);
@@ -140,11 +143,12 @@ public class SystemModel {
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("opinion", feadback);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestFeadbackResult(returnCode, msg);
@@ -163,11 +167,12 @@ public class SystemModel {
 		RequestParam paramPath = new RequestParam("account/invite/insert")
 		.setParams("userId", userId)
 		.setParams("token", token);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						int inviteId = response.getInt("inviteId");
@@ -186,11 +191,12 @@ public class SystemModel {
 	public void requestInviteInfo(final Context context, int userId){
 		RequestParam paramPath = new RequestParam("account/invite/info")
 		.setParams("userId", userId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						int drawAmount = response.getInt("drawAmount");
 						int usedAmount = response.getInt("usedAmount");
 						int awardPrice = response.getInt("awardPrice");

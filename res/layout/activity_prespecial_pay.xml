@@ -76,10 +76,10 @@
 	    
 	    <ImageView 
 	        android:id="@+id/cart_list_cell_minus"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="40dip"
+	        android:layout_height="match_parent"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/main_minus"/>
+	        android:src="@drawable/button_minus"/>
 	    
 	    <TextView 
 	        android:id="@+id/cart_list_cell_num"
@@ -93,10 +93,10 @@
 	    
 	    <ImageView 
 	        android:id="@+id/cart_list_cell_plus"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="40dip"
+	        android:layout_height="match_parent"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/main_plus"/>
+	        android:src="@drawable/button_plus"/>
 	    
 	    <TextView 
 	        android:id="@+id/cart_list_cell_price"

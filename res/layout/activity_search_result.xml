@@ -17,14 +17,12 @@
 	    android:gravity="center_vertical"
 	    android:textSize="@dimen/dimen_global_14sp"
 	    android:layout_marginLeft="12dip"
-	    android:textColor="@color/color_app_base_4"/>
+	    android:textColor="@color/color_app_base_26"/>
 	
 	<com.guozha.buy.view.MultiGridView
 	    android:id="@+id/search_result_list"
 	    android:layout_width="match_parent"
 	    android:numColumns="3"
-	    android:layout_marginLeft="8dip"
-	    android:layout_marginRight="8dip"
 	    android:horizontalSpacing="1dip"
 	    android:verticalSpacing="1dip"
 	    android:layout_height="wrap_content"/>
@@ -35,7 +33,7 @@
 	    android:text="相关菜谱"
 	    android:gravity="center_vertical"
 	    android:textSize="@dimen/dimen_global_14sp"
-	    android:textColor="@color/color_app_base_4"
+	    android:textColor="@color/color_app_base_26"
 	    android:layout_marginLeft="12dip"/>
 	
 	<com.guozha.buy.view.MultiListView

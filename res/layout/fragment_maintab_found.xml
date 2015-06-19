@@ -29,7 +29,7 @@
 	            android:scaleType="centerInside"/>
 	        
 	        <TextView 
-	             android:id="@+id/found_frag2_tab"
+	            android:id="@+id/found_frag2_tab"
 	            android:layout_width="0dip"
 	            android:layout_weight="1"
 	            android:layout_height="40dip"
@@ -41,7 +41,7 @@
 	    <com.guozha.buy.view.ViewPagerTab
 	       	android:id="@+id/viewpager_tab"
 	        android:layout_width="fill_parent"
-	   		android:layout_height="3dip"/>
+	   		android:layout_height="2dip"/>
 	    <View 
 	        android:layout_width="match_parent"
 	        android:layout_height="1px"

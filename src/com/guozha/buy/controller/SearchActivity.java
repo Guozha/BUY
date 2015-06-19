@@ -1,10 +1,11 @@
 package com.guozha.buy.controller;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 
 import com.guozha.buy.R;
@@ -15,7 +16,7 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class SearchActivity extends BaseActivity{
+public class SearchActivity extends Activity{
 	
 	private static final String PAGE_NAME = "SearchPage";
 	private EditText mSearchKeyWord;
@@ -23,11 +24,10 @@ public class SearchActivity extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_search);
-		
-		initActionBar(getActionBar());
-		
+		//让Dialog全屏
+		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		//initActionBar(getActionBar());
 		initView();
 	}
 	
@@ -51,20 +51,14 @@ public class SearchActivity extends BaseActivity{
 				SearchActivity.this.finish();
 			}
 		});
-	}
-	
-	/**
-	 * 初始化ActionBar
-	 * @param actionbar
-	 */
-	private void initActionBar(ActionBar actionbar){
-		if(actionbar == null) return;
-		actionbar.setDisplayHomeAsUpEnabled(false);
-		actionbar.setDisplayShowHomeEnabled(false);
-		actionbar.setDisplayShowTitleEnabled(false);
-		actionbar.setDisplayUseLogoEnabled(false);
-		actionbar.setDisplayShowCustomEnabled(true);
-		actionbar.setCustomView(R.layout.actionbar_search_custom_view);
+		
+		findViewById(R.id.search_blank_area).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SearchActivity.this.finish();
+			}
+		});
 	}
 	
 	@Override

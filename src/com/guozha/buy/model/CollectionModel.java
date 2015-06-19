@@ -96,11 +96,12 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("goodsId", goodsId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath.toString(), new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestCollectionGoodsResult(returnCode, msg);
@@ -120,7 +121,7 @@ public class CollectionModel {
 		.setParams("userId", userId)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			paramPath.toString(), new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -141,7 +142,7 @@ public class CollectionModel {
 		.setParams("userId", userId)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
-			paramPath.toString(), new Listener<String>() {
+			paramPath, new Listener<String>() {
 				@Override
 				public void onResponse(String response) {
 					Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
@@ -163,11 +164,12 @@ public class CollectionModel {
 		.setParams("userId", userId)
 		.setParams("token", token)
 		.setParams("dirName", folderName);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					mInterface.requestAddCollectDirResult(returnCode, msg);
@@ -190,11 +192,12 @@ public class CollectionModel {
 		.setParams("token", token)
 		.setParams("myMenuId", menuId)
 		.setParams("myDirId", dirId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestModifyCollectFolder(returnCode, msg);
@@ -215,11 +218,12 @@ public class CollectionModel {
 		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyDir")
 		.setParams("token", token)
 		.setParams("myDirId", dirId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestDeleCollectDirResult(returnCode, msg);
@@ -237,11 +241,12 @@ public class CollectionModel {
 		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyMenu")
 		.setParams("token", token)
 		.setParams("myMenuId", menuId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestDeleMenuCollectItemResult(returnCode, msg);
@@ -261,11 +266,12 @@ public class CollectionModel {
 		RequestParam paramPath = new RequestParam("account/myfavo/deleteMyGoods")
 		.setParams("token", token)
 		.setParams("myGoodsId", goodsId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestDeletGoodsCollectResult(returnCode, msg);

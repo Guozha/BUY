@@ -1,5 +1,7 @@
 package com.guozha.buy.controller.mine;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +37,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private static final int HAND_KEYWORD_COMPLETED = 0x0002;  //关键字获取成功
 	private static final int HAND_DELETE_OLD_ADDRESS = 0x0003; //删除就的地址
 	private static final int HAND_FINISH_WINDOW = 0x0004; //退出
+	private static final int HAND_ADD_ADDR_SUCCESS = 0x0005;
 	private static final int REQUEST_CODE = 0;
 	
 	private EditText mReceiveName;   //收货人
@@ -70,6 +73,12 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			case HAND_FINISH_WINDOW:
 				setResult(0);
 				AddAddressActivity.this.finish();
+				break;
+			case HAND_ADD_ADDR_SUCCESS: //添加地址成功
+				int choosedAddress = ConfigManager.getInstance().getChoosedAddressId();
+				if(choosedAddress != -1) handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+				mUserModel.requestListAddress(AddAddressActivity.this,
+							ConfigManager.getInstance().getUserId());
 				break;
 			}
 		};
@@ -177,6 +186,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		case R.id.add_address_request_button:
 			if(mAddressInfo != null){
 				if(mAddressSize <= 1){
+					LogUtil.e("mAddressSize == " + mAddressSize);
 					ToastUtil.showToast(AddAddressActivity.this, "不允许地址全部删除");
 					return;
 				}
@@ -345,7 +355,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 						showNotCoveredDialog();
 					}else{
 						ToastUtil.showToast(AddAddressActivity.this, "成功添加");
-						handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+						handler.sendEmptyMessage(HAND_ADD_ADDR_SUCCESS);
 					}
 				}
 			}else{
@@ -356,10 +366,23 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		@Override
 		public void requestDeleteAddressResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+				if(mAddressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId()){
+					mUserModel.requestListAddress(AddAddressActivity.this, ConfigManager.getInstance().getUserId());
+				}else{
+					handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+				}
 			}else{
 				ToastUtil.showToast(AddAddressActivity.this, "删除失败");
 			}
+		}
+		
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			if(addressInfos != null && !addressInfos.isEmpty()){
+				ConfigManager.getInstance()
+					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+			}
+			handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 		}
 	}
 }

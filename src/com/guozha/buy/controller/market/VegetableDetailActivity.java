@@ -123,14 +123,15 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		mDetailName = (TextView) header.findViewById(R.id.detail_name);
 		mDetailPrice = (TextView) header.findViewById(R.id.vegetable_detail_item_price);
 		mDetailDescript = (TextView) header.findViewById(R.id.vegetable_description);
-		header.findViewById(R.id.cookbook_add_cart_button).setOnClickListener(this);
-		header.findViewById(R.id.cookbook_collection_button).setOnClickListener(this);
+		//header.findViewById(R.id.cookbook_add_cart_button).setOnClickListener(this);
+		//header.findViewById(R.id.cookbook_collection_button).setOnClickListener(this);
 	}
 	
 
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
+		/*
 		case R.id.cookbook_add_cart_button:
 			Intent intent = new Intent(VegetableDetailActivity.this, WeightSelectDialog.class);
 			intent.putExtra("goodsId", mGoodsId);
@@ -143,17 +144,21 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		case R.id.cookbook_collection_button:
 			requestCollectionVegetable();
 			break;
+			*/
+		default:
+			
+			break;
 		}
 	}
 
 	/**
 	 * 请求收藏食材
 	 */
-	private void requestCollectionVegetable() {
-		String token = ConfigManager.getInstance().getUserToken();
-		int userId = ConfigManager.getInstance().getUserId();
-		mCollectionModel.requestCollectionGoods(this, token, userId, Integer.parseInt(mGoodsId));
-	}
+	//private void requestCollectionVegetable() {
+	//	String token = ConfigManager.getInstance().getUserToken();
+	//	int userId = ConfigManager.getInstance().getUserId();
+	//	mCollectionModel.requestCollectionGoods(this, token, userId, Integer.parseInt(mGoodsId));
+	//}
 	
 	private void initData(){
 		//2.1.4接口

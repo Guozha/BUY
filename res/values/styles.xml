@@ -48,6 +48,7 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowAnimationStyle">@style/BottomInOutAnimStyle</item>
 	</style>
+	
 	<!-- 通用对话框主题 -->
 	<style name="Theme.CommenDialog" parent="@android:style/Theme.Dialog">
 	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
@@ -61,11 +62,30 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
 	</style>
 	
+	<!-- 查找主题 -->
+	<style name="Theme.Search" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
+        <item name="android:backgroundDimAmount">0.0</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/RightInOutAnimStyle</item>
+	</style>
+	
 	<!-- 逛菜场菜单动画 -->
     <style name="BottomInOutAnimStyle">
         <item name="android:windowEnterAnimation">@anim/umeng_socialize_slide_in_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/dialog_weight_select_out_from_bottom</item>
     </style> 	
+    
+    <style name="RightInOutAnimStyle">
+          <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
 	
     <style name="CheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_style</item>

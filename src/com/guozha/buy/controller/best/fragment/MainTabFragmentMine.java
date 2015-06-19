@@ -19,6 +19,7 @@ import com.guozha.buy.controller.SetWarnTimeActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.controller.mine.MyCollectionActivity;
+import com.guozha.buy.controller.mine.MyInvateNumActivity;
 import com.guozha.buy.controller.mine.MyOrderActivity;
 import com.guozha.buy.controller.mine.MyTicketActivity;
 import com.guozha.buy.controller.mine.SettingActivity;
@@ -171,6 +172,10 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			break;
 		case R.id.mine_online_service__button:
 			dialServerTelephone();
+			break;
+		case R.id.mine_invate_num_button:
+			intent = new Intent(getActivity(), MyInvateNumActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

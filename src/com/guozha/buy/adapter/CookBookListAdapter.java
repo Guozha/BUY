@@ -22,19 +22,16 @@ import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 
-public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
+public class CookBookListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<RelationRecipe> mRelationRecipe;
-	private Context mContext;
+	//private Context mContext;
 	private BitmapCache mBitmapCache;
-	private ShopCartModel mShopCartModel;
 	public CookBookListAdapter(Context context, List<RelationRecipe> relationRecipe, BitmapCache bitmapCache){
-		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mRelationRecipe = relationRecipe;
 		mBitmapCache = bitmapCache;
-		mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	}
 
 	@Override
@@ -61,9 +58,9 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 			holder = new ViewHolder();
 			holder.image = (ImageView) convertView.findViewById(R.id.cook_book_imag);
 			holder.name = (TextView) convertView.findViewById(R.id.cooke_book_name);
-			holder.material = (TextView) convertView.findViewById(R.id.cook_book_material);
-			holder.collectionButton = (ImageView) convertView.findViewById(R.id.cook_book_collection);
-			holder.collectionButton.setOnClickListener(this);
+			//holder.material = (TextView) convertView.findViewById(R.id.cook_book_material);
+			//holder.collectionButton = (ImageView) convertView.findViewById(R.id.cook_book_collection);
+			//holder.collectionButton.setOnClickListener(this);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
@@ -72,8 +69,8 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 		holder.image.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
 		holder.name.setText(relationRecipe.getMenuName());
-		holder.material.setText(getRecipeDescript(relationRecipe.getGoodsList()));
-		holder.collectionButton.setTag(relationRecipe.getMenuId());
+		//holder.material.setText(getRecipeDescript(relationRecipe.getGoodsList()));
+		//holder.collectionButton.setTag(relationRecipe.getMenuId());
 		return convertView;
 	}
 	
@@ -98,24 +95,16 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
     static class ViewHolder{
     	private ImageView image;
     	private TextView name;
-    	private TextView material;
-    	private ImageView collectionButton;
+    	//private TextView material;
+    	//private ImageView collectionButton;
     }
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.cook_book_collection:
-			int menuId = (Integer) view.getTag();
-			requestCollectionRecipe(menuId);
-			break;
-		}
-	}
-
+    
 	/**
 	 * 请求添加购物车
 	 * @param menuId
 	 */
+    /*
 	private void requestCollectionRecipe(int menuId) {
 		String token = ConfigManager.getInstance().getUserToken();
 		if(token == null) return;  //TODO 先登录
@@ -134,4 +123,5 @@ public class CookBookListAdapter extends BaseAdapter implements OnClickListener{
 			}
 		}
 	}
+	*/
 }

@@ -13,13 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.adapter.SearchRelateRecipeListAdapter;
+import com.guozha.buy.adapter.CookBookListAdapter;
 import com.guozha.buy.adapter.SearchResultListAdapter;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.controller.found.MenuDetailActivity;
-import com.guozha.buy.entry.global.SearchRecipe;
 import com.guozha.buy.entry.global.SearchResult;
 import com.guozha.buy.entry.market.ItemSaleInfo;
+import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.SystemModel;
@@ -45,7 +45,7 @@ public class SearchResultActivity extends BaseActivity{
 	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private List<ItemSaleInfo> mSearchResultList;		
-	private List<SearchRecipe> mSearchRelateList;
+	private List<RelationRecipe> mSearchRelateList;
 	
 	private String mKeyWord;
 	
@@ -100,8 +100,9 @@ public class SearchResultActivity extends BaseActivity{
 	 */
 	private void updateSearchRelateView(){
 		if(mSearchRelate == null) return;
-		mSearchRelate.setAdapter(
-				new SearchRelateRecipeListAdapter(this, mSearchRelateList, mBitmapCache));
+		//mSearchRelate.setAdapter(
+		//		new SearchRelateRecipeListAdapter(this, mSearchRelateList, mBitmapCache));
+		mSearchRelate.setAdapter(new CookBookListAdapter(this, mSearchRelateList, mBitmapCache));
 	}
 	
 	/**

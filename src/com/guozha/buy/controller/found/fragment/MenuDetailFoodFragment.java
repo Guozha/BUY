@@ -2,6 +2,7 @@ package com.guozha.buy.controller.found.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,11 +48,15 @@ public class MenuDetailFoodFragment extends BaseFragment{
 		TextView soupListHead = new TextView(getActivity());
 		AbsListView.LayoutParams params = new AbsListView.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, 
-				DimenUtil.dp2px(getActivity(), 48));
+				DimenUtil.dp2px(getActivity(), 56));
 		foodListHead.setGravity(Gravity.CENTER);
+		foodListHead.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+		foodListHead.setTextColor(getResources().getColor(R.color.color_app_base_25));
 		foodListHead.setLayoutParams(params);
 		foodListHead.setText("食材");
 		soupListHead.setGravity(Gravity.CENTER);
+		soupListHead.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+		soupListHead.setTextColor(getResources().getColor(R.color.color_app_base_25));
 		soupListHead.setLayoutParams(params);
 		soupListHead.setText("辅料");
 		mFoodList.addHeaderView(foodListHead);

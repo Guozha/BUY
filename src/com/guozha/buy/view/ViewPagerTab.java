@@ -35,12 +35,10 @@ public class ViewPagerTab extends ViewGroup{
 	private Scroller mScroller; 
 	private int mTabNum;
 	private List<TextView> mTabTexts;
-	private Resources mResource;
 	private int mCurrentChoosed;
 	public ViewPagerTab(Context context, AttributeSet attrs) {
 		super(context, attrs);	
 		this.mContext = context;
-		mResource = context.getResources();
 		mScroller = new Scroller(mContext);  
 		//initAttr(context, attrs);
 		mTabNum = 2;
@@ -92,12 +90,14 @@ public class ViewPagerTab extends ViewGroup{
 		mTabNum = mTabTexts.size();
 		for(int i = 0; i < mTabTexts.size(); i++){
 			final int position = i;
-			mTabTexts.get(i).setOnClickListener(new OnClickListener() {
+			TextView textView = mTabTexts.get(i);
+			textView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					mViewPager.setCurrentItem(position);
 				}
 			});
+			textView.setTextColor(getResources().getColor(R.color.color_app_base_22));
 		}
 		setTabChoosedColor(mCurrentChoosed);
 	}

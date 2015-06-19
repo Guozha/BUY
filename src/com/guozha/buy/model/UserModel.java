@@ -133,12 +133,14 @@ public class UserModel extends BaseModel{
 	 */
 	public void obtainPhoneValidate(final Context context, String phoneNum) {
 		RequestParam paramPath = new RequestParam(
-				"account/checkCodeForOnekeyLogin").setParams("mobileNo", phoneNum);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+				"account/checkCodeForOnekeyLogin")
+		.setParams("mobileNo", phoneNum);
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response
 								.getString("returnCode");
 						String msg = response.getString("msg");
@@ -157,15 +159,15 @@ public class UserModel extends BaseModel{
 	 */
 	public void requestCheckLogin(final Context context, 
 			String phoneNum, final String checkCode, String invitateCode) {
-		RequestParam paramPaht = new RequestParam("account/onekeyLogin")
+		RequestParam paramPath = new RequestParam("account/onekeyLogin")
 		.setParams("mobileNo", phoneNum)
 		.setParams("checkCode", checkCode)
 		.setParams("inviteCode", invitateCode);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPaht, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					UserInfor userInfor = null;
@@ -174,7 +176,6 @@ public class UserModel extends BaseModel{
 						String userToken = response.getString("token");
 						String mobileNum = response.getString("mobileNo");
 						String pwd = response.getString("passwd");
-						
 						userInfor = new UserInfor();
 						userInfor.setUserId(userId);
 						userInfor.setUserToken(userToken);
@@ -200,11 +201,12 @@ public class UserModel extends BaseModel{
 		.setParams("mobileNo", phoneNum)
 		.setParams("passwd", pwd);
 		final String password = pwd;
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String responseStr) {
 				try {
+					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					UserInfor userInfor = null;
@@ -254,11 +256,12 @@ public class UserModel extends BaseModel{
 		RequestParam paramPath = new RequestParam("account/logout")
 		.setParams("token", token);
 		HttpManager.getInstance(context)
-			.volleyJsonRequestByPost(
-					paramPath, new Listener<JSONObject>() {
+			.volleyRequestByPost(
+					paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestLoginOutResult(returnCode, msg);
@@ -342,11 +345,12 @@ public class UserModel extends BaseModel{
 		.setParams("buildingName", buildName)
 		.setParams("detailAddr", detailAddr)
 		.setParams("defaultFlag", flag);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-				paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String responseStr) {
 						try {
+							JSONObject response = new JSONObject(responseStr);
 							String returnCode = response.getString("returnCode");
 							String buildFlag = response.getString("buildingFlag");
 							String msg = response.getString("msg");
@@ -370,12 +374,13 @@ public class UserModel extends BaseModel{
 		.setParams("userId", userId)
 		.setParams("token", token)
 		.setParams("addressId", addressId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 				@Override
-				public void onResponse(JSONObject response) {
+				public void onResponse(String responseStr) {
 					//相当于修改，没有判断的必要
 					try {
+						JSONObject response = new JSONObject(responseStr);
 						String returnCode = response.getString("returnCode");
 						String msg = response.getString("msg");
 						mInterface.requestDeleteAddressResult(returnCode, msg);
@@ -398,11 +403,12 @@ public class UserModel extends BaseModel{
 		.setParams("token", token)
 		.setParams("addressId", addressId)
 		.setParams("userId", userId);
-		HttpManager.getInstance(context).volleyJsonRequestByPost(
-			paramPath, new Listener<JSONObject>() {
+		HttpManager.getInstance(context).volleyRequestByPost(
+			paramPath, new Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String responseStr) {
 						try {
+							JSONObject response = new JSONObject(responseStr);
 							String returnCode = response.getString("returnCode");
 							String msg = response.getString("msg");
 							mInterface.requestDefaultAddressResult(returnCode, msg);

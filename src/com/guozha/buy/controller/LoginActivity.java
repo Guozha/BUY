@@ -1,5 +1,6 @@
 package com.guozha.buy.controller;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.global.UserInfor;
+import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.UserModel;
@@ -43,6 +46,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	private static final int HAND_REFRESH_BUTTON = 0x0002;
 	private static final int HAND_SEND_COMPLETED = 0x0003;
 	private static final int HAND_LOGIN_SUCCESSS = 0x0004;
+	private static final int HAND_EMPTY_ADDRESS = 0x0005;
 	
 	public static final String LOGIN_STATUS = "login_status";
 	public static final int RESULT_CODE_LOGIN = 0;		//请求状态码		
@@ -84,6 +88,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				data.putExtra(LOGIN_STATUS, true);
 				setResult(RESULT_CODE_LOGIN, data);
 				LoginActivity.this.finish();
+				break;
+			case HAND_EMPTY_ADDRESS:
+				//去添加地址
+				Intent intent = new Intent(LoginActivity.this, AddAddressActivity.class);
+				startActivity(intent);
 				break;
 			}
 		}
@@ -333,9 +342,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				ConfigManager.getInstance().setUserPwd(userInfor.getPassword());
 				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
 				//登录成功
+				//判断是否有地址
+				mUserModel.requestListAddress(LoginActivity.this, ConfigManager.getInstance().getUserId());
 				mHandler.sendEmptyMessage(HAND_LOGIN_SUCCESSS);
 			}else{
 				ToastUtil.showToast(LoginActivity.this, msg);
+			}
+		}
+		
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			if(addressInfos == null || addressInfos.isEmpty()){
+				mHandler.sendEmptyMessage(HAND_EMPTY_ADDRESS);
+			}else{
+				ConfigManager.getInstance()
+					.setChoosedAddressId(addressInfos.get(0).getAddressId());
 			}
 		}
 	}

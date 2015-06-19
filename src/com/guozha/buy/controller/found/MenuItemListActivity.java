@@ -6,6 +6,8 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
@@ -18,10 +20,12 @@ import android.widget.GridView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MenuItemGridAdapter;
 import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.entry.found.FoundMenu;
 import com.guozha.buy.entry.found.FoundMenuPage;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
+import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
 
@@ -150,5 +154,31 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 			LogUtil.e("maxPageSize == " + mMaxPageSize);
 			mHander.sendEmptyMessage(HAND_FOUND_MENU_LIST_COMPLETED);
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_detail_actionbar_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			this.finish();
+			break;
+		case R.id.action_share:
+			ShareManager shareManager = new ShareManager(MenuItemListActivity.this);
+			shareManager.showSharePlatform(this);
+			break;
+		case R.id.action_cart:
+			Intent intent = new Intent(MenuItemListActivity.this, MainActivity.class);
+			intent.putExtra("fragmentIndex", MainActivity.FRAGMENT_CART_INDEX);
+			intent.putExtra("canback", true);
+			startActivity(intent);
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

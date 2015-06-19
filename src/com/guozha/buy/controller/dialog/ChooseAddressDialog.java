@@ -1,10 +1,12 @@
 package com.guozha.buy.controller.dialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -18,7 +20,8 @@ import com.guozha.buy.adapter.ChooseAddressListAdapter;
 import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
 
 /**
  * 选择地址对话框
@@ -27,17 +30,31 @@ import com.guozha.buy.global.MainPageInitDataManager;
  */
 public class ChooseAddressDialog extends Activity{
 	
+	private static final int HAND_ADDRESS_COMPLTED = 0x0001;
+	
 	private ListView mChooseAddressList;
 	private TextView mAddNewAddress;
-	private List<AddressInfo> mAddressInfos;
+	private List<AddressInfo> mAddressInfos = new ArrayList<AddressInfo>();
+	private ChooseAddressListAdapter mAddressListAdapter;
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_ADDRESS_COMPLTED:
+				mAddressListAdapter.notifyDataSetChanged();
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog_choose_address);
 		//让Dialog全屏
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		
 		setResult(0);
 		initView();
 		initData();
@@ -75,14 +92,23 @@ public class ChooseAddressDialog extends Activity{
 				ChooseAddressDialog.this.finish();
 			}
 		});
+		mAddressListAdapter = new ChooseAddressListAdapter(this, mAddressInfos);
+		mChooseAddressList.setAdapter(mAddressListAdapter);
 	}
 	
 	/**
 	 * 初始化数据
 	 */
 	private void initData(){
-		mAddressInfos = 
-				MainPageInitDataManager.getInstance().getAddressInfos();
-		mChooseAddressList.setAdapter(new ChooseAddressListAdapter(this, mAddressInfos));
+		mUserModel.requestListAddress(ChooseAddressDialog.this, ConfigManager.getInstance().getUserId());
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestListAddressResult(List<AddressInfo> adressInfos) {
+			if(adressInfos == null) return;
+			mAddressInfos.addAll(adressInfos);
+			mHandler.sendEmptyMessage(HAND_ADDRESS_COMPLTED);
+		}
 	}
 }

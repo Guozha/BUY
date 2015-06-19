@@ -80,6 +80,7 @@ public class MyAddressActivity extends BaseActivity{
 				AddressInfo addressInfo = mAdressInfos.get(position);
 				Intent intent = new Intent(MyAddressActivity.this, AddAddressActivity.class);
 				intent.putExtra("addressInfo", addressInfo);
+				intent.putExtra("addressSize", mAdressInfos.size());
 				startActivityForResult(intent, REQUEST_CODE);
 			}
 		});

@@ -24,7 +24,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:scaleType="centerInside"
-	        android:src="@drawable/main_menu_down_arrow"
+	        android:src="@drawable/arrow_next_down"
 	        android:layout_alignParentRight="true"
 	        android:layout_centerVertical="true"
 	        android:layout_marginRight="18dip"/>

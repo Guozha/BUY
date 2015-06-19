@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.controller.CustomApplication;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
 
@@ -66,11 +67,11 @@ public class HttpManager {
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyRequestByPost(String url, Listener<String> responsListener){
-		StringRequest stringRequest = 
-				new StringRequest(Method.POST, url, responsListener, errorListener);  
-		mQueue.add(stringRequest);
-	}
+	//public void volleyRequestByPost(String url, Listener<String> responsListener){
+	//	StringRequest stringRequest = 
+	//			new StringRequest(Method.POST, url, responsListener, errorListener);  
+	//	mQueue.add(stringRequest);
+	//}
 	
 	/**
 	 * post方式请求string字符串
@@ -78,7 +79,10 @@ public class HttpManager {
 	 * @param responsListener
 	 */
 	public void volleyRequestByPost(RequestParam paramPath, Listener<String> responsListener){
-		volleyRequestByPost(paramPath.toString(), responsListener);
+		//volleyRequestByPost(paramPath.toString(), responsListener);
+		StringRequest stringRequest = 
+				new GZStringRequest(paramPath.getParams(), Method.POST, paramPath.getUrl(), responsListener, errorListener);  
+		mQueue.add(stringRequest);
 	}
 	
 	
@@ -98,20 +102,25 @@ public class HttpManager {
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyJsonRequestByPost(String url, Listener<JSONObject> responsListener){
-		JsonObjectRequest jsonObjectRequest = 
-				new JsonObjectRequest(Method.POST, url, null, responsListener, errorListener);
-		mQueue.add(jsonObjectRequest);
-	}
+	//public void volleyJsonRequestByPost(String url, Listener<JSONObject> responsListener){
+	//	JsonObjectRequest jsonObjectRequest = 
+	//			new JsonObjectRequest(Method.POST, url, null, responsListener, errorListener);
+	//	mQueue.add(jsonObjectRequest);
+	//}
 	
 	/**
 	 * post方式请求Json格式的数据
 	 * @param url
 	 * @param responsListener
 	 */
-	public void volleyJsonRequestByPost(RequestParam paramPath, Listener<JSONObject> responsListener){
-		volleyJsonRequestByPost(paramPath.toString(), responsListener);
-	}
+	//public void volleyJsonRequestByPost(RequestParam paramPath, Listener<JSONObject> responsListener){
+		//volleyJsonRequestByPost(paramPath.toString(), responsListener);
+	//	JSONObject jsonObject = new JSONObject(paramPath.getParams());
+	//	LogUtil.e("jsonObject == " + jsonObject);
+	//	JsonObjectRequest jsonObjectRequest = 
+	//			new JsonObjectRequest(Method.POST, paramPath.getUrl(), jsonObject, responsListener, errorListener);
+	//	mQueue.add(jsonObjectRequest);
+	//}
 	
 	/**
 	 * 请求图片资源

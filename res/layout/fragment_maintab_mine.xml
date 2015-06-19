@@ -254,6 +254,30 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_27"/>
 	<LinearLayout 
+	    android:id="@+id/mine_invate_num_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    style="@style/mine_menu_list_area">
+	    
+	    <TextView 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:text="输入优惠码"
+	        android:drawableLeft="@drawable/tag_code"
+	        style="@style/mine_menu_list_text"/>
+	    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/button_next"
+	        android:scaleType="centerInside"/>
+	</LinearLayout>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+	<LinearLayout 
 	    android:id="@+id/mine_invitation_button"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
@@ -263,7 +287,7 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
-	        android:text="我的邀请"
+	        android:text="我的收益"
 	        android:drawableLeft="@drawable/tag_gain"
 	        style="@style/mine_menu_list_text"/>
 	    

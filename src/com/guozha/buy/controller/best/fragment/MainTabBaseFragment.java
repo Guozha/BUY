@@ -29,5 +29,10 @@ public abstract class MainTabBaseFragment extends BaseFragment{
 		TextView title = (TextView) actionbar.getCustomView().findViewById(R.id.title);
 		title.setText(barTitle);
 	}
+	
+	public boolean onKeyDownBack(){
+		
+		return false;
+	}
 
 }

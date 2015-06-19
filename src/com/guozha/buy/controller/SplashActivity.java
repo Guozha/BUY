@@ -1,5 +1,6 @@
 package com.guozha.buy.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
@@ -16,10 +17,12 @@ import cn.jpush.android.api.TagAliasCallback;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.global.UserInfor;
+import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.SystemModel;
 import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
@@ -41,7 +44,8 @@ public class SplashActivity extends Activity{
 	
 	private long mInitStartTime;
 	private boolean mHasInit;
-	private UserModel mUserModel;
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -69,7 +73,6 @@ public class SplashActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		mHasInit = false;
-		mUserModel = new UserModel(new MyUserModelResult());
 		initJPush();
 		//友盟统计设置为debug模式
 		//TODO 在发布的时候注意修改
@@ -146,18 +149,13 @@ public class SplashActivity extends Activity{
 			return;
 		}
 		
-		//注意：下面的操作和网络状态有关（联网状态下才请求）
-		
-		//初始化入口界面数据(这里最好传全局的context)
-		MainPageInitDataManager initDataManager = MainPageInitDataManager.getInstance();
 		//自动登录应用
+		mSystemModel.requestSystemTime(SplashActivity.this);
 		String mobileNum = ConfigManager.getInstance().getMobileNum();
 		String pwd = ConfigManager.getInstance().getUserPwd();
 		if(mobileNum != null && pwd != null){
 			mUserModel.requestPwdLogin(SplashActivity.this, mobileNum, pwd);
 		}
-		//获取地址列表
-		initDataManager.initPageData();
 		//设置别名和标签
 		//Set<String> tags = new HashSet<String>();
 		int userId = ConfigManager.getInstance().getUserId();
@@ -195,9 +193,27 @@ public class SplashActivity extends Activity{
 				ConfigManager.getInstance().setUserId(userInfor.getUserId());
 				ConfigManager.getInstance().setUserToken(userInfor.getUserToken());
 				ConfigManager.getInstance().setMobileNum(userInfor.getMobileNo());
+				//TODO 登录完成应该请求地址列表，设置默认地址
+				//判断是否有地址
+				mUserModel.requestListAddress(SplashActivity.this, ConfigManager.getInstance().getUserId());
 			}else{
 				ToastUtil.showToast(SplashActivity.this, msg);
 			}
+		}
+		
+		@Override
+		public void requestListAddressResult(List<AddressInfo> addressInfos) {
+			if(addressInfos != null && !addressInfos.isEmpty()){
+				ConfigManager.getInstance()
+					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+			}
+		}
+	}
+	
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestSystemTime(long systemTime) {
+			ConfigManager.getInstance().setTodayDate(systemTime);
 		}
 	}
 }

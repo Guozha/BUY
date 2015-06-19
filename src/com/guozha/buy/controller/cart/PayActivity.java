@@ -21,11 +21,12 @@ import com.guozha.buy.entry.cart.PayValidateResult;
 import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.MainPageInitDataManager;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.PayModel;
+import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.model.result.PayModelResult;
+import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
 import com.guozha.buy.util.ToastUtil;
@@ -41,6 +42,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	
 	private static final int HAND_PAY_WAY_COMPLETED = 0x0004;		//支付方式请求完毕
 	private static final int HAND_MAIN_SIGNLE_COMPLETED = 0x0005; 	//主单信息请求完毕
+	private static final int HAND_USER_INFO_COMPLETED = 0x0009;
 	private static final int HAND_PAY_VALIDATE_COMPLETED = 0x0006;  //付款前验证完毕
 	private static final int HAND_PAY_SUCCESSED = 0x0007;			//支付成功
 	private static final int HAND_CHOOSED_TICKET_COMPLETED = 0x0008; //选择菜谱完成
@@ -81,11 +83,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private View mHuoDaoFuKuanView;
 	
 	private List<PayWayEntry> mPayWayList;  //支付方式
-	
+	private AccountInfo mAccountInfo;
 	private PayOrderMesg mPayOrderMesg;		//支付信息
 	
 	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
 	private PayModel mPayModel = new PayModel(new MyPayModelResult());
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -158,6 +161,15 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 						setPayPriceText();
 					}
 					break;
+				case HAND_USER_INFO_COMPLETED:
+					if(mAccountInfo == null) return;
+					//获取账户信息(菜豆、菜票）
+					mAccountRemain = mAccountInfo.getBalance();
+					mBeanNum = mAccountInfo.getBeanAmount();
+					mCanUseMoneyText.setText("可用账户余额" +
+								UnitConvertUtil.getSwitchedMoney(mAccountRemain));	 //账户余额
+					mCanUseBeanText.setText("可用菜豆数" + mBeanNum + "个" + UnitConvertUtil.getBeanMoney(mBeanNum) + "元"); //菜豆数
+					break;
 			}
 		};
 	};
@@ -226,21 +238,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void initData(){
 		mOrderModel.requestOrderInfo(this, mOrderId);
-		
-		//获取账户信息(菜豆、菜票）
-		AccountInfo accountInfo = 
-				MainPageInitDataManager.getInstance().getAccountInfo();
-		if(accountInfo != null){
-			mAccountRemain = accountInfo.getBalance();
-			mBeanNum = accountInfo.getBeanAmount();
-			mCanUseMoneyText.setText("可用账户余额" +
-						UnitConvertUtil.getSwitchedMoney(mAccountRemain));	 //账户余额
-			mCanUseBeanText.setText("可用菜豆数" + mBeanNum + "个" + UnitConvertUtil.getBeanMoney(mBeanNum) + "元"); //菜豆数
-		}
-		
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
 		//获取支付方式
 		mPayModel.requestPayWays(this, addressId);
+		mUserModel.requestAccountInfo(this, token, userId);
 	}
 	
 	private long mBeginTimeMillis; //防止重复提交的时间记录
@@ -538,6 +541,15 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			}else{
 				ToastUtil.showToast(PayActivity.this, "验证订单失败");
 			}
+		}
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestAccountInfoResult(AccountInfo accountInfo) {
+			if(accountInfo == null) return;
+			mAccountInfo = accountInfo;
+			mHandler.sendEmptyMessage(HAND_USER_INFO_COMPLETED);
 		}
 	}
 }

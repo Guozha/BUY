@@ -11,7 +11,7 @@
 	    android:layout_height="48dip"
 	    android:gravity="center_vertical"
 	    android:tag="unexpand"
-	    android:background="#fefefe"
+	    android:background="@color/color_app_base_24"
 	   	android:orientation="horizontal">
 	    
 	    <TextView 
@@ -21,7 +21,6 @@
 	        android:textSize="@dimen/dimen_global_16sp"
 	        android:layout_marginLeft="18dip"
 	        android:gravity="center_vertical"
-	        
 	        android:text="全部分类"/>
 	    
 	    <Space
@@ -34,12 +33,12 @@
 	        android:layout_height="wrap_content"
 	        android:scaleType="centerInside"
 	        android:layout_marginRight="18dip"
-	        android:src="@drawable/main_menu_down"/>
+	        android:src="@drawable/arrow_down"/>
 	</LinearLayout>
 	<View 
 	    android:layout_width="match_parent"
-	    android:layout_height="1dp"
-	    android:background="#dadedd"/>
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	<!-- 下面 -->
 	<FrameLayout 
 	    android:layout_width="match_parent"
@@ -65,7 +64,7 @@
 		<com.guozha.buy.view.AnimatedExpandableListView 
 	        android:id="@+id/market_item_menu_list"
 	        android:layout_width="match_parent"
-	        android:background="@color/color_app_base_6"
+	        android:background="@color/color_app_base_24"
 	        android:visibility="gone"
 	        android:groupIndicator="@null"
 	        android:layout_height="match_parent" />
@@ -73,7 +72,6 @@
 	        android:id="@android:id/list"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" />
-		
 	</FrameLayout>
     
 </LinearLayout>
