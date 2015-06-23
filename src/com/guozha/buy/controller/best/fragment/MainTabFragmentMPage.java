@@ -74,7 +74,6 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	private void initView(View view){
 		if(view == null) return;
 		mListView = (ListView) view.findViewById(R.id.mpage_list);
-		
 		//添加footerView
 		mBottomLoadingView = getActivity().getLayoutInflater()
 				.inflate(R.layout.list_paging_bottom, null);
@@ -92,6 +91,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = new Intent(getActivity(), MenuDetailActivity.class);
+				intent.putExtra("menuId", mBestMenuItems.get(position).getMenuId());
 				startActivity(intent);
 			}
 		});

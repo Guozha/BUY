@@ -122,6 +122,13 @@ public class UserModel extends BaseModel{
 		 * @param marketTickets
 		 */
 		public void requestMyTicketResult(List<MarketTicket> marketTickets);
+		
+		/**
+		 * 输入邀请码请求
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestInvateNumCommitResult(String returnCode, String msg);
 	}
 
 	
@@ -433,6 +440,26 @@ public class UserModel extends BaseModel{
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				List<MarketTicket> marketTickets = gson.fromJson(response, new TypeToken<List<MarketTicket>>() { }.getType());
 				mInterface.requestMyTicketResult(marketTickets);
+			}
+		});
+	}
+	
+	public void requestInvateNumCommit(final Context context, String token, int userId, String preferenNo){
+		RequestParam paramPath = new RequestParam("account/preferen/commit")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("preferenNo", preferenNo);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response.getString("returnCode");
+					String msg = response.getString("msg");
+					mInterface.requestInvateNumCommitResult(returnCode, msg);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

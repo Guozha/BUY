@@ -80,8 +80,10 @@ public class HttpManager {
 	 */
 	public void volleyRequestByPost(RequestParam paramPath, Listener<String> responsListener){
 		//volleyRequestByPost(paramPath.toString(), responsListener);
+		LogUtil.e(paramPath.toString());
 		StringRequest stringRequest = 
-				new GZStringRequest(paramPath.getParams(), Method.POST, paramPath.getUrl(), responsListener, errorListener);  
+				new GZStringRequest(paramPath.getParams(), 
+						Method.POST, paramPath.getUrl(), responsListener, errorListener);
 		mQueue.add(stringRequest);
 	}
 	

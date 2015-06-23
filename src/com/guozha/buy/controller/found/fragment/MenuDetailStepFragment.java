@@ -1,6 +1,7 @@
 package com.guozha.buy.controller.found.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,25 +15,51 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MenuDetailStepListAdapter;
-import com.guozha.buy.controller.BaseFragment;
+import com.guozha.buy.entry.found.menu.MenuDetail;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 菜谱详情 - 步骤
  * @author PeggyTong
  *
  */
-public class MenuDetailStepFragment extends BaseFragment{
+public class MenuDetailStepFragment extends BaseMenuDetailFragment{
+	
+	private static final int HAND_MENU_DETAIL_COMPLETED = 0x0001;
 	
 	private ListView mStepList;  //步骤列表
 	private MenuDetailStepListAdapter mStepListAdapter;
+	private MenuDetail mMenuDetail;
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_MENU_DETAIL_COMPLETED:
+				updateView();
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_menu_detail_step, container, false);
 		initView(view); 
+		updateView();
 		return view;
+	}
+	
+	@Override
+	public void sendMenuDetailData(MenuDetail menuDetail) {
+		super.sendMenuDetailData(menuDetail);
+		if(menuDetail == null) return;
+		mMenuDetail = menuDetail;
+		mHandler.sendEmptyMessage(HAND_MENU_DETAIL_COMPLETED);
 	}
 	
 	private void initView(View view){
@@ -47,8 +74,19 @@ public class MenuDetailStepFragment extends BaseFragment{
 		headText.setGravity(Gravity.CENTER);
 		headText.setLayoutParams(params);
 		mStepList.addHeaderView(headText);
-		
-		mStepListAdapter = new MenuDetailStepListAdapter(getActivity());
+	}
+	
+	private void updateView(){
+		if(mMenuDetail == null) return;
+		if(mStepList == null) return;
+		mStepListAdapter = new MenuDetailStepListAdapter(
+				getActivity(), mMenuDetail.getMenuSteps(), mBitmapCache);
 		mStepList.setAdapter(mStepListAdapter);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
 	}
 }

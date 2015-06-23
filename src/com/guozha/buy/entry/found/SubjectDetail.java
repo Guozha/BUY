@@ -7,6 +7,8 @@ public class SubjectDetail {
 	private String itemDesc;
 	private String productType;
 	private int goodsOrMenuId;
+	private String unit;
+	private String unitPrice;
 	
 	private List<SubjectDetailItem> itemDetailList;
 	
@@ -39,5 +41,17 @@ public class SubjectDetail {
 	}
 	public void setItemDetailList(List<SubjectDetailItem> itemDetailList) {
 		this.itemDetailList = itemDetailList;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public String getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(String unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 }

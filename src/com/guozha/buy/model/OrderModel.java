@@ -11,10 +11,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.OrderDetail;
+import com.guozha.buy.entry.mine.order.OrderResult;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.OrderModelResult;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 订单相关的数据获取
@@ -90,6 +92,21 @@ public class OrderModel extends BaseModel{
 		 * @param msg
 		 */
 		public void requestGradeProductResult(String returnCode, String msg);
+		
+		/**
+		 * 4.12 确认订单，获取商品总额和服务费
+		 * @param returnCode
+		 * @param msg
+		 * @param totalPrice
+		 * @param serviceFee
+		 */
+		public void requestOrderConfirmResult(String returnCode, String msg, int totalPrice, int serviceFee);
+		
+		/**
+		 * 4.13 下单并支付
+		 * @param orderResult
+		 */
+		public void requestOrderNomalWithPayResult(OrderResult orderResult);
 	}
 	
 	
@@ -311,6 +328,72 @@ public class OrderModel extends BaseModel{
 						e.printStackTrace();
 					}
 				}
+		});
+	}
+	
+	/**
+	 * 4.12 确认订单并获取商品的总额和服务费
+	 */
+	public void requestOrderConfirm(final Context context, String token, int userId, int addressId){
+		RequestParam paramPath = new RequestParam("v31/order/confirmOrder")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("addressId", addressId);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response.getString("returnCode");
+					String msg = response.getString("msg");
+					int totalPrice = response.getInt("totalPrice");
+					int serviceFee = response.getInt("serviceFee");
+					mInterface.requestOrderConfirmResult(returnCode, msg, totalPrice, serviceFee);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 4.13 下单并支付
+	 * @param context
+	 * @param token
+	 * @param userId
+	 * @param orderId
+	 * @param balanceDecPrice
+	 * @param useTicketId
+	 * @param useBeanAmount
+	 * @param payWayId
+	 * @param addressId
+	 * @param wantUpTime
+	 * @param wantDownTime
+	 * @param memo
+	 */
+	public void requestOrderNomalWithPay(final Context context, String token, int userId, int orderId,
+			int balanceDecPrice, int useTicketId, int useBeanAmount,
+			int payWayId, int addressId, String wantUpTime, String wantDownTime, String memo){
+		RequestParam paramPath = new RequestParam("v31/order/insertNormalWithPay")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("orderId", orderId)
+		.setParams("balanceDecPrice", balanceDecPrice)
+		.setParams("useTicketId", useTicketId)
+		.setParams("useBeanAmount", useBeanAmount)
+		.setParams("payWayId", payWayId)
+		.setParams("addressId", addressId)
+		.setParams("wantUpTime", wantUpTime)
+		.setParams("wantDownTime", wantDownTime)
+		.setParams("memo", memo);
+		
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				OrderResult orderResult = gson.fromJson(response, new TypeToken<OrderResult>() { }.getType());
+				mInterface.requestOrderNomalWithPayResult(orderResult);
+			}
 		});
 	}
 }

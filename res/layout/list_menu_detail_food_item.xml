@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/color_app_base_24"
     android:gravity="center_vertical"
+    android:paddingRight="8dip"
     android:orientation="horizontal" >
     
 	<TextView 
@@ -27,9 +28,10 @@
 	
 	<CheckBox 
 	    android:id="@+id/menu_detail_list_item_check"
-	    android:layout_width="40dip"
-	    android:layout_height="40dip"
-	    android:gravity="center_vertical"
+	    android:layout_width="35dip"
+	    android:layout_height="35dip"
+	    android:gravity="center"
 	    android:button="@drawable/checkbox_style"
+	    android:background="@drawable/checkbox_bg"
 	    android:checked="true"/>
 </LinearLayout>

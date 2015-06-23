@@ -86,4 +86,10 @@ public class UserModelResult implements UserModelInterface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void requestInvateNumCommitResult(String returnCode, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
 }

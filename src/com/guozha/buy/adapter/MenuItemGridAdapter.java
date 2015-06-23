@@ -1,6 +1,6 @@
 package com.guozha.buy.adapter;
 
-import java.util.Random;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.found.FoundMenu;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
 
 public class MenuItemGridAdapter extends BaseAdapter{
@@ -21,9 +23,12 @@ public class MenuItemGridAdapter extends BaseAdapter{
 	private int mGridWidth;
 	private int mGridHeight;
 	private int mBgColor;
-	
-	public MenuItemGridAdapter(Context context, int gridSpace){
+	private List<FoundMenu> mFoundMenus;
+	private BitmapCache mBitmapCache;
+	public MenuItemGridAdapter(Context context, int gridSpace, List<FoundMenu> foundMenus, BitmapCache bitmapCache){
 		mInflater = LayoutInflater.from(context);
+		mFoundMenus = foundMenus;
+		mBitmapCache = bitmapCache;
 		int screenWidth = DimenUtil.getScreenWidth(context);
 		mGridSpace = gridSpace;
 		mGridWidth = mGridHeight = screenWidth / 2 - gridSpace;
@@ -32,24 +37,20 @@ public class MenuItemGridAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 20;
+		if(mFoundMenus == null) return 0;
+		return mFoundMenus.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mFoundMenus.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
-	Random radom = new Random();
-	int[] imags = new int[]{R.drawable.temp_mpage_img1, R.drawable.temp_mpage_img2, R.drawable.temp_mpage_img3};
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -73,9 +74,10 @@ public class MenuItemGridAdapter extends BaseAdapter{
 		}else{
 			holder.frame.setPadding(0, 0, 0, 0);
 		}
-		
-		holder.icon.setImageResource(imags[radom.nextInt(3)]);
-		holder.name.setText("蔬菜沙拉");
+		FoundMenu foundMenu = mFoundMenus.get(position);
+		holder.icon.setImageResource(R.drawable.default_icon);
+		mBitmapCache.loadBitmaps(holder.icon, foundMenu.getMenuImg());
+		holder.name.setText(foundMenu.getMenuName());
 		return convertView;
 	}
 	

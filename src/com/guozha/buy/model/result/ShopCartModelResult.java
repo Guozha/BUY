@@ -28,4 +28,10 @@ public class ShopCartModelResult implements ShopCartModelInterface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void requestCartAddMenuResult(String returnCode, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
 }

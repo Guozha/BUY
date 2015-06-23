@@ -84,7 +84,6 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			}
 		}
 		setResult(0);
-		
 		mWheelView = (WheelView) findViewById(R.id.select_weight_wheelview);
 		mWheelView.setVisibleItems(5); // Number of items
 		mWheelView.setWheelBackground(R.drawable.wheel_bg_holo);
@@ -199,7 +198,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			return;
 		}
 		mShopCartModel.requestAddCart(this, userId, 
-				Integer.parseInt(mGoodsId), "02", quantity, token, addressId);
+				Integer.parseInt(mGoodsId), quantity, token, addressId);
 	}
 	
 	private void requestWeightData(){

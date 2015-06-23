@@ -22,7 +22,7 @@
 	
 	<!-- splash -->
 	<color name="activity_splash_bg_color">#e9a22f</color>
-	
+	<color name="checkbox_press_bg">#60df3411</color>
 	<!-- main_frgment_mpage -->
 	
 	<!-- scroll wheel -->

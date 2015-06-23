@@ -2,6 +2,9 @@ package com.guozha.buy.model;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 
 import com.android.volley.Response.Listener;
@@ -9,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.found.FoundMenuPage;
+import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.mpage.BestMenuPage;
 import com.guozha.buy.global.net.HttpManager;
@@ -42,6 +46,19 @@ public class MenuModel extends BaseModel{
 		 * @param foundMenuPage
 		 */
 		public void requestFoundMenuListResult(FoundMenuPage foundMenuPage);
+		
+		/**
+		 * 8.6 菜谱详情
+		 * @param menuDetail
+		 */
+		public void requestMenuDetailResult(MenuDetail menuDetail);
+		
+		/**
+		 * 1.11.2 菜谱收藏
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestCollectionMenuResult(String returnCode, String msg);
 	}
 	
 	public void requestMenusByGoods(final Context context, int goodsId){
@@ -96,6 +113,48 @@ public class MenuModel extends BaseModel{
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				FoundMenuPage foundMenuPage = gson.fromJson(response, new TypeToken<FoundMenuPage>() { }.getType());
 				mInterface.requestFoundMenuListResult(foundMenuPage);
+			}
+		});
+	}
+	
+	/**
+	 * 8.6 请求菜谱详情
+	 * @param context
+	 * @param menuId
+	 */
+	public void requestMenuDetail(final Context context, int menuId){
+		RequestParam paramPath = new RequestParam("v31/menu/detail")
+		.setParams("menuId", menuId);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
+				MenuDetail menuDetail = gson.fromJson(response, new TypeToken<MenuDetail>() { }.getType());
+				mInterface.requestMenuDetailResult(menuDetail);
+			}
+		});
+	}
+	
+	/**
+	 * 1.11.2 请求收藏菜谱
+	 */
+	public void requestCollectionMenu(final Context context, String token, int userId, int menuId){
+		RequestParam paramPath = new RequestParam("account/myfavo/insertMenuFavo")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("menuIds", menuId);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response
+							.getString("returnCode");
+					String msg = response.getString("msg");
+					mInterface.requestCollectionMenuResult(returnCode, msg);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

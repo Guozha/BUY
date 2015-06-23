@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_app_base_6"
+    android:background="@color/color_app_base_24"
     android:orientation="vertical" >
     
 	<RelativeLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
-	    android:background="@color/color_app_base_6">
+	    android:background="@color/color_app_base_24">
 	    
 	    <TextView 
 	        android:id="@+id/collection_recipe_dirname"
@@ -17,7 +17,7 @@
 	        android:text="默认"
 	        android:layout_centerVertical="true"
 	        android:layout_marginLeft="18dip"
-	        android:textColor="@color/color_app_base_4"
+	        android:textColor="@color/color_app_base_26"
 	        android:textSize="@dimen/dimen_global_16sp"/>
 	    
 	    <ImageView 

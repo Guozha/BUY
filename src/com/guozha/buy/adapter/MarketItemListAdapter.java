@@ -97,6 +97,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		    	holderEntry.image = (ImageView) itemVegetable.findViewById(R.id.vegetable_cell_image);
 		    	holderEntry.productName = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_name);
 		    	holderEntry.price = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_price);
+		    	holderEntry.bargainIcon = (ImageView) itemVegetable.findViewById(R.id.vegetable_bargain_icon);
 		    	holder.cells.add(holderEntry);
 		    }
 		    holder.typeName = (TextView) convertView.findViewById(R.id.item_type_name);
@@ -131,7 +132,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			ItemSaleInfo itemSaleInfo = itemSaleInfos.get(i);
 			holderEntry.productName.setVisibility(View.VISIBLE);
 			holderEntry.price.setVisibility(View.VISIBLE);
-			
+			holderEntry.bargainIcon.setVisibility(View.GONE);
 			//设置TAG
 			holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
 					+ ":" + itemSaleInfo.getUnitPrice() + ":" + itemSaleInfo.getUnit());
@@ -143,6 +144,10 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			String imgUrl = itemSaleInfo.getGoodsImg();
 			holderEntry.image.setImageResource(R.drawable.default_icon);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
+			
+			if("1".equals(itemSaleInfo.getBargainFlag())){
+				holderEntry.bargainIcon.setVisibility(View.VISIBLE);
+			}
 		}
 		
 		for(int i = itemSaleInfos.size(); i < holder.cells.size(); i++){
@@ -194,6 +199,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		private ImageView image;
 		private TextView productName;
 		private TextView price;
+		private ImageView bargainIcon;
 	}
 
 }

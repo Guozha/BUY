@@ -87,11 +87,10 @@ public class GoodsModel extends BaseModel{
 	 * @param pageNum
 	 * @param pageSize
 	 */
-	public void requestGoodsList(final Context context, int addressId, int pageNum, int pageSize){
-		RequestParam paramPath = new RequestParam("goods/general/list")
+	public void requestGoodsList(final Context context, int addressId, int pageNum){
+		RequestParam paramPath = new RequestParam("v31/goods/general/list")
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId))
-		.setParams("pageNum", pageNum)
-		.setParams("pageSize", pageSize);
+		.setParams("pageNum", pageNum);
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, 
 			new Listener<String>() {
 				@Override

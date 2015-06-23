@@ -1,5 +1,7 @@
 package com.guozha.buy.model;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +56,13 @@ public class ShopCartModel extends BaseModel{
 		 * @param msg
 		 */
 		public void requestDeleteCartResult(String returnCode, String msg);
+		
+		/**
+		 * 3.6 菜谱添加购物车
+		 * @param returnCode
+		 * @param msg
+		 */
+		public void requestCartAddMenuResult(String returnCode, String msg);
 	}
 	
 	/**
@@ -61,7 +70,7 @@ public class ShopCartModel extends BaseModel{
 	 * @param handler
 	 */
 	public void requestListCartItem(final Context context, int userId, int addressId){
-		RequestParam paramPath = new RequestParam("cart/list")
+		RequestParam paramPath = new RequestParam("v31/cart/list")
 		.setParams("userId", userId)
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
 		HttpManager.getInstance(context).volleyRequestByPost(
@@ -76,15 +85,20 @@ public class ShopCartModel extends BaseModel{
 	}
 	
 	/**
-	 * 3. 2请求添加到购物车
+	 * 3. 7 食材添加到购物车
+	 * @param context
+	 * @param userId
+	 * @param goodsId
+	 * @param productType
 	 * @param quantity
+	 * @param token
+	 * @param addressId
 	 */
 	public void requestAddCart(final Context context, int userId,
-			int goodsId, String productType, int quantity, String token, int addressId) {
-		RequestParam paramPath = new RequestParam("cart/insert")
+			int goodsId, int quantity, String token, int addressId) {
+		RequestParam paramPath = new RequestParam("v31/cart/insertForGoods")
 		.setParams("userId", userId)
-		.setParams("id", goodsId)
-		.setParams("productType", "02")  //02是商品
+		.setParams("goodsId", goodsId)
 		.setParams("amount", quantity)
 		.setParams("token", token)
 		.setParams("addressId", addressId);
@@ -97,6 +111,38 @@ public class ShopCartModel extends BaseModel{
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
 					mInterface.requestAddCartResult(returnCode, msg);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 3.6 菜谱添加购物车
+	 * @param context
+	 * @param userId
+	 * @param menuId
+	 * @param token
+	 * @param addressId
+	 * @param goodsId
+	 */
+	public void requestCartAddMenu(final Context context, 
+			int userId, int menuId, String token, int addressId, List<String> goodsIds){
+		RequestParam paramPath = new RequestParam("v31/cart/insertForMenu")
+		.setParams("userId", userId)
+		.setParams("menuId", menuId)
+		.setParams("token", token)
+		.setParams("addressId", addressId)
+		.setParams("goodsId", goodsIds);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response.getString("returnCode");
+					String msg = response.getString("msg");
+					mInterface.requestCartAddMenuResult(returnCode, msg);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

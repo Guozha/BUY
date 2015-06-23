@@ -22,7 +22,6 @@ import com.guozha.buy.controller.mine.MyCollectionActivity;
 import com.guozha.buy.controller.mine.MyInvateNumActivity;
 import com.guozha.buy.controller.mine.MyOrderActivity;
 import com.guozha.buy.controller.mine.MyTicketActivity;
-import com.guozha.buy.controller.mine.SettingActivity;
 import com.guozha.buy.controller.mine.SharePraiseActivity;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.global.ConfigManager;
@@ -101,6 +100,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		view.findViewById(R.id.mine_ticket_button).setOnClickListener(this);
 		view.findViewById(R.id.mine_address_button).setOnClickListener(this);
 		view.findViewById(R.id.mine_online_service__button).setOnClickListener(this);
+		view.findViewById(R.id.mine_invate_num_button).setOnClickListener(this);
 		mAccountInfoArea.setVisibility(View.GONE);
 	}
 	
@@ -228,8 +228,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 				}
 			}
 			break;
-	
-		
 		case 1: //从相册获取
 			if(data == null) return;
 			startPhotoZoom(data.getData());
@@ -243,7 +241,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 				setPicToView(data);
 			}
 			break;
-			
 		default:
 			break;
 		}

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
@@ -20,7 +21,10 @@ import com.guozha.buy.entry.cart.PayOrderMesg;
 import com.guozha.buy.entry.cart.PayValidateResult;
 import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.mine.account.AccountInfo;
+import com.guozha.buy.entry.mine.order.Order;
+import com.guozha.buy.entry.mine.order.OrderResult;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.PayModel;
 import com.guozha.buy.model.UserModel;
@@ -29,6 +33,7 @@ import com.guozha.buy.model.result.PayModelResult;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.WXpayManager;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.util.pay.PayResult;
@@ -41,7 +46,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private static final int REQUEST_CODE = 0x0001;
 	
 	private static final int HAND_PAY_WAY_COMPLETED = 0x0004;		//支付方式请求完毕
-	private static final int HAND_MAIN_SIGNLE_COMPLETED = 0x0005; 	//主单信息请求完毕
 	private static final int HAND_USER_INFO_COMPLETED = 0x0009;
 	private static final int HAND_PAY_VALIDATE_COMPLETED = 0x0006;  //付款前验证完毕
 	private static final int HAND_PAY_SUCCESSED = 0x0007;			//支付成功
@@ -49,8 +53,11 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	
 	private boolean mOrderComeIn = false; 	//是否从订单进来
 	
-	private int mOrderId = -1;
+	private int mOrderId = 0;
 	private int mServicePrice = -1;
+	private String mFromeTime;
+	private String mToTime;
+	private String mMemo;
 	
 	private boolean mBeanChecked = false;				//是否选择使用菜豆
 	private boolean mAccountRemainChecked = false;		//是否选择使用账户余额
@@ -84,7 +91,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	
 	private List<PayWayEntry> mPayWayList;  //支付方式
 	private AccountInfo mAccountInfo;
-	private PayOrderMesg mPayOrderMesg;		//支付信息
+	//private PayOrderMesg mPayOrderMesg;		//支付信息
+	private Order mOrder;
 	
 	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
 	private PayModel mPayModel = new PayModel(new MyPayModelResult());
@@ -129,11 +137,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 							break;
 						};
 					}
-					break;
-				case HAND_MAIN_SIGNLE_COMPLETED:
-					mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
-					mServerPriceText.setText(UnitConvertUtil.getSwitchedMoney(mServicePrice) + "元");
-					mPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice + mServicePrice) + "元");
 					break;
 				case HAND_PAY_VALIDATE_COMPLETED:
 					requestPayMoney();
@@ -183,9 +186,13 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
-				mOrderId = bundle.getInt("orderId");
+				//mOrderId = bundle.getInt("orderId");
 				mServicePrice = bundle.getInt("serverPrice");
+				mTotalPrice = bundle.getInt("totalPrice");
+				mFromeTime = bundle.getString("fromTime");
+				mToTime = bundle.getString("toTime");
 				mOrderComeIn = bundle.getBoolean("orderComeIn");
+				mMemo = bundle.getString("memo");
 			}
 		}
 		setResult(0);
@@ -231,13 +238,19 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		mTicketView = findViewById(R.id.pay_ticket_choose);
 		mTicketView.setOnClickListener(this);
 		findViewById(R.id.pay_button).setOnClickListener(this);
+		
+		mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
+		mServerPriceText.setText(UnitConvertUtil.getSwitchedMoney(mServicePrice) + "元");
+		mPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice + mServicePrice) + "元");
 	}
 	
 	/**
 	 * 初始化数据
 	 */
 	private void initData(){
-		mOrderModel.requestOrderInfo(this, mOrderId);
+		
+		//mOrderModel.requestOrderInfo(this, mOrderId);
+		
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
@@ -368,7 +381,9 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		mPayModel.requestPreparePay(this, token, userId, mOrderId, mTicketId, Integer.parseInt(payWayId), mAccountRemainDeduct, mBeanrDeduct);
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mOrderModel.requestOrderNomalWithPay(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId), addressId, mFromeTime, mToTime, mMemo);
+		//mPayModel.requestPreparePay(this, token, userId, mOrderId, mTicketId, Integer.parseInt(payWayId), mAccountRemainDeduct, mBeanrDeduct);
 	}
 
 	/**
@@ -385,10 +400,10 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			tag = String.valueOf(payZhifubaoIcon.getTag());
 			if("1".equals(tag)){
 				AlipayManager alipayManager = new AlipayManager(
-						mPayOrderMesg.getOrderNo(), 
-						mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", 
-						mPayOrderMesg.getMemo(), 
-						UnitConvertUtil.getSwitchedMoney(mPayOrderMesg.getPayPrice()));
+						mOrder.getOrderNo(), 
+						mOrder.getFirstShowName() + "等" + mOrder.getQuantity() + "件商品", 
+						mOrder.getMemo(), 
+						UnitConvertUtil.getSwitchedMoney(mOrder.getPayPrice()));
 				alipayManager.requestPay(this, mHandler);
 			}else{
 				ToastUtil.showToast(PayActivity.this, "请选择支付方式");
@@ -399,17 +414,17 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			if("1".equals(tag)){
 				WXpayManager wxpayManager = new WXpayManager(
 						this, 
-						mPayOrderMesg.getOrderNo(), 
-						mPayOrderMesg.getFirstShowName() + "等" + mPayOrderMesg.getQuantity() + "件商品", 
-						mPayOrderMesg.getMemo(), 
-						mPayOrderMesg.getPayPrice());
+						mOrder.getOrderNo(), 
+						mOrder.getFirstShowName() + "等" + mOrder.getQuantity() + "件商品", 
+						mOrder.getMemo(), 
+						mOrder.getPayPrice());
 				wxpayManager.requestPay(this);
 			}else{
 				ToastUtil.showToast(PayActivity.this, "请选择支付方式");
 			}
 			break;
 		case HUO_DAO_FU_KUAN:
-			
+			LogUtil.e("货到付款。。。");
 			break;
 		case WANG_YING:
 			
@@ -498,11 +513,42 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	class MyOrderModelResult extends OrderModelResult{
+		/*
 		@Override
 		public void requestOrderInforResult(int totalPrice, int serviceFee) {
 			mTotalPrice = totalPrice;
 			mServicePrice = serviceFee;
 			mHandler.sendEmptyMessage(HAND_MAIN_SIGNLE_COMPLETED);			
+		}
+		*/
+		@Override
+		public void requestOrderNomalWithPayResult(OrderResult orderResult) {
+			LogUtil.e("requestNomalPayResult...");
+			if(orderResult == null) {
+				ToastUtil.showToast(PayActivity.this, "生成订单数据异常");
+				return;
+			}
+			if(BaseModel.REQUEST_SUCCESS.equals(orderResult.getReturnCode())){
+				String flag = orderResult.getNeedPayFlag();
+				if("0".equals(flag)){
+					mHandler.sendEmptyMessage(HAND_PAY_SUCCESSED);
+				}else if("1".equals(flag)){
+					mOrder = orderResult.getOrder();
+					if(mOrder != null){
+						if(mOrder.getPayPrice() <= 0){
+							ToastUtil.showToast(PayActivity.this, "支付金额必须大于0");
+						}else{
+							mHandler.sendEmptyMessage(HAND_PAY_VALIDATE_COMPLETED);
+						}
+					}else{
+						ToastUtil.showToast(PayActivity.this, "订单信息获取失败");
+					}
+				}else{
+					ToastUtil.showToast(PayActivity.this, "获取的支付码未定义");
+				}
+			}else{
+				ToastUtil.showToast(PayActivity.this, orderResult.getMsg());
+			}
 		}
 	}
 	
@@ -513,6 +559,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			mHandler.sendEmptyMessage(HAND_PAY_WAY_COMPLETED);
 		}
 		
+		/*
 		@Override
 		public void requestPreparePayResult(PayValidateResult payValidateResult) {
 			if(payValidateResult != null){
@@ -542,6 +589,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 				ToastUtil.showToast(PayActivity.this, "验证订单失败");
 			}
 		}
+		*/
 	}
 	
 	class MyUserModelResult extends UserModelResult{

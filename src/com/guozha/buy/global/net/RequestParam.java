@@ -1,6 +1,7 @@
 package com.guozha.buy.global.net;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,31 +58,48 @@ public class RequestParam {
 		return this;
 	}
 	
+	/**
+	 * 设置参数
+	 * @param key
+	 * @param values
+	 */
+	public RequestParam setParams(String key, List<String> values){
+		for(int i = 0; i < values.size(); i++){
+			setParams(key, values.get(i));
+		}
+		return this;
+	}
+	
+	/**
+	 * 设置参数
+	 * @param key
+	 * @param values
+	 * @return
+	 */
+	public RequestParam setParams(String key,String[] values){
+		setParams(key, Arrays.asList(values));
+		return this;
+	}
+	
+	/**
+	 * 设置参数
+	 * @param key
+	 * @param values
+	 * @return
+	 */
+	public RequestParam setParams(String key, int[] values){
+		for(int i = 0; i < values.length; i++){
+			setParams(key, values[i]);
+		}
+		return this;
+	}
+	
 	public Map<String, String> getParams(){
 		return mParams;
 	}
 	
 	public String getUrl(){
 		return URL + mUri;
-	}
-
-	
-	/**
-	 * 设置参数
-	 * @param key
-	 * @param values
-	 */
-	public void setParams(String key, String[] values){
-		
-	}
-	
-	/**
-	 * 设置参数
-	 * @param key
-	 * @param values
-	 */
-	public void setParams(String key, List<String> values){
-		
 	}
 	
 	@Override

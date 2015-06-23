@@ -101,6 +101,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 				FoundSubject foundSubject = mSubjectItems.get(position);
 				Intent intent = new Intent(getActivity(), FoundSubjectDetailActivity.class);
 				intent.putExtra("subjectId", foundSubject.getSubjectId());
+				intent.putExtra("subjectImage", foundSubject.getSubjectImg());
 				intent.putExtra("subjectName", foundSubject.getSubjectName());
 				intent.putExtra("subjectDescript", foundSubject.getSubjectDesc());
 				startActivity(intent);

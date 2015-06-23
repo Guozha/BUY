@@ -41,7 +41,7 @@
 	    <TextView 
 	        android:id="@+id/menu_detail_cookway"
 	        android:layout_width="wrap_content"
-	        android:layout_height="56dip"
+	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="8dip"
 	        android:textColor="@color/color_app_base_22"
 	        android:textSize="@dimen/dimen_global_12sp"/>

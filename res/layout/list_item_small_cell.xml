@@ -3,8 +3,8 @@
         android:id="@+id/vegetable_cell_item1"
         android:layout_height="wrap_content"
         android:layout_width="0dip"
-        android:padding="8dip"
         android:background="@color/color_app_base_5"
+        android:paddingBottom="8dip"
         android:layout_weight="1">
         
         <!-- 这里的高度暂时改为0dip -->
@@ -19,6 +19,7 @@
             android:src="@drawable/main_add_in"/>
         <ImageView 
             android:id="@+id/vegetable_cell_image"
+            android:layout_marginTop="8dip"
             android:layout_below="@id/vegetable_cell_icon"
             android:layout_width="match_parent"
             android:layout_height="100dip"
@@ -30,21 +31,35 @@
             android:layout_below="@id/vegetable_cell_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/color_app_base_4"
+            android:textSize="12sp"
+            android:textColor="@color/color_app_base_26"
             android:maxLines="2"
             android:gravity="bottom"
             android:lines="2"
             android:ellipsize="end"
+            android:layout_centerHorizontal="true"
             android:text="产品名称"/>
         <TextView
             android:id="@+id/vegetable_cell_price"
             android:layout_below="@id/vegetable_cell_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textColor="@color/color_app_base_4"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_app_base_26"
             android:text="重量"/>
+        
+        <ImageView 
+            android:id="@+id/vegetable_bargain_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/tag_tejia"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
     </RelativeLayout>

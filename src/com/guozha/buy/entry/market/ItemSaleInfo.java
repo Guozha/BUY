@@ -13,6 +13,8 @@ public class ItemSaleInfo implements Serializable{
 	private String unit;		//计量单位
 	private String goodsImg;	//商品图片
 	private String goodsProp;	//商品性质
+	private String bargainFlag;  //0不是特惠， 1是特惠
+	private int bargainUnitPrice; //特惠单价
 	
 	public int getGoodsId() {
 		return goodsId;
@@ -50,6 +52,16 @@ public class ItemSaleInfo implements Serializable{
 	public void setGoodsProp(String goodsProp) {
 		this.goodsProp = goodsProp;
 	}
-	
-	
+	public String getBargainFlag() {
+		return bargainFlag;
+	}
+	public void setBargainFlag(String bargainFlag) {
+		this.bargainFlag = bargainFlag;
+	}
+	public int getBargainUnitPrice() {
+		return bargainUnitPrice;
+	}
+	public void setBargainUnitPrice(int bargainUnitPrice) {
+		this.bargainUnitPrice = bargainUnitPrice;
+	}
 }

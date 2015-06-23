@@ -39,8 +39,7 @@
             android:textColor="@color/color_app_base_9"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="18dip"
-            android:text="￥59.80"/>
+            android:layout_marginRight="18dip"/>
     </RelativeLayout>
     <!-- 服务费 -->
     <RelativeLayout 
@@ -75,8 +74,7 @@
             android:textColor="@color/color_app_base_9"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="18dip"
-            android:text="5元"/>
+            android:layout_marginRight="18dip"/>
     </RelativeLayout>
     
     <!-- 账户余额 -->
@@ -96,8 +94,7 @@
             android:textColor="@color/color_app_base_4"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="18dip"
-            android:text="可用账户余额12元"/>
+            android:layout_marginLeft="18dip"/>
         
         <TextView 
             android:id="@+id/pay_can_use_money_deduct"
@@ -134,8 +131,7 @@
             android:textColor="@color/color_app_base_4"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="18dip"
-            android:text="可用35个菜豆抵0.35元"/>
+            android:layout_marginLeft="18dip"/>
         
         <ImageView 
             android:id="@+id/pay_can_use_bean_icon"
@@ -175,8 +171,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dip"
-            android:visibility="gone"
-            android:text="￥12.00"/>
+            android:visibility="gone"/>
         
          <ImageView 
              android:id="@+id/pay_ticket_icon"
@@ -214,8 +209,7 @@
             android:textColor="@color/color_app_base_9"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="18dip"
-            android:text="￥49.8"/>
+            android:layout_marginRight="18dip"/>
     </RelativeLayout>
     
     <TextView 

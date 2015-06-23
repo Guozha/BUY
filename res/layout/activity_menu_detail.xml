@@ -66,6 +66,7 @@
 	    android:layout_height="48dip"
 	    android:orientation="horizontal">
 	    <Button 
+	        android:id="@+id/menu_collection_button"
 	        android:layout_width="0dip"
 	        android:layout_weight="1"
 	        android:layout_height="match_parent"
@@ -78,6 +79,7 @@
 	        android:layout_height="match_parent"
 	        android:background="@color/color_app_base_27"/>
 	    <Button 
+	        android:id="@+id/menu_addcart_button"
 	        android:layout_width="0dip"
 	        android:layout_weight="1"
 	        android:layout_height="match_parent"

@@ -10,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,6 +21,7 @@ import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.entry.found.FoundMenu;
 import com.guozha.buy.entry.found.FoundMenuPage;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.server.ShareManager;
@@ -44,6 +43,7 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 	private String mMenuTypeName;
 	private List<FoundMenu> mFoundMenus = new ArrayList<FoundMenu>();
 	private int mGridSpace;
+	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
 	
 	private Handler mHander = new Handler(){
@@ -79,14 +79,17 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 		mMenuItemGrid.setVerticalSpacing(mGridSpace);
 		mMenuItemGrid.setPadding(mGridSpace, 0, mGridSpace, 0);
 		
-		mItemGridAdapter = new MenuItemGridAdapter(this, mGridSpace);
+		mItemGridAdapter = new MenuItemGridAdapter(this, mGridSpace, mFoundMenus, mBitmapCache);
 		mMenuItemGrid.setAdapter(mItemGridAdapter);
 		
 		mMenuItemGrid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+				if(mFoundMenus == null || mFoundMenus.isEmpty()) return;
+				Intent intent = new Intent(MenuItemListActivity.this, MenuDetailActivity.class);
+				intent.putExtra("menuId", mFoundMenus.get(position).getMenuId());
+				startActivity(intent);
 			}
 		});
 	}
@@ -180,5 +183,11 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mBitmapCache.fluchCache();
 	}
 }

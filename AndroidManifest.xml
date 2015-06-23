@@ -8,6 +8,8 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
     
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+        
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -179,6 +181,8 @@
         <!-- 下单界面 -->
         <activity 
             android:name="com.guozha.buy.controller.cart.PlanceOrderActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+         	android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"></activity>
         
         <!-- Debug界面 -->

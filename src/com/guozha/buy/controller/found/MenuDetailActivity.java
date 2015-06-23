@@ -13,14 +13,27 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.MainActivity;
+import com.guozha.buy.controller.found.fragment.BaseMenuDetailFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailDescriptFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailFoodFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailStepFragment;
+import com.guozha.buy.entry.found.menu.MenuDetail;
+import com.guozha.buy.entry.found.menu.MenuGoods;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.MenuModel;
+import com.guozha.buy.model.ShopCartModel;
+import com.guozha.buy.model.result.MenuModelResult;
+import com.guozha.buy.model.result.ShopCartModelResult;
+import com.guozha.buy.server.FloatWindowManage;
 import com.guozha.buy.server.ShareManager;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ViewPagerTab;
 
 /**
@@ -28,18 +41,28 @@ import com.guozha.buy.view.ViewPagerTab;
  * @author PeggyTong
  *
  */
-public class MenuDetailActivity extends FragmentActivity{
+public class MenuDetailActivity extends FragmentActivity implements OnClickListener{
 	
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
 	private List<TextView> mTabTexts;
+	private MenuDetail mMenuDetail;
+	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
+	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
+	private int mMenuId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_detail);
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		if(bundle != null){
+			mMenuId = bundle.getInt("menuId");
+		}
 		customActionBarStyle("菜谱详情");
 		initView();
+		initData();
 	}
 	
 	/**
@@ -65,6 +88,12 @@ public class MenuDetailActivity extends FragmentActivity{
 		mTabTexts.add((TextView) findViewById(R.id.menu_detail_frag2_tab));
 		mTabTexts.add((TextView) findViewById(R.id.menu_detail_frag3_tab));
 		setUpTab();
+		findViewById(R.id.menu_collection_button).setOnClickListener(this);
+		findViewById(R.id.menu_addcart_button).setOnClickListener(this);
+	}
+	
+	private void initData(){
+		mMenuModel.requestMenuDetail(this, mMenuId);
 	}
 	
 	private void setUpViewPage(){
@@ -80,25 +109,21 @@ public class MenuDetailActivity extends FragmentActivity{
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{
 		
-		private Class[] fragments;
+		BaseMenuDetailFragment[] fragments;
 		
 		public ViewPagerAdapter(FragmentManager fm) {
 			super(fm);
-			fragments = new Class[]{
-				MenuDetailDescriptFragment.class, 
-				MenuDetailFoodFragment.class,
-				MenuDetailStepFragment.class
+			fragments = new BaseMenuDetailFragment[]{
+				new MenuDetailDescriptFragment(), 
+				new MenuDetailFoodFragment(),
+				new MenuDetailStepFragment()
 			};
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			try {
-				return (Fragment) fragments[position].newInstance();
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			return fragments[position];
+			
 		}	
 
 		@Override
@@ -131,5 +156,62 @@ public class MenuDetailActivity extends FragmentActivity{
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	class MyMenuModelResult extends MenuModelResult{
+		@Override
+		public void requestMenuDetailResult(MenuDetail menuDetail) {
+			final BaseMenuDetailFragment[] fragments = mViewPagerAdapter.fragments;
+			for(int i = 0; i < fragments.length; i++){
+				fragments[i].sendMenuDetailData(menuDetail);
+			}
+			mMenuDetail = menuDetail;
+		}
+		
+		@Override
+		public void requestCollectionMenuResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(MenuDetailActivity.this, "收藏成功");
+			}else{
+				ToastUtil.showToast(MenuDetailActivity.this, msg);
+			}
+		}
+	}
+	
+	class MyShopCartModelResult extends ShopCartModelResult{
+		@Override
+		public void requestCartAddMenuResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				ToastUtil.showToast(MenuDetailActivity.this, "添加成功");
+			}else{
+				ToastUtil.showToast(MenuDetailActivity.this, msg);
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		String token = ConfigManager.getInstance().getUserToken();
+		int userId = ConfigManager.getInstance().getUserId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		switch (view.getId()) {
+		case R.id.menu_collection_button:
+			mMenuModel.requestCollectionMenu(
+					MenuDetailActivity.this, token, userId, mMenuId);
+			FloatWindowManage.createAddCartWindow("收藏成功", this);
+			break;
+		case R.id.menu_addcart_button:
+			List<String> goodsId = new ArrayList<String>();
+			for(int i = 0; i < mMenuDetail.getMenuGoods().size(); i++){
+				MenuGoods menuGoods = mMenuDetail.getMenuGoods().get(i);
+				goodsId.add(String.valueOf(menuGoods.getGoodsId()));
+			}
+			mShopCartModel.requestCartAddMenu(
+					MenuDetailActivity.this, userId, mMenuId, token, addressId, goodsId);
+			FloatWindowManage.createAddCartWindow("+1", this);
+			break;
+		default:
+			break;
+		}
 	}
 }

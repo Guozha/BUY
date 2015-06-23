@@ -59,7 +59,6 @@ public class PlanceOrderActivity extends BaseActivity{
 	
 	private int mTotalPrice = -1;
 	private int mServicePrice = -1;
-	private TextView mTotalPriceText;
 	
 	private TextView mOrderName;
 	private TextView mOrderPhone;
@@ -121,6 +120,7 @@ public class PlanceOrderActivity extends BaseActivity{
 	private void initData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
 		mSystemModel.requestSystemTime(this);
@@ -157,7 +157,7 @@ public class PlanceOrderActivity extends BaseActivity{
 				if(System.currentTimeMillis() - beginTimeMillis > 3000){
 					beginTimeMillis = System.currentTimeMillis();
 					//提交菜场订单
-					requestSubmitOrder();
+					chooseTimeSubmit();
 				}else{
 					ToastUtil.showToast(PlanceOrderActivity.this, "请不要重复提交");
 				}
@@ -193,9 +193,6 @@ public class PlanceOrderActivity extends BaseActivity{
 				}
 			}
 		});
-		
-		mTotalPriceText = (TextView) findViewById(R.id.plance_order_total_price);
-		mTotalPriceText.setText(UnitConvertUtil.getSwitchedMoney(mTotalPrice) + "元");
 	}
 	
 	private void setCancelOneHourArrive() {
@@ -234,7 +231,7 @@ public class PlanceOrderActivity extends BaseActivity{
 	/**
 	 * 请求提交订单
 	 */
-	private void requestSubmitOrder() {
+	private void chooseTimeSubmit() {
 		String tag = String.valueOf(mQuickTimeChooseIcon.getTag());
 		int chooseItem;
 		if("1".equals(tag)){
@@ -268,10 +265,21 @@ public class PlanceOrderActivity extends BaseActivity{
 		//String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
 		Date date = new Date(timeInMillis);
 		String timeStr = DimenUtil.getStringDate(date);
+		
+		Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
+		
+		intent.putExtra("fromTime", timeStr + "$" + pointTime.getFromTime());
+		intent.putExtra("toTime", timeStr + "$" + pointTime.getToTime());
+		intent.putExtra("memo", mLeaveMessage.getText().toString());
+		intent.putExtra("serverPrice", mServicePrice);
+		intent.putExtra("totalPrice", mTotalPrice);
+		PlanceOrderActivity.this.startActivity(intent);
+		/*
 		mOrderModel.requestSubmitOrder(this, token, userId, addressId, 
 				timeStr + "$" + pointTime.getFromTime(), 
 				timeStr + "$" + pointTime.getToTime(), 
 				mLeaveMessage.getText().toString());
+		*/
 	}
 	
 	private class TimeOptionAdapter extends AbstractWheelTextAdapter{
@@ -346,6 +354,7 @@ public class PlanceOrderActivity extends BaseActivity{
 			}
 		}
 
+		/*
 		@Override
 		public void requestSubmitOrderResult(String returnCode, String msg,
 				int orderId) {
@@ -359,6 +368,7 @@ public class PlanceOrderActivity extends BaseActivity{
 				ToastUtil.showToast(PlanceOrderActivity.this, msg);
 			}
 		}
+		*/
 	}
 	
 	class MySystemModelResult extends SystemModelResult{

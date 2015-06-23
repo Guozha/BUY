@@ -43,7 +43,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 		customActionBarStyle("管家提醒");
 		
 		initView();
-		setWarnTimeData(null);
+		setWarnTimeData("null");
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 					requestMenuPlan(valueTime);
 				}else{
 					//传null表示关闭
-					requestMenuPlan(null);
+					requestMenuPlan("null");
 				}
 				ConfigManager.getInstance().setWarnTimeOpend(CheckState);
 			}
@@ -165,5 +165,4 @@ public class SetWarnTimeActivity extends BaseActivity{
 			}
 		}
 	}
-	
 }

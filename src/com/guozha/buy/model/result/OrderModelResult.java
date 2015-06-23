@@ -2,6 +2,7 @@ package com.guozha.buy.model.result;
 
 import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.order.OrderDetail;
+import com.guozha.buy.entry.mine.order.OrderResult;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.model.OrderModel.OrderModelInterface;
 
@@ -46,6 +47,19 @@ public class OrderModelResult implements OrderModelInterface{
 
 	@Override
 	public void requestOrderMarkResult(String returnCode, String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestOrderConfirmResult(String returnCode, String msg,
+			int totalPrice, int serviceFee) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestOrderNomalWithPayResult(OrderResult orderResult) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,6 +1,7 @@
 package com.guozha.buy.controller.found.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.MenuDetailFoodListAdapter;
 import com.guozha.buy.adapter.MenuDetailSoupListAdapter;
-import com.guozha.buy.controller.BaseFragment;
+import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.util.DimenUtil;
 
 /**
@@ -23,19 +24,40 @@ import com.guozha.buy.util.DimenUtil;
  * @author PeggyTong
  *
  */
-public class MenuDetailFoodFragment extends BaseFragment{
+public class MenuDetailFoodFragment extends BaseMenuDetailFragment{
 	
+	private static final int HAND_MENU_DETAIL_COMPLETED = 0x0001;
 	private ListView mFoodList;
 	private ListView mSoupList;
 	private MenuDetailFoodListAdapter mFoudListAdapter;
 	private MenuDetailSoupListAdapter mSoupListAdapter;
-
+	private MenuDetail mMenuDetail;
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_MENU_DETAIL_COMPLETED:
+				updateView();
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_menu_detail_food, container, false);
-		initView(view); 
+		initView(view);
+		updateView();
 		return view;
+	}
+	
+	@Override
+	public void sendMenuDetailData(MenuDetail menuDetail) {
+		super.sendMenuDetailData(menuDetail);
+		if(menuDetail == null) return;
+		mMenuDetail = menuDetail;
+		mHandler.sendEmptyMessage(HAND_MENU_DETAIL_COMPLETED);
 	}
 	
 	private void initView(View view){
@@ -61,9 +83,13 @@ public class MenuDetailFoodFragment extends BaseFragment{
 		soupListHead.setText("辅料");
 		mFoodList.addHeaderView(foodListHead);
 		mSoupList.addHeaderView(soupListHead);
-		
-		mFoudListAdapter = new MenuDetailFoodListAdapter(getActivity());
-		mSoupListAdapter = new MenuDetailSoupListAdapter(getActivity());
+	}
+	
+	private void updateView(){
+		if(mMenuDetail == null) return;
+		if(mFoodList == null || mSoupList == null) return;
+		mFoudListAdapter = new MenuDetailFoodListAdapter(getActivity(), mMenuDetail.getMenuGoods());
+		mSoupListAdapter = new MenuDetailSoupListAdapter(getActivity(), mMenuDetail.getSeasonings());
 		mFoodList.setAdapter(mFoudListAdapter);
 		mSoupList.setAdapter(mSoupListAdapter);
 	}

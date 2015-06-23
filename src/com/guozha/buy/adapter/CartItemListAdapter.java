@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -30,7 +31,7 @@ import com.guozha.buy.util.UnitConvertUtil;
  * @author PeggyTong
  *
  */
-public class CartItemListAdapter extends BaseExpandableListAdapter implements OnClickListener{
+public class CartItemListAdapter extends BaseExpandableListAdapter implements OnClickListener, OnLongClickListener{
 	
 	private LayoutInflater mInflater;
 	private Resources mResource;
@@ -103,6 +104,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_item_cell_cart_list, null);
 			holder = new GroupViewHolder();
+			holder.cartitemgroup = convertView.findViewById(R.id.cart_group_item);
 			holder.title = (TextView) convertView.findViewById(R.id.cart_list_cell_title);
 			holder.minus = (Button) convertView.findViewById(R.id.cart_list_cell_minus);
 			holder.num = (TextView) convertView.findViewById(R.id.cart_list_cell_num);
@@ -110,13 +112,13 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.price = (TextView) convertView.findViewById(R.id.cart_list_cell_price);
 			holder.minus.setOnClickListener(this);
 			holder.plus.setOnClickListener(this);
+			holder.cartitemgroup.setOnLongClickListener(this);
 			convertView.setTag(holder);
 		}else{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
-		
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
-		
+		holder.cartitemgroup.setTag(baseItem.getCartId());
 		if(baseItem.getCartId() == -1){
 			holder.minus.setVisibility(View.INVISIBLE);
 			holder.num.setVisibility(View.INVISIBLE);
@@ -175,6 +177,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	}
 	
 	static class GroupViewHolder{
+		private View cartitemgroup;
 		private TextView title;
 		private Button minus;
 		private TextView num;
@@ -262,5 +265,16 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	}
 	public interface CartItemChanged{
 		public void changed();
+		public void delete(int cartId);
+	}
+
+	@Override
+	public boolean onLongClick(View view) {
+		Integer cartId  = (Integer) view.getTag();
+		if(cartId == null) return false;
+		if(mItemChanged != null){
+			mItemChanged.delete(cartId);
+		}
+		return true;
 	}
 }

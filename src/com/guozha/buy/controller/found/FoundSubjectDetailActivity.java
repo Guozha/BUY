@@ -36,6 +36,7 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 	
 	private int mSubjectId;
 	private String mSubjectName;
+	private String mSubjectImage;
 	private String mSubjectDescript;
 	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	private List<SubjectDetail> mSubjectDetails = new ArrayList<SubjectDetail>();
@@ -66,6 +67,7 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 		if(bundle != null){
 			mSubjectId = bundle.getInt("subjectId");
 			mSubjectName = bundle.getString("subjectName");
+			mSubjectImage = bundle.getString("subjectImage");
 			mSubjectDescript = bundle.getString("subjectDescript");
 		}
 		initView();
@@ -87,7 +89,8 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 		mSubjectDetailAdapter = new FoundSubjectDetailListAdapter(
 				this, mSubjectDetails, mBitmapCache);
 		
-		mHeadImage.setImageResource(R.drawable.temp_subject_item_imag);
+		mHeadImage.setImageResource(R.drawable.default_icon_large);
+		mBitmapCache.loadBitmaps(mHeadImage, mSubjectImage);
 		mHeadTitle.setText(mSubjectName);
 		mHeadDescript.setText(mSubjectDescript);
 		

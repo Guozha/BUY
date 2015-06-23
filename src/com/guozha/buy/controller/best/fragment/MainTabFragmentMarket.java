@@ -87,7 +87,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	private int mLastVisibleIndex;  //可见的最后一条数据
 	private int mMaxDateNum;		//最大数据数
 	private static int mCurrentPage = 0;
-	private static final int PAGE_SIZE = 4;
 	
 	/**
 	 * 分页加载底部view相关
@@ -258,7 +257,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	
 	private void requestGoodsList(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1, PAGE_SIZE);
+		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1);
 	}
 	
 	/**

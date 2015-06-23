@@ -1,5 +1,7 @@
 package com.guozha.buy.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.found.menu.MenuStep;
+import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
 
 //发现 - 菜谱详情 - 步骤 适配器
@@ -18,28 +22,30 @@ public class MenuDetailStepListAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;
 	private int mScreenWidth;
 	private LinearLayout.LayoutParams mParams;
-	public MenuDetailStepListAdapter(Context context){
+	private List<MenuStep> mMenuSteps;
+	private BitmapCache mBitmapCache;
+	public MenuDetailStepListAdapter(Context context, List<MenuStep> menuSteps, BitmapCache bitmapCache){
 		mInflater = LayoutInflater.from(context);
+		mMenuSteps = menuSteps;
+		mBitmapCache = bitmapCache;
 		mScreenWidth = DimenUtil.getScreenWidth(context);
 		mParams = new LinearLayout.LayoutParams(mScreenWidth, mScreenWidth / 2);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 8;
+		if(mMenuSteps == null) return 0;
+		return mMenuSteps.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mMenuSteps.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -55,8 +61,11 @@ public class MenuDetailStepListAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.image.setImageResource(R.drawable.temp_subject_item_imag);
-		holder.text.setText("软化的60克黄油加20g糖尿发大幅度发D大调的典范对方答复");
+		
+		MenuStep menuStep = mMenuSteps.get(position);
+		holder.image.setImageResource(R.drawable.default_icon_large);
+		mBitmapCache.loadBitmaps(holder.image, menuStep.getStepImg());
+		holder.text.setText(menuStep.getStepDesc());
 		return convertView;
 	}
 	

@@ -1,5 +1,7 @@
 package com.guozha.buy.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.entry.found.menu.MenuSeason;
 
 /**
  * 菜谱详情 - 辅料 适配器
@@ -17,27 +20,27 @@ import com.guozha.buy.R;
 public class MenuDetailSoupListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
+	private List<MenuSeason> mMenuSeasons;
 	
-	public MenuDetailSoupListAdapter(Context context){
+	public MenuDetailSoupListAdapter(Context context, List<MenuSeason> menuSeasons){
 		mInflater = LayoutInflater.from(context);
+		mMenuSeasons = menuSeasons;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 20;
+		if(mMenuSeasons == null) return 0;
+		return mMenuSeasons.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		return mMenuSeasons.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
 
 	@Override
@@ -47,8 +50,9 @@ public class MenuDetailSoupListAdapter extends BaseAdapter{
 		}
 		TextView name = (TextView) convertView.findViewById(R.id.menu_detail_soup_item_name);
 		TextView weight = (TextView) convertView.findViewById(R.id.menu_detail_soup_item_weight);
-		name.setText("葱");
-		weight.setText("100g");
+		MenuSeason menuSeason = mMenuSeasons.get(position);
+		name.setText(menuSeason.getSeasoningsName());
+		weight.setText(menuSeason.getSeasoningsAmount());
 		return convertView;
 	}
 
