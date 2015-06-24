@@ -106,7 +106,10 @@ public class OrderModel extends BaseModel{
 		 * 4.13 下单并支付
 		 * @param orderResult
 		 */
-		public void requestOrderNomalWithPayResult(OrderResult orderResult);
+		public void requestOrderNomalInsertResult(String returnCode, String msg, int orderId);
+		
+		
+		public void requestPayCountResult(OrderResult orderResult);
 	}
 	
 	
@@ -371,17 +374,11 @@ public class OrderModel extends BaseModel{
 	 * @param wantDownTime
 	 * @param memo
 	 */
-	public void requestOrderNomalWithPay(final Context context, String token, int userId, int orderId,
-			int balanceDecPrice, int useTicketId, int useBeanAmount,
-			int payWayId, int addressId, String wantUpTime, String wantDownTime, String memo){
-		RequestParam paramPath = new RequestParam("v31/order/insertNormalWithPay")
+	public void requestOrderNomalInsert(final Context context, String token, int userId, int addressId,
+			String wantUpTime, String wantDownTime, String memo){
+		RequestParam paramPath = new RequestParam("v31/order/insertNormal")
 		.setParams("token", token)
 		.setParams("userId", userId)
-		.setParams("orderId", orderId)
-		.setParams("balanceDecPrice", balanceDecPrice)
-		.setParams("useTicketId", useTicketId)
-		.setParams("useBeanAmount", useBeanAmount)
-		.setParams("payWayId", payWayId)
 		.setParams("addressId", addressId)
 		.setParams("wantUpTime", wantUpTime)
 		.setParams("wantDownTime", wantDownTime)
@@ -389,10 +386,49 @@ public class OrderModel extends BaseModel{
 		
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
+			public void onResponse(String responseStr) {
+				LogUtil.e("responseStr == " + responseStr);
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response.getString("returnCode");
+					String msg = response.getString("msg");
+					int orderId = response.getInt("orderId");
+					mInterface.requestOrderNomalInsertResult(returnCode, msg, orderId);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 6.3 支付订单—V3.1
+	 * @param context
+	 * @param token
+	 * @param userId
+	 * @param orderId
+	 * @param balanceDecPrice
+	 * @param useTicketId
+	 * @param useBeanAmount
+	 * @param payWayId
+	 */
+	public void requestPayCount(final Context context, String token, int userId, int orderId,
+			int balanceDecPrice, int useTicketId, int useBeanAmount, int payWayId){
+		RequestParam paramPath = new RequestParam("v31/payment/pay")
+		.setParams("token", token)
+		.setParams("userId", userId)
+		.setParams("orderId", orderId)
+		.setParams("balanceDecPrice", balanceDecPrice)
+		.setParams("useTicketId", useTicketId)
+		.setParams("useBeanAmount", useBeanAmount)
+		.setParams("payWayId", payWayId);
+		
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				OrderResult orderResult = gson.fromJson(response, new TypeToken<OrderResult>() { }.getType());
-				mInterface.requestOrderNomalWithPayResult(orderResult);
+				mInterface.requestPayCountResult(orderResult);
 			}
 		});
 	}

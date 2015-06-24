@@ -55,9 +55,6 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	
 	private int mOrderId = 0;
 	private int mServicePrice = -1;
-	private String mFromeTime;
-	private String mToTime;
-	private String mMemo;
 	
 	private boolean mBeanChecked = false;				//是否选择使用菜豆
 	private boolean mAccountRemainChecked = false;		//是否选择使用账户余额
@@ -186,13 +183,10 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
-				//mOrderId = bundle.getInt("orderId");
+				mOrderId = bundle.getInt("orderId");
 				mServicePrice = bundle.getInt("serverPrice");
 				mTotalPrice = bundle.getInt("totalPrice");
-				mFromeTime = bundle.getString("fromTime");
-				mToTime = bundle.getString("toTime");
 				mOrderComeIn = bundle.getBoolean("orderComeIn");
-				mMemo = bundle.getString("memo");
 			}
 		}
 		setResult(0);
@@ -381,8 +375,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		String token = ConfigManager.getInstance().getUserToken();
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mOrderModel.requestOrderNomalWithPay(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId), addressId, mFromeTime, mToTime, mMemo);
+		mOrderModel.requestPayCount(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId));
+		//mOrderModel.requestOrderNomalWithPay(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId), addressId, mFromeTime, mToTime, mMemo);
 		//mPayModel.requestPreparePay(this, token, userId, mOrderId, mTicketId, Integer.parseInt(payWayId), mAccountRemainDeduct, mBeanrDeduct);
 	}
 
@@ -522,8 +516,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}
 		*/
 		@Override
-		public void requestOrderNomalWithPayResult(OrderResult orderResult) {
-			LogUtil.e("requestNomalPayResult...");
+		public void requestPayCountResult(OrderResult orderResult) {
 			if(orderResult == null) {
 				ToastUtil.showToast(PayActivity.this, "生成订单数据异常");
 				return;

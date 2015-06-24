@@ -118,6 +118,16 @@ public class ShopCartModel extends BaseModel{
 		});
 	}
 	
+	public void requestCartAddMenu(final Context context, 
+			int userId, int menuId, String token, int addressId, List<String> goodsIds){
+		requestCartAddMenu(context, userId, menuId, token, addressId, goodsIds, 1);
+	}
+	
+	public void requestCartAddMenu(final Context context, 
+			int userId, int menuId, String token, int addressId){
+		requestCartAddMenu(context, userId, menuId, token, addressId, null, 0);
+	}
+	
 	/**
 	 * 3.6 菜谱添加购物车
 	 * @param context
@@ -128,13 +138,16 @@ public class ShopCartModel extends BaseModel{
 	 * @param goodsId
 	 */
 	public void requestCartAddMenu(final Context context, 
-			int userId, int menuId, String token, int addressId, List<String> goodsIds){
+			int userId, int menuId, String token, int addressId, List<String> goodsIds, int goodsFlag){
 		RequestParam paramPath = new RequestParam("v31/cart/insertForMenu")
 		.setParams("userId", userId)
 		.setParams("menuId", menuId)
 		.setParams("token", token)
 		.setParams("addressId", addressId)
-		.setParams("goodsId", goodsIds);
+		.setParams("goodsFlag", goodsFlag);
+		if(goodsFlag != 0){
+			paramPath.setParams("goodsId", goodsIds);
+		}
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String responseStr) {

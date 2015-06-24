@@ -5,6 +5,7 @@ import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderResult;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.model.OrderModel.OrderModelInterface;
+import com.guozha.buy.util.LogUtil;
 
 public class OrderModelResult implements OrderModelInterface{
 
@@ -59,7 +60,13 @@ public class OrderModelResult implements OrderModelInterface{
 	}
 
 	@Override
-	public void requestOrderNomalWithPayResult(OrderResult orderResult) {
+	public void requestOrderNomalInsertResult(String returnCode, String msg,
+			int orderId) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void requestPayCountResult(OrderResult orderResult) {
 		// TODO Auto-generated method stub
 		
 	}

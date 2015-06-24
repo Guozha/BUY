@@ -96,7 +96,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 	
 	private void updateView(){
 		if(mMenusAdapter == null){
-			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas, false);
+			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas);
 			mExpandableListView.setAdapter(mMenusAdapter);
 			//首次全部展开
 			for (int i = 0; i < mExpandListDatas.size(); i++) {

@@ -53,7 +53,8 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 	private String mOrderAddressName;
 	private String mOrderAddressDetail;
 	private String mOrderTotalPrice;
-	private int mServiceFee = 0;
+	private int mServiceFee = -1;
+	private int mTotalPrice = -1;
 	
 	private String mOrderStatus;
 	
@@ -125,37 +126,45 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 		});
 		
 		findViewById(R.id.order_detail_pay).setOnClickListener(new OnClickListener() {
+			private long beginTimeMillis;
 			@Override
 			public void onClick(View v) {
-				if("1".equals(mOrderType)){ //普通订单
-					Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
-					intent.putExtra("orderId", mOrderId);
-					intent.putExtra("serverPrice", mServiceFee);
-					intent.putExtra("orderComeIn", true);
-					startActivityForResult(intent, REQUEST_CODE);
-				}else{		//特供预售
-					
-					//TODO 这里要做特殊处理
-					if(mExpandListDatas != null && !mExpandListDatas.isEmpty()){
-						ExpandListData expandListData = mExpandListDatas.get(0);
-						Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
-						intent.putExtra("goodsId", expandListData.getId());
-						intent.putExtra("unitPrice", expandListData.getUnitPrice());
-						intent.putExtra("goodsName", expandListData.getName());
-						intent.putExtra("goodsType", mOrderType);
-						intent.putExtra("orderComeIn", true);
-						startActivityForResult(intent, REQUEST_CODE);
-					}
+				if(System.currentTimeMillis() - beginTimeMillis > 3000){
+					beginTimeMillis = System.currentTimeMillis();
+					requestOrderCheck();
+				}else{
+					ToastUtil.showToast(OrderUnPayDetailActivity.this, "请不要重复提交");
 				}
 			}
 		});
 	}
 	
-
+	private void requestOrderCheck(){
+		if("1".equals(mOrderType)){ //普通订单
+			Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
+			intent.putExtra("orderId", mOrderId);
+			intent.putExtra("serverPrice", mServiceFee);
+			intent.putExtra("orderComeIn", true);
+			intent.putExtra("totalPrice", mTotalPrice);
+			startActivityForResult(intent, REQUEST_CODE);
+		}else{		//特供预售
+			//TODO 这里要做特殊处理
+			if(mExpandListDatas != null && !mExpandListDatas.isEmpty()){
+				ExpandListData expandListData = mExpandListDatas.get(0);
+				Intent intent = new Intent(OrderUnPayDetailActivity.this, PayActivity.class);
+				intent.putExtra("goodsId", expandListData.getId());
+				intent.putExtra("unitPrice", expandListData.getUnitPrice());
+				intent.putExtra("goodsName", expandListData.getName());
+				intent.putExtra("goodsType", mOrderType);
+				intent.putExtra("orderComeIn", true);
+				startActivityForResult(intent, REQUEST_CODE);
+			}
+		}
+	}
 	
 	private void updateView(){
 		if(mMenusAdapter == null){
-			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas, false);
+			mMenusAdapter = new OrderDetailMenusListAdapter(this, mExpandListDatas);
 			mExpandableListView.setAdapter(mMenusAdapter);
 			//首次全部展开
 			for (int i = 0; i < mExpandListDatas.size(); i++) {
@@ -221,6 +230,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
 			mServiceFee = orderDetail.getServiceFee();
+			mTotalPrice = orderDetail.getTotalPrice();
 			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
 			mOrderStatus = orderDetail.getStatus();
 			if(mExpandListDatas == null){

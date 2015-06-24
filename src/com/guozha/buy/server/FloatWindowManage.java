@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.view.AddCartAnimWindow;
 import com.guozha.buy.view.AddCartAnimWindow.OnAnimEndListener;
@@ -15,6 +16,13 @@ public class FloatWindowManage {
 	private static AddCartAnimWindow mCollectAnimWindow;
 	private static LayoutParams mCollectWindowParams;
 	
+	private FloatWindowManage(){ }
+	
+	public enum CartDirection{
+		TOP,
+		BOTTOM
+	}
+	
 	private static WindowManager getWindowManager(Context context){
 		if(mWindowManager == null){
 			mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -22,12 +30,13 @@ public class FloatWindowManage {
 		return mWindowManager;
 	}
 
-	public static void createAddCartWindow(String showText, final Context context){
+	public static AddCartAnimWindow createAddCartWindow(String showText, CartDirection cartDirection){
+		Context context = CustomApplication.getContext();
 		WindowManager windowManager = getWindowManager(context);
 		int screenWidth = DimenUtil.getScreenWidth(context);
 		int screenHeight = DimenUtil.getScreenHeight(context);
 		if(mCollectAnimWindow == null){
-			mCollectAnimWindow = new AddCartAnimWindow(showText, mWindowManager, context);
+			mCollectAnimWindow = new AddCartAnimWindow(showText, cartDirection, mWindowManager, context);
 			mCollectWindowParams = new LayoutParams();
 			mCollectWindowParams.type = LayoutParams.TYPE_PHONE;  
 			mCollectWindowParams.format = PixelFormat.RGBA_8888;  
@@ -46,15 +55,16 @@ public class FloatWindowManage {
 			mCollectAnimWindow.setOnAnimEndListener(new OnAnimEndListener() {
 				@Override
 				public void animEnd() {
-					removeAddCartWindow(context);
+					removeAddCartWindow();
 				}
 			});
-			
             windowManager.addView(mCollectAnimWindow, mCollectWindowParams);  
 		}
+		return mCollectAnimWindow;
 	}
 	
-    public static void removeAddCartWindow(Context context) {  
+    public static void removeAddCartWindow() {  
+    	Context context = CustomApplication.getContext();
         if (mCollectAnimWindow != null) {  
             WindowManager windowManager = getWindowManager(context);  
             windowManager.removeView(mCollectAnimWindow);  

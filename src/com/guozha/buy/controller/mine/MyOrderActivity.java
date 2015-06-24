@@ -11,12 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.mine.fragment.OrderFinishedFragment;

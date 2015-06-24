@@ -32,9 +32,9 @@ import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
-import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
@@ -120,7 +120,6 @@ public class PlanceOrderActivity extends BaseActivity{
 	private void initData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
 		mSystemModel.requestSystemTime(this);
@@ -265,21 +264,13 @@ public class PlanceOrderActivity extends BaseActivity{
 		//String timeStr = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+ 1)+ "-" + calendar.get(Calendar.DAY_OF_MONTH);
 		Date date = new Date(timeInMillis);
 		String timeStr = DimenUtil.getStringDate(date);
-		
-		Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
-		
-		intent.putExtra("fromTime", timeStr + "$" + pointTime.getFromTime());
-		intent.putExtra("toTime", timeStr + "$" + pointTime.getToTime());
-		intent.putExtra("memo", mLeaveMessage.getText().toString());
-		intent.putExtra("serverPrice", mServicePrice);
-		intent.putExtra("totalPrice", mTotalPrice);
-		PlanceOrderActivity.this.startActivity(intent);
 		/*
 		mOrderModel.requestSubmitOrder(this, token, userId, addressId, 
 				timeStr + "$" + pointTime.getFromTime(), 
 				timeStr + "$" + pointTime.getToTime(), 
 				mLeaveMessage.getText().toString());
 		*/
+		mOrderModel.requestOrderNomalInsert(this, token, userId, addressId, timeStr + "$" + pointTime.getFromTime(), timeStr + "$" + pointTime.getToTime(), mLeaveMessage.getText().toString());
 	}
 	
 	private class TimeOptionAdapter extends AbstractWheelTextAdapter{
@@ -353,22 +344,30 @@ public class PlanceOrderActivity extends BaseActivity{
 				handler.sendEmptyMessage(HAND_TIMES_DATA_COMPLETED);
 			}
 		}
-
-		/*
+		
 		@Override
-		public void requestSubmitOrderResult(String returnCode, String msg,
-				int orderId) {
+		public void requestOrderNomalInsertResult(String returnCode,
+				String msg, int orderId) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
 				Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
 				intent.putExtra("orderId", orderId);
 				intent.putExtra("serverPrice", mServicePrice);
+				intent.putExtra("totalPrice", mTotalPrice);
 				startActivity(intent);
 				PlanceOrderActivity.this.finish();
 			}else{
 				ToastUtil.showToast(PlanceOrderActivity.this, msg);
 			}
 		}
+		
+		/*
+		@Override
+		public void requestSubmitOrderResult(String returnCode, String msg,
+				int orderId) {
+			
+		}
 		*/
+		
 	}
 	
 	class MySystemModelResult extends SystemModelResult{

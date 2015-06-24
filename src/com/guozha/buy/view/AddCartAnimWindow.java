@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.guozha.buy.R;
+import com.guozha.buy.server.FloatWindowManage.CartDirection;
 import com.guozha.buy.util.DimenUtil;
 
 public class AddCartAnimWindow extends View{
@@ -36,12 +37,14 @@ public class AddCartAnimWindow extends View{
 	private int mScreenWidth;
 	private int mScreenHeight;
 	private boolean mMoveable = true;
+	private CartDirection mCartDirection;
 
-	public AddCartAnimWindow(String showText, WindowManager windowManager, Context context) {
+	public AddCartAnimWindow(String showText, CartDirection cartDirection, WindowManager windowManager, Context context) {
 		super(context);
 		if(!"+1".equals(showText)){
 			mMoveable = false;
 		}
+		mCartDirection = cartDirection;
 		mWindowManager = windowManager;
 		mStatus = new ChangeBigStatus();
 		circlePaint = new Paint();
@@ -62,13 +65,15 @@ public class AddCartAnimWindow extends View{
 		mScreenWidth = DimenUtil.getScreenWidth(context);
 		mScreenHeight = DimenUtil.getScreenHeight(context);
 		mXGAP = DimenUtil.dp2px(context, 23);
+		if(mCartDirection == CartDirection.BOTTOM){
+			mXGAP = mScreenWidth / 5 + mXGAP;
+		}
 		mYGAP = DimenUtil.dp2px(context, 23);
 		mPointX = mScreenWidth / 2;
 		mPointY = mScreenHeight / 2;
 		mCurrentDimen = mTextSize + 10;
-		
-		X_SPEED = (int)((float)mScreenWidth / 2 / SPEED);
-		Y_SPEED = (int)((float)mScreenHeight / 2 / SPEED);
+		X_SPEED = (int)((float)(mScreenWidth / 2 - mXGAP) / SPEED);
+		Y_SPEED = (int)((float)(mScreenHeight / 2 - mYGAP) / SPEED);
 	}
 
 	@Override
@@ -98,7 +103,7 @@ public class AddCartAnimWindow extends View{
 			}
 			if(mCurrentDimen < maxWindowDimen) {
 				postInvalidateDelayed(30);
-				mCurrentDimen = mCurrentDimen * 1.2f;
+				mCurrentDimen = mCurrentDimen + X_SPEED * 2;
 			}
 		}
 
@@ -122,15 +127,25 @@ public class AddCartAnimWindow extends View{
 			if(mPointX >= mScreenWidth - mXGAP){
 				mPointX = mScreenWidth - mXGAP;
 			}
-			if(mPointY <= mYGAP){
-				mPointY = mYGAP;
+			if(mCartDirection == CartDirection.TOP){
+				if(mPointY <= mYGAP){
+					mPointY = mYGAP;
+				}
+			}else{
+				if(mPointY >= mScreenHeight - mYGAP){
+					mPointY = mScreenHeight - mYGAP;
+				}
 			}
 			canvas.drawCircle(mPointX, mPointY, mCurrentDimen / 2, circlePaint);
 			if(mCurrentDimen > mTextBound.width()){
 				canvas.drawText(mDrawText, mPointX - mTextBound.width() / 2, mPointY + mTextBound.height() / 2, textPaint);
 			}
 			
-			if(mPointX >= mScreenWidth - mXGAP && mPointY <= mYGAP){
+			if(drawCount >= SPEED * 2){
+				toNextStatus();
+				return;
+			}
+			if(mPointX >= mScreenWidth - mXGAP&& (mPointY <= mYGAP || mPointY >= mScreenHeight - mYGAP)){
 				toNextStatus();
 			}else{
 				postInvalidateDelayed(15);
@@ -140,11 +155,15 @@ public class AddCartAnimWindow extends View{
 					if(drawCount < SPEED / 2){
 						ySpeed = Y_SPEED + (SPEED - drawCount * 2);
 					}else{
-						//ySpeed = Y_SPEED - (drawCount - SPEED / 2) * 5;
 						ySpeed = Y_SPEED;
 					}
-					mPointX = mPointX + X_SPEED;
-					mPointY = mPointY - ySpeed;
+					if(mCartDirection == CartDirection.TOP){
+						mPointX = mPointX + X_SPEED;
+						mPointY = mPointY - ySpeed;
+					}else{
+						mPointX = mPointX + X_SPEED;
+						mPointY = mPointY + ySpeed;
+					}
 					drawCount++;
 				}
 			}

@@ -33,6 +33,7 @@ import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.server.FloatWindowManage;
 import com.guozha.buy.server.ShareManager;
+import com.guozha.buy.server.FloatWindowManage.CartDirection;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ViewPagerTab;
 
@@ -171,7 +172,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		@Override
 		public void requestCollectionMenuResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				ToastUtil.showToast(MenuDetailActivity.this, "收藏成功");
+				FloatWindowManage.createAddCartWindow("收藏成功", CartDirection.TOP);
 			}else{
 				ToastUtil.showToast(MenuDetailActivity.this, msg);
 			}
@@ -182,7 +183,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		@Override
 		public void requestCartAddMenuResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				ToastUtil.showToast(MenuDetailActivity.this, "添加成功");
+				FloatWindowManage.createAddCartWindow("+1", CartDirection.TOP);
 			}else{
 				ToastUtil.showToast(MenuDetailActivity.this, msg);
 			}
@@ -198,7 +199,6 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		case R.id.menu_collection_button:
 			mMenuModel.requestCollectionMenu(
 					MenuDetailActivity.this, token, userId, mMenuId);
-			FloatWindowManage.createAddCartWindow("收藏成功", this);
 			break;
 		case R.id.menu_addcart_button:
 			List<String> goodsId = new ArrayList<String>();
@@ -208,7 +208,6 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 			}
 			mShopCartModel.requestCartAddMenu(
 					MenuDetailActivity.this, userId, mMenuId, token, addressId, goodsId);
-			FloatWindowManage.createAddCartWindow("+1", this);
 			break;
 		default:
 			break;

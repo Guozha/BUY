@@ -32,38 +32,5 @@
 	        android:singleLine="true"
 	        android:layout_marginRight="10dip"
 	        android:ellipsize="end"/>
-	    
-	    <Space 
-	        android:layout_width="0dip"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"/>
-	    
-	    <LinearLayout 
-	        android:id="@+id/child_grade_area"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-	    <ImageView 
-	        android:id="@+id/child_grade_face1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:scaleType="centerInside"
-	        android:layout_marginRight="20dip"
-	        android:src="@drawable/main_emoticons_cool_normal"/>
-	    <ImageView 
-	        android:id="@+id/child_grade_face2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:scaleType="centerInside"
-	        android:layout_marginRight="20dip"
-	        android:src="@drawable/main_emoticons_wondering_normal"/>
-	    <ImageView 
-	        android:id="@+id/child_grade_face3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:scaleType="centerInside"
-	        android:layout_marginRight="20dip"
-	        android:src="@drawable/main_emoticons_angry_normal"/>
-	    </LinearLayout>
 	</LinearLayout>
 </LinearLayout>
