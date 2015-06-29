@@ -34,7 +34,6 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	
 	private static final String PAGE_NAME = "ListVegetable";
 	
-	private static final int PAGE_ITEM_COUNT = 24;
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private int mMaxDateNum; //最大数据数
@@ -150,7 +149,7 @@ public class ListVegetableActivity extends BaseActivity implements OnScrollListe
 	 */
 	private void requestNewData(){
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mGoodsModel.requestTypeGoodsList(this, Integer.parseInt(mFrontTypeId), addressId, mCurrentPage + 1, PAGE_ITEM_COUNT);
+		mGoodsModel.requestTypeGoodsList(this, Integer.parseInt(mFrontTypeId), addressId, mCurrentPage + 1);
 	}
 	
 	private int mCurrentPage = 0;

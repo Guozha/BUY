@@ -1,5 +1,7 @@
 package com.guozha.buy.controller.found.fragment;
 
+import java.util.Set;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.guozha.buy.adapter.MenuDetailFoodListAdapter;
 import com.guozha.buy.adapter.MenuDetailSoupListAdapter;
 import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 菜谱详情 - 食材
@@ -88,9 +91,18 @@ public class MenuDetailFoodFragment extends BaseMenuDetailFragment{
 	private void updateView(){
 		if(mMenuDetail == null) return;
 		if(mFoodList == null || mSoupList == null) return;
-		mFoudListAdapter = new MenuDetailFoodListAdapter(getActivity(), mMenuDetail.getMenuGoods());
+		LogUtil.e("canChoose == " + mMenuDetail.getPackingFlag());
+		boolean canChoose = true;
+		if("1".equals(mMenuDetail.getPackingFlag())) canChoose = false;
+		mFoudListAdapter = new MenuDetailFoodListAdapter(getActivity(), canChoose, mMenuDetail.getMenuGoods());
 		mSoupListAdapter = new MenuDetailSoupListAdapter(getActivity(), mMenuDetail.getSeasonings());
 		mFoodList.setAdapter(mFoudListAdapter);
 		mSoupList.setAdapter(mSoupListAdapter);
+	}
+	
+	@Override
+	public Set<String> getCheckedIds() {
+		if(mFoudListAdapter == null) return null;
+		return mFoudListAdapter.getCheckedIds();
 	}
 }

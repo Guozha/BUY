@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.market.VegetableDetailActivity;
 import com.guozha.buy.entry.global.WeightOption;
 import com.guozha.buy.global.ConfigManager;
@@ -24,13 +23,9 @@ import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.server.FloatWindowManage;
-import com.guozha.buy.server.FloatWindowManage.CartDirection;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.guozha.buy.view.AddCartAnimWindow;
-import com.guozha.buy.view.AddCartAnimWindow.OnAnimEndListener;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
@@ -196,12 +191,9 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 	 */
 	private void requestAddCart(int quantity) {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		if(token == null){
-			//TODO 先登录
-			return;
-		}
+		String token = ConfigManager.getInstance().getUserToken(this);
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(token == null || addressId == -1) return;
 		mShopCartModel.requestAddCart(this, userId, 
 				Integer.parseInt(mGoodsId), quantity, token, addressId);
 	}
@@ -267,7 +259,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 		public void requestAddCartResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
 				ToastUtil.showToast(WeightSelectDialog.this, "已添加到购物车");
-				FloatWindowManage.createAddCartWindow("+1", CartDirection.BOTTOM);
+				ToastUtil.showBottomAddCartAnim(WeightSelectDialog.this);
 				WeightSelectDialog.this.finish();
 				
 			}else{

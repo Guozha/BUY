@@ -48,7 +48,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	private static final int HAND_LOGIN_SUCCESSS = 0x0004;
 	private static final int HAND_EMPTY_ADDRESS = 0x0005;
 	
-	public static final String LOGIN_STATUS = "login_status";
 	public static final int RESULT_CODE_LOGIN = 0;		//请求状态码		
 	
 	//登录成功后 跳转控制器的 路径
@@ -84,15 +83,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				buttonChangeNomal("重新获取");
 				break;
 			case HAND_LOGIN_SUCCESSS:
-				Intent data = LoginActivity.this.getIntent();
-				data.putExtra(LOGIN_STATUS, true);
-				setResult(RESULT_CODE_LOGIN, data);
 				LoginActivity.this.finish();
 				break;
 			case HAND_EMPTY_ADDRESS:
 				//去添加地址
 				Intent intent = new Intent(LoginActivity.this, AddAddressActivity.class);
 				startActivity(intent);
+				mHandler.sendEmptyMessage(HAND_LOGIN_SUCCESSS);
 				break;
 			}
 		}
@@ -344,7 +341,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				//登录成功
 				//判断是否有地址
 				mUserModel.requestListAddress(LoginActivity.this, ConfigManager.getInstance().getUserId());
-				mHandler.sendEmptyMessage(HAND_LOGIN_SUCCESSS);
 			}else{
 				ToastUtil.showToast(LoginActivity.this, msg);
 			}
@@ -355,8 +351,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 			if(addressInfos == null || addressInfos.isEmpty()){
 				mHandler.sendEmptyMessage(HAND_EMPTY_ADDRESS);
 			}else{
-				ConfigManager.getInstance()
-					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+				if(ConfigManager.getInstance().getChoosedAddressId() == -1){
+					ConfigManager.getInstance().setChoosedAddressId(addressInfos.get(0).getAddressId());
+				}
+				mHandler.sendEmptyMessage(HAND_LOGIN_SUCCESSS);
 			}
 		}
 	}

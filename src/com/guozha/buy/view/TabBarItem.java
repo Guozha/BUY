@@ -3,7 +3,6 @@ package com.guozha.buy.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -80,12 +79,6 @@ public class TabBarItem extends LinearLayout{
 				new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		addView(mBtnImage);
 		addView(mBtnText);
-	}
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		
 	}
 	
 	/**

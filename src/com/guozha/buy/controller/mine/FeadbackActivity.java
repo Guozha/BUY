@@ -81,7 +81,7 @@ public class FeadbackActivity extends BaseActivity{
 	
 	private void requestFeadback(String feadback){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null) return; //TODO 先登录
 		mSystemModel.requestFeadback(this, token, userId, feadback);
 	}

@@ -62,7 +62,7 @@ public class MenuModel extends BaseModel{
 	}
 	
 	public void requestMenusByGoods(final Context context, int goodsId){
-		RequestParam paramPath = new RequestParam("menuplan/goodsMenuList")
+		RequestParam paramPath = new RequestParam("v31/menu/goodsMenuList")
 		.setParams("goodsId", goodsId);
 		HttpManager.getInstance(context).volleyRequestByPost(
 				paramPath, new Listener<String>() {
@@ -153,6 +153,7 @@ public class MenuModel extends BaseModel{
 					String msg = response.getString("msg");
 					mInterface.requestCollectionMenuResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}

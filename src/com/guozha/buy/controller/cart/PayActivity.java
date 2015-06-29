@@ -245,9 +245,11 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		
 		//mOrderModel.requestOrderInfo(this, mOrderId);
 		
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(addressId == -1) return;
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
 		//获取支付方式
 		mPayModel.requestPayWays(this, addressId);
 		mUserModel.requestAccountInfo(this, token, userId);
@@ -373,7 +375,8 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			ToastUtil.showToast(PayActivity.this, "请选择支付方式");
 			return;
 		}
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
 		int userId = ConfigManager.getInstance().getUserId();
 		mOrderModel.requestPayCount(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId));
 		//mOrderModel.requestOrderNomalWithPay(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId), addressId, mFromeTime, mToTime, mMemo);

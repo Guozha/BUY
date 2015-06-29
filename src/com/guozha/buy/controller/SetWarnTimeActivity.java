@@ -40,10 +40,9 @@ public class SetWarnTimeActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setwarntime);
 		
-		customActionBarStyle("管家提醒");
-		
+		customActionBarStyle("设置提醒");
 		initView();
-		setWarnTimeData("null");
+		setWarnTimeData();
 	}
 	
 	/**
@@ -60,11 +59,10 @@ public class SetWarnTimeActivity extends BaseActivity{
 				//TODO 将选择的时间发送给服务器
 				WarnTime warnTime = mWarnTimes.get(position);
 				ConfigManager.getInstance().setWarnTime(warnTime.getValueTime());
-				setWarnTimeData(warnTime.getShowTime());
+				setWarnTimeData();
 				if(ConfigManager.getInstance().getWarnTimeOpend()){
 					requestMenuPlan(warnTime.getValueTime());
 				}
-				
 			}
 		});
 		Switch switchWarn = (Switch) findViewById(R.id.switch_warn);
@@ -78,7 +76,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 					requestMenuPlan(valueTime);
 				}else{
 					//传null表示关闭
-					requestMenuPlan("null");
+					requestMenuPlan(null);
 				}
 				ConfigManager.getInstance().setWarnTimeOpend(CheckState);
 			}
@@ -92,7 +90,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 	 * @param warnTime
 	 */
 	private void requestMenuPlan(String valueTime) {
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null) return;  //TODO 先登录
 		int userId = ConfigManager.getInstance().getUserId();
 		mSystemModel.requestWarnPlan(this, token, userId, valueTime);
@@ -116,7 +114,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 	/**
 	 * 设置提醒时间
 	 */
-	private void setWarnTimeData(String showTime){
+	private void setWarnTimeData(){
 		mWarnTimes = new ArrayList<WarnTime>();
 		mWarnTimes.add(new WarnTime("09:00", "0900"));
 		mWarnTimes.add(new WarnTime("10:00", "1000"));
@@ -127,16 +125,13 @@ public class SetWarnTimeActivity extends BaseActivity{
 		mWarnTimes.add(new WarnTime("15:00", "1500"));
 		mWarnTimes.add(new WarnTime("16:00", "1600"));
 		String choosedWarnTime = ConfigManager.getInstance().getWarnTime();
-		mWarnList.setAdapter(new WarnTimeListAdapter(this, choosedWarnTime, mWarnTimes));
-		if(showTime == null){
-			for(int i = 0; i < mWarnTimes.size(); i++){
-				if(mWarnTimes.get(i).getValueTime().equals(choosedWarnTime)){
-					mSettingWarnTime.setText(mWarnTimes.get(i).getShowTime());
-				}
-			}
+		if(choosedWarnTime == null){
+			mSettingWarnTime.setVisibility(View.GONE);
 		}else{
-			mSettingWarnTime.setText(showTime);
+			mSettingWarnTime.setVisibility(View.VISIBLE);
+			mSettingWarnTime.setText(choosedWarnTime);
 		}
+		mWarnList.setAdapter(new WarnTimeListAdapter(this, choosedWarnTime, mWarnTimes));
 	}
 
 	@Override

@@ -141,8 +141,7 @@ public class MyCollectionActivity extends BaseActivity{
 	 */
 	private void requestCollectionRecipeData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mCollectionModel.requestMenuCollectList(this, userId, addressId);
+		mCollectionModel.requestMenuCollectList(this, userId);
 	}
 	
 	/**
@@ -150,7 +149,7 @@ public class MyCollectionActivity extends BaseActivity{
 	 * @param dirId
 	 */
 	private void requestDeleteCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null)return; //先登录
 		mCollectionModel.requestDeleCollectDir(this, token, dirId);
 	}

@@ -39,13 +39,7 @@ public class OrderModelResult implements OrderModelInterface{
 	public void requestCancelOrderResult(String returnCode, String msg) {
 		
 	}
-
-	@Override
-	public void requestGradeProductResult(String returnCode, String msg) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void requestOrderMarkResult(String returnCode, String msg) {
 		// TODO Auto-generated method stub

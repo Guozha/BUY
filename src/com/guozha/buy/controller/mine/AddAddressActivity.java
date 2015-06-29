@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
@@ -60,7 +61,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private int mAddressSize = 0;
 	
 	private Button mRequestAddButton;
-	private Button mRequestSettingDefaultButton;
 	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	private Handler handler = new Handler(){
 		
@@ -73,12 +73,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			case HAND_FINISH_WINDOW:
 				setResult(0);
 				AddAddressActivity.this.finish();
-				break;
-			case HAND_ADD_ADDR_SUCCESS: //添加地址成功
-				int choosedAddress = ConfigManager.getInstance().getChoosedAddressId();
-				if(choosedAddress != -1) handler.sendEmptyMessage(HAND_FINISH_WINDOW);
-				mUserModel.requestListAddress(AddAddressActivity.this,
-							ConfigManager.getInstance().getUserId());
 				break;
 			}
 		};
@@ -109,7 +103,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		mAddressDetai = (TextView) findViewById(R.id.add_address_detailaddr);
 		mAddressDetaiNum = (EditText) findViewById(R.id.add_address_detail_number);
 		mRequestAddButton = (Button) findViewById(R.id.add_address_request_button);
-		mRequestSettingDefaultButton = (Button) findViewById(R.id.add_address_setting_default);
 		
 		mAddressCityIcon = (ImageView) findViewById(R.id.add_address_city_icon);
 		mAddressCountryIcon = (ImageView) findViewById(R.id.add_address_country_icon);
@@ -129,7 +122,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mAddressDetai.setEnabled(false);
 			mAddressDetaiNum.setEnabled(false);
 			mRequestAddButton.setText("删除");
-			mRequestSettingDefaultButton.setVisibility(View.VISIBLE);
 			mAddressCityIcon.setVisibility(View.INVISIBLE);
 			mAddressCountryIcon.setVisibility(View.INVISIBLE);
 			mAddressDetailIcon.setVisibility(View.INVISIBLE);
@@ -145,11 +137,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			findViewById(R.id.add_city_button).setOnClickListener(this);
 			mAddressDetai.setOnClickListener(this);
 			mRequestAddButton.setText("添加");
-			mRequestSettingDefaultButton.setVisibility(View.GONE);
 		}
 		
 		mRequestAddButton.setOnClickListener(this);
-		mRequestSettingDefaultButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -171,17 +161,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			intent.putExtra("countryId", mCountryId);
 			intent.putExtra("addrDetail", mAddressDetai.getText());
 			startActivityForResult(intent, REQUEST_CODE);
-			break;
-		case R.id.add_address_setting_default: //设为默认
-			if(valideRequestAddress()){
-				if(mAddressInfo == null){
-					defaultFlag = 1;
-					ToastUtil.showToast(AddAddressActivity.this, "设置默认成功");
-				}else{
-					
-					//requestDefaultAddress();
-				}
-			}
 			break;
 		case R.id.add_address_request_button:
 			if(mAddressInfo != null){
@@ -219,11 +198,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void requestAddAddress() {
 		int userId = ConfigManager.getInstance().getUserId();
-		String userToken = ConfigManager.getInstance().getUserToken();
-		if(userId == -1 || userToken == null){
-			//TODO 去登录
-			return;
-		}
+		String userToken = ConfigManager.getInstance().getUserToken(this);
+		if(userToken == null) return;
 		mUserModel.requestAddAddress(this, userToken, userId, mReceiveName.getText().toString(), 
 				mMobileNum.getText().toString(), mCountryId, mAddressDetai.getText().toString(), 
 				mAddressDetaiNum.getText().toString(), String.valueOf(defaultFlag));
@@ -254,7 +230,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	 * 删除旧的地址
 	 */
 	private void deleteOldAddress(){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		int userId = ConfigManager.getInstance().getUserId();
 		if(token == null || userId == -1) return; //TODO 去登录
 		mUserModel.requestDeleteAddress(this, userId, token, mAddressInfo.getAddressId());
@@ -344,7 +320,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	class MyUserModelResult extends UserModelResult{
 		@Override
 		public void requestAddAddressResult(String returnCode,
-				String buildFlag, String msg) {
+				String buildFlag, String msg, int addressId) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
 				if(mAddressInfo != null){
 					//请求删除旧的（这个相当于修改）
@@ -355,7 +331,8 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 						showNotCoveredDialog();
 					}else{
 						ToastUtil.showToast(AddAddressActivity.this, "成功添加");
-						handler.sendEmptyMessage(HAND_ADD_ADDR_SUCCESS);
+						ConfigManager.getInstance().setChoosedAddressId(addressId);
+						handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 					}
 				}
 			}else{
@@ -366,7 +343,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		@Override
 		public void requestDeleteAddressResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				if(mAddressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId()){
+				if(mAddressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId(AddAddressActivity.this)){
 					mUserModel.requestListAddress(AddAddressActivity.this, ConfigManager.getInstance().getUserId());
 				}else{
 					handler.sendEmptyMessage(HAND_FINISH_WINDOW);
@@ -379,8 +356,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		@Override
 		public void requestListAddressResult(List<AddressInfo> addressInfos) {
 			if(addressInfos != null && !addressInfos.isEmpty()){
-				ConfigManager.getInstance()
-					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+				ConfigManager.getInstance().setChoosedAddressId(addressInfos.get(0).getAddressId());
 			}
 			handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 		}

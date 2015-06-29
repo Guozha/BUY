@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -25,6 +26,7 @@ import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -60,6 +62,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 	private List<ExpandListData> mExpandListDatas;
 	private EditText mFeadBackText;
 	private Button mFeadBackButton;
+	private RatingBar mRatingBar;
 	private int mOrderId; 
 	
 	private OrderModel mOrderModel;
@@ -110,6 +113,10 @@ public class OrderGradDetailActivity extends BaseActivity{
 		mOrderAddressNameText = (TextView) findViewById(R.id.order_detail_address_name);
 		mOrderAddressDetailText = (TextView) findViewById(R.id.order_detail_address_detail);
 		mOrderTotalPriceText = (TextView) findViewById(R.id.order_detail_total_price);
+		
+		mRatingBar = (RatingBar) findViewById(R.id.rationbar);
+		mRatingBar.setMax(5);
+		mRatingBar.setStepSize(1);
 	}
 	
 	/**
@@ -117,9 +124,17 @@ public class OrderGradDetailActivity extends BaseActivity{
 	 */
 	private void requestOrderFeadback() {
 		String feadback = mFeadBackText.getText().toString();
-		if(feadback.isEmpty()) return;
-		String token = ConfigManager.getInstance().getUserToken();
-		mOrderModel.requestOrderMark(this, token, mOrderId, feadback);
+		if(feadback.isEmpty()) {
+			ToastUtil.showToast(OrderGradDetailActivity.this, "写一下评价吧");
+			return;
+		}
+		if(mRatingBar.getRating() == 0.0f){
+			ToastUtil.showToast(OrderGradDetailActivity.this, "对服务打一下分吧");
+			return;
+		}
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
+		mOrderModel.requestOrderMark(this, token, mOrderId, (int)mRatingBar.getRating(), feadback);
 	}
 	
 	private void updateView(){

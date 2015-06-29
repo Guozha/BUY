@@ -107,7 +107,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null || userId == -1) {
+		if(token == null) {
 			mAccountInfoArea.setVisibility(View.GONE);
 			mHeadArea.setBackgroundResource(R.drawable.background_personal);
 			mMineHeadImg.setImageResource(R.drawable.button_login);
@@ -137,11 +137,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	public void onClick(View view) {
 		Intent intent;
 		//如果没有登录
-		if(ConfigManager.getInstance().getUserToken() == null){
-			intent = new Intent(getActivity(), LoginActivity.class);
-			this.startActivityForResult(intent, REQUEST_CODE_LOGIN);
-			return;
-		}
+		if(ConfigManager.getInstance().getUserToken(getActivity()) == null) return;
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
 			//showChooseImageMethodDialog();

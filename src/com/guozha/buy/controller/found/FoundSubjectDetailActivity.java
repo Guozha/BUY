@@ -19,6 +19,7 @@ import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.FoundModel;
 import com.guozha.buy.model.result.FoundModelResult;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 发现-主题 的详情

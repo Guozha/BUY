@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_app_base_23"
-    android:orientation="vertical" >
-    <ListView 
+     android:background="@color/color_app_base_23"
+    android:layout_height="match_parent">
+    <com.guozha.buy.view.MultiListView
         android:id="@+id/found_menu_list"
         android:layout_width="match_parent"
         android:divider="@null"
@@ -12,4 +11,4 @@
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:layout_height="wrap_content"/>
-</LinearLayout>
+</ScrollView>

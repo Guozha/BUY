@@ -58,6 +58,7 @@ public class ShareManager{
 		}
 		//添加新浪SSO授权
 		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+		mController.getConfig().removePlatform(SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT);
 		//添加QQ和QZone授权
 		addQQAndQZoneSSO(activity);
 		//添加微信、微信朋友圈授权

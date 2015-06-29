@@ -2,6 +2,7 @@ package com.guozha.buy.controller.found;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -18,22 +19,22 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.controller.found.fragment.BaseMenuDetailFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailDescriptFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailFoodFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailStepFragment;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.found.menu.MenuDetail;
-import com.guozha.buy.entry.found.menu.MenuGoods;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.server.FloatWindowManage;
 import com.guozha.buy.server.ShareManager;
-import com.guozha.buy.server.FloatWindowManage.CartDirection;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ViewPagerTab;
 
@@ -172,7 +173,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		@Override
 		public void requestCollectionMenuResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				FloatWindowManage.createAddCartWindow("收藏成功", CartDirection.TOP);
+				ToastUtil.showCollectionAnim(MenuDetailActivity.this);
 			}else{
 				ToastUtil.showToast(MenuDetailActivity.this, msg);
 			}
@@ -183,7 +184,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		@Override
 		public void requestCartAddMenuResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				FloatWindowManage.createAddCartWindow("+1", CartDirection.TOP);
+				ToastUtil.showTopAddCartAnim(MenuDetailActivity.this);
 			}else{
 				ToastUtil.showToast(MenuDetailActivity.this, msg);
 			}
@@ -192,22 +193,22 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 
 	@Override
 	public void onClick(View view) {
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(addressId == -1) return;
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		
 		switch (view.getId()) {
 		case R.id.menu_collection_button:
 			mMenuModel.requestCollectionMenu(
 					MenuDetailActivity.this, token, userId, mMenuId);
 			break;
 		case R.id.menu_addcart_button:
-			List<String> goodsId = new ArrayList<String>();
-			for(int i = 0; i < mMenuDetail.getMenuGoods().size(); i++){
-				MenuGoods menuGoods = mMenuDetail.getMenuGoods().get(i);
-				goodsId.add(String.valueOf(menuGoods.getGoodsId()));
-			}
+			Set<String> checkedIds = mViewPagerAdapter.fragments[1].getCheckedIds();
+			LogUtil.e("checkedIds = " + checkedIds);
 			mShopCartModel.requestCartAddMenu(
-					MenuDetailActivity.this, userId, mMenuId, token, addressId, goodsId);
+					MenuDetailActivity.this, userId, mMenuId, token, addressId, checkedIds);
 			break;
 		default:
 			break;

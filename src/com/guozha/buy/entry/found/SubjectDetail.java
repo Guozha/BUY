@@ -8,7 +8,7 @@ public class SubjectDetail {
 	private String productType;
 	private int goodsOrMenuId;
 	private String unit;
-	private String unitPrice;
+	private int unitPrice;
 	
 	private List<SubjectDetailItem> itemDetailList;
 	
@@ -48,10 +48,10 @@ public class SubjectDetail {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public String getUnitPrice() {
+	public int getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(String unitPrice) {
+	public void setUnitPrice(int unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 }

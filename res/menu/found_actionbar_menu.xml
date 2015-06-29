@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
    <item 
        android:id="@+id/action_share"
-       android:icon="@drawable/action_bar_camera"
+       android:icon="@drawable/action_bar_share"
        android:showAsAction="always"
        android:title="分享"/>
 </menu>

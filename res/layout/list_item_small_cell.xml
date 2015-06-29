@@ -22,6 +22,8 @@
             android:layout_marginTop="8dip"
             android:layout_below="@id/vegetable_cell_icon"
             android:layout_width="match_parent"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
             android:layout_height="100dip"
             android:scaleType="fitCenter"
             android:src="@drawable/default_icon"/>
@@ -32,13 +34,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
             android:textColor="@color/color_app_base_26"
             android:maxLines="2"
             android:gravity="bottom"
             android:lines="2"
             android:ellipsize="end"
-            android:layout_centerHorizontal="true"
-            android:text="产品名称"/>
+            android:layout_centerHorizontal="true"/>
         <TextView
             android:id="@+id/vegetable_cell_price"
             android:layout_below="@id/vegetable_cell_name"
@@ -48,8 +51,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/color_app_base_26"
-            android:text="重量"/>
+            android:textColor="@color/color_app_base_26"/>
         
         <ImageView 
             android:id="@+id/vegetable_bargain_icon"

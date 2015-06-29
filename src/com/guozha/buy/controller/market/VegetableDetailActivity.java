@@ -31,6 +31,7 @@ import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.MenuModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -84,6 +85,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mGoodsId = bundle.getString("goodsId");
+				LogUtil.e("mGoodsId == " + mGoodsId);
 			}
 		}
 		initView();
@@ -159,7 +161,9 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	
 	private void initData(){
 		//2.1.4接口
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		if(mGoodsId == null) return;
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(addressId == -1) return;
 		mGoodsModel.requestGoodsDetail(this, Integer.parseInt(mGoodsId), addressId);
 		//7.4接口
 		mMenuModel.requestMenusByGoods(this, Integer.parseInt(mGoodsId));

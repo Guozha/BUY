@@ -14,16 +14,15 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog;
 import com.guozha.buy.controller.dialog.CustomDialog;
+import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
-import com.guozha.buy.entry.mine.collection.Material;
-import com.guozha.buy.entry.mine.collection.RecipeListItem;
+import com.guozha.buy.entry.mine.collection.CollectionMenu;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.CollectionModel;
 import com.guozha.buy.model.result.CollectionModelResult;
 import com.guozha.buy.util.ToastUtil;
-import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
 
 /**
@@ -34,17 +33,16 @@ import com.guozha.buy.view.AnimatedExpandableListView.AnimatedExpandableListAdap
 public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter{
 	
 	private LayoutInflater mInflater;
-	private Context context;
 	
 	private ModifyClickListener mModifyClickListener;
 	private DeleteClickListener mDeleteClickListener;
 	private List<CollectionDir> mCollectionDir;
 	private BitmapCache mBitmapCache;
-	
+	private Context mContext;
 	private CollectionModel mCollectionModel;
 	
 	public CollectionRecipeExpandAdapter(Context context, List<CollectionDir> collectionDir, BitmapCache bitmapCache){
-		this.context = context;
+		this.mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mCollectionDir = collectionDir;
 		mModifyClickListener = new ModifyClickListener();
@@ -114,65 +112,49 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.list_fragment_collection_recipe_cell_child, null);
 			holder = new ChildViewHolder();
-			holder.recipeImg = (ImageView) convertView.findViewById(R.id.recipe_collection_img);
-			holder.recipeName = (TextView) convertView.findViewById(R.id.recipe_collection_name);
-			holder.recipeDescript = (TextView) convertView.findViewById(R.id.recipe_collection_descript);
-			holder.modifyButton = (ImageView)
-					convertView.findViewById(R.id.collection_recipe_modify_button);
-			holder.deleteButton = (ImageView) 
-					convertView.findViewById(R.id.collection_recipe_delete_button);
+			holder.image = (ImageView) convertView.findViewById(R.id.collection_cooke_book_img);
+			holder.name = (TextView) convertView.findViewById(R.id.collection_cooke_book_name);
+			holder.cookeWay = (TextView) convertView.findViewById(R.id.cooke_way);
+			holder.cookeTime = (TextView) convertView.findViewById(R.id.cooke_time);
+			holder.cookeCalorie = (TextView) convertView.findViewById(R.id.cooke_calorie);
+			holder.modifyButton = (ImageView) convertView.findViewById(R.id.collection_recipe_modify_button);
+			holder.deleteButton = (ImageView) convertView.findViewById(R.id.collection_recipe_delete_button);
 			holder.modifyButton.setOnClickListener(mModifyClickListener);
 			holder.deleteButton.setOnClickListener(mDeleteClickListener);
 			convertView.setTag(holder);
 		}else{
 			holder = (ChildViewHolder) convertView.getTag();
 		}
-		CollectionDir collectionDir = mCollectionDir.get(groupPosition);
-		RecipeListItem recipeCollection = collectionDir.getMenuInfoList().get(childPosition);
-		holder.recipeImg.setImageResource(R.drawable.default_icon);
-		mBitmapCache.loadBitmaps(holder.recipeImg, recipeCollection.getMenuImg());
-		holder.recipeName.setText(recipeCollection.getMenuName());
-		holder.recipeDescript.setText(getRecipeDescript(recipeCollection.getGoodsList()));
-		holder.modifyButton.setTag(recipeCollection.getMyMenuId());
-		holder.deleteButton.setTag(recipeCollection.getMyMenuId());
+		CollectionMenu relationRecipe = mCollectionDir.get(groupPosition).getMenuInfoList().get(childPosition);
+		holder.image.setImageResource(R.drawable.default_icon);
+		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
+		holder.name.setText(relationRecipe.getMenuName());
+		holder.cookeWay.setText(relationRecipe.getCookieWay());
+		holder.cookeTime.setText(relationRecipe.getCookieTime() + "min");
+		holder.cookeCalorie.setText(relationRecipe.getCalories() + "卡路里");
+		holder.modifyButton.setTag(relationRecipe.getMyMenuId());
+		holder.deleteButton.setTag(relationRecipe.getMyMenuId());
 		return convertView;
-	}
-	
-	/**
-	 * 获取主料拼接串
-	 * @param materials
-	 * @return
-	 */
-	private String getRecipeDescript(List<Material> materials){
-		StringBuffer buffer = new StringBuffer("主料:");
-		if(materials == null) return buffer.toString();
-		for(int i = 0; i < materials.size(); i++){
-			Material material = materials.get(i);
-			buffer.append(material.getGoodsName());
-			buffer.append(UnitConvertUtil.getSwitchedWeight(material.getAmount(), material.getUnit()));
-			if(buffer.length() > 30) break;
-			buffer.append("、");
-		}
-		return buffer.toString();
 	}
 
 	@Override
 	public int getRealChildrenCount(int groupPosition) {
 		if(mCollectionDir == null) return 0;
 		CollectionDir collectionDir = mCollectionDir.get(groupPosition);
-		List<RecipeListItem> recipeCollections = collectionDir.getMenuInfoList();
-		if(recipeCollections == null)return 0;
-		return recipeCollections.size();
+		List<CollectionMenu> relationRecipe = collectionDir.getMenuInfoList();
+		if(relationRecipe == null)return 0;
+		return relationRecipe.size();
 	}
 	
 	static class ChildViewHolder{
-		private ImageView recipeImg;
-		private TextView recipeName;
-		private TextView recipeDescript;
-		
-		private ImageView modifyButton;
-		private ImageView deleteButton;
-		
+    	private ImageView image;
+    	private TextView name;
+    	private TextView cookeWay;
+    	private TextView cookeTime;
+    	private TextView cookeCalorie;
+    	
+        private ImageView modifyButton;
+        private ImageView deleteButton;
 	}
 	
 	/**
@@ -185,9 +167,9 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		@Override
 		public void onClick(View view) {
 			int menuId = (Integer) view.getTag();
-			Intent intent = new Intent(context, CollectionRecipeModifyDialog.class);
+			Intent intent = new Intent(mContext, CollectionRecipeModifyDialog.class);
 			intent.putExtra("menuId", menuId);
-			context.startActivity(intent);
+			mContext.startActivity(intent);
 		}
 	}
 	
@@ -201,7 +183,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		@Override
 		public void onClick(View view) {
 			final int menuId = (Integer) view.getTag();
-			final CustomDialog dialog = new CustomDialog(context, R.layout.dialog_delete_notify);
+			final CustomDialog dialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
 			dialog.setDismissButtonId(R.id.cancel_button);
 			dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 				@Override
@@ -217,8 +199,9 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 	 * 请求删除收藏菜谱
 	 */
 	private void requestDeleteRecipeItem(int menuId){
-		String token = ConfigManager.getInstance().getUserToken();
-		mCollectionModel.requestDeleMenuCollectItem(context, token, menuId);
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
+		mCollectionModel.requestDeleMenuCollectItem(mContext, token, menuId);
 	}
 	
 	private UpdateRecipeListener mUpdateRecipeListener;
@@ -240,7 +223,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 					mUpdateRecipeListener.update();
 				}
 			}else{
-				ToastUtil.showToast(context, msg);
+				ToastUtil.showToast(mContext, msg);
 			}
 		}
 	}

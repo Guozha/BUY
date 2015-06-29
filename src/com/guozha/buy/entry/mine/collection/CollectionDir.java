@@ -3,6 +3,8 @@ package com.guozha.buy.entry.mine.collection;
 import java.io.Serializable;
 import java.util.List;
 
+import com.guozha.buy.entry.market.RelationRecipe;
+
 /**
  * 菜谱收藏的文件夹
  * @author PeggyTong
@@ -15,8 +17,7 @@ public class CollectionDir implements Serializable{
 	private int myDirId;				//文件夹id
 	private String defaultFlag;			//文件夹标识（1代表默认文件夹)
 	private String dirName;				//文件夹名称
-	
-	private List<RecipeListItem> menuInfoList;
+	private List<CollectionMenu> menuInfoList;
 	
 	public int getMyDirId() {
 		return myDirId;
@@ -36,10 +37,10 @@ public class CollectionDir implements Serializable{
 	public void setDirName(String dirName) {
 		this.dirName = dirName;
 	}
-	public List<RecipeListItem> getMenuInfoList() {
+	public List<CollectionMenu> getMenuInfoList() {
 		return menuInfoList;
 	}
-	public void setMenuInfoList(List<RecipeListItem> menuInfoList) {
+	public void setMenuInfoList(List<CollectionMenu> menuInfoList) {
 		this.menuInfoList = menuInfoList;
 	}
 }

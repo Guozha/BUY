@@ -7,8 +7,6 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
-    
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
         
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -98,7 +96,7 @@
         <activity 
             android:name="com.guozha.buy.controller.SearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Search"
+            android:theme="@style/Theme.Translate"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
         </activity>   
@@ -247,6 +245,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         
+        <!-- 更新 -->
+        <activity 
+            android:name="com.guozha.buy.controller.mine.UpdateActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- 添加地址，选择小区、楼宇 -->
         <activity 
             android:name="com.guozha.buy.controller.mine.ChooseDetailActivity"
@@ -284,6 +287,12 @@
         <activity 
             android:name="com.guozha.buy.controller.dialog.ChooseAddressDialog"
             android:theme="@style/Theme.CommenDialog"
+            android:screenOrientation="portrait"></activity>
+        
+        <!-- 添加购物车动画对话框 -->
+        <activity 
+            android:name="com.guozha.buy.controller.dialog.AddCartAnimDialog"
+            android:theme="@style/AddCartAnimStyle"
             android:screenOrientation="portrait"></activity>
         
         <!-- 活动规则对话框 -->

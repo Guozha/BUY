@@ -14,19 +14,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
-import com.guozha.buy.controller.found.FoundSubjectDetailActivity;
 import com.guozha.buy.controller.found.MenuDetailActivity;
 import com.guozha.buy.controller.market.VegetableDetailActivity;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.found.SubjectDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.server.FloatWindowManage;
-import com.guozha.buy.server.FloatWindowManage.CartDirection;
+import com.guozha.buy.util.ConstantUtil;
+import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
 
 public class FoundSubjectDetailListAdapter extends BaseAdapter implements OnClickListener{
 	private LayoutInflater mInflater;
@@ -83,7 +86,9 @@ public class FoundSubjectDetailListAdapter extends BaseAdapter implements OnClic
 		FoundSubjectDetailItemListAdapter itemListAdapter = 
 				new FoundSubjectDetailItemListAdapter(mContext, subjectDetail.getItemDetailList(), mBitmapCache);
 		holder.list.setAdapter(itemListAdapter);
-		holder.price.setText("价格：19.8");
+		LogUtil.e("unitPrice== " + subjectDetail.getUnitPrice());
+		holder.price.setText("价格：" + UnitConvertUtil.getSwitchedMoney(subjectDetail.getUnitPrice()) + "元/" +
+				UnitConvertUtil.getSwichedUnit(1000, subjectDetail.getUnit()));
 		return convertView;
 	}
 	
@@ -109,24 +114,26 @@ public class FoundSubjectDetailListAdapter extends BaseAdapter implements OnClic
 				intent.putExtra("menuId", subjectDetail.getGoodsOrMenuId());
 			}else{
 				intent = new Intent(mContext, VegetableDetailActivity.class);
-				intent.putExtra("goodsId", subjectDetail.getGoodsOrMenuId());
+				intent.putExtra("goodsId", String.valueOf(subjectDetail.getGoodsOrMenuId()));
 			}
 			mContext.startActivity(intent);
 			break;
 		case R.id.subject_detail_item_cart_btn:
+			String token = ConfigManager.getInstance().getUserToken(mContext);
+			if(token == null) return;
+			int addressId = ConfigManager.getInstance().getChoosedAddressId(mContext);
+			if(addressId == -1) return;
 			if("01".equals(subjectDetail.getProductType())){ //菜谱
 				//TODO 这块应该让3.6接口可以直接加入菜谱（全选食材）
 				int userId = ConfigManager.getInstance().getUserId();
-				String token = ConfigManager.getInstance().getUserToken();
-				int addressId = ConfigManager.getInstance().getChoosedAddressId();
-				mShopCartModel.requestCartAddMenu(mContext, userId, subjectDetail.getGoodsOrMenuId(), token, addressId);
+				mShopCartModel.requestCartAddMenu(mContext, userId, subjectDetail.getGoodsOrMenuId(), token, addressId, null);
 			}else{
 				intent = new Intent(mContext, WeightSelectDialog.class);
-				intent.putExtra("goodsId", subjectDetail.getGoodsOrMenuId());
-				intent.putExtra("unitPrice", subjectDetail.getUnitPrice());
+				intent.putExtra("goodsId", String.valueOf(subjectDetail.getGoodsOrMenuId()));
+				intent.putExtra("unitPrice", String.valueOf(subjectDetail.getUnitPrice()));
 				intent.putExtra("unit", subjectDetail.getUnit());
+				mContext.startActivity(intent);
 			}
-			
 			break;
 		}
 	}
@@ -135,7 +142,7 @@ public class FoundSubjectDetailListAdapter extends BaseAdapter implements OnClic
 		@Override
 		public void requestCartAddMenuResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				FloatWindowManage.createAddCartWindow("+1", CartDirection.TOP);
+				ToastUtil.showTopAddCartAnim(mContext);
 			}else{
 				ToastUtil.showToast(mContext, msg);
 			}

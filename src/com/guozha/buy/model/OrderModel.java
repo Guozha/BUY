@@ -87,13 +87,6 @@ public class OrderModel extends BaseModel{
 		public void requestOrderMarkResult(String returnCode, String msg);
 		
 		/**
-		 * 4.14 订单商品评价
-		 * @param returnCode
-		 * @param msg
-		 */
-		public void requestGradeProductResult(String returnCode, String msg);
-		
-		/**
 		 * 4.12 确认订单，获取商品总额和服务费
 		 * @param returnCode
 		 * @param msg
@@ -162,6 +155,7 @@ public class OrderModel extends BaseModel{
 					String msg = response.getString("msg");
 					mInterface.requestSubmitOrderResult(returnCode, msg, orderId);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -212,6 +206,7 @@ public class OrderModel extends BaseModel{
 						int serviceFee = response.getInt("serviceFee");	//服务费
 						mInterface.requestOrderInforResult(totalPrice, serviceFee);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -260,6 +255,7 @@ public class OrderModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.requestCancelOrderResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -273,12 +269,12 @@ public class OrderModel extends BaseModel{
 	 * @param orderId
 	 * @param commentDesc
 	 */
-	public void requestOrderMark(final Context context, String token, int orderId, String commentDesc){
-		RequestParam paramPath = new RequestParam("order/orderMark")
+	public void requestOrderMark(final Context context, String token, int orderId, int serviceStar, String commentDesc){
+		RequestParam paramPath = new RequestParam("v31/order/mark")
 		.setParams("token", token)
 		.setParams("orderId", orderId)
 		.setParams("commentDesc", commentDesc)
-		.setParams("serviceStar", "");
+		.setParams("serviceStar", serviceStar);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			paramPath, new Listener<String>() {
 				@Override
@@ -289,45 +285,7 @@ public class OrderModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.requestOrderMarkResult(returnCode, msg);
 					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-		});
-	}
-	
-	/**
-	 * 4.14 订单商品评价
-	 * @param context
-	 * @param id
-	 * @param orderId
-	 * @param token
-	 * @param marketType
-	 * @param goodsStar
-	 */
-	public void requestGradeProduct(final Context context, int id, 
-			int orderId, String token, int marketType, int goodsStar){
-		RequestParam paramPath = new RequestParam("order/goodsMark")
-		.setParams("token", token)
-		.setParams("orderId", orderId)
-		.setParams("markType", marketType)
-		.setParams("goodsStar", goodsStar);
-		if(marketType == 1){
-			paramPath.setParams("orderMenuGoodsId", id);
-			paramPath.setParams("orderGoodsId", "");
-		}else{
-			paramPath.setParams("orderGoodsId", id);
-			paramPath.setParams("orderMenuGoodsId", "");
-		}
-		HttpManager.getInstance(context).volleyRequestByPost(
-			paramPath, new Listener<String>() {
-				@Override
-				public void onResponse(String responseStr) {
-					try {
-						JSONObject response = new JSONObject(responseStr);
-						String returnCode = response.getString("returnCode");
-						String msg = response.getString("msg");
-						mInterface.requestGradeProductResult(returnCode, msg);
-					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -353,6 +311,7 @@ public class OrderModel extends BaseModel{
 					int serviceFee = response.getInt("serviceFee");
 					mInterface.requestOrderConfirmResult(returnCode, msg, totalPrice, serviceFee);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -387,7 +346,6 @@ public class OrderModel extends BaseModel{
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String responseStr) {
-				LogUtil.e("responseStr == " + responseStr);
 				try {
 					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
@@ -395,6 +353,7 @@ public class OrderModel extends BaseModel{
 					int orderId = response.getInt("orderId");
 					mInterface.requestOrderNomalInsertResult(returnCode, msg, orderId);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}

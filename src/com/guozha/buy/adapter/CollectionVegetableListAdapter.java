@@ -122,7 +122,8 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 	 * @param goodsId
 	 */
 	private void requestDeleteVegetable(final int goodsId) {
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
 		mCollectionModel.requestDeletGoodsCollect(mContext, token, goodsId);
 	}
 	

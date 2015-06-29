@@ -84,6 +84,10 @@ public class ViewPagerTab extends ViewGroup{
 		mCurrentChoosed = 0;
 	}
 	
+	public int getCurrentIndex(){
+		return mCurrentChoosed;
+	}
+	
 	private void setTabTexts(List<TextView> tabTexts){
 		if(tabTexts == null || tabTexts.size() < 2) return;
 		mTabTexts = tabTexts;

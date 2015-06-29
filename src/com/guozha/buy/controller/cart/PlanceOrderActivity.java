@@ -118,7 +118,8 @@ public class PlanceOrderActivity extends BaseActivity{
 	}
 	
 	private void initData(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(addressId == -1) return;
 		int userId = ConfigManager.getInstance().getUserId();
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
@@ -248,7 +249,7 @@ public class PlanceOrderActivity extends BaseActivity{
 			return;
 		}
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null) return; //先登录
 		int addressId = ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this);
 		if(addressId == -1) return;
@@ -384,7 +385,7 @@ public class PlanceOrderActivity extends BaseActivity{
 			if(addressInfos != null){
 				for(int i = 0; i < addressInfos.size(); i++){
 					AddressInfo addressInfo = addressInfos.get(i);
-					if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId()){
+					if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this)){
 						mAddressInfo = addressInfo;
 						handler.sendEmptyMessage(HAND_ADDRESS_COMPLETED);
 					}

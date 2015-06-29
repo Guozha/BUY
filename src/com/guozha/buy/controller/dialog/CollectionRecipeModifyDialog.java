@@ -101,7 +101,7 @@ public class CollectionRecipeModifyDialog extends Activity{
 	 * @param dirId
 	 */
 	private void requestModifyCollectionFolder(int dirId){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		//TODO 去登录
 		if(token == null) return;
 		mCollectionModel.requestModifyCollectFolder(this, token, mMenuId, dirId);
@@ -132,8 +132,7 @@ public class CollectionRecipeModifyDialog extends Activity{
 	 */
 	private void requestCollectionRecipeData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mCollectionModel.requestMenuCollectList(this, userId, addressId);
+		mCollectionModel.requestMenuCollectList(this, userId);
 	}
 	
 	class MyCollectionModelResult extends CollectionModelResult{

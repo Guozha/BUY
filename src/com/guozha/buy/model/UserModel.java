@@ -94,7 +94,7 @@ public class UserModel extends BaseModel{
 		 * @param buildFlag
 		 * @param msg
 		 */
-		public void requestAddAddressResult(String returnCode, String buildFlag, String msg);
+		public void requestAddAddressResult(String returnCode, String buildFlag, String msg, int addressId);
 		
 		/**
 		 * 1.7.5 删除地址
@@ -153,6 +153,7 @@ public class UserModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.obtainPhoneValidateResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -191,7 +192,7 @@ public class UserModel extends BaseModel{
 					}
 					mInterface.requestCheckLogin(returnCode, msg, userInfor);
 				} catch (JSONException e) {
-					ToastUtil.showToast(context, "数据解析异常");
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -230,6 +231,7 @@ public class UserModel extends BaseModel{
 					}
 					mInterface.requestPasswordLogin(returnCode, msg, userInfor);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -273,6 +275,7 @@ public class UserModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.requestLoginOutResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 					
@@ -361,8 +364,10 @@ public class UserModel extends BaseModel{
 							String returnCode = response.getString("returnCode");
 							String buildFlag = response.getString("buildingFlag");
 							String msg = response.getString("msg");
-							mInterface.requestAddAddressResult(returnCode, buildFlag, msg);
+							int addressId = response.getInt("addressId");
+							mInterface.requestAddAddressResult(returnCode, buildFlag, msg, addressId);
 						} catch (JSONException e) {
+							jsonException(context);
 							e.printStackTrace();
 						}
 					}
@@ -392,6 +397,7 @@ public class UserModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.requestDeleteAddressResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -420,6 +426,7 @@ public class UserModel extends BaseModel{
 							String msg = response.getString("msg");
 							mInterface.requestDefaultAddressResult(returnCode, msg);
 						} catch (JSONException e) {
+							jsonException(context);
 							e.printStackTrace();
 						}
 					}
@@ -458,6 +465,7 @@ public class UserModel extends BaseModel{
 					String msg = response.getString("msg");
 					mInterface.requestInvateNumCommitResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}

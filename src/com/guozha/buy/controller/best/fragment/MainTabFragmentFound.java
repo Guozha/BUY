@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.found.fragment.FoundMenuFragment;
 import com.guozha.buy.controller.found.fragment.FoundSubjectFragment;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.ViewPagerTab;
 
 /**
@@ -57,6 +58,15 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	private void setUpTab(View view){
 		mViewPagerTab = (ViewPagerTab) view.findViewById(R.id.viewpager_tab);
 		mViewPagerTab.setViewPageAndTabTexts(mViewPager, mTabTexts);
+	}
+	
+	@Override
+	public boolean onKeyDownBack() {
+		if(mViewPagerTab.getCurrentIndex() != 0){
+			mViewPager.setCurrentItem(0);
+			return true;
+		}
+		return false;
 	}
 	
 	class ViewPagerAdapter extends FragmentPagerAdapter{

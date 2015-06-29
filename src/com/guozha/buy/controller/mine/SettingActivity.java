@@ -77,7 +77,7 @@ public class SettingActivity extends BaseActivity{
 				requestLoginOut();
 			}
 		});
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null){
 			mLogoutButton.setVisibility(View.GONE);
 		}
@@ -140,7 +140,7 @@ public class SettingActivity extends BaseActivity{
 	 * 请求退出登录
 	 */
 	private void requestLoginOut() {
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null){ //TODO 先登录
 			return;
 		}

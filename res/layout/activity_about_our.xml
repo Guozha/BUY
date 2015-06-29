@@ -74,7 +74,7 @@
 	    android:id="@+id/about_our_qq_group"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
-	    android:text="QQ粉丝群：100179552"
+	    android:text="客服微信号：aizhangshaohz"
 	    android:textColor="@color/color_app_base_26"
 	    android:textSize="@dimen/dimen_global_14sp"
 	    android:background="@drawable/white_list_selector_bg"

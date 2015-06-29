@@ -58,9 +58,9 @@ public class CookBookListAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			holder.image = (ImageView) convertView.findViewById(R.id.cook_book_imag);
 			holder.name = (TextView) convertView.findViewById(R.id.cooke_book_name);
-			//holder.material = (TextView) convertView.findViewById(R.id.cook_book_material);
-			//holder.collectionButton = (ImageView) convertView.findViewById(R.id.cook_book_collection);
-			//holder.collectionButton.setOnClickListener(this);
+			holder.cookeWay = (TextView) convertView.findViewById(R.id.cooke_way);
+			holder.cookeTime = (TextView) convertView.findViewById(R.id.cooke_time);
+			holder.cookeCalorie = (TextView) convertView.findViewById(R.id.cooke_calorie);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
@@ -69,59 +69,18 @@ public class CookBookListAdapter extends BaseAdapter{
 		holder.image.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
 		holder.name.setText(relationRecipe.getMenuName());
-		//holder.material.setText(getRecipeDescript(relationRecipe.getGoodsList()));
-		//holder.collectionButton.setTag(relationRecipe.getMenuId());
+		holder.cookeWay.setText(relationRecipe.getCookieWay());
+		holder.cookeTime.setText(relationRecipe.getCookieTime() + "min");
+		holder.cookeCalorie.setText(relationRecipe.getCalories() + "卡路里");
+
 		return convertView;
-	}
-	
-	/**
-	 * 获取主料拼接串
-	 * @param materials
-	 * @return
-	 */
-	private String getRecipeDescript(List<RelationRecipeMaterial> materials){
-		StringBuffer buffer = new StringBuffer("主料:");
-		if(materials == null) return buffer.toString();
-		for(int i = 0; i < materials.size(); i++){
-			RelationRecipeMaterial material = materials.get(i);
-			buffer.append(material.getGoodsName());
-			buffer.append(UnitConvertUtil.getSwitchedWeight(material.getAmount(), material.getUnit()));
-			if(buffer.length() > 30) break;
-			buffer.append("、");
-		}
-		return buffer.toString();
 	}
 	
     static class ViewHolder{
     	private ImageView image;
     	private TextView name;
-    	//private TextView material;
-    	//private ImageView collectionButton;
+    	private TextView cookeWay;
+    	private TextView cookeTime;
+    	private TextView cookeCalorie;
     }
-
-    
-	/**
-	 * 请求添加购物车
-	 * @param menuId
-	 */
-    /*
-	private void requestCollectionRecipe(int menuId) {
-		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null) return;  //TODO 先登录
-		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mShopCartModel.requestAddCart(mContext, userId, menuId, "01", 1, token, addressId);
-	}
-	
-	class MyShopCartModelResult extends ShopCartModelResult{
-		@Override
-		public void requestAddCartResult(String returnCode, String msg) {
-			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				ToastUtil.showToast(mContext, "添加成功");
-			}else{
-				ToastUtil.showToast(mContext, msg);
-			}
-		}
-	}
-	*/
 }

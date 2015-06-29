@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_app_base_6"
+    android:background="@color/color_app_base_23"
     android:orientation="vertical" >
     
 	<LinearLayout 
@@ -78,39 +78,68 @@
         android:headerDividersEnabled="true"
         android:footerDividersEnabled="true"
         android:groupIndicator="@null"
-        android:background="@color/color_app_base_5"
+        android:background="@color/color_app_base_23"
         android:divider="@color/color_app_base_7"
         android:dividerHeight="1px"/>
-	    
+	 
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="50dip"
-	    android:background="@color/color_app_base_5"
-	    android:gravity="center_vertical"
-	    android:orientation="horizontal">
-	    
-	    <EditText 
-	        android:id="@+id/order_feadback_text"
-	        android:layout_width="0dip"
-	        android:layout_weight="1"
-	        android:layout_height="34dip"
-	        android:layout_marginLeft="18dip"
-	        android:hint="说两句吧..."
-	        android:textColor="@color/color_app_base_4"
-	        android:textSize="@dimen/dimen_global_14sp"
-	        android:background="@drawable/main_dialog_background"
-	        android:textColorHint="@color/color_app_base_8"/>
-	    
-	    <Button
-	        android:id="@+id/order_feadback_button" 
-	        android:layout_width="80dip"
-	        android:layout_height="34dip"
-	        android:layout_marginLeft="5dip"
-	        android:layout_marginRight="18dip"
-	        android:text="评论"
-	        android:gravity="center"
-	        android:textSize="@dimen/dimen_global_14sp"
-	        android:textColor="@color/color_app_base_5"
-	        android:background="@drawable/nomal_button_nomal_bg"/>
+	    android:layout_height="wrap_content"
+	    android:background="@color/color_app_base_24"
+	    android:orientation="vertical">
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="18dip"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal">
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="@dimen/dimen_global_14sp"
+	            android:textColor="@color/color_app_base_21"
+	            android:text="评价该次服务"/>
+	        <RatingBar 
+	            android:id="@+id/rationbar"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:numStars="5"
+	            style="@style/RatingBarStyle"/>
+	    </LinearLayout>
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="50dip"
+		    android:background="@color/color_app_base_5"
+		    android:gravity="center_vertical"
+		    android:orientation="horizontal">
+		    
+		    <EditText 
+		        android:id="@+id/order_feadback_text"
+		        android:layout_width="0dip"
+		        android:layout_weight="1"
+		        android:layout_height="34dip"
+		        android:layout_marginLeft="18dip"
+		        android:hint="说两句吧..."
+		        android:textColor="@color/color_app_base_4"
+		        android:textSize="@dimen/dimen_global_14sp"
+		        android:background="@drawable/main_dialog_background"
+		        android:textColorHint="@color/color_app_base_8"/>
+		    
+		    <Button
+		        android:id="@+id/order_feadback_button" 
+		        android:layout_width="80dip"
+		        android:layout_height="34dip"
+		        android:layout_marginLeft="5dip"
+		        android:layout_marginRight="18dip"
+		        android:text="评论"
+		        android:gravity="center"
+		        android:textSize="@dimen/dimen_global_14sp"
+		        android:textColor="@color/color_app_base_5"
+		        android:background="@drawable/nomal_button_nomal_bg"/>
+		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

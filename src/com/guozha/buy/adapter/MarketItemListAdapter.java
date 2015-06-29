@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentMarket;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.controller.market.ListVegetableActivity;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.MarketHomeItem;
 import com.guozha.buy.global.ConfigManager;
@@ -165,12 +168,14 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken() == null){
-			return;  //TODO 先登录
-		}
+		if(ConfigManager.getInstance().getUserToken(mContext) == null)
+			return;
 		//TODO 再判断当前选择的地址是否为NULL
-		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1) return;
-		
+		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1){
+			intent = new Intent(mContext, AddAddressActivity.class);
+			mContext.startActivity(intent);
+			return;
+		};
 		String tag = String.valueOf(view.getTag());
 		String[] tags = tag.split(":");
 		if(tags.length != 3){

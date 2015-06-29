@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -72,13 +73,18 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.about_our_weixin:
-			new CustomDialog(this, R.layout.dialog_custom_erweima).getWindow();
+			ImageView gongzhonghao = (ImageView) new CustomDialog(
+					this, R.layout.dialog_custom_erweima).getViewById(R.id.erweima_img);
+			gongzhonghao.setImageResource(R.drawable.weixin_erweima);
 			break;
 		case R.id.about_our_weibo:
 			openWeiboUserInfo("5571667895");
 			break;
 		case R.id.about_our_qq_group:
-			openQQgroup();
+			//openQQgroup();
+			ImageView kefuhao = (ImageView) new CustomDialog(
+					this, R.layout.dialog_custom_erweima).getViewById(R.id.erweima_img);
+			kefuhao.setImageResource(R.drawable.kefuhao);
 			break;
 		case R.id.about_our_website:
 			

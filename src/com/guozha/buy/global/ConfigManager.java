@@ -7,13 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.Address;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.CustomApplication;
+import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.controller.mine.AddAddressActivity;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -40,7 +43,7 @@ public class ConfigManager{
 	private String mVersionName;					   //版本名称
 	private boolean mWarnTimeOpend;					   //提醒开关是否打开
 	private long mTodayDate;						   //今天的日期 
-
+	private int mCartNumber = -1; 						   //购物车数量
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
@@ -68,7 +71,7 @@ public class ConfigManager{
 		mUserToken = sharedPreference.getString(USER_TOKEN, null);
 		mUserPwd = sharedPreference.getString(USER_PWD, null);
 		mMobileNumber = sharedPreference.getString(MOBILE_NUMBER, null);
-		mWarnTime = sharedPreference.getString(WARN_TIME, "1600");
+		mWarnTime = sharedPreference.getString(WARN_TIME, null);
 		mChoosedAddressId = sharedPreference.getInt(CHOOSED_ADDRESS_ID, -1);
 		mVersionCode = sharedPreference.getInt(VERSION_CODE, -1);
 		mVersionName = sharedPreference.getString(VERSION_NAME, null);
@@ -94,6 +97,16 @@ public class ConfigManager{
 				
 			};
 		}.start();
+	}
+	
+	private OnConfigChangeListener mConfigChangeListener;
+	
+	public void setOnConfigChangeListener(OnConfigChangeListener configChangeListener){
+		mConfigChangeListener = configChangeListener;
+	}
+	
+	public interface OnConfigChangeListener{
+		public void cartNumChanged();
 	}
 	
 	/**
@@ -141,6 +154,26 @@ public class ConfigManager{
 	}
 	
 	/**
+	 * 设置购物车数量
+	 * @param cartNumber
+	 */
+	public void setCartNumber(int cartNumber){
+		if(mCartNumber == cartNumber) return;
+		mCartNumber = cartNumber;
+		if(mConfigChangeListener != null){
+			mConfigChangeListener.cartNumChanged();
+		}
+	}
+	
+	/**
+	 * 获取购物车数量
+	 * @return
+	 */
+	public int getCartNumber(){
+		return mCartNumber;
+	}
+	
+	/**
 	 * 获取用户ID
 	 * @return
 	 */
@@ -157,10 +190,6 @@ public class ConfigManager{
 		setConfig(USER_ID, userId);
 	}
 	
-	/**
-	 * 获取选择的地址ID
-	 * @return
-	 */
 	public int getChoosedAddressId(){
 		return mChoosedAddressId;
 	}
@@ -172,17 +201,8 @@ public class ConfigManager{
 	 */
 	public int getChoosedAddressId(final Context context){
 		if(mChoosedAddressId == -1){
-			final CustomDialog addAddressDialog = new CustomDialog(context, R.layout.dialog_add_address);
-			addAddressDialog.setDismissButtonId(R.id.cancel_button);
-			addAddressDialog.getViewById(R.id.agree_button)
-				.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(context, AddAddressActivity.class);
-					context.startActivity(intent);
-					addAddressDialog.dismiss();
-				}
-			});
+			Intent intent = new Intent(context, AddAddressActivity.class);
+			context.startActivity(intent);
 		}
 		return mChoosedAddressId;
 	}
@@ -198,6 +218,14 @@ public class ConfigManager{
 	}
 	
 	public String getUserToken(){
+		return mUserToken;
+	}
+	
+	public String getUserToken(Context context){
+		if(mUserToken == null){
+			Intent intent = new Intent(context, LoginActivity.class);
+			context.startActivity(intent);
+		}
 		return mUserToken;
 	}
 	

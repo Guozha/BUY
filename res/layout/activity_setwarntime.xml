@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_app_base_6"
+    android:background="@color/color_app_base_23"
     android:orientation="vertical" >
     
 	<RelativeLayout 
 	    android:layout_width="match_parent"
-	    android:background="@color/color_app_base_5"
+	    android:background="@color/color_app_base_24"
 	    android:layout_height="112dip">
 	    
 	    <LinearLayout 
@@ -48,17 +48,17 @@
 	
 	<View 
 	    android:layout_width="match_parent"
-	    android:layout_height="1dip"
-	    android:background="@color/color_app_base_7"/>
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	<ListView 
 	    android:id="@+id/set_warn_list"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:dividerHeight="1dip"
-	    android:divider="@color/color_app_base_7"/>
+	    android:dividerHeight="1px"
+	    android:divider="@color/color_app_base_27"/>
 	
 	<View 
 	    android:layout_width="match_parent"
-	    android:layout_height="1dip"
-	    android:background="@color/color_app_base_7"/>
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 </LinearLayout>

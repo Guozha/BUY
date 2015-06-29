@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
+import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
@@ -110,15 +111,11 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 	public void onClick(View view) {
 		Intent intent;
 		//先判断用户是否登录了
-		if(ConfigManager.getInstance().getUserToken() == null){
-			intent = new Intent(mContext, LoginActivity.class);
-			mContext.startActivity(intent);
-			//TODO 刷新数据。。。
+		if(ConfigManager.getInstance().getUserToken(mContext) == null)
 			return;
-		}
 		//TODO 再判断当前选择的地址是否为NULL
-		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1) return;
-		
+		if(ConfigManager.getInstance().getChoosedAddressId(mContext) == -1) 
+			return;
 		String tag= String.valueOf(view.getTag());
 		String[] tags = tag.split(":");
 		if(tags.length != 3) return;

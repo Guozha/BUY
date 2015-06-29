@@ -60,7 +60,7 @@ public class MyInvateNumActivity extends BaseActivity{
 			public void onClick(View view) {
 				String preferenNo = mEditText.getText().toString();
 				if(preferenNo.isEmpty()) return;
-				String token = ConfigManager.getInstance().getUserToken();
+				String token = ConfigManager.getInstance().getUserToken(MyInvateNumActivity.this);
 				int userId = ConfigManager.getInstance().getUserId();
 				mUserModel.requestInvateNumCommit(MyInvateNumActivity.this, token, userId, preferenNo);
 			}

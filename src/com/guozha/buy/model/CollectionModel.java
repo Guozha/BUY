@@ -17,7 +17,7 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.CollectionModelResult;
 
-public class CollectionModel {
+public class CollectionModel extends BaseModel{
 	
 	private CollectionModelInterface mInterface;
 	
@@ -87,7 +87,6 @@ public class CollectionModel {
 		
 	}
 	
-
 	/**
 	 * 1.11.1 请求收藏食材
 	 */
@@ -106,6 +105,7 @@ public class CollectionModel {
 						String msg = response.getString("msg");
 						mInterface.requestCollectionGoodsResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 					
@@ -137,10 +137,9 @@ public class CollectionModel {
 	 * @param userId
 	 * @param addressId
 	 */
-	public void requestMenuCollectList(final Context context, int userId, int addressId){
-		RequestParam paramPath = new RequestParam("account/myfavo/listMenuFavo")
-		.setParams("userId", userId)
-		.setParams("addressId", addressId);
+	public void requestMenuCollectList(final Context context, int userId){
+		RequestParam paramPath = new RequestParam("v31/account/myfavo/listMenuFavo")
+		.setParams("userId", userId);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			paramPath, new Listener<String>() {
 				@Override
@@ -174,6 +173,7 @@ public class CollectionModel {
 					String msg = response.getString("msg");
 					mInterface.requestAddCollectDirResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -202,6 +202,7 @@ public class CollectionModel {
 						String msg = response.getString("msg");
 						mInterface.requestModifyCollectFolder(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -228,6 +229,7 @@ public class CollectionModel {
 						String msg = response.getString("msg");
 						mInterface.requestDeleCollectDirResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -251,6 +253,7 @@ public class CollectionModel {
 						String msg = response.getString("msg");
 						mInterface.requestDeleMenuCollectItemResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 					
@@ -276,6 +279,7 @@ public class CollectionModel {
 						String msg = response.getString("msg");
 						mInterface.requestDeletGoodsCollectResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}

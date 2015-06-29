@@ -1,25 +1,14 @@
 package com.guozha.buy.entry.mine.collection;
 
-import java.io.Serializable;
-import java.util.List;
-
-/**
- * 菜谱收藏
- * @author PeggyTong
- *
- */
-public class RecipeListItem implements Serializable{
-	
-	private static final long serialVersionUID = 5069237596455086691L;
-	
+public class CollectionMenu {
 	private int myMenuId;
 	private int myDirId;
-	private int menuId; 
+	private int menuId;
 	private String menuName;
 	private String menuImg;
-	private String activeFlag;
-	private List<Material> goodsList;
-	
+	private String cookieWay;
+	private int cookieTime;
+	private int calories;
 	public int getMyMenuId() {
 		return myMenuId;
 	}
@@ -50,16 +39,22 @@ public class RecipeListItem implements Serializable{
 	public void setMenuImg(String menuImg) {
 		this.menuImg = menuImg;
 	}
-	public String getActiveFlag() {
-		return activeFlag;
+	public String getCookieWay() {
+		return cookieWay;
 	}
-	public void setActiveFlag(String activeFlag) {
-		this.activeFlag = activeFlag;
+	public void setCookieWay(String cookieWay) {
+		this.cookieWay = cookieWay;
 	}
-	public List<Material> getGoodsList() {
-		return goodsList;
+	public int getCookieTime() {
+		return cookieTime;
 	}
-	public void setGoodsList(List<Material> goodsList) {
-		this.goodsList = goodsList;
+	public void setCookieTime(int cookieTime) {
+		this.cookieTime = cookieTime;
+	}
+	public int getCalories() {
+		return calories;
+	}
+	public void setCalories(int calories) {
+		this.calories = calories;
 	}
 }

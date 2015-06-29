@@ -61,19 +61,27 @@
             hyman:nomal_color="@color/color_app_base_26"
             hyman:check_color="@color/color_app_base_21"/>
 
-        <com.guozha.buy.view.TabBarItem
-            android:id="@+id/id_indicator_four"
-            android:layout_width="0dp"        
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            hyman:checked_item="false"
-            hyman:nomal_icon="@drawable/tab_bar_icon04_normal"
-            hyman:check_icon="@drawable/tab_bar_icon04_current"
-            hyman:text="@string/activity_main_tab4_title"
-            hyman:text_size="@dimen/app_nomal_text_size"
-            hyman:nomal_color="@color/color_app_base_26"
-            hyman:check_color="@color/color_app_base_21"/>
-
+        <FrameLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+	        <com.guozha.buy.view.TabBarItem
+	            android:id="@+id/id_indicator_four"
+	            android:layout_width="match_parent"        
+	            android:layout_height="fill_parent"
+	            hyman:checked_item="false"
+	            hyman:nomal_icon="@drawable/tab_bar_icon04_normal"
+	            hyman:check_icon="@drawable/tab_bar_icon04_current"
+	            hyman:text="@string/activity_main_tab4_title"
+	            hyman:text_size="@dimen/app_nomal_text_size"
+	            hyman:nomal_color="@color/color_app_base_26"
+	            hyman:check_color="@color/color_app_base_21"/>
+	        <com.guozha.buy.view.CartPointView
+	            android:id="@+id/main_cart_number_redpoint"
+	            android:layout_gravity="center"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"/>
+		</FrameLayout>
         <com.guozha.buy.view.TabBarItem
             android:id="@+id/id_indicator_five"
             android:layout_width="0dp"

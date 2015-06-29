@@ -116,7 +116,7 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 				cancelOrderDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						String token = ConfigManager.getInstance().getUserToken();
+						String token = ConfigManager.getInstance().getUserToken(OrderUnPayDetailActivity.this);
 						if(token == null) return; //TODO 先登录
 						mOrderModel.requestCancelOrder(OrderUnPayDetailActivity.this, 
 								token, mOrderId, mOrderStatus);

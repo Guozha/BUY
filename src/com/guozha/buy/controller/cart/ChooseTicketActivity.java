@@ -90,7 +90,8 @@ public class ChooseTicketActivity extends BaseActivity{
 	 */
 	private void initData(){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
 		mPayModel.requestValidTicket(this, token, userId, mMoney);
 	}
 	

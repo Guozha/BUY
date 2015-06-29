@@ -67,13 +67,18 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/color_app_base_7"/>
-    <RelativeLayout 
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:paddingLeft="12dip"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:background="@color/color_app_base_5">
-            
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
          <TextView 
              android:id="@+id/cart_total_message"
              android:layout_width="wrap_content"
@@ -81,13 +86,15 @@
              android:text="合计￥0.00"
              android:textSize="@dimen/dimen_global_16sp"
              android:textColor="@color/color_app_base_25"/>
-         
+         <LinearLayout 
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
          <TextView
              android:id="@+id/cart_server_money" 
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="预计服务费0元"
-             android:layout_below="@id/cart_total_message"
              android:textSize="@dimen/dimen_global_12sp"
              android:textColor="@color/color_app_base_26"/>
          
@@ -98,21 +105,18 @@
              android:text="，离免服务费还差0元"
              android:singleLine="true"
              android:ellipsize="end"
-             android:layout_below="@id/cart_total_message"
-             android:layout_toStartOf="@id/cart_server_money"
-             android:layout_toRightOf="@id/cart_server_money"
              android:textSize="@dimen/dimen_global_12sp"
              android:textColor="@color/color_app_base_26"/>
-        
+         </LinearLayout>
+        </LinearLayout>     
         <Button 
             android:id="@+id/cart_to_order_button"
             android:layout_width="100dip"
             android:layout_height="match_parent"
             android:text="选好了"
             android:layout_marginLeft="1dip"
-            android:layout_alignParentRight="true"
             android:background="@drawable/cart_button_bg"
             android:textSize="@dimen/dimen_global_14sp"
             android:textColor="@color/color_app_base_24"/>
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

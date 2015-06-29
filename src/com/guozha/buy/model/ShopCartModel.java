@@ -1,6 +1,6 @@
 package com.guozha.buy.model;
 
-import java.util.List;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,9 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.guozha.buy.entry.cart.CartTotalData;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.ShopCartModelResult;
+import com.guozha.buy.util.LogUtil;
 
 public class ShopCartModel extends BaseModel{
 	
@@ -79,6 +81,16 @@ public class ShopCartModel extends BaseModel{
 			public void onResponse(String response) {
 				Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();  
 				CartTotalData cartTotalData = gson.fromJson(response, new TypeToken<CartTotalData>() { }.getType());
+				int cartNumber = 0;
+				if(cartTotalData != null){
+					if(cartTotalData.getGoodsList() != null){
+						cartNumber = cartNumber + cartTotalData.getGoodsList().size();
+					}
+					if(cartTotalData.getMenuList() != null){
+						cartNumber = cartNumber + cartTotalData.getMenuList().size();
+					}
+				}
+				ConfigManager.getInstance().setCartNumber(cartNumber);
 				mInterface.requestListCartItemResult(cartTotalData);
 			}
 		});
@@ -110,22 +122,15 @@ public class ShopCartModel extends BaseModel{
 					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
+					int cartNum = response.getInt("cartNum");
+					ConfigManager.getInstance().setCartNumber(cartNum);
 					mInterface.requestAddCartResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	
-	public void requestCartAddMenu(final Context context, 
-			int userId, int menuId, String token, int addressId, List<String> goodsIds){
-		requestCartAddMenu(context, userId, menuId, token, addressId, goodsIds, 1);
-	}
-	
-	public void requestCartAddMenu(final Context context, 
-			int userId, int menuId, String token, int addressId){
-		requestCartAddMenu(context, userId, menuId, token, addressId, null, 0);
 	}
 	
 	/**
@@ -138,16 +143,13 @@ public class ShopCartModel extends BaseModel{
 	 * @param goodsId
 	 */
 	public void requestCartAddMenu(final Context context, 
-			int userId, int menuId, String token, int addressId, List<String> goodsIds, int goodsFlag){
+			int userId, int menuId, String token, int addressId, Set<String> goodsIds){
 		RequestParam paramPath = new RequestParam("v31/cart/insertForMenu")
 		.setParams("userId", userId)
 		.setParams("menuId", menuId)
 		.setParams("token", token)
 		.setParams("addressId", addressId)
-		.setParams("goodsFlag", goodsFlag);
-		if(goodsFlag != 0){
-			paramPath.setParams("goodsId", goodsIds);
-		}
+		.setParams("goodsId", goodsIds);
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String responseStr) {
@@ -155,8 +157,11 @@ public class ShopCartModel extends BaseModel{
 					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
+					int cartNum = response.getInt("cartNum");
+					ConfigManager.getInstance().setCartNumber(cartNum);
 					mInterface.requestCartAddMenuResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}
@@ -187,6 +192,7 @@ public class ShopCartModel extends BaseModel{
 						String msg = response.getString("msg");
 						mInterface.requestUpdateCartResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -201,7 +207,7 @@ public class ShopCartModel extends BaseModel{
 	 * @param token
 	 */
 	public void requestDeleteCart(final Context context, int cartId, int userId, String token){
-		RequestParam paramPath = new RequestParam("cart/delete")
+		RequestParam paramPath = new RequestParam("v31/cart/delete")
 		.setParams("cartId", cartId)
 		.setParams("userId", userId)
 		.setParams("token", token);
@@ -213,8 +219,11 @@ public class ShopCartModel extends BaseModel{
 					JSONObject response = new JSONObject(responseStr);
 					String returnCode = response.getString("returnCode");
 					String msg = response.getString("msg");
+					int cartNum = response.getInt("cartNum");
+					ConfigManager.getInstance().setCartNumber(cartNum);
 					mInterface.requestDeleteCartResult(returnCode, msg);
 				} catch (JSONException e) {
+					jsonException(context);
 					e.printStackTrace();
 				}
 			}

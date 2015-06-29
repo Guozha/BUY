@@ -97,7 +97,8 @@ public class SharePraiseActivity extends BaseActivity{
 			@Override
 			public void onClick(View v) {
 				int userId = ConfigManager.getInstance().getUserId();
-				String token = ConfigManager.getInstance().getUserToken();
+				String token = ConfigManager.getInstance().getUserToken(SharePraiseActivity.this);
+				if(token == null) return;
 				mSystemModel.requestInviteShare(SharePraiseActivity.this, userId, token);
 			}
 		});

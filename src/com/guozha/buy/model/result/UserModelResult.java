@@ -52,7 +52,7 @@ public class UserModelResult implements UserModelInterface{
 
 	@Override
 	public void requestAddAddressResult(String returnCode, String buildFlag,
-			String msg) {
+			String msg, int addressId) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -24,6 +24,7 @@ import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -91,13 +92,10 @@ public class ChooseDetailActivity extends BaseActivity{
 			if(bundle != null){
 				mCountryId = bundle.getInt("countryId");
 				mAddrDetail = bundle.getString("addrDetail");
-				if("其他地址".equals(mAddrDetail))
-					mAddrDetail = "";
 			}
 		}
 		initView();
 		requestAddressBuilding();
-		
 		setResult(1, null);
 	}
 
@@ -157,7 +155,7 @@ public class ChooseDetailActivity extends BaseActivity{
 			@Override
 			public void onClick(View v) {
 				Intent intent = getIntent();
-				intent.putExtra("addrDetail", "其他地址");
+				intent.putExtra("addrDetail", mDetailText.getText().toString());
 				setResult(1, intent);
 				ChooseDetailActivity.this.finish();
 			}
@@ -168,7 +166,7 @@ public class ChooseDetailActivity extends BaseActivity{
 	 * 请求关键词
 	 */
 	private void requestAddressBuilding(){
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null) return;
 		mUserModel.requestAddressBuilding(this, token, mCountryId);
 	}

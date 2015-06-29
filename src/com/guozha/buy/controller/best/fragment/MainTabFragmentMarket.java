@@ -265,7 +265,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 */
 	private void setAddressInfoData(){
 		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
-		LogUtil.e("choosedId == " + choosedId);
+		if(choosedId == -1) return;
 		String addressName = "";
 		if(mActionBarAddress != null){
 			if(mAddressInfos != null){
@@ -400,6 +400,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		@Override
 		public void requestGoodsTypesResult(List<GoodsItemType> goodsItemTypes) {
 			if(goodsItemTypes == null) return;
+			mGoodsItemTypes.clear();
 			mGoodsItemTypes.addAll(goodsItemTypes);
 			formatGoodsItemTypes();
 			mHandler.sendEmptyMessage(HAND_GOODS_TYPE_COMPLETED);

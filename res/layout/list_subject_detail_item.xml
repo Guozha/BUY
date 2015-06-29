@@ -34,39 +34,39 @@
 	    android:layout_height="48dip"
 	    android:orientation="horizontal"
 	    android:gravity="center_vertical">
-	    
 	    <TextView 
 	        android:id="@+id/subject_detail_item_price"
-	        android:layout_width="0dip"
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
 	        android:textStyle="bold"
+	        android:singleLine="true"
+	        android:ellipsize="end"
 	        android:textSize="@dimen/dimen_global_16sp"
 	        android:textColor="@color/color_app_base_25"/>
-	    
+	    <Space 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"/>
 	    <Button 
 	        android:id="@+id/subject_detail_item_detail_btn"
-	        android:layout_width="0dip"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_marginLeft="10dip"
+	        android:layout_width="100dip"
+	        android:layout_height="32dip"
 	        android:text="查看详情"
 	        android:gravity="center"
-	        android:background="@drawable/subject_detail_detail_btn_bg"
+	        android:background="@drawable/subject_detail_goodsdetail_btn_bg"
 	        android:textSize="@dimen/dimen_global_14sp"
 	        android:textColor="@color/color_app_base_26"/>
-	    
+	    <Space 
+	        android:layout_width="15dip"
+	        android:layout_height="match_parent"/>
 	    <Button 
 	        android:id="@+id/subject_detail_item_cart_btn"
-	        android:layout_width="0dip"
-	        android:layout_height="wrap_content"
+	        android:layout_width="100dip"
+	        android:layout_height="32dip"
 	        android:textSize="@dimen/dimen_global_14sp"
 	        android:textColor="@color/color_app_base_21"
-	        android:layout_marginLeft="10dip"
+	        android:background="@drawable/subject_detail_addcart_button_bg"
 	        android:gravity="center"
-	        android:layout_marginRight="15dip"
-	        android:background="@drawable/subject_detail_cart_btn_bg"
-	        android:text="加入购物车"
-	        android:layout_weight="1"/>
+	        android:text="加入购物车"/>
 	</LinearLayout>
 </LinearLayout>

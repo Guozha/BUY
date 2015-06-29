@@ -3,11 +3,14 @@ package com.guozha.buy.global.net;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.util.HttpUtil;
+import com.guozha.buy.util.LogUtil;
 
 /**
  * 请求参数
@@ -43,6 +46,7 @@ public class RequestParam {
 		if(value != null){
 			value = value.trim().replaceAll(" ", "_");
 		}
+		if(value == null) value = "";
 		mParams.put(key, value);
 		return this;
 	}
@@ -63,10 +67,19 @@ public class RequestParam {
 	 * @param key
 	 * @param values
 	 */
-	public RequestParam setParams(String key, List<String> values){
-		for(int i = 0; i < values.size(); i++){
-			setParams(key, values.get(i));
+	public RequestParam setParams(String key, Set<String> values){
+		if(values == null || values.isEmpty()) {
+			setParams(key, "");
+			return this;
 		}
+		Iterator<String> iterator = values.iterator();
+		StringBuffer value = new StringBuffer();
+		while(iterator.hasNext()){
+			value.append(iterator.next());
+			value.append(",");
+		}
+		String valueStr = value.substring(0, value.lastIndexOf(","));
+		setParams(key, valueStr);
 		return this;
 	}
 	
@@ -77,7 +90,12 @@ public class RequestParam {
 	 * @return
 	 */
 	public RequestParam setParams(String key,String[] values){
-		setParams(key, Arrays.asList(values));
+		if(values == null || values.length == 0){
+			setParams(key, "");
+			return this;
+		}
+		Set<String> set = new HashSet<String>(Arrays.asList(values));
+		setParams(key, set);
 		return this;
 	}
 	
@@ -88,9 +106,13 @@ public class RequestParam {
 	 * @return
 	 */
 	public RequestParam setParams(String key, int[] values){
+		StringBuffer value = new StringBuffer();
 		for(int i = 0; i < values.length; i++){
-			setParams(key, values[i]);
+			value.append(values[i]);
+			value.append(",");
 		}
+		String valueStr = value.substring(0, value.lastIndexOf(","));
+		setParams(key, valueStr);
 		return this;
 	}
 	

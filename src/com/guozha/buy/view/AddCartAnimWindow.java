@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.guozha.buy.R;
-import com.guozha.buy.server.FloatWindowManage.CartDirection;
 import com.guozha.buy.util.DimenUtil;
 
 public class AddCartAnimWindow extends View{
-	
+
 	private int mXGAP;
 	private int mYGAP;
 	
@@ -24,7 +23,7 @@ public class AddCartAnimWindow extends View{
 	private String mDrawText = "+1";
 	
 	private WindowManager.LayoutParams mParams;
-	private WindowManager mWindowManager;
+	//private WindowManager mWindowManager;
 	private int mTextSize;
 	private int mPointX;
 	private int mPointY;
@@ -37,18 +36,17 @@ public class AddCartAnimWindow extends View{
 	private int mScreenWidth;
 	private int mScreenHeight;
 	private boolean mMoveable = true;
-	private CartDirection mCartDirection;
-
-	public AddCartAnimWindow(String showText, CartDirection cartDirection, WindowManager windowManager, Context context) {
+	private boolean mCartIsTop = true;
+	
+	public AddCartAnimWindow(String showText, boolean cartIsTop, Context context) {
 		super(context);
 		if(!"+1".equals(showText)){
 			mMoveable = false;
 		}
-		mCartDirection = cartDirection;
-		mWindowManager = windowManager;
+		mCartIsTop = cartIsTop;
 		mStatus = new ChangeBigStatus();
 		circlePaint = new Paint();
-		circlePaint.setColor(context.getResources().getColor(R.color.color_app_base_33));
+		circlePaint.setColor(context.getResources().getColor(R.color.addcart_float_anim_bg_color));
 		circlePaint.setAntiAlias(true);
 		textPaint = new Paint();
 		textPaint.setColor(context.getResources().getColor(R.color.color_app_base_24));
@@ -65,10 +63,11 @@ public class AddCartAnimWindow extends View{
 		mScreenWidth = DimenUtil.getScreenWidth(context);
 		mScreenHeight = DimenUtil.getScreenHeight(context);
 		mXGAP = DimenUtil.dp2px(context, 23);
-		if(mCartDirection == CartDirection.BOTTOM){
-			mXGAP = mScreenWidth / 5 + mXGAP;
-		}
 		mYGAP = DimenUtil.dp2px(context, 23);
+		if(!mCartIsTop){
+			mXGAP = mScreenWidth / 5 + mXGAP;
+			mYGAP = DimenUtil.dp2px(context, 60);
+		}
 		mPointX = mScreenWidth / 2;
 		mPointY = mScreenHeight / 2;
 		mCurrentDimen = mTextSize + 10;
@@ -127,7 +126,7 @@ public class AddCartAnimWindow extends View{
 			if(mPointX >= mScreenWidth - mXGAP){
 				mPointX = mScreenWidth - mXGAP;
 			}
-			if(mCartDirection == CartDirection.TOP){
+			if(mCartIsTop){
 				if(mPointY <= mYGAP){
 					mPointY = mYGAP;
 				}
@@ -157,7 +156,7 @@ public class AddCartAnimWindow extends View{
 					}else{
 						ySpeed = Y_SPEED;
 					}
-					if(mCartDirection == CartDirection.TOP){
+					if(mCartIsTop){
 						mPointX = mPointX + X_SPEED;
 						mPointY = mPointY - ySpeed;
 					}else{
@@ -221,29 +220,6 @@ public class AddCartAnimWindow extends View{
 	
 	public interface OnAnimEndListener{
 		public void animEnd();
-	}
-	
-	/**
-	 * 更新参数移动位置
-	 */
-	private void updateViewPosition(){
-		//int gap = (int) Math.floor(maxWindowDimen - mCurrentDimen) / 2;
-		//int currentDimen = (int) Math.ceil(mCurrentDimen);
-		if(mParams.x < mScreenWidth){
-			mParams.x = mParams.x + X_SPEED;
-		}else{
-			mParams.x = mScreenWidth;
-		}
-		
-		if(mParams.y > 0){
-			mParams.y = mParams.y - Y_SPEED;
-		}else{
-			mParams.y = 0;
-		}
-		
-		//mParams.width = currentDimen;
-		//mParams.height = currentDimen;
-		mWindowManager.updateViewLayout(this, mParams);
 	}
 	
     /**

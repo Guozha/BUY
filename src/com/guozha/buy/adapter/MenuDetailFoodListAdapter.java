@@ -1,6 +1,8 @@
 package com.guozha.buy.adapter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
@@ -19,13 +23,17 @@ import com.guozha.buy.util.UnitConvertUtil;
  * @author PeggyTong
  *
  */
-public class MenuDetailFoodListAdapter extends BaseAdapter{
+public class MenuDetailFoodListAdapter extends BaseAdapter implements OnCheckedChangeListener{
 	
 	private LayoutInflater mInflater;
 	private List<MenuGoods> mMenuGoodss;
-	public MenuDetailFoodListAdapter(Context context, List<MenuGoods> menuGoods){
+	private boolean mCanChoose;
+	private Set<String> mCheckedId;
+	public MenuDetailFoodListAdapter(Context context, boolean canChoose, List<MenuGoods> menuGoods){
 		mInflater = LayoutInflater.from(context);
 		mMenuGoodss = menuGoods;
+		mCanChoose = canChoose;
+		mCheckedId = new HashSet<String>();
 	}
 
 	@Override
@@ -43,6 +51,10 @@ public class MenuDetailFoodListAdapter extends BaseAdapter{
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	public Set<String> getCheckedIds(){
+		return mCheckedId;
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -52,9 +64,27 @@ public class MenuDetailFoodListAdapter extends BaseAdapter{
 		TextView name = (TextView) convertView.findViewById(R.id.menu_detail_list_item_name);
 		TextView weight = (TextView) convertView.findViewById(R.id.menu_detail_list_item_weight);
 		CheckBox check = (CheckBox) convertView.findViewById(R.id.menu_detail_list_item_check);
+		check.setOnCheckedChangeListener(this);
 		MenuGoods menuGoods = mMenuGoodss.get(position);
+		mCheckedId.add(String.valueOf(menuGoods.getGoodsId()));
+		check.setChecked(true);
+		if(!mCanChoose){
+			check.setEnabled(false);
+		}
+		check.setTag(position);
 		name.setText(menuGoods.getGoodsName());
 		weight.setText(UnitConvertUtil.getSwitchedWeight(menuGoods.getAmount(), menuGoods.getUnit()));
 		return convertView;
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		int position = (Integer) buttonView.getTag();
+		String goodsId = String.valueOf(mMenuGoodss.get(position).getGoodsId());
+		if(isChecked){
+			mCheckedId.add(goodsId);
+		}else{
+			mCheckedId.remove(goodsId);
+		}
 	}
 }

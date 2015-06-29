@@ -1,7 +1,6 @@
 package com.guozha.buy.entry.market;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 菜品关联菜谱
@@ -17,8 +16,7 @@ public class RelationRecipe implements Serializable{
 	private String menuImg;
 	private int cookieTime;
 	private String cookieWay;
-	private String hardType;
-	private List<RelationRecipeMaterial> goodsList;
+	private int calories;
 	
 	public int getMenuId() {
 		return menuId;
@@ -50,16 +48,10 @@ public class RelationRecipe implements Serializable{
 	public void setCookieWay(String cookieWay) {
 		this.cookieWay = cookieWay;
 	}
-	public String getHardType() {
-		return hardType;
+	public int getCalories() {
+		return calories;
 	}
-	public void setHardType(String hardType) {
-		this.hardType = hardType;
-	}
-	public List<RelationRecipeMaterial> getGoodsList() {
-		return goodsList;
-	}
-	public void setGoodsList(List<RelationRecipeMaterial> goodsList) {
-		this.goodsList = goodsList;
+	public void setCalories(int calories) {
+		this.calories = calories;
 	}
 }

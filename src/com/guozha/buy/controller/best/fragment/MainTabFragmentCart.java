@@ -191,8 +191,8 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	 */
 	private void requestDeleteCartItem(int cartId) {
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null) return; //TODO 先登录
+		String token = ConfigManager.getInstance().getUserToken(getActivity());
+		if(token == null) return;
 		mShopCartModel.requestDeleteCart(getActivity(), cartId, userId, token);
 	}
 
@@ -212,9 +212,11 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			});
 			return;
 		}
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(getActivity());
+		if(token == null) return;
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(getActivity());
+		if(addressId == -1) return;
 		int userId = ConfigManager.getInstance().getUserId();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mOrderModel.requestOrderConfirm(getActivity(), token, userId, addressId);
 	}
 	
@@ -264,6 +266,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mCartItems.clear();
 		int userId = ConfigManager.getInstance().getUserId();
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		if(addressId == -1) return;
 		mShopCartModel.requestListCartItem(getActivity(), userId, addressId);
 	}
 	

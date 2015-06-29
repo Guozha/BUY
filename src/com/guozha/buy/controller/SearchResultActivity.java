@@ -117,6 +117,10 @@ public class SearchResultActivity extends BaseActivity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String token = ConfigManager.getInstance().getUserToken(SearchResultActivity.this);
+				if(token == null) return;
+				int addressId = ConfigManager.getInstance().getChoosedAddressId(SearchResultActivity.this);
+				if(addressId == -1) return;
 				Intent intent = new Intent(SearchResultActivity.this, WeightSelectDialog.class);
 				ItemSaleInfo saleInfo = mSearchResultList.get(position);
 				if(saleInfo != null){

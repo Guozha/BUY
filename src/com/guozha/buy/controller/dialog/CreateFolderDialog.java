@@ -65,7 +65,7 @@ public class CreateFolderDialog extends Activity implements OnClickListener{
 	 */
 	private void requestAddNewFolder(String folderName){
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
+		String token = ConfigManager.getInstance().getUserToken(this);
 		//TODO 去登录
 		if(token == null) return;
 		mCollectionModel.requestAddCollectDir(this, userId, token, folderName);

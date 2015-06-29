@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.alipay.sdk.data.Response;
 import com.android.volley.Response.Listener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,7 +14,7 @@ import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.SystemModelResult;
 
-public class SystemModel {
+public class SystemModel extends BaseModel{
 	
 	private SystemModelInterface mInterface;
 	
@@ -84,6 +83,7 @@ public class SystemModel {
 						long currentdate = response.getLong("gregorianDate");
 						mInterface.requestSystemTime(currentdate);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -94,7 +94,7 @@ public class SystemModel {
 	 * 初始化数据
 	 */
 	public void requestSystemSearched(final Context context, String keyWord, int addressId){
-		RequestParam paramPath = new RequestParam("search")
+		RequestParam paramPath = new RequestParam("v31/search")
 		.setParams("word", keyWord)
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
@@ -127,6 +127,7 @@ public class SystemModel {
 						String msg = response.getString("msg");
 						mInterface.requestWarnPlanResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 					
@@ -153,6 +154,7 @@ public class SystemModel {
 						String msg = response.getString("msg");
 						mInterface.requestFeadbackResult(returnCode, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -179,6 +181,7 @@ public class SystemModel {
 						String shareUrl = response.getString("shareUrl");
 						mInterface.requestInviteShareResult(returnCode, inviteId, shareUrl, msg);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}
@@ -202,6 +205,7 @@ public class SystemModel {
 						int awardPrice = response.getInt("awardPrice");
 						mInterface.requestInviteInfoResult(drawAmount, usedAmount, awardPrice);
 					} catch (JSONException e) {
+						jsonException(context);
 						e.printStackTrace();
 					}
 				}

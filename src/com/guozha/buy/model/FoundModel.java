@@ -14,6 +14,7 @@ import com.guozha.buy.entry.found.SubjectDetail;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.FoundModelResult;
+import com.guozha.buy.util.LogUtil;
 
 public class FoundModel extends BaseModel{
 	

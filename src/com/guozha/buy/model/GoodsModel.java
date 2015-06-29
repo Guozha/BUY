@@ -145,12 +145,11 @@ public class GoodsModel extends BaseModel{
 	/**
 	 * 2.1.6 查询产品列表（单个类目）
 	 */
-	public void requestTypeGoodsList(final Context context, int frontTypeId, int addressId, int pageNum, int pageSize){
-		RequestParam paramPath = new RequestParam("goods/general/typeList")
+	public void requestTypeGoodsList(final Context context, int frontTypeId, int addressId, int pageNum){
+		RequestParam paramPath = new RequestParam("v31/goods/general/typeList")
 		.setParams("frontTypeId", frontTypeId)
 		.setParams("addressId", addressId)
-		.setParams("pageNum", pageNum)
-		.setParams("pageSize", pageSize);
+		.setParams("pageNum", pageNum);
 		HttpManager.getInstance(context).volleyRequestByPost(
 				paramPath, new Listener<String>() {
 

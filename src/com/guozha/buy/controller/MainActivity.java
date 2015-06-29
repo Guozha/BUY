@@ -3,8 +3,6 @@ package com.guozha.buy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -24,8 +22,8 @@ import com.guozha.buy.controller.best.fragment.MainTabFragmentMarket;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentMine;
 import com.guozha.buy.controller.mine.SettingActivity;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.ConfigManager.OnConfigChangeListener;
 import com.guozha.buy.server.ShareManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.TabBarItem;
 import com.umeng.update.UmengUpdateAgent;
@@ -52,6 +50,8 @@ public class MainActivity extends FragmentActivity{
 	private List<TabBarItem> mTabIndicators = 
 			new ArrayList<TabBarItem>();
 	
+	private View mRedCartNumber;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +70,13 @@ public class MainActivity extends FragmentActivity{
 			.add(R.id.fragment_container, mFragments.get(mCurrentItem)).commit();
 		initTabIndicators();
 		initYoumeng();
+		mRedCartNumber = findViewById(R.id.main_cart_number_redpoint);
+		ConfigManager.getInstance().setOnConfigChangeListener(new OnConfigChangeListener() {
+			@Override
+			public void cartNumChanged() {
+				mRedCartNumber.invalidate();
+			}
+		});
 	}
 	
 	/**

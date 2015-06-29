@@ -226,8 +226,8 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		int position  = (Integer) view.getTag();
 		CartBaseItem cartBaseItem = mCartItems.get(position);
 		int userId = ConfigManager.getInstance().getUserId();
-		String token = ConfigManager.getInstance().getUserToken();
-		if(token == null) return; //TODO 先登录
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
 		int gap = 1;
 		if("01".equals(cartBaseItem.getUnit())){
 			gap = UnitConvertUtil.getPlusAmount(cartBaseItem.getAmount(), 
