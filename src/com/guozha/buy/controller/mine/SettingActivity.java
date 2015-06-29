@@ -98,6 +98,8 @@ public class SettingActivity extends BaseActivity{
 					break;
 				case 1:     //系统更新
 					//dialServerTelephone();
+					intent = new Intent(SettingActivity.this, UpdateActivity.class);
+					startActivity(intent);
 					break;
 			    /*
 				case 3:     //系统更新
