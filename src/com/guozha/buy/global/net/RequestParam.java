@@ -10,7 +10,6 @@ import java.util.Set;
 
 import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.util.HttpUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 请求参数
@@ -24,7 +23,6 @@ public class RequestParam {
 	 */
 	//正式服
 	public static String URL = DebugActivity.TEST_URL;
-	//public static String IMG_URL = URL;
 	
 	private Map<String, String> mParams = new HashMap<String, String>();
 	

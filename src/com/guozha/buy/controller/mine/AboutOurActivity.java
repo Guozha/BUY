@@ -1,10 +1,13 @@
 package com.guozha.buy.controller.mine;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +16,7 @@ import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.controller.DebugActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
 import com.umeng.analytics.MobclickAgent;
 
@@ -21,11 +25,13 @@ import com.umeng.analytics.MobclickAgent;
  * @author PeggyTong
  *
  */
-public class AboutOurActivity extends BaseActivity implements OnClickListener{
+public class AboutOurActivity extends BaseActivity implements OnClickListener, OnLongClickListener{
 	
 	private static final String PAGE_NAME = "AboutOurPage";
 	private TextView mVersionNameText;
 	private TextView mBottomVersionText;
+	private TextView mWeixinGZH;
+	private TextView mWeixinKF;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +51,19 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 		
 		findViewById(R.id.logo_icon).setOnClickListener(this);
 		
-		findViewById(R.id.about_our_weixin).setOnClickListener(this);
+		mWeixinGZH = (TextView) findViewById(R.id.about_our_weixin);
+		mWeixinGZH.setOnClickListener(this);
+		mWeixinGZH.setOnLongClickListener(this);
 		findViewById(R.id.about_our_weibo).setOnClickListener(this);
-		findViewById(R.id.about_our_qq_group).setOnClickListener(this);
+		mWeixinKF = (TextView) findViewById(R.id.about_our_qq_group);
+		mWeixinKF.setOnClickListener(this);
+		mWeixinKF.setOnLongClickListener(this);
 		findViewById(R.id.about_our_website).setOnClickListener(this);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 		//友盟界面统计
 		MobclickAgent.onResume(this);
 		MobclickAgent.onPageStart(PAGE_NAME);
@@ -63,10 +72,31 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
+	}
+
+	@Override
+	public boolean onLongClick(View view) {
+		switch (view.getId()) {
+		case R.id.about_our_weixin:
+			copyText("aizhangshao");
+			break;
+		case R.id.about_our_qq_group:
+			copyText("aizhangshaohz");
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+	
+	private void copyText(String text) {
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);  
+		ClipData clip =ClipData.newPlainText("orderMessage", text);
+		clipboard.setPrimaryClip(clip);
+		ToastUtil.showToast(AboutOurActivity.this, "已经复制到剪贴板");
 	}
 
 	@Override
@@ -144,4 +174,5 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener{
 	         return false;
 	     }
 	}
+
 }

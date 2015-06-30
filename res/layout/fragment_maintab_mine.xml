@@ -32,7 +32,6 @@
 	        android:scaleType="centerCrop"/>
 	    </LinearLayout>
         
-	    
 	    <LinearLayout 
 	        android:id="@+id/mine_top_account_message_area"
 	        android:layout_width="0dip"
@@ -210,7 +209,7 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
-	        android:text="设置提醒"
+	        android:text="买菜提醒"
 	        android:drawableLeft="@drawable/tag_bell"
 	        style="@style/mine_menu_list_text"/>
 	    
@@ -302,6 +301,30 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_27"/>
 	<LinearLayout 
+	    android:id="@+id/mine_weixin_kefu__button"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    style="@style/mine_menu_list_area">
+	    
+	    <TextView 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:text="微信客服"
+	        android:drawableLeft="@drawable/tag_chat"
+	        style="@style/mine_menu_list_text"/>
+	    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/button_next"
+	        android:scaleType="centerInside"/>
+	</LinearLayout>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+	<LinearLayout 
 	    android:id="@+id/mine_online_service__button"
 	    android:layout_width="match_parent"
 	    android:layout_height="48dip"
@@ -311,7 +334,7 @@
 	        android:layout_width="0dip"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
-	        android:text="在线客服"
+	        android:text="联系电话"
 	        android:drawableLeft="@drawable/tag_call"
 	        style="@style/mine_menu_list_text"/>
 	    

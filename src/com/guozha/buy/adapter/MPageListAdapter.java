@@ -91,9 +91,11 @@ public class MPageListAdapter extends BaseAdapter{
 		}
 		
 		BestMenuItem menuItem = mMenuItems.get(position);
+		imageView.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(imageView, menuItem.getMenuImg());
 		holder.centerView.setBackgroundColor(menuItem.getBgColor());
 		holder.centerIcon.setImageResource(R.drawable.icon_drink_color);
+		holder.centerIcon.setImageResource(R.drawable.icon_default);
 		mBitmapCache.loadBitmaps(holder.centerIcon, menuItem.getPickImg());
 		holder.centerTitle.setText(menuItem.getMenuName());
 		holder.centerTitle.setTextColor(menuItem.getFontColor());

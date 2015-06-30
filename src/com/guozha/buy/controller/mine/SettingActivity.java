@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,13 +18,13 @@ import com.guozha.buy.adapter.SettingListAdapter;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.controller.LicenceActivity;
 import com.guozha.buy.controller.LoginActivity;
-import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  * 设置界面
@@ -77,11 +76,10 @@ public class SettingActivity extends BaseActivity{
 				requestLoginOut();
 			}
 		});
-		String token = ConfigManager.getInstance().getUserToken(this);
+		String token = ConfigManager.getInstance().getUserToken();
 		if(token == null){
 			mLogoutButton.setVisibility(View.GONE);
 		}
-		
 		mSettingList = (ListView) findViewById(R.id.setting_list);
 		mSettingList.setAdapter(new SettingListAdapter(this, mSettingItems));
 		
@@ -98,8 +96,9 @@ public class SettingActivity extends BaseActivity{
 					break;
 				case 1:     //系统更新
 					//dialServerTelephone();
-					intent = new Intent(SettingActivity.this, UpdateActivity.class);
-					startActivity(intent);
+					//intent = new Intent(SettingActivity.this, UpdateActivity.class);
+					//startActivity(intent);
+					UmengUpdateAgent.forceUpdate(SettingActivity.this);
 					break;
 			    /*
 				case 3:     //系统更新

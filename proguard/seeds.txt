@@ -381,6 +381,7 @@ com.guozha.buy.R$drawable: int gray_edit_bg
 com.guozha.buy.R$drawable: int grey_button_nomal_bg
 com.guozha.buy.R$drawable: int guide_button_comein_bg
 com.guozha.buy.R$drawable: int ic_launcher
+com.guozha.buy.R$drawable: int icon_default
 com.guozha.buy.R$drawable: int icon_drink_color
 com.guozha.buy.R$drawable: int img01
 com.guozha.buy.R$drawable: int img02
@@ -389,6 +390,7 @@ com.guozha.buy.R$drawable: int img_gain
 com.guozha.buy.R$drawable: int img_two_dimensional_code
 com.guozha.buy.R$drawable: int intro_button
 com.guozha.buy.R$drawable: int intro_button_pressed
+com.guozha.buy.R$drawable: int kefuhao
 com.guozha.buy.R$drawable: int line_dashed
 com.guozha.buy.R$drawable: int line_dotted
 com.guozha.buy.R$drawable: int login_right_state
@@ -408,9 +410,6 @@ com.guozha.buy.R$drawable: int main_collect_button
 com.guozha.buy.R$drawable: int main_coupon_background
 com.guozha.buy.R$drawable: int main_coupon_stamp
 com.guozha.buy.R$drawable: int main_dialog_background
-com.guozha.buy.R$drawable: int main_dialog_left_background
-com.guozha.buy.R$drawable: int main_dialog_right_background
-com.guozha.buy.R$drawable: int main_dialog_right_background_pressed
 com.guozha.buy.R$drawable: int main_emoticons_angry_normal
 com.guozha.buy.R$drawable: int main_emoticons_angry_selected
 com.guozha.buy.R$drawable: int main_emoticons_cool_normal
@@ -482,6 +481,7 @@ com.guozha.buy.R$drawable: int tag_add
 com.guozha.buy.R$drawable: int tag_bell
 com.guozha.buy.R$drawable: int tag_call
 com.guozha.buy.R$drawable: int tag_calories
+com.guozha.buy.R$drawable: int tag_chat
 com.guozha.buy.R$drawable: int tag_code
 com.guozha.buy.R$drawable: int tag_cooking
 com.guozha.buy.R$drawable: int tag_cooktime
@@ -499,6 +499,9 @@ com.guozha.buy.R$drawable: int tb_munion_item_selector
 com.guozha.buy.R$drawable: int temp_mpage_tag1
 com.guozha.buy.R$drawable: int temp_subject_item_tag
 com.guozha.buy.R$drawable: int text_background
+com.guozha.buy.R$drawable: int text_left_background
+com.guozha.buy.R$drawable: int text_right_background
+com.guozha.buy.R$drawable: int text_right_background_pressed
 com.guozha.buy.R$drawable: int triangle
 com.guozha.buy.R$drawable: int truck
 com.guozha.buy.R$drawable: int truck_unselected
@@ -692,6 +695,7 @@ com.guozha.buy.R$id: int cooke_book_name
 com.guozha.buy.R$id: int cooke_calorie
 com.guozha.buy.R$id: int cooke_time
 com.guozha.buy.R$id: int cooke_way
+com.guozha.buy.R$id: int copy_button
 com.guozha.buy.R$id: int create_new_class
 com.guozha.buy.R$id: int create_newfolder_name
 com.guozha.buy.R$id: int current_http_path_text
@@ -702,6 +706,7 @@ com.guozha.buy.R$id: int detail_image
 com.guozha.buy.R$id: int detail_name
 com.guozha.buy.R$id: int dial_tel_button
 com.guozha.buy.R$id: int empty_view
+com.guozha.buy.R$id: int erweima_img
 com.guozha.buy.R$id: int expandable_cart_list
 com.guozha.buy.R$id: int expandable_order_detail_list
 com.guozha.buy.R$id: int feadback_button
@@ -757,8 +762,6 @@ com.guozha.buy.R$id: int list_subject_detail_item_descript
 com.guozha.buy.R$id: int list_vegetable
 com.guozha.buy.R$id: int loading
 com.guozha.buy.R$id: int login_button
-com.guozha.buy.R$id: int login_invitation
-com.guozha.buy.R$id: int login_invitation_input_area
 com.guozha.buy.R$id: int login_licence
 com.guozha.buy.R$id: int login_obtain_validenum
 com.guozha.buy.R$id: int login_phone_input_area
@@ -822,6 +825,7 @@ com.guozha.buy.R$id: int mine_order_button
 com.guozha.buy.R$id: int mine_ticket_button
 com.guozha.buy.R$id: int mine_top_account_message_area
 com.guozha.buy.R$id: int mine_warn_button
+com.guozha.buy.R$id: int mine_weixin_kefu__button
 com.guozha.buy.R$id: int mpage_container
 com.guozha.buy.R$id: int mpage_item_center
 com.guozha.buy.R$id: int mpage_item_center_descript
@@ -861,13 +865,10 @@ com.guozha.buy.R$id: int order_unfinished_list
 com.guozha.buy.R$id: int other_addr_area
 com.guozha.buy.R$id: int other_addr_button
 com.guozha.buy.R$id: int pay_button
-com.guozha.buy.R$id: int pay_can_use_bean
-com.guozha.buy.R$id: int pay_can_use_bean_icon
 com.guozha.buy.R$id: int pay_can_use_money
 com.guozha.buy.R$id: int pay_can_use_money_deduct
 com.guozha.buy.R$id: int pay_can_use_money_icon
 com.guozha.buy.R$id: int pay_can_use_money_text
-com.guozha.buy.R$id: int pay_can_user_bean_text
 com.guozha.buy.R$id: int pay_price
 com.guozha.buy.R$id: int pay_server_fee_rule
 com.guozha.buy.R$id: int pay_server_price
@@ -1089,7 +1090,9 @@ com.guozha.buy.R$id: int viewpager_tab
 com.guozha.buy.R$id: int warn_time_text
 com.guozha.buy.R$id: int webView
 com.guozha.buy.R$id: int webview
+com.guozha.buy.R$id: int webview_yingyongbao
 com.guozha.buy.R$id: int weight_selected_dialog_test
+com.guozha.buy.R$id: int weixinnum
 com.guozha.buy.R$id: int youmeng_phoneid_test
 com.guozha.buy.R$layout
 com.guozha.buy.R$layout: int actionbar_base_view
@@ -1133,6 +1136,7 @@ com.guozha.buy.R$layout: int activity_setting
 com.guozha.buy.R$layout: int activity_setwarntime
 com.guozha.buy.R$layout: int activity_splash
 com.guozha.buy.R$layout: int activity_unpay_order_detail
+com.guozha.buy.R$layout: int activity_update
 com.guozha.buy.R$layout: int activity_vegetable_detail
 com.guozha.buy.R$layout: int adapter_list_mpage_item
 com.guozha.buy.R$layout: int dialog_active_rule
@@ -1153,6 +1157,7 @@ com.guozha.buy.R$layout: int dialog_server_fee_rule
 com.guozha.buy.R$layout: int dialog_set_head
 com.guozha.buy.R$layout: int dialog_version_update
 com.guozha.buy.R$layout: int dialog_weight_select
+com.guozha.buy.R$layout: int dialog_weixin_kefu
 com.guozha.buy.R$layout: int float_window_collection
 com.guozha.buy.R$layout: int fragment_found_menu
 com.guozha.buy.R$layout: int fragment_found_subject
@@ -1495,6 +1500,8 @@ com.guozha.buy.controller.mine.SettingActivity
 com.guozha.buy.controller.mine.SettingActivity: SettingActivity()
 com.guozha.buy.controller.mine.SharePraiseActivity
 com.guozha.buy.controller.mine.SharePraiseActivity: SharePraiseActivity()
+com.guozha.buy.controller.mine.UpdateActivity
+com.guozha.buy.controller.mine.UpdateActivity: UpdateActivity()
 com.guozha.buy.entry.cart.CartBaseItem
 com.guozha.buy.entry.cart.CartBaseItem: long serialVersionUID
 com.guozha.buy.entry.cart.CartBaseItem: int cartId
@@ -1974,6 +1981,12 @@ com.guozha.buy.entry.global.UserInfor: java.lang.String getPassword()
 com.guozha.buy.entry.global.UserInfor: void setPassword(java.lang.String)
 com.guozha.buy.entry.global.UserInfor: java.lang.String getMobileNo()
 com.guozha.buy.entry.global.UserInfor: void setMobileNo(java.lang.String)
+com.guozha.buy.entry.global.WarnTime
+com.guozha.buy.entry.global.WarnTime: java.lang.String showTime
+com.guozha.buy.entry.global.WarnTime: java.lang.String valueTime
+com.guozha.buy.entry.global.WarnTime: WarnTime(java.lang.String,java.lang.String)
+com.guozha.buy.entry.global.WarnTime: java.lang.String getShowTime()
+com.guozha.buy.entry.global.WarnTime: java.lang.String getValueTime()
 com.guozha.buy.entry.global.WeightOption
 com.guozha.buy.entry.global.WeightOption: long serialVersionUID
 com.guozha.buy.entry.global.WeightOption: int goodsId

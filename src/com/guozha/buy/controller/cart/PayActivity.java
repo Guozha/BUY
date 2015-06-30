@@ -11,14 +11,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.controller.mine.MyOrderActivity;
-import com.guozha.buy.entry.cart.PayOrderMesg;
-import com.guozha.buy.entry.cart.PayValidateResult;
 import com.guozha.buy.entry.cart.PayWayEntry;
 import com.guozha.buy.entry.mine.account.AccountInfo;
 import com.guozha.buy.entry.mine.order.Order;
@@ -56,12 +53,12 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private int mOrderId = 0;
 	private int mServicePrice = -1;
 	
-	private boolean mBeanChecked = false;				//是否选择使用菜豆
+	//private boolean mBeanChecked = false;				//是否选择使用菜豆
 	private boolean mAccountRemainChecked = false;		//是否选择使用账户余额
 
 	
 	private int mTotalPrice;		//总金额
-	private int mBeanNum;			//菜豆数
+	//private int mBeanNum;			//菜豆数
 	private int mAccountRemain;		//账户余额
 	private int mTicketId = -1;			//菜票Id
 	private int mTicketPrice;		//菜票面额
@@ -71,15 +68,15 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 	private View mCanUseMoneyView;			//账户余额
 	private TextView mCanUseMoneyDeduct;	//扣除余额
 	private ImageView mCanUserMoneyViewIcon;	
-	private View mCanUseBeanView;			//菜豆
-	private ImageView mCanUserBeanViewIcon;	
+	//private View mCanUseBeanView;			//菜豆
+	//private ImageView mCanUserBeanViewIcon;	
 	private TextView mTicketText;		//菜票
 	private View mTicketView;		
 	private ImageView mTicketArrowIcon;	//菜票右边箭头
 	private TextView mPriceText;		//应支付
 	
 	private TextView mCanUseMoneyText;
-	private TextView mCanUseBeanText;
+	//private TextView mCanUseBeanText;
 	
 	private View mZhiFuBaoView;
 	private View mWeiXinView;
@@ -134,6 +131,21 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 							break;
 						};
 					}
+					int defaultPayWay = ConfigManager.getInstance().getDefaultPayWay();
+					switch (defaultPayWay) {
+					case 1:
+						payWayExchangeIcon(payZhifubaoIcon, PayWay.ZHI_FU_BAO);
+						break;
+					case 2:
+						payWayExchangeIcon(payWeixinIcon, PayWay.WEI_XIN);
+						break;
+					case 3:
+						payWayExchangeIcon(payWangyingIcon, PayWay.WANG_YING);
+						break;
+					case 4:
+						payWayExchangeIcon(payHuodaofukuanIcon, PayWay.HUO_DAO_FU_KUAN);
+						break;
+					}
 					break;
 				case HAND_PAY_VALIDATE_COMPLETED:
 					requestPayMoney();
@@ -165,10 +177,17 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 					if(mAccountInfo == null) return;
 					//获取账户信息(菜豆、菜票）
 					mAccountRemain = mAccountInfo.getBalance();
-					mBeanNum = mAccountInfo.getBeanAmount();
+					//mBeanNum = mAccountInfo.getBeanAmount();
 					mCanUseMoneyText.setText("可用账户余额" +
 								UnitConvertUtil.getSwitchedMoney(mAccountRemain));	 //账户余额
-					mCanUseBeanText.setText("可用菜豆数" + mBeanNum + "个" + UnitConvertUtil.getBeanMoney(mBeanNum) + "元"); //菜豆数
+					if(mAccountRemain > 0){
+						mCanUseMoneyView.setVisibility(View.VISIBLE);
+						mAccountRemainChecked = exchangeIcon(mCanUserMoneyViewIcon);
+						setPayPriceText();
+					}else{
+						mCanUseMoneyView.setVisibility(View.GONE);
+					}
+					//mCanUseBeanText.setText("可用菜豆数" + mBeanNum + "个" + UnitConvertUtil.getBeanMoney(mBeanNum) + "元"); //菜豆数
 					break;
 			}
 		};
@@ -204,14 +223,14 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		mServerPriceText = (TextView) findViewById(R.id.pay_server_price);
 		mCanUseMoneyView = findViewById(R.id.pay_can_use_money);
 		mCanUserMoneyViewIcon = (ImageView) findViewById(R.id.pay_can_use_money_icon);
-		mCanUseBeanView = findViewById(R.id.pay_can_use_bean);
-		mCanUserBeanViewIcon = (ImageView) findViewById(R.id.pay_can_use_bean_icon);
+		//mCanUseBeanView = findViewById(R.id.pay_can_use_bean);
+		//mCanUserBeanViewIcon = (ImageView) findViewById(R.id.pay_can_use_bean_icon);
 		mTicketText = (TextView) findViewById(R.id.pay_ticket);
 		mPriceText = (TextView) findViewById(R.id.pay_price);
 		mTicketArrowIcon = (ImageView) findViewById(R.id.pay_ticket_icon);
 		mCanUseMoneyDeduct = (TextView) findViewById(R.id.pay_can_use_money_deduct);
 		mCanUseMoneyText = (TextView) findViewById(R.id.pay_can_use_money_text);
-		mCanUseBeanText = (TextView) findViewById(R.id.pay_can_user_bean_text);
+		//mCanUseBeanText = (TextView) findViewById(R.id.pay_can_user_bean_text);
 		
 		mZhiFuBaoView = findViewById(R.id.pay_way_zhifubao);
 		mZhiFuBaoView.setOnClickListener(this);
@@ -226,8 +245,9 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		mHuoDaoFuKuanView.setOnClickListener(this);
 		payHuodaofukuanIcon = (ImageView) findViewById(R.id.pay_way_huodaofukuan_icon);
 		
-		mCanUseBeanView.setOnClickListener(this);
+		//mCanUseBeanView.setOnClickListener(this);
 		mCanUseMoneyView.setOnClickListener(this);
+		
 		findViewById(R.id.pay_server_fee_rule).setOnClickListener(this);
 		mTicketView = findViewById(R.id.pay_ticket_choose);
 		mTicketView.setOnClickListener(this);
@@ -284,28 +304,34 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 			mAccountRemainChecked = exchangeIcon(mCanUserMoneyViewIcon);
 			setPayPriceText();
 			break;
+		/*
 		case R.id.pay_can_use_bean:	   //扣除菜豆选择
 			if(mCanUserBeanViewIcon == null) return;
 			mBeanChecked = exchangeIcon(mCanUserBeanViewIcon);
 			setPayPriceText();
 			break;
+		*/
 		case R.id.pay_way_zhifubao:
+			ConfigManager.getInstance().setDefaultPayWay(1);
 			payWayExchangeIcon(payZhifubaoIcon, PayWay.ZHI_FU_BAO);
 			break;
 		case R.id.pay_way_weixin:
+			ConfigManager.getInstance().setDefaultPayWay(2);
 			payWayExchangeIcon(payWeixinIcon, PayWay.WEI_XIN);
 			break;
 		case R.id.pay_way_wangying:
+			ConfigManager.getInstance().setDefaultPayWay(3);
 			payWayExchangeIcon(payWangyingIcon, PayWay.WANG_YING);
 			break;
 		case R.id.pay_way_huodaofukuan:
+			ConfigManager.getInstance().setDefaultPayWay(4);
 			payWayExchangeIcon(payHuodaofukuanIcon, PayWay.HUO_DAO_FU_KUAN);
 			break;
 		}
 	}
 	
 	private int mAccountRemainDeduct = 0; //扣除的余额
-	private int mBeanrDeduct = 0;		  //扣除菜豆
+	//private int mBeanrDeduct = 0;		  //扣除菜豆
 
 	/**
 	 * 设置应付多少款文字
@@ -320,17 +346,18 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 				mAccountRemainDeduct = payPrice;
 				payPrice = 0;
 				mTicketId = -1;
-				mBeanrDeduct = 0;
-				mCanUseBeanView.setVisibility(View.GONE);
+				//mBeanrDeduct = 0;
+				//mCanUseBeanView.setVisibility(View.GONE);
 				mTicketView.setVisibility(View.GONE);
 			}
 			mCanUseMoneyDeduct.setVisibility(View.VISIBLE);
 			mCanUseMoneyDeduct.setText(" 扣除" + UnitConvertUtil.getSwitchedMoney(mAccountRemainDeduct) + "元");
 		}else{
 			mCanUseMoneyDeduct.setVisibility(View.GONE);
-			mCanUseBeanView.setVisibility(View.VISIBLE);
+			//mCanUseBeanView.setVisibility(View.VISIBLE);
 			mTicketView.setVisibility(View.VISIBLE);
 		}
+		/*
 		if(mBeanChecked){
 			payPrice = payPrice - mBeanNum;
 			if(payPrice < 0){
@@ -340,6 +367,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		}else{
 			mBeanrDeduct = 0;
 		}
+		*/
 		
 		if(mTicketId != -1){
 			payPrice = payPrice - mTicketPrice;
@@ -378,7 +406,7 @@ public class PayActivity extends BaseActivity implements OnClickListener{
 		String token = ConfigManager.getInstance().getUserToken(this);
 		if(token == null) return;
 		int userId = ConfigManager.getInstance().getUserId();
-		mOrderModel.requestPayCount(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId));
+		mOrderModel.requestPayCount(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, Integer.parseInt(payWayId));
 		//mOrderModel.requestOrderNomalWithPay(this, token, userId, mOrderId, mAccountRemainDeduct, mTicketId, mBeanrDeduct, Integer.parseInt(payWayId), addressId, mFromeTime, mToTime, mMemo);
 		//mPayModel.requestPreparePay(this, token, userId, mOrderId, mTicketId, Integer.parseInt(payWayId), mAccountRemainDeduct, mBeanrDeduct);
 	}

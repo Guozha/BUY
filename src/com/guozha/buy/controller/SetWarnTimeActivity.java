@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.WarnTimeListAdapter;
+import com.guozha.buy.entry.global.WarnTime;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.SystemModel;
@@ -40,7 +41,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setwarntime);
 		
-		customActionBarStyle("设置提醒");
+		customActionBarStyle("买菜提醒");
 		initView();
 		setWarnTimeData();
 	}
@@ -58,7 +59,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 					int position, long id) {
 				//TODO 将选择的时间发送给服务器
 				WarnTime warnTime = mWarnTimes.get(position);
-				ConfigManager.getInstance().setWarnTime(warnTime.getValueTime());
+				ConfigManager.getInstance().setWarnTime(warnTime.getShowTime());
 				setWarnTimeData();
 				if(ConfigManager.getInstance().getWarnTimeOpend()){
 					requestMenuPlan(warnTime.getValueTime());
@@ -94,21 +95,6 @@ public class SetWarnTimeActivity extends BaseActivity{
 		if(token == null) return;  //TODO 先登录
 		int userId = ConfigManager.getInstance().getUserId();
 		mSystemModel.requestWarnPlan(this, token, userId, valueTime);
-	}
-	
-	public class WarnTime{
-		private String showTime;	//显示的时间
-		private String valueTime;	//发送的时间
-		public WarnTime(String showTime, String valueTime){
-			this.showTime = showTime;
-			this.valueTime = valueTime;
-		}
-		public String getShowTime() {
-			return showTime;
-		}
-		public String getValueTime() {
-			return valueTime;
-		}
 	}
 	
 	/**

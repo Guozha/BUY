@@ -34,5 +34,15 @@ public abstract class MainTabBaseFragment extends BaseFragment{
 		
 		return false;
 	}
+	
+	protected OnRequestTurnItem mOnRequestTurnItem;
+	
+	public interface OnRequestTurnItem{
+		public void turnItem(int index);
+	}
+	
+	public void setOnRequestTurnItem(OnRequestTurnItem requestTurnItem){
+		mOnRequestTurnItem = requestTurnItem;
+	}
 
 }

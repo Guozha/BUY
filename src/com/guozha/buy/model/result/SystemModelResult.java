@@ -42,4 +42,16 @@ public class SystemModelResult implements SystemModelInterface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void requestImagePathResult(String imgPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestWeixinNumResult(String weixinnum) {
+		// TODO Auto-generated method stub
+		
+	}
 }

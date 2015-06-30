@@ -1,7 +1,5 @@
 package com.guozha.buy.global.net;
 
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -15,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.controller.CustomApplication;
@@ -129,11 +126,14 @@ public class HttpManager {
 	 * @param url
 	 * @param responsListener
 	 */
+	/*
 	 void volleyImageRequest(String url, Listener<Bitmap> responsListener){
 		ImageRequest imageRequest = 		//第三、四个参数，如果设置为0则默认不压缩，否则会压缩
 				new ImageRequest(url, responsListener, 0, 0, Config.ARGB_8888, errorListener);
 		mQueue.add(imageRequest);
 	}
+	*/
+	
 	
 	/**
 	 * 可以实现图片缓存，避免重复发送请求

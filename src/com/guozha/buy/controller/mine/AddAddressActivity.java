@@ -154,7 +154,7 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.add_address_detailaddr:  //请求小区、楼宇
 			if(mCountryId == -1){
-				ToastUtil.showToast(AddAddressActivity.this, "请先选择区");
+				ToastUtil.showToast(AddAddressActivity.this, "请先选择行政区");
 				return;
 			}
 			Intent intent = new Intent(AddAddressActivity.this, ChooseDetailActivity.class);
@@ -252,17 +252,17 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		}
 		String country = mAddressCountry.getText().toString();
 		if(country.isEmpty()){
-			ToastUtil.showToast(AddAddressActivity.this, "请选择所在区");
+			ToastUtil.showToast(AddAddressActivity.this, "请选择行政区");
 			return false;
 		}
 		String detailAddr = mAddressDetai.getText().toString();
 		if(detailAddr.isEmpty()){
-			ToastUtil.showToast(AddAddressActivity.this, "请填写详细地址");
+			ToastUtil.showToast(AddAddressActivity.this, "请选择小区/楼宇");
 			return false;
 		}
 		String detailAddrNum = mAddressDetaiNum.getText().toString();
 		if(detailAddrNum.isEmpty()){
-			ToastUtil.showToast(AddAddressActivity.this, "请填写门牌号");
+			ToastUtil.showToast(AddAddressActivity.this, "请填写详细地址和门牌号");
 			return false;
 		}
 		return true;

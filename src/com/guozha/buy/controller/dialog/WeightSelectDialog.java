@@ -128,7 +128,11 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			WeightOption weightOption = options.get(options.size()-1);
 			String textUnit = UnitConvertUtil.getSwichedUnit(
 					weightOption.getAmount(), mUnit);
-			mCustomWeight.setText(UnitConvertUtil.getSwitchWeightNum(weightOption.getAmount(), mUnit));
+			String weightNum = UnitConvertUtil.getSwitchWeightNum(weightOption.getAmount(), mUnit);
+			if(weightNum.contains(".")){
+				weightNum = weightNum.substring(0, weightNum.indexOf("."));
+			}
+			mCustomWeight.setText(weightNum);
 			mCustomWeightUnit.setText(
 					textUnit);
 		}

@@ -43,7 +43,10 @@ public class ConfigManager{
 	private String mVersionName;					   //版本名称
 	private boolean mWarnTimeOpend;					   //提醒开关是否打开
 	private long mTodayDate;						   //今天的日期 
-	private int mCartNumber = -1; 						   //购物车数量
+	private int mCartNumber = -1; 					   //购物车数量
+	private String mImagePath;						   //图片路径
+	private int mDefaultPayWay; 					   //默认支付方式
+	private String mWeixinNum;							   //微信服务号
 	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
@@ -55,6 +58,9 @@ public class ConfigManager{
 	private static final String VERSION_NAME = "version_name";		//当前版本名称
 	private static final String WARN_TIME_OPEND = "warn_time_opend";//提醒开关是否打开
 	private static final String TODAY_DATE = "today_date";			//今天的日期
+	private static final String IMAGE_PATH = "image_path";			//图片路径
+	private static final String DEFAULT_PAYWAY = "default_payway";	//默认支付方式
+	private static final String WEIXIN_NUM = "weixin_num";			//微信服务号
 	
 	/**
 	 * 获取配置管理对象
@@ -77,6 +83,9 @@ public class ConfigManager{
 		mVersionName = sharedPreference.getString(VERSION_NAME, null);
 		mWarnTimeOpend = sharedPreference.getBoolean(WARN_TIME_OPEND, false);
 		mTodayDate = sharedPreference.getLong(TODAY_DATE, -1);
+		mImagePath = sharedPreference.getString(IMAGE_PATH, "");
+		mDefaultPayWay = sharedPreference.getInt(DEFAULT_PAYWAY, 1);
+		mWeixinNum = sharedPreference.getString(WEIXIN_NUM, "aizhangshaohz");
 		initConfigXML();
 	}
 	
@@ -294,6 +303,42 @@ public class ConfigManager{
 	}
 	
 	/**
+	 * 设置图片路径
+	 * @param imagePath
+	 */
+	public void setImagePath(String imagePath){
+		if(mImagePath == imagePath) return;
+		mImagePath = imagePath;
+		setConfig(IMAGE_PATH, mImagePath);
+	}
+	
+	/**
+	 * 获取图片路径
+	 * @return
+	 */
+	public String getImagePath(){
+		return mImagePath;
+	}
+	
+	/**
+	 * 设置默认支付方式
+	 * @param defaultPayWay
+	 */
+	public void setDefaultPayWay(int defaultPayWay){
+		if(mDefaultPayWay == defaultPayWay) return;
+		mDefaultPayWay = defaultPayWay;
+		setConfig(DEFAULT_PAYWAY, mDefaultPayWay);
+	}
+	
+	/**
+	 * 获取默认支付方式
+	 * @return
+	 */
+	public int getDefaultPayWay(){
+		return mDefaultPayWay;
+	}
+	
+	/**
 	 * 获取常亮列表
 	 * @return
 	 */
@@ -393,6 +438,24 @@ public class ConfigManager{
 	 */
 	public long getTodayDate(){
 		return mTodayDate;
+	}
+	
+	/**
+	 * 获取微信服务号
+	 * @return
+	 */
+	public String getWeixinNum(){
+		return mWeixinNum;
+	}
+	
+	/**
+	 * 设置微信服务号
+	 * @param weixinnum
+	 */
+	public void setWeixinNum(String weixinnum){
+		if(weixinnum != null && weixinnum.equals(mWeixinNum))return;
+		mWeixinNum = weixinnum;
+		setConfig(WEIXIN_NUM, mWeixinNum);
 	}
 	
 	////////////////////////////////逻辑相关//////////////////////////////////

@@ -387,6 +387,7 @@ public class PlanceOrderActivity extends BaseActivity{
 					AddressInfo addressInfo = addressInfos.get(i);
 					if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this)){
 						mAddressInfo = addressInfo;
+						LogUtil.e("mAddressInfo.size == " + mAddressInfo);
 						handler.sendEmptyMessage(HAND_ADDRESS_COMPLETED);
 					}
 				}

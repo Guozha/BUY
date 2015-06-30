@@ -25,7 +25,7 @@
 	    android:textColor="@color/color_app_base_4"
 	    android:paddingLeft="20dip"
 	    android:paddingRight="20dip"
-	    android:text="您确定要取消改订单吗？"/>
+	    android:text="您确定要取消该订单吗？"/>
 	
     <LinearLayout 
         android:layout_width="match_parent"

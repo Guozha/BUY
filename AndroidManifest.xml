@@ -164,6 +164,8 @@
         <!-- 已完成订单详情 -->
         <activity
             android:name="com.guozha.buy.controller.mine.OrderGradDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"></activity>
         
         <!-- 行政区选择 -->

@@ -67,6 +67,18 @@ public class SystemModel extends BaseModel{
 		 * @param awardPrice
 		 */
 		public void requestInviteInfoResult(int drawAmount, int usedAmount, int awardPrice);
+	
+		/**
+		 * 请求图片的路径
+		 * @param imgPath
+		 */
+		public void requestImagePathResult(String imgPath);
+		
+		/**
+		 * 获取服务微信号
+		 * @param weixinnum
+		 */
+		public void requestWeixinNumResult(String weixinnum);
 	}
 	
 	/**
@@ -130,7 +142,6 @@ public class SystemModel extends BaseModel{
 						jsonException(context);
 						e.printStackTrace();
 					}
-					
 				}
 		});
 	}
@@ -209,6 +220,53 @@ public class SystemModel extends BaseModel{
 						e.printStackTrace();
 					}
 				}
+		});
+	}
+	
+	/**
+	 * 请求图片路径
+	 * @param context
+	 */
+	public void requestImagePath(final Context context){
+		RequestParam paramPath = new RequestParam("system/imgPath");
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String imgPath = response.getString("imgPath");
+					mInterface.requestImagePathResult(imgPath);
+				} catch (JSONException e) {
+					jsonException(context);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 请求微信服务号
+	 * @param context
+	 */
+	public void requestWeixinNum(final Context context, String token, int addressId){
+		//TODO
+		RequestParam paramPath = new RequestParam("serve/weixin")
+		.setParams("token", token)
+		.setParams("addressId", addressId);
+		HttpManager.getInstance(context).volleyRequestByPost(
+				paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String weixinnum = response.getString("weiXin");
+					mInterface.requestWeixinNumResult(weixinnum);
+				} catch (JSONException e) {
+					jsonException(context);
+					e.printStackTrace();
+				}
+			}
 		});
 	}
 }

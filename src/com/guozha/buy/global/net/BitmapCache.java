@@ -26,6 +26,7 @@ import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.guozha.buy.controller.CustomApplication;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.util.HttpUtil;
 
 /**
@@ -147,7 +148,7 @@ public class BitmapCache implements ImageCache{
 	 */
 	public void loadBitmaps(ImageView imageView, String imageUrl) {
 		if(imageUrl == null) return;
-		imageUrl = RequestParam.URL + imageUrl;
+		imageUrl = ConfigManager.getInstance().getImagePath() + imageUrl;
 		try {
 			Bitmap bitmap = getBitmapFromMemoryCache(imageUrl);
 			if (bitmap == null) {

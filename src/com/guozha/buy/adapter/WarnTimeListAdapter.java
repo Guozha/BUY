@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.SetWarnTimeActivity;
-import com.guozha.buy.controller.SetWarnTimeActivity.WarnTime;
+import com.guozha.buy.entry.global.WarnTime;
 
 /**
  * 提醒设置时间列表适配器
@@ -23,11 +22,11 @@ public class WarnTimeListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	
-	private List<SetWarnTimeActivity.WarnTime> mWarnTimes;
+	private List<WarnTime> mWarnTimes;
 	
 	private String mChoosedTime;
 	
-	public WarnTimeListAdapter(Context context, String choosedTime, List<SetWarnTimeActivity.WarnTime> warnTimes){
+	public WarnTimeListAdapter(Context context, String choosedTime, List<WarnTime> warnTimes){
 		mInflater = LayoutInflater.from(context);
 		mChoosedTime = choosedTime;
 		mWarnTimes = warnTimes;
@@ -60,14 +59,11 @@ public class WarnTimeListAdapter extends BaseAdapter{
 		ImageView choosedIcon = (ImageView) convertView.findViewById(R.id.choosed_icon);
 		WarnTime warnTime = mWarnTimes.get(position);
 		warnTimeText.setText(warnTime.getShowTime());
-		if(warnTime.getValueTime().equals(mChoosedTime)){
+		if(warnTime.getShowTime().equals(mChoosedTime)){
 			choosedIcon.setImageResource(R.drawable.button_tick);
 		}else{
 			choosedIcon.setImageResource(0);
 		}
-		
 		return convertView;
 	}
-
-
 }

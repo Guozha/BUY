@@ -372,14 +372,14 @@ public class OrderModel extends BaseModel{
 	 * @param payWayId
 	 */
 	public void requestPayCount(final Context context, String token, int userId, int orderId,
-			int balanceDecPrice, int useTicketId, int useBeanAmount, int payWayId){
+			int balanceDecPrice, int useTicketId, int payWayId){
 		RequestParam paramPath = new RequestParam("v31/payment/pay")
 		.setParams("token", token)
 		.setParams("userId", userId)
 		.setParams("orderId", orderId)
 		.setParams("balanceDecPrice", balanceDecPrice)
 		.setParams("useTicketId", useTicketId)
-		.setParams("useBeanAmount", useBeanAmount)
+		//.setParams("useBeanAmount", useBeanAmount)
 		.setParams("payWayId", payWayId);
 		
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {

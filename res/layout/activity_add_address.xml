@@ -218,7 +218,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="请输入门牌号码"
+            android:hint="请输入详细地址和门牌号"
             android:background="@color/color_app_base_24"
             android:textColorHint="@color/color_app_base_28"
             android:layout_marginRight="18dip"

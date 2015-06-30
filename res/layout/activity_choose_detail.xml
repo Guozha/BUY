@@ -72,7 +72,7 @@
 	        android:layout_marginTop="10dip"
 	        android:textSize="@dimen/dimen_global_14sp"
 	        android:textColor="@color/color_app_base_4"
-	        android:text="该地址暂未录入地址库，请点击“其他地址”，在详细地址中输入。"/>
+	        android:text="该地址暂未收录，选择“其他地址”后，在详细地址中输入。"/>
 	    
 	    <Button 
 	        android:id="@+id/other_addr_button"

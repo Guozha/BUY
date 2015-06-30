@@ -23,6 +23,11 @@
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="@color/color_app_base_1"
 	            android:text="菜谱"/>
+	        <ImageView 
+	            android:layout_width="1dip"
+	            android:layout_height="match_parent"
+	            android:src="@drawable/tabbar_gap_line"
+	            android:scaleType="centerInside"/>
 	        <TextView 
 	             android:id="@+id/menu_detail_frag2_tab"
 	            android:layout_width="0dip"
@@ -32,6 +37,11 @@
 	            android:textSize="@dimen/dimen_global_16sp"
 	            android:textColor="@color/color_app_base_1"
 	            android:text="清单"/>
+	        <ImageView 
+	            android:layout_width="1dip"
+	            android:layout_height="match_parent"
+	            android:src="@drawable/tabbar_gap_line"
+	            android:scaleType="centerInside"/>
 	        <TextView 
 	            android:id="@+id/menu_detail_frag3_tab"
 	            android:layout_width="0dip"

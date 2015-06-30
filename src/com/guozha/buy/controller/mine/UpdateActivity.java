@@ -21,7 +21,6 @@ public class UpdateActivity extends BaseActivity{
 		setContentView(R.layout.activity_update);
 		customActionBarStyle("系统更新");
 		mWebView = (WebView) findViewById(R.id.webview_yingyongbao);
-		//mWebView.loadUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.guozha.buy#opened");
 		mWebView.setWebViewClient(new WebViewClient(){
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -29,5 +28,6 @@ public class UpdateActivity extends BaseActivity{
 				return true;
 			}
 		});
+		mWebView.loadUrl("http://download.wymc.com.cn/app/buyer_app.html");
 	}
 }

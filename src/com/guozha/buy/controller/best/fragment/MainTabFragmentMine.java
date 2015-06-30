@@ -1,5 +1,7 @@
 package com.guozha.buy.controller.best.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.SetWarnTimeActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
+import com.guozha.buy.controller.mine.AboutOurActivity;
 import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.controller.mine.MyCollectionActivity;
 import com.guozha.buy.controller.mine.MyInvateNumActivity;
@@ -29,6 +31,7 @@ import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.BitmapUtil;
 import com.guozha.buy.util.LogUtil;
+import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -51,7 +54,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	private View mAccountInfoArea;
 	
 	private AccountInfo mAccountInfo;
-	
 	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler mHandle = new Handler(){
@@ -99,6 +101,7 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		view.findViewById(R.id.mine_collection_button).setOnClickListener(this);
 		view.findViewById(R.id.mine_ticket_button).setOnClickListener(this);
 		view.findViewById(R.id.mine_address_button).setOnClickListener(this);
+		view.findViewById(R.id.mine_weixin_kefu__button).setOnClickListener(this);
 		view.findViewById(R.id.mine_online_service__button).setOnClickListener(this);
 		view.findViewById(R.id.mine_invate_num_button).setOnClickListener(this);
 		mAccountInfoArea.setVisibility(View.GONE);
@@ -114,7 +117,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			return;
 		}
 		mUserModel.requestAccountInfo(getActivity(), token, userId);
-		
 	}
 	
 	private void setInfos(){
@@ -168,6 +170,9 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			break;
 		case R.id.mine_online_service__button:
 			dialServerTelephone();
+			break;
+		case R.id.mine_weixin_kefu__button:
+			dialogWeixinKefu();
 			break;
 		case R.id.mine_invate_num_button:
 			intent = new Intent(getActivity(), MyInvateNumActivity.class);
@@ -291,6 +296,29 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 				MainTabFragmentMine.this.startActivity(intent);
 			}
 		});
+	}
+	
+	private void dialogWeixinKefu(){
+		final CustomDialog dialDialog = 
+			new CustomDialog(getActivity(), R.layout.dialog_weixin_kefu);
+		TextView weixinnum = (TextView) dialDialog.getViewById(R.id.weixinnum);
+		weixinnum.setText("微信号：" + ConfigManager.getInstance().getWeixinNum());
+		dialDialog.setDismissButtonId(R.id.cancel_button);
+		dialDialog.getViewById(R.id.copy_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				copyText(ConfigManager.getInstance().getWeixinNum());
+				dialDialog.dismiss();
+			}
+		});
+	}
+	
+	private void copyText(String text) {
+		ClipboardManager clipboard = (ClipboardManager) 
+				getActivity().getSystemService(android.content.Context.CLIPBOARD_SERVICE);  
+		ClipData clip =ClipData.newPlainText("orderMessage", text);
+		clipboard.setPrimaryClip(clip);
+		ToastUtil.showToast(MainTabFragmentMine.this.getActivity(), "已经复制到剪贴板");
 	}
 	
 	@Override

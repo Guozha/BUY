@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.CartItemListAdapter;
 import com.guozha.buy.adapter.CartItemListAdapter.CartItemChanged;
+import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.controller.cart.PlanceOrderActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.cart.CartBaseItem;
@@ -95,10 +96,15 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		View view = inflater.inflate(R.layout.fragment_maintab_cart, container, false);
 		initActionBar("购物车");
 		initView(view);
-		initData();
 		return view;
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		initData();
+	}
+	
 	/**
 	 * 改变数据格式
 	 * @param cartTotalData
@@ -206,8 +212,12 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			emptyNotify.setDismissButtonId(R.id.cancel_button);
 			emptyNotify.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View arg0) {
+				public void onClick(View view) {
 					//TODO
+					if(mOnRequestTurnItem != null){
+						mOnRequestTurnItem.turnItem(MainActivity.FRAGMENT_MARKET_INDEX);
+					}
+					emptyNotify.dismiss();
 				}
 			});
 			return;

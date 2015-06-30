@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	private CheckBox mLicenceCheckBox;
 	private EditText mEditPhoneNum;  
 	private EditText mEditValidNum;
-	private EditText mEditInvitation;  //邀请码
+	//private EditText mEditInvitation;  //邀请码
 	private ImageView mPhoneNumIcon;
 	private Button mObtainValiNumBtton;
 	private Button mLoginButton;
@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	 */
 	private void buttonChangeTimer() {
 		mObtainValiNumBtton.setTextColor(getResources().getColor(R.color.color_app_base_4));
-		mObtainValiNumBtton.setBackgroundResource(R.drawable.main_dialog_right_background_pressed);
+		mObtainValiNumBtton.setBackgroundResource(R.drawable.text_right_background_pressed);
 		mObtainValiNumBtton.setClickable(false);
 		mObtainValiNumBtton.setFocusable(false);
 	};
@@ -109,8 +109,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 	 * 验证码 按钮的普通样式
 	 */
 	private void buttonChangeNomal(String buttonText){
-        mObtainValiNumBtton.setTextColor(getResources().getColor(R.color.color_app_base_2));
-        mObtainValiNumBtton.setBackgroundResource(R.drawable.main_dialog_right_background);
+        mObtainValiNumBtton.setTextColor(getResources().getColor(R.color.color_app_base_21));
+        mObtainValiNumBtton.setBackgroundResource(R.drawable.text_right_background);
 		mObtainValiNumBtton.setText(buttonText);
 		mObtainValiNumBtton.setFocusable(true);
 		mObtainValiNumBtton.setClickable(true);
@@ -189,7 +189,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		
 		mPhoneNumIcon = (ImageView) findViewById(R.id.login_phonenum_clear);
 		
-		mEditInvitation = (EditText) findViewById(R.id.login_invitation);
+		//mEditInvitation = (EditText) findViewById(R.id.login_invitation);
 		
 		mLoginButton = (Button) findViewById(R.id.login_button);
 		mLicenceText = (TextView) findViewById(R.id.login_licence);
@@ -232,8 +232,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				return;
 			}
 			//请求登录
-			String invitateCode = mEditInvitation.getText().toString();
-			mUserModel.requestCheckLogin(LoginActivity.this, phoneNum, validNum, invitateCode);
+			//String invitateCode = mEditInvitation.getText().toString();
+			mUserModel.requestCheckLogin(LoginActivity.this, phoneNum, validNum);
 			break;
 		case R.id.login_obtain_validenum:
 			phoneNum = mEditPhoneNum.getText().toString(); 

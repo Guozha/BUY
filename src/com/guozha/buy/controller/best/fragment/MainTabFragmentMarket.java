@@ -40,7 +40,6 @@ import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.UserModelResult;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;

@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.best.fragment.MainTabBaseFragment;
+import com.guozha.buy.controller.best.fragment.MainTabBaseFragment.OnRequestTurnItem;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentCart;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentFound;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentMPage;
@@ -96,8 +97,15 @@ public class MainActivity extends FragmentActivity{
 		mFragments.add(new MainTabFragmentMPage());
 		mFragments.add(new MainTabFragmentFound());
 		mFragments.add(new MainTabFragmentMarket());
-		mFragments.add(new MainTabFragmentCart());
+		MainTabFragmentCart fragmentCart = new MainTabFragmentCart();
+		mFragments.add(fragmentCart);
 		mFragments.add(new MainTabFragmentMine());
+		fragmentCart.setOnRequestTurnItem(new OnRequestTurnItem() {
+			@Override
+			public void turnItem(int index) {
+				changeTabRefreshView(index);
+			}
+		});
 	}
 	
 

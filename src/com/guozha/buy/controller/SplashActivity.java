@@ -148,9 +148,15 @@ public class SplashActivity extends Activity{
 			ToastUtil.showToast(this, "您的网络好像有问题哦~");
 			return;
 		}
-		
+	    //请求图片路径
+		mSystemModel.requestImagePath(SplashActivity.this);
 		//自动登录应用
 		mSystemModel.requestSystemTime(SplashActivity.this);
+		String token = ConfigManager.getInstance().getUserToken();
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		//请求微信号
+		mSystemModel.requestWeixinNum(SplashActivity.this, token, addressId);
+		
 		String mobileNum = ConfigManager.getInstance().getMobileNum();
 		String pwd = ConfigManager.getInstance().getUserPwd();
 		if(mobileNum != null && pwd != null){
@@ -206,6 +212,8 @@ public class SplashActivity extends Activity{
 			if(addressInfos != null && !addressInfos.isEmpty()){
 				ConfigManager.getInstance()
 					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+			}else{
+				ConfigManager.getInstance().setChoosedAddressId(-1);
 			}
 		}
 	}
@@ -214,6 +222,18 @@ public class SplashActivity extends Activity{
 		@Override
 		public void requestSystemTime(long systemTime) {
 			ConfigManager.getInstance().setTodayDate(systemTime);
+		}
+		
+		@Override
+		public void requestImagePathResult(String imgPath) {
+			if(imgPath == null) return;
+			ConfigManager.getInstance().setImagePath(imgPath);
+		}
+		
+		@Override
+		public void requestWeixinNumResult(String weixinnum) {
+			if(weixinnum == null) return;
+			ConfigManager.getInstance().setWeixinNum(weixinnum);
 		}
 	}
 }

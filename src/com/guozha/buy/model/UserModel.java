@@ -21,6 +21,7 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.UserModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 
 /**
@@ -166,11 +167,10 @@ public class UserModel extends BaseModel{
 	 * @param pwd
 	 */
 	public void requestCheckLogin(final Context context, 
-			String phoneNum, final String checkCode, String invitateCode) {
+			String phoneNum, final String checkCode) {
 		RequestParam paramPath = new RequestParam("account/onekeyLogin")
 		.setParams("mobileNo", phoneNum)
-		.setParams("checkCode", checkCode)
-		.setParams("inviteCode", invitateCode);
+		.setParams("checkCode", checkCode);
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override
 			public void onResponse(String responseStr) {
