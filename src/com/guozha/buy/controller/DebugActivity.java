@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.ShareManager;

@@ -26,7 +26,7 @@ import com.umeng.socialize.media.UMImage;
  */
 public class SharePraiseActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SharePraisePage";
+	private static final String PAGE_NAME = "推荐有奖";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	private static final int HAND_INVITEID_COMPLTED = 0x0002;
 	private static final String SHARE_TITLE = "做了好人几十年，真心不愿吃独食，戳一下5块钱菜票拿走不谢~";

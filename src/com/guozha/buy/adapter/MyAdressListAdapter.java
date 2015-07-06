@@ -21,10 +21,11 @@ public class MyAdressListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<AddressInfo> mAddressInfos;
-	
-	public MyAdressListAdapter(Context context, List<AddressInfo> addressInfos){
+	private int mCurrentAddressId;
+	public MyAdressListAdapter(Context context, List<AddressInfo> addressInfos, int currentAddressId){
 		mInflater = LayoutInflater.from(context);
 		mAddressInfos = addressInfos;
+		mCurrentAddressId = currentAddressId;
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class MyAdressListAdapter extends BaseAdapter{
 		holder.receiveName.setText(addressInfo.getReceiveName());
 		holder.mobileNo.setText(addressInfo.getMobileNo());
 		holder.detailAddress.setText(addressInfo.getCountyName() + addressInfo.getBuildingName() + addressInfo.getDetailAddr());
-		if("1".equals(addressInfo.getDefaultFlag())){
+		if(mCurrentAddressId == addressInfo.getAddressId()){
 			holder.defaultAdress.setVisibility(View.VISIBLE);
 		}else{
 			holder.defaultAdress.setVisibility(View.INVISIBLE);

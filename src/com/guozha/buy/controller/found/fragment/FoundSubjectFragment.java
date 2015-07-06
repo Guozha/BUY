@@ -21,14 +21,14 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.FoundSubjectListAdapter;
 import com.guozha.buy.controller.BaseFragment;
-import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.found.FoundSubjectDetailActivity;
 import com.guozha.buy.entry.found.FoundSubject;
 import com.guozha.buy.entry.found.FoundSubjectPage;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.FoundModel;
 import com.guozha.buy.model.result.FoundModelResult;
-import com.guozha.buy.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 发现-专题
@@ -37,7 +37,7 @@ import com.guozha.buy.util.LogUtil;
  */
 public class FoundSubjectFragment extends BaseFragment implements OnScrollListener{
 	
-	private static final String PAGE_NAME = "FoundSubjectPage";
+	private static final String PAGE_NAME = "专题";
 	
 	private static final int HAND_SUBJECT_COMPLETED = 0x0001;
 	private ListView mSubjectListView;
@@ -98,6 +98,10 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String token = ConfigManager.getInstance().getUserToken(FoundSubjectFragment.this.getActivity());
+				if(token == null) return;
+				int addressId = ConfigManager.getInstance().getChoosedAddressId(FoundSubjectFragment.this.getActivity());
+				if(addressId == -1) return;
 				FoundSubject foundSubject = mSubjectItems.get(position);
 				Intent intent = new Intent(getActivity(), FoundSubjectDetailActivity.class);
 				intent.putExtra("subjectId", foundSubject.getSubjectId());
@@ -115,11 +119,16 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 		mMaxPageSize = 0;
 		mCurrentPage = 0;
 		mSubjectItems.clear();
+		isLocked = false;
 		requestFoundSubjectList();
 	}
 	
+	private boolean isLocked = false;
 	private void requestFoundSubjectList(){
-		mFoundModel.requestFoundSubjectList(getActivity(), mCurrentPage + 1);
+		if(!isLocked){
+			mFoundModel.requestFoundSubjectList(getActivity(), mCurrentPage + 1);
+			isLocked = true;
+		}
 	}
 	
 	//////////////////////////--分页加载相关--/////////////////////////////
@@ -161,6 +170,7 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 		@Override
 		public void requestFoundSubjectListResult(
 				FoundSubjectPage foundSubjectPage) {
+			isLocked = false;
 			if(foundSubjectPage == null) return;
 			List<FoundSubject> foundSubjects = foundSubjectPage.getSubjectList();
 			if(foundSubjects == null) return;
@@ -168,15 +178,20 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 			mCurrentPage++;
 			mMaxPageSize = foundSubjectPage.getPageCount();
 			mMaxDateNum = foundSubjectPage.getTotalCount();
-			LogUtil.e("maxDateNum == " + mMaxDateNum);
-			LogUtil.e("maxPageSize == " + mMaxPageSize);
 			mHander.sendEmptyMessage(HAND_SUBJECT_COMPLETED);
 		}
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
 	public void onPause() {
 		super.onPause();
+		MobclickAgent.onPageEnd(PAGE_NAME);
 		mBitmapCache.fluchCache();
 	}
 

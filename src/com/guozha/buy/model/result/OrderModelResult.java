@@ -5,7 +5,6 @@ import com.guozha.buy.entry.mine.order.OrderDetail;
 import com.guozha.buy.entry.mine.order.OrderResult;
 import com.guozha.buy.entry.mine.order.OrderSummaryPage;
 import com.guozha.buy.model.OrderModel.OrderModelInterface;
-import com.guozha.buy.util.LogUtil;
 
 public class OrderModelResult implements OrderModelInterface{
 

@@ -31,7 +31,6 @@ import com.guozha.buy.server.ValidNumTimer;
 import com.guozha.buy.server.ValidNumTimer.TimerObserver;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 登录界面
@@ -39,8 +38,6 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class LoginActivity extends BaseActivity implements OnClickListener, TimerObserver{
-	
-	private static final String PAGE_NAME = "LoginPage";
 	
 	private static final int HAND_VALID_NUM_SEND = 0x0001;
 	private static final int HAND_REFRESH_BUTTON = 0x0002;
@@ -298,24 +295,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 		}else{
 			return true;
 		}
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 	
 	class MyUserModelResult extends UserModelResult{

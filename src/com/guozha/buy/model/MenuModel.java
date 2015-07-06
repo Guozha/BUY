@@ -18,6 +18,7 @@ import com.guozha.buy.entry.mpage.BestMenuPage;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.MenuModelResult;
+import com.guozha.buy.util.LogUtil;
 
 public class MenuModel extends BaseModel{
 	
@@ -82,7 +83,7 @@ public class MenuModel extends BaseModel{
 	 * @param pageSize
 	 */
 	public void requestBestMenuList(final Context context, int pageNum){
-		RequestParam paramPath = new RequestParam("/v31/pick/list")
+		RequestParam paramPath = new RequestParam("v31/pick/list")
 		.setParams("pageNum", pageNum);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			paramPath, new Listener<String>() {
@@ -122,8 +123,9 @@ public class MenuModel extends BaseModel{
 	 * @param context
 	 * @param menuId
 	 */
-	public void requestMenuDetail(final Context context, int menuId){
+	public void requestMenuDetail(final Context context, int menuId, int addressId){
 		RequestParam paramPath = new RequestParam("v31/menu/detail")
+		.setParams("addressId", addressId)
 		.setParams("menuId", menuId);
 		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
 			@Override

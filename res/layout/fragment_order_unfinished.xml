@@ -11,7 +11,6 @@
 	    android:background="@color/color_app_base_5"
 	    android:divider="@color/color_app_base_6"
 	    android:dividerHeight="8dip"/>
-	
 	<LinearLayout 
 	    android:id="@+id/empty_view"
 	    android:layout_width="match_parent"

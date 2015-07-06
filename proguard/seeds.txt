@@ -383,6 +383,7 @@ com.guozha.buy.R$drawable: int guide_button_comein_bg
 com.guozha.buy.R$drawable: int ic_launcher
 com.guozha.buy.R$drawable: int icon_default
 com.guozha.buy.R$drawable: int icon_drink_color
+com.guozha.buy.R$drawable: int icon_truck
 com.guozha.buy.R$drawable: int img01
 com.guozha.buy.R$drawable: int img02
 com.guozha.buy.R$drawable: int img03
@@ -477,6 +478,8 @@ com.guozha.buy.R$drawable: int tab_bar_icon05_current
 com.guozha.buy.R$drawable: int tab_bar_icon05_normal
 com.guozha.buy.R$drawable: int tabbar_gap_line
 com.guozha.buy.R$drawable: int tabline_1px_red
+com.guozha.buy.R$drawable: int tag_activities_current
+com.guozha.buy.R$drawable: int tag_activities_finished
 com.guozha.buy.R$drawable: int tag_add
 com.guozha.buy.R$drawable: int tag_bell
 com.guozha.buy.R$drawable: int tag_call
@@ -497,7 +500,6 @@ com.guozha.buy.R$drawable: int tag_tejia
 com.guozha.buy.R$drawable: int tb_munion_icon
 com.guozha.buy.R$drawable: int tb_munion_item_selector
 com.guozha.buy.R$drawable: int temp_mpage_tag1
-com.guozha.buy.R$drawable: int temp_subject_item_tag
 com.guozha.buy.R$drawable: int text_background
 com.guozha.buy.R$drawable: int text_left_background
 com.guozha.buy.R$drawable: int text_right_background
@@ -647,6 +649,10 @@ com.guozha.buy.R$id: int add_city_button
 com.guozha.buy.R$id: int add_new_address
 com.guozha.buy.R$id: int address_default
 com.guozha.buy.R$id: int address_detail
+com.guozha.buy.R$id: int address_item_detail
+com.guozha.buy.R$id: int address_item_name
+com.guozha.buy.R$id: int address_item_phone
+com.guozha.buy.R$id: int address_list
 com.guozha.buy.R$id: int address_mobileno
 com.guozha.buy.R$id: int address_receivename
 com.guozha.buy.R$id: int advice_praise_button
@@ -659,6 +665,8 @@ com.guozha.buy.R$id: int back_button
 com.guozha.buy.R$id: int bottom_verson_message
 com.guozha.buy.R$id: int cancel_button
 com.guozha.buy.R$id: int canton_item_list
+com.guozha.buy.R$id: int cart_address
+com.guozha.buy.R$id: int cart_address_area
 com.guozha.buy.R$id: int cart_empty_bg
 com.guozha.buy.R$id: int cart_free_money_gap
 com.guozha.buy.R$id: int cart_group_item
@@ -792,6 +800,7 @@ com.guozha.buy.R$id: int menu_detail_head_title
 com.guozha.buy.R$id: int menu_detail_list_item_check
 com.guozha.buy.R$id: int menu_detail_list_item_name
 com.guozha.buy.R$id: int menu_detail_list_item_weight
+com.guozha.buy.R$id: int menu_detail_price
 com.guozha.buy.R$id: int menu_detail_soup_item_name
 com.guozha.buy.R$id: int menu_detail_soup_item_weight
 com.guozha.buy.R$id: int menu_detail_soup_list
@@ -942,7 +951,8 @@ com.guozha.buy.R$id: int regist_pwd_clear
 com.guozha.buy.R$id: int regist_pwd_input_area
 com.guozha.buy.R$id: int regist_validenum
 com.guozha.buy.R$id: int regist_validenum_input_area
-com.guozha.buy.R$id: int rule_text
+com.guozha.buy.R$id: int rule_content
+com.guozha.buy.R$id: int rule_title
 com.guozha.buy.R$id: int search_blank_area
 com.guozha.buy.R$id: int search_button
 com.guozha.buy.R$id: int search_keyword
@@ -962,6 +972,8 @@ com.guozha.buy.R$id: int select_weight_wheelview
 com.guozha.buy.R$id: int seller_descript
 com.guozha.buy.R$id: int seller_visit_count
 com.guozha.buy.R$id: int server_pice_title
+com.guozha.buy.R$id: int service_fee_rule_content
+com.guozha.buy.R$id: int service_fee_rule_title
 com.guozha.buy.R$id: int set_warn_list
 com.guozha.buy.R$id: int setting_erweima
 com.guozha.buy.R$id: int setting_item_text
@@ -1082,6 +1094,7 @@ com.guozha.buy.R$id: int vegetable_cell_image
 com.guozha.buy.R$id: int vegetable_cell_item1
 com.guozha.buy.R$id: int vegetable_cell_name
 com.guozha.buy.R$id: int vegetable_cell_price
+com.guozha.buy.R$id: int vegetable_cell_specail_price
 com.guozha.buy.R$id: int vegetable_connect_cookbook_list
 com.guozha.buy.R$id: int vegetable_description
 com.guozha.buy.R$id: int vegetable_detail_item_price
@@ -1092,6 +1105,7 @@ com.guozha.buy.R$id: int webView
 com.guozha.buy.R$id: int webview
 com.guozha.buy.R$id: int webview_yingyongbao
 com.guozha.buy.R$id: int weight_selected_dialog_test
+com.guozha.buy.R$id: int weixin_kefu_title
 com.guozha.buy.R$id: int weixinnum
 com.guozha.buy.R$id: int youmeng_phoneid_test
 com.guozha.buy.R$layout
@@ -1104,6 +1118,7 @@ com.guozha.buy.R$layout: int activity_advice_praise
 com.guozha.buy.R$layout: int activity_alipay
 com.guozha.buy.R$layout: int activity_answer_question
 com.guozha.buy.R$layout: int activity_choose_canton
+com.guozha.buy.R$layout: int activity_choose_cartaddress
 com.guozha.buy.R$layout: int activity_choose_detail
 com.guozha.buy.R$layout: int activity_choose_menu
 com.guozha.buy.R$layout: int activity_choose_ticket
@@ -1189,6 +1204,7 @@ com.guozha.buy.R$layout: int list_item_cell_cart_material_list
 com.guozha.buy.R$layout: int list_item_cell_maintab_market
 com.guozha.buy.R$layout: int list_item_cell_market
 com.guozha.buy.R$layout: int list_item_choose_address_cell
+com.guozha.buy.R$layout: int list_item_choose_address_item
 com.guozha.buy.R$layout: int list_item_cook_book_list_cell
 com.guozha.buy.R$layout: int list_item_setting_cell
 com.guozha.buy.R$layout: int list_item_small_cell
@@ -1431,6 +1447,8 @@ com.guozha.buy.controller.SetWarnTimeActivity
 com.guozha.buy.controller.SetWarnTimeActivity: SetWarnTimeActivity()
 com.guozha.buy.controller.SplashActivity
 com.guozha.buy.controller.SplashActivity: SplashActivity()
+com.guozha.buy.controller.cart.ChooseCartAddressActivity
+com.guozha.buy.controller.cart.ChooseCartAddressActivity: ChooseCartAddressActivity()
 com.guozha.buy.controller.cart.ChooseTicketActivity
 com.guozha.buy.controller.cart.ChooseTicketActivity: ChooseTicketActivity()
 com.guozha.buy.controller.cart.PayActivity
@@ -1804,6 +1822,7 @@ com.guozha.buy.entry.found.menu.MenuDetail: int cookieTime
 com.guozha.buy.entry.found.menu.MenuDetail: java.lang.String cookieWay
 com.guozha.buy.entry.found.menu.MenuDetail: java.lang.String calories
 com.guozha.buy.entry.found.menu.MenuDetail: java.lang.String packingFlag
+com.guozha.buy.entry.found.menu.MenuDetail: java.lang.String unitPrice
 com.guozha.buy.entry.found.menu.MenuDetail: java.util.List seasonings
 com.guozha.buy.entry.found.menu.MenuDetail: java.util.List menuSteps
 com.guozha.buy.entry.found.menu.MenuDetail: java.util.List menuGoods
@@ -1830,6 +1849,8 @@ com.guozha.buy.entry.found.menu.MenuDetail: java.util.List getMenuSteps()
 com.guozha.buy.entry.found.menu.MenuDetail: void setMenuSteps(java.util.List)
 com.guozha.buy.entry.found.menu.MenuDetail: java.util.List getMenuGoods()
 com.guozha.buy.entry.found.menu.MenuDetail: void setMenuGoods(java.util.List)
+com.guozha.buy.entry.found.menu.MenuDetail: java.lang.String getUnitPrice()
+com.guozha.buy.entry.found.menu.MenuDetail: void setUnitPrice(java.lang.String)
 com.guozha.buy.entry.found.menu.MenuGoods
 com.guozha.buy.entry.found.menu.MenuGoods: int goodsId
 com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String goodsName
@@ -2229,6 +2250,7 @@ com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String countyName
 com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String buildingName
 com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String detailAddr
 com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String defaultFlag
+com.guozha.buy.entry.mine.address.AddressInfo: int countyId
 com.guozha.buy.entry.mine.address.AddressInfo: AddressInfo()
 com.guozha.buy.entry.mine.address.AddressInfo: int getAddressId()
 com.guozha.buy.entry.mine.address.AddressInfo: void setAddressId(int)
@@ -2248,6 +2270,8 @@ com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getDetailAddr()
 com.guozha.buy.entry.mine.address.AddressInfo: void setDetailAddr(java.lang.String)
 com.guozha.buy.entry.mine.address.AddressInfo: java.lang.String getDefaultFlag()
 com.guozha.buy.entry.mine.address.AddressInfo: void setDefaultFlag(java.lang.String)
+com.guozha.buy.entry.mine.address.AddressInfo: int getCountyId()
+com.guozha.buy.entry.mine.address.AddressInfo: void setCountyId(int)
 com.guozha.buy.entry.mine.address.Country
 com.guozha.buy.entry.mine.address.Country: long serialVersionUID
 com.guozha.buy.entry.mine.address.Country: int areaId
@@ -2373,7 +2397,6 @@ com.guozha.buy.entry.mine.order.Order
 com.guozha.buy.entry.mine.order.Order: int orderId
 com.guozha.buy.entry.mine.order.Order: java.lang.String orderNo
 com.guozha.buy.entry.mine.order.Order: int quantity
-com.guozha.buy.entry.mine.order.Order: java.lang.String firstShowName
 com.guozha.buy.entry.mine.order.Order: java.lang.String memo
 com.guozha.buy.entry.mine.order.Order: java.util.Date createTime
 com.guozha.buy.entry.mine.order.Order: int totalPrice
@@ -2388,8 +2411,6 @@ com.guozha.buy.entry.mine.order.Order: java.lang.String getOrderNo()
 com.guozha.buy.entry.mine.order.Order: void setOrderNo(java.lang.String)
 com.guozha.buy.entry.mine.order.Order: int getQuantity()
 com.guozha.buy.entry.mine.order.Order: void setQuantity(int)
-com.guozha.buy.entry.mine.order.Order: java.lang.String getFirstShowName()
-com.guozha.buy.entry.mine.order.Order: void setFirstShowName(java.lang.String)
 com.guozha.buy.entry.mine.order.Order: java.lang.String getMemo()
 com.guozha.buy.entry.mine.order.Order: void setMemo(java.lang.String)
 com.guozha.buy.entry.mine.order.Order: java.util.Date getCreateTime()
@@ -2411,6 +2432,7 @@ com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String orderType
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String orderNo
 com.guozha.buy.entry.mine.order.OrderDetail: java.util.Date createTime
 com.guozha.buy.entry.mine.order.OrderDetail: java.util.Date arrivalTime
+com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String wantArrivalTimeScope
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String receiveMen
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String receiveMobile
 com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String receiveAddr
@@ -2449,6 +2471,8 @@ com.guozha.buy.entry.mine.order.OrderDetail: java.util.List getMenuInfoList()
 com.guozha.buy.entry.mine.order.OrderDetail: void setMenuInfoList(java.util.List)
 com.guozha.buy.entry.mine.order.OrderDetail: int getServiceFee()
 com.guozha.buy.entry.mine.order.OrderDetail: void setServiceFee(int)
+com.guozha.buy.entry.mine.order.OrderDetail: java.lang.String getWantArrivalTimeScope()
+com.guozha.buy.entry.mine.order.OrderDetail: void setWantArrivalTimeScope(java.lang.String)
 com.guozha.buy.entry.mine.order.OrderDetailGoods
 com.guozha.buy.entry.mine.order.OrderDetailGoods: long serialVersionUID
 com.guozha.buy.entry.mine.order.OrderDetailGoods: java.lang.String goodsFromType

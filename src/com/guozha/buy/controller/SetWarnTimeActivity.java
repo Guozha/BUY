@@ -29,7 +29,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SetWarnTimeActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SetWarnTimePage";
+	private static final String PAGE_NAME = "买菜提醒";
 	
 	private ListView mWarnList;
 	private TextView mSettingWarnTime;
@@ -41,7 +41,7 @@ public class SetWarnTimeActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setwarntime);
 		
-		customActionBarStyle("买菜提醒");
+		customActionBarStyle(PAGE_NAME);
 		initView();
 		setWarnTimeData();
 	}

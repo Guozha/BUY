@@ -4,8 +4,6 @@ import org.litepal.LitePalApplication;
 
 import android.content.Context;
 
-import com.guozha.buy.global.net.BitmapCache;
-
 /**
  * 全局的Application
  * @author Administrator

@@ -18,6 +18,7 @@ public class OrderDetail implements Serializable{
 	private String orderNo;
 	private Date createTime;
 	private Date arrivalTime;
+	private String wantArrivalTimeScope;
 	private String receiveMen;
 	private String receiveMobile;
 	private String receiveAddr;
@@ -110,5 +111,11 @@ public class OrderDetail implements Serializable{
 	}
 	public void setServiceFee(int serviceFee) {
 		this.serviceFee = serviceFee;
+	}
+	public String getWantArrivalTimeScope() {
+		return wantArrivalTimeScope;
+	}
+	public void setWantArrivalTimeScope(String wantArrivalTimeScope) {
+		this.wantArrivalTimeScope = wantArrivalTimeScope;
 	}
 }

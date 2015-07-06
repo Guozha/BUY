@@ -25,11 +25,8 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
-import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 订单详情（评价界面，也就是已完成订单详情界面）
@@ -37,9 +34,7 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class OrderGradDetailActivity extends BaseActivity{
-	
 
-	private static final String PAGE_NAME = "OrderDetailPage";
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
 	private String mOrderNum;
@@ -88,7 +83,7 @@ public class OrderGradDetailActivity extends BaseActivity{
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mOrderId = bundle.getInt("orderId");
-				mOrderDescript = bundle.getString("orderDescript");
+				mOrderDescript = "订单状态：" + bundle.getString("orderDescript");
 			}
 		}
 		initView();
@@ -124,12 +119,12 @@ public class OrderGradDetailActivity extends BaseActivity{
 	 */
 	private void requestOrderFeadback() {
 		String feadback = mFeadBackText.getText().toString();
-		if(feadback.isEmpty()) {
-			ToastUtil.showToast(OrderGradDetailActivity.this, "写一下评价吧");
-			return;
-		}
 		if(mRatingBar.getRating() == 0.0f){
 			ToastUtil.showToast(OrderGradDetailActivity.this, "对服务打一下分吧");
+			return;
+		}
+		if(mRatingBar.getRating() < 4 && feadback.isEmpty()) {
+			ToastUtil.showToast(OrderGradDetailActivity.this, "对我们的服务评价一下吧");
 			return;
 		}
 		String token = ConfigManager.getInstance().getUserToken(this);
@@ -162,24 +157,6 @@ public class OrderGradDetailActivity extends BaseActivity{
 		mOrderModel.requestOrderDetail(this, mOrderId);
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
-	}
-	
 	class MyOrderModelResult extends OrderModelResult{
 
 		@Override
@@ -187,10 +164,11 @@ public class OrderGradDetailActivity extends BaseActivity{
 			if(orderDetail == null) return;
 			
 			mOrderNum = "订单号：" + orderDetail.getOrderNo();
-			mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+			mOrderTime = "配送时间：" + orderDetail.getWantArrivalTimeScope();
+			//mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
-			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + "元";
 			
 			if(mExpandListDatas == null){
 				mExpandListDatas = new ArrayList<ExpandListData>();

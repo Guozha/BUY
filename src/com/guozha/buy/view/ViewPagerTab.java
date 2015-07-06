@@ -3,8 +3,6 @@ package com.guozha.buy.view;
 import java.util.List;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -17,7 +15,6 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 

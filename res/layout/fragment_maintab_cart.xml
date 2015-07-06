@@ -4,14 +4,47 @@
     android:layout_height="match_parent"
     android:background="@color/color_app_base_23"
     android:orientation="vertical" >
-   
+    <LinearLayout 
+        android:id="@+id/cart_address_area"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:background="@drawable/nomal_list_item_bg"
+        android:orientation="horizontal">
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_truck"
+            android:layout_marginLeft="18dip"
+            android:layout_marginRight="12dip"/>
+        <TextView 
+            android:id="@+id/cart_address"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_26"/>
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:src="@drawable/button_next"
+            android:scaleType="centerInside"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_27"/>
     <!-- 购物车商品列表 -->
     <FrameLayout 
     android:layout_width="match_parent"
     android:layout_height="0dip"
     android:layout_weight="1"
-    android:background="@color/color_app_base_5"
-    android:layout_marginTop="8dip">
+    android:layout_marginTop="12dip"
+    android:background="@color/color_app_base_24">
     <LinearLayout 
         android:id="@+id/cart_empty_bg"
         android:layout_width="match_parent"
@@ -49,7 +82,7 @@
 		        android:headerDividersEnabled="true"
 		        android:footerDividersEnabled="true"
 		        android:groupIndicator="@null"
-		        android:divider="@color/color_app_base_7"
+		        android:divider="@color/color_app_base_27"
 		        android:dividerHeight="1px"/>
 		     <View 
 	        android:layout_width="match_parent"

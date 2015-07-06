@@ -24,7 +24,7 @@ import com.guozha.buy.view.ViewPagerTab;
  * @author PeggyTong
  */
 public class MainTabFragmentFound extends MainTabBaseFragment{
-	
+	private static final String PAGE_NAME = "发现";
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
@@ -34,7 +34,7 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_found, container, false);
-		initActionBar("发现");
+		initActionBar(PAGE_NAME);
 		initView(view); 
 		return view;
 	}
@@ -90,5 +90,10 @@ public class MainTabFragmentFound extends MainTabBaseFragment{
 		public int getCount() {
 			return fragments.length;
 		}
+	}
+
+	@Override
+	protected String getPageName() {
+		return PAGE_NAME;
 	}
 }

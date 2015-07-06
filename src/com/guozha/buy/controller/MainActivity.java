@@ -27,6 +27,7 @@ import com.guozha.buy.global.ConfigManager.OnConfigChangeListener;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.TabBarItem;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 /**
@@ -236,6 +237,18 @@ public class MainActivity extends FragmentActivity{
 	protected void onDestroy() {
 		super.onDestroy();
 		ConfigManager.getInstance().setUserToken(null);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);       //统计时长
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 	/**

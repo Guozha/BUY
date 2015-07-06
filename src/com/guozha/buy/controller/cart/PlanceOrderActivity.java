@@ -24,7 +24,6 @@ import com.guozha.buy.entry.cart.ShowTime;
 import com.guozha.buy.entry.cart.TimeList;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
-import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.SystemModel;
 import com.guozha.buy.model.UserModel;
@@ -32,7 +31,6 @@ import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.scroll.WheelView;
@@ -47,13 +45,12 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class PlanceOrderActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SubmitOrderPage";
+	private static final String PAGE_NAME = "下单";
 	
 	private WheelView mWheelView;
 	
 	private static final int HAND_TIMES_DATA_COMPLETED = 0x0001;
 	private static final int HAND_CHANGE_QUICK_MENU = 0x0002;
-	private static final int HAND_ADDRESS_COMPLETED = 0x0003;
 	
 	private List<ShowTime> mShowTimes = new ArrayList<ShowTime>();
 	
@@ -69,9 +66,13 @@ public class PlanceOrderActivity extends BaseActivity{
 	private View mQuickTimeChoose;
 	private String mTodayEarliestTime = null;  //当天最早的时间
 	private AddressInfo mAddressInfo;
+	
+	private String mFromArriveTime;
+	private String mToArriveTime;
+	private String mMemoMessage;
+	
 	private OrderModel mOrderModel = new OrderModel(new MyOrderModelResult());
 	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
-	private UserModel mUserModel = new UserModel(new MyUserModelResult());
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -89,12 +90,6 @@ public class PlanceOrderActivity extends BaseActivity{
 					mQuickTimeChoose.setVisibility(View.GONE);
 				}
 				break;
-			case HAND_ADDRESS_COMPLETED:
-				if(mAddressInfo == null) return;
-				mOrderName.setText(mAddressInfo.getReceiveName());
-				mOrderPhone.setText(mAddressInfo.getMobileNo());
-				mOrderAddress.setText(mAddressInfo.getBuildingName() + mAddressInfo.getDetailAddr());
-				break;
 			}
 		};
 	};
@@ -103,13 +98,14 @@ public class PlanceOrderActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plance_order);
-		customActionBarStyle("下单");
+		customActionBarStyle(PAGE_NAME);
 		Intent intent = getIntent();
 		if(intent != null){
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mTotalPrice = bundle.getInt("totalPrice");
 				mServicePrice = bundle.getInt("serverPrice");
+				mAddressInfo = (AddressInfo) bundle.getSerializable("addressInfo");
 			}
 		}
 		initView();
@@ -124,7 +120,6 @@ public class PlanceOrderActivity extends BaseActivity{
 		mOrderModel.requestOrderTimes(this, addressId);
 		//TODO 重新获取一下服务器时间
 		mSystemModel.requestSystemTime(this);
-		mUserModel.requestListAddress(this, userId);
 	}
 	
 	/**
@@ -193,6 +188,11 @@ public class PlanceOrderActivity extends BaseActivity{
 				}
 			}
 		});
+		
+		if(mAddressInfo == null) return;
+		mOrderName.setText(mAddressInfo.getReceiveName());
+		mOrderPhone.setText(mAddressInfo.getMobileNo());
+		mOrderAddress.setText(mAddressInfo.getBuildingName() + mAddressInfo.getDetailAddr());
 	}
 	
 	private void setCancelOneHourArrive() {
@@ -271,7 +271,20 @@ public class PlanceOrderActivity extends BaseActivity{
 				timeStr + "$" + pointTime.getToTime(), 
 				mLeaveMessage.getText().toString());
 		*/
-		mOrderModel.requestOrderNomalInsert(this, token, userId, addressId, timeStr + "$" + pointTime.getFromTime(), timeStr + "$" + pointTime.getToTime(), mLeaveMessage.getText().toString());
+		//mOrderModel.requestOrderNomalInsert(this, token, userId, addressId, timeStr + "$" + pointTime.getFromTime(), timeStr + "$" + pointTime.getToTime(), mLeaveMessage.getText().toString());
+		mFromArriveTime = timeStr + "$" + pointTime.getFromTime();
+		mToArriveTime = timeStr + "$" + pointTime.getToTime();
+		mMemoMessage = mLeaveMessage.getText().toString();
+		Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
+		intent.putExtra("orderId", -1);
+		intent.putExtra("fromArriveTime", mFromArriveTime);
+		intent.putExtra("toArriveTime", mToArriveTime);
+		intent.putExtra("memoMessage", mMemoMessage);
+		intent.putExtra("addressId", addressId);
+		intent.putExtra("serverPrice", mServicePrice);
+		intent.putExtra("totalPrice", mTotalPrice);
+		startActivity(intent);
+		PlanceOrderActivity.this.finish();
 	}
 	
 	private class TimeOptionAdapter extends AbstractWheelTextAdapter{
@@ -304,7 +317,6 @@ public class PlanceOrderActivity extends BaseActivity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 		//友盟界面统计
 		MobclickAgent.onResume(this);
 		MobclickAgent.onPageStart(PAGE_NAME);
@@ -313,7 +325,6 @@ public class PlanceOrderActivity extends BaseActivity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
@@ -345,53 +356,12 @@ public class PlanceOrderActivity extends BaseActivity{
 				handler.sendEmptyMessage(HAND_TIMES_DATA_COMPLETED);
 			}
 		}
-		
-		@Override
-		public void requestOrderNomalInsertResult(String returnCode,
-				String msg, int orderId) {
-			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				Intent intent = new Intent(PlanceOrderActivity.this, PayActivity.class);
-				intent.putExtra("orderId", orderId);
-				intent.putExtra("serverPrice", mServicePrice);
-				intent.putExtra("totalPrice", mTotalPrice);
-				startActivity(intent);
-				PlanceOrderActivity.this.finish();
-			}else{
-				ToastUtil.showToast(PlanceOrderActivity.this, msg);
-			}
-		}
-		
-		/*
-		@Override
-		public void requestSubmitOrderResult(String returnCode, String msg,
-				int orderId) {
-			
-		}
-		*/
-		
 	}
 	
 	class MySystemModelResult extends SystemModelResult{
 		@Override
 		public void requestSystemTime(long systemTime) {
 			ConfigManager.getInstance().setTodayDate(systemTime);
-		}
-	}
-	
-	class MyUserModelResult extends UserModelResult{
-		@Override
-		public void requestListAddressResult(List<AddressInfo> addressInfos) {
-			//设置地址信息
-			if(addressInfos != null){
-				for(int i = 0; i < addressInfos.size(); i++){
-					AddressInfo addressInfo = addressInfos.get(i);
-					if(addressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId(PlanceOrderActivity.this)){
-						mAddressInfo = addressInfo;
-						LogUtil.e("mAddressInfo.size == " + mAddressInfo);
-						handler.sendEmptyMessage(HAND_ADDRESS_COMPLETED);
-					}
-				}
-			}
 		}
 	}
 }

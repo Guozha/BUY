@@ -27,7 +27,6 @@ import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 未付款订单详情
@@ -36,7 +35,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class OrderUnPayDetailActivity extends BaseActivity{
 
-	private static final String PAGE_NAME = "OrderDetailPage";
 	private static final int REQUEST_CODE = 0x0001;
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
@@ -186,24 +184,6 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 	}
 	
 	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
-	}
-	
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == REQUEST_CODE){
@@ -226,12 +206,13 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 			if(orderDetail == null) return;
 			mOrderNum = "订单号：" + orderDetail.getOrderNo();
 			mOrderType = orderDetail.getOrderType();
-			mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+			mOrderTime = "配送时间：" + orderDetail.getWantArrivalTimeScope();
+			//mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
 			mServiceFee = orderDetail.getServiceFee();
 			mTotalPrice = orderDetail.getTotalPrice();
-			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + "元";
 			mOrderStatus = orderDetail.getStatus();
 			if(mExpandListDatas == null){
 				mExpandListDatas = new ArrayList<ExpandListData>();

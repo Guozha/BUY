@@ -11,6 +11,7 @@ public class MenuDetail {
 	private String cookieWay;
 	private String calories;
 	private String packingFlag;
+	private String unitPrice;
 	
 	private List<MenuSeason> seasonings;
 	private List<MenuStep> menuSteps;
@@ -80,5 +81,11 @@ public class MenuDetail {
 	}
 	public void setMenuGoods(List<MenuGoods> menuGoods) {
 		this.menuGoods = menuGoods;
+	}
+	public String getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(String unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 }

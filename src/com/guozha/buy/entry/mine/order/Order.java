@@ -7,7 +7,6 @@ public class Order {
 	private int orderId;
 	private String orderNo;
 	private int quantity;
-	private String firstShowName;
 	private String memo;
 	private Date createTime;
 	private int totalPrice;
@@ -33,12 +32,6 @@ public class Order {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}
-	public String getFirstShowName() {
-		return firstShowName;
-	}
-	public void setFirstShowName(String firstShowName) {
-		this.firstShowName = firstShowName;
 	}
 	public String getMemo() {
 		return memo;

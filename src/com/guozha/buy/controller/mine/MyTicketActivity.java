@@ -23,7 +23,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class MyTicketActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "MyTicketPage";
+	private static final String PAGE_NAME = "我的菜票";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private ListView mMyTicket;  //我的菜票
@@ -55,7 +55,7 @@ public class MyTicketActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_ticket);
-		customActionBarStyle("我的菜票");
+		customActionBarStyle(PAGE_NAME);
 		
 		initView();
 		setTicketData();

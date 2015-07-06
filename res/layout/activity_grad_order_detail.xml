@@ -35,10 +35,17 @@
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>
-	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:layout_marginTop="5dip"
+	    android:background="@color/color_app_base_27"/>
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_marginTop="5dip"
 	    android:layout_height="74dip"
 	    android:background="@color/color_app_base_5"
 	    android:paddingLeft="18dip"
@@ -60,7 +67,10 @@
 	        android:textColor="@color/color_app_base_4"
 	        android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>
-	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	<TextView 
 	    android:id="@+id/order_detail_total_price"
 	    android:layout_width="match_parent"
@@ -69,7 +79,10 @@
 	    android:gravity="center_vertical"
 	    android:textColor="@color/color_app_base_1"
 	    android:textSize="@dimen/dimen_global_14sp"/>	
-
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 	<ExpandableListView 
         android:id="@+id/expandable_order_detail_list"
         android:layout_width="match_parent"
@@ -78,7 +91,7 @@
         android:headerDividersEnabled="true"
         android:footerDividersEnabled="true"
         android:groupIndicator="@null"
-        android:background="@color/color_app_base_23"
+        android:background="@color/color_app_base_24"
         android:divider="@color/color_app_base_7"
         android:dividerHeight="1px"/>
 	 

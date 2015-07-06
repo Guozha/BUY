@@ -1,11 +1,9 @@
 package com.guozha.buy.adapter;
 
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import com.guozha.buy.R;
 import com.guozha.buy.entry.mpage.BestMenuItem;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 主界面列表适配器

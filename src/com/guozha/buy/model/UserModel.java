@@ -21,8 +21,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.UserModelResult;
-import com.guozha.buy.util.LogUtil;
-import com.guozha.buy.util.ToastUtil;
 
 /**
  * 用户相关的数据获取
@@ -110,6 +108,14 @@ public class UserModel extends BaseModel{
 		 * @param msg
 		 */
 		public void requestDefaultAddressResult(String returnCode, String msg);
+		
+		/**
+		 * 1.7.7 请求更改地址
+		 * @param returnCode
+		 * @param msg
+		 * @param addressId
+		 */
+		public void requestModefyAddressResult(String returnCode, String msg, int addressId, String buildFlag);
 		
 		/**
 		 * 退出登录
@@ -431,6 +437,47 @@ public class UserModel extends BaseModel{
 						}
 					}
 				});
+	}
+	
+	/**
+	 * 1.7.7 请求更改地址
+	 * @param context
+	 * @param token
+	 * @param addressId
+	 * @param userId
+	 * @param countyId
+	 * @param receiveName
+	 * @param mobileNo
+	 * @param buildingName
+	 * @param detailAddr
+	 */
+	public void requestModefyAddress(final Context context, String token, int addressId, int userId, int countyId,
+			String receiveName, String mobileNo, String buildingName, String detailAddr){
+		RequestParam paramPath = new RequestParam("v31/account/address/update")
+		.setParams("token", token)
+		.setParams("addressId", addressId)
+		.setParams("userId", userId)
+		.setParams("countyId", countyId)
+		.setParams("receiveName", receiveName)
+		.setParams("mobileNo", mobileNo)
+		.setParams("buildingName", buildingName)
+		.setParams("detailAddr", detailAddr);
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String returnCode = response.getString("returnCode");
+					String msg = response.getString("msg");
+					int addressId = response.getInt("addressId");
+					String buildFlag = response.getString("buildingFlag");
+					mInterface.requestModefyAddressResult(returnCode, msg, addressId, buildFlag);
+				} catch (JSONException e) {
+					jsonException(context);
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**

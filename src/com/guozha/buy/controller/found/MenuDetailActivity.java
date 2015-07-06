@@ -7,6 +7,7 @@ import java.util.Set;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -19,13 +20,11 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.controller.found.fragment.BaseMenuDetailFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailDescriptFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailFoodFragment;
 import com.guozha.buy.controller.found.fragment.MenuDetailStepFragment;
-import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
@@ -34,9 +33,9 @@ import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.model.result.ShopCartModelResult;
 import com.guozha.buy.server.ShareManager;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.view.ViewPagerTab;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 菜谱详情
@@ -44,15 +43,31 @@ import com.guozha.buy.view.ViewPagerTab;
  *
  */
 public class MenuDetailActivity extends FragmentActivity implements OnClickListener{
-	
+	private static final String PAGE_NAME = "菜谱详情";
+	private static final int HAND_MENU_DETAIL_COMPLETED = 0x0100;
 	private ViewPagerTab mViewPagerTab;
 	private ViewPagerAdapter mViewPagerAdapter;
 	private ViewPager mViewPager;
 	private List<TextView> mTabTexts;
 	private MenuDetail mMenuDetail;
+	private TextView mMenuPrice;
 	private MenuModel mMenuModel = new MenuModel(new MyMenuModelResult());
 	private ShopCartModel mShopCartModel = new ShopCartModel(new MyShopCartModelResult());
 	private int mMenuId;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_MENU_DETAIL_COMPLETED:
+				if(mMenuDetail != null && mMenuPrice != null){
+					mMenuPrice.setText(mMenuDetail.getUnitPrice());
+				}
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +77,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		if(bundle != null){
 			mMenuId = bundle.getInt("menuId");
 		}
-		customActionBarStyle("菜谱详情");
+		customActionBarStyle(PAGE_NAME);
 		initView();
 		initData();
 	}
@@ -92,10 +107,12 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 		setUpTab();
 		findViewById(R.id.menu_collection_button).setOnClickListener(this);
 		findViewById(R.id.menu_addcart_button).setOnClickListener(this);
+		mMenuPrice = (TextView) findViewById(R.id.menu_detail_price);
 	}
 	
 	private void initData(){
-		mMenuModel.requestMenuDetail(this, mMenuId);
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
+		mMenuModel.requestMenuDetail(this, mMenuId, addressId);
 	}
 	
 	private void setUpViewPage(){
@@ -168,6 +185,7 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 				fragments[i].sendMenuDetailData(menuDetail);
 			}
 			mMenuDetail = menuDetail;
+			mHandler.sendEmptyMessage(HAND_MENU_DETAIL_COMPLETED);
 		}
 		
 		@Override
@@ -206,12 +224,25 @@ public class MenuDetailActivity extends FragmentActivity implements OnClickListe
 			break;
 		case R.id.menu_addcart_button:
 			Set<String> checkedIds = mViewPagerAdapter.fragments[1].getCheckedIds();
-			LogUtil.e("checkedIds = " + checkedIds);
 			mShopCartModel.requestCartAddMenu(
 					MenuDetailActivity.this, userId, mMenuId, token, addressId, checkedIds);
 			break;
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME); //统计页面
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME); 
 	}
 }

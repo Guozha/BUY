@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_27"/>
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="80dip"
@@ -61,4 +64,8 @@
 	        android:paddingRight="18dip"
 	        android:src="@drawable/button_next"/>
 	</LinearLayout>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 </LinearLayout>

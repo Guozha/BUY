@@ -1,7 +1,5 @@
 package com.guozha.buy.controller.mine;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseActivity;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.entry.mine.address.AddressInfo;
 import com.guozha.buy.global.ConfigManager;
@@ -33,10 +30,9 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	
-	private static final String PAGE_NAME = "AddAddressPage";
+	private static final String PAGE_NAME = "添加地址";
 	
 	private static final int HAND_KEYWORD_COMPLETED = 0x0002;  //关键字获取成功
-	private static final int HAND_DELETE_OLD_ADDRESS = 0x0003; //删除就的地址
 	private static final int HAND_FINISH_WINDOW = 0x0004; //退出
 	private static final int HAND_ADD_ADDR_SUCCESS = 0x0005;
 	private static final int REQUEST_CODE = 0;
@@ -58,7 +54,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	private int defaultFlag = 0;  //是否默认地址
 	
 	private AddressInfo mAddressInfo = null;
-	private int mAddressSize = 0;
 	
 	private Button mRequestAddButton;
 	private UserModel mUserModel = new UserModel(new MyUserModelResult());
@@ -66,10 +61,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case HAND_DELETE_OLD_ADDRESS:
-				//删除旧地址
-				deleteOldAddress();
-				break;
 			case HAND_FINISH_WINDOW:
 				setResult(0);
 				AddAddressActivity.this.finish();
@@ -82,12 +73,14 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_address);
-		customActionBarStyle("添加地址");
+		customActionBarStyle(PAGE_NAME);
 		Bundle bundle = getIntent().getExtras();
 		if(bundle != null){
 			mAddressInfo = 
 					(AddressInfo) bundle.getSerializable("addressInfo");
-			mAddressSize = bundle.getInt("addressSize");
+			if(mAddressInfo != null){
+				mCountryId = mAddressInfo.getCountyId();
+			}
 		}
 		initView();
 	}
@@ -115,30 +108,17 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			mAddressCountry.setText(mAddressInfo.getCountyName());
 			mAddressDetai.setText(mAddressInfo.getBuildingName());
 			mAddressDetaiNum.setText(mAddressInfo.getDetailAddr());
-			mReceiveName.setEnabled(false);
-			mMobileNum.setEnabled(false);
-			mAddressCity.setEnabled(false);
-			mAddressCountry.setEnabled(false);
-			mAddressDetai.setEnabled(false);
-			mAddressDetaiNum.setEnabled(false);
-			mRequestAddButton.setText("删除");
-			mAddressCityIcon.setVisibility(View.INVISIBLE);
-			mAddressCountryIcon.setVisibility(View.INVISIBLE);
-			mAddressDetailIcon.setVisibility(View.INVISIBLE);
-			mReceiveName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-			mMobileNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-			mAddressDetaiNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+			mRequestAddButton.setText("修改");
 		}else{
 			String mobileNum = ConfigManager.getInstance().getMobileNum();
 			if(mobileNum != null){
 				mMobileNum.setText(mobileNum);
 			}
-			findViewById(R.id.add_canton_button).setOnClickListener(this);
-			findViewById(R.id.add_city_button).setOnClickListener(this);
-			mAddressDetai.setOnClickListener(this);
 			mRequestAddButton.setText("添加");
 		}
-		
+		findViewById(R.id.add_canton_button).setOnClickListener(this);
+		findViewById(R.id.add_city_button).setOnClickListener(this);
+		mAddressDetai.setOnClickListener(this);
 		mRequestAddButton.setOnClickListener(this);
 	}
 
@@ -163,22 +143,9 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.add_address_request_button:
-			if(mAddressInfo != null){
-				if(mAddressSize <= 1){
-					LogUtil.e("mAddressSize == " + mAddressSize);
-					ToastUtil.showToast(AddAddressActivity.this, "不允许地址全部删除");
-					return;
-				}
-				final CustomDialog dialog = 
-						new CustomDialog(AddAddressActivity.this, R.layout.dialog_delete_notify);
-				dialog.setDismissButtonId(R.id.cancel_button);
-				dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
-						dialog.dismiss();
-					}
-				});
+			if(mAddressInfo != null){//修改地址
+				if(!valideRequestAddress()) return;
+				requestModefyAddress();
 				return;
 			}
 			if(!valideRequestAddress()) return;
@@ -193,6 +160,17 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		startActivityForResult(intent, REQUEST_CODE);
 	}
 
+	/**
+	 * 请求修改地址
+	 */
+	private void requestModefyAddress(){
+		if(mAddressInfo == null) return;
+		int userId = ConfigManager.getInstance().getUserId();
+		String token = ConfigManager.getInstance().getUserToken(this);
+		if(token == null) return;
+		mUserModel.requestModefyAddress(this, token, mAddressInfo.getAddressId(), 
+				userId, mCountryId, mReceiveName.getText().toString(), mMobileNum.getText().toString(), mAddressDetai.getText().toString(), mAddressDetaiNum.getText().toString());
+	}
 	/**
 	 * 请求添加地址
 	 */
@@ -224,16 +202,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 			}
 		});
-	}
-	
-	/**
-	 * 删除旧的地址
-	 */
-	private void deleteOldAddress(){
-		String token = ConfigManager.getInstance().getUserToken(this);
-		int userId = ConfigManager.getInstance().getUserId();
-		if(token == null || userId == -1) return; //TODO 去登录
-		mUserModel.requestDeleteAddress(this, userId, token, mAddressInfo.getAddressId());
 	}
 	
 	/**
@@ -289,10 +257,13 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 				mCountryId = bundle.getInt("areaId");
 				String areaName = bundle.getString("areaName");
 				mAddressCountry.setText(areaName);
+				mAddressDetai.setText("");
+				mAddressDetaiNum.setText("");
 			}else if(resultCode == 1){
 				LogUtil.e("onActivityResult");
 				String detail = bundle.getString("addrDetail");
 				mAddressDetai.setText(detail);
+				mAddressDetaiNum.setText("");
 				mAddressDetaiNum.requestFocus();
 			}
 		}
@@ -302,7 +273,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 		//友盟界面统计
 		MobclickAgent.onResume(this);
 		MobclickAgent.onPageStart(PAGE_NAME);
@@ -311,7 +281,6 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
 		//友盟界面统计
 		MobclickAgent.onPause(this);
 		MobclickAgent.onPageEnd(PAGE_NAME);
@@ -322,43 +291,32 @@ public class AddAddressActivity extends BaseActivity implements OnClickListener{
 		public void requestAddAddressResult(String returnCode,
 				String buildFlag, String msg, int addressId) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				if(mAddressInfo != null){
-					//请求删除旧的（这个相当于修改）
-					//handler.sendEmptyMessage(HAND_DELETE_OLD_ADDRESS);
-					ToastUtil.showToast(AddAddressActivity.this, "成功处理");
+				if("0".equals(buildFlag)){//未覆盖
+					showNotCoveredDialog();
 				}else{
-					if("0".equals(buildFlag)){//未覆盖
-						showNotCoveredDialog();
-					}else{
-						ToastUtil.showToast(AddAddressActivity.this, "成功添加");
-						ConfigManager.getInstance().setChoosedAddressId(addressId);
-						handler.sendEmptyMessage(HAND_FINISH_WINDOW);
-					}
-				}
-			}else{
-				ToastUtil.showToast(AddAddressActivity.this, "访问服务器异常");
-			}
-		}
-		
-		@Override
-		public void requestDeleteAddressResult(String returnCode, String msg) {
-			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
-				if(mAddressInfo.getAddressId() == ConfigManager.getInstance().getChoosedAddressId(AddAddressActivity.this)){
-					mUserModel.requestListAddress(AddAddressActivity.this, ConfigManager.getInstance().getUserId());
-				}else{
+					ToastUtil.showToast(AddAddressActivity.this, "成功添加");
+					ConfigManager.getInstance().setChoosedAddressId(addressId);
 					handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 				}
 			}else{
-				ToastUtil.showToast(AddAddressActivity.this, "删除失败");
+				ToastUtil.showToast(AddAddressActivity.this, msg);
 			}
 		}
 		
 		@Override
-		public void requestListAddressResult(List<AddressInfo> addressInfos) {
-			if(addressInfos != null && !addressInfos.isEmpty()){
-				ConfigManager.getInstance().setChoosedAddressId(addressInfos.get(0).getAddressId());
+		public void requestModefyAddressResult(String returnCode, String msg,
+				int addressId, String buildFlag) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+					if("0".equals(buildFlag)){//未覆盖
+						showNotCoveredDialog();
+					}else{
+						ToastUtil.showToast(AddAddressActivity.this, "成功修改");
+						ConfigManager.getInstance().setChoosedAddressId(addressId);
+						handler.sendEmptyMessage(HAND_FINISH_WINDOW);
+					}
+			}else{
+				ToastUtil.showToast(AddAddressActivity.this, msg);
 			}
-			handler.sendEmptyMessage(HAND_FINISH_WINDOW);
 		}
 	}
 }

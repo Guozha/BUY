@@ -5,7 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.sax.StartElementListener;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.best.fragment.MainTabFragmentMarket;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.controller.market.ListVegetableActivity;
@@ -100,6 +99,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		    	holderEntry.image = (ImageView) itemVegetable.findViewById(R.id.vegetable_cell_image);
 		    	holderEntry.productName = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_name);
 		    	holderEntry.price = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_price);
+		    	holderEntry.specialPrice = (TextView) itemVegetable.findViewById(R.id.vegetable_cell_specail_price);
 		    	holderEntry.bargainIcon = (ImageView) itemVegetable.findViewById(R.id.vegetable_bargain_icon);
 		    	holder.cells.add(holderEntry);
 		    }
@@ -137,19 +137,28 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			holderEntry.price.setVisibility(View.VISIBLE);
 			holderEntry.bargainIcon.setVisibility(View.GONE);
 			//设置TAG
-			holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
-					+ ":" + itemSaleInfo.getUnitPrice() + ":" + itemSaleInfo.getUnit());
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
 			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
-			holderEntry.price.setText(
-					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "元/" +
-					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 			String imgUrl = itemSaleInfo.getGoodsImg();
 			holderEntry.image.setImageResource(R.drawable.default_icon);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
-			
+			holderEntry.price.setText(
+					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "元/" +
+					UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 			if("1".equals(itemSaleInfo.getBargainFlag())){
 				holderEntry.bargainIcon.setVisibility(View.VISIBLE);
+				holderEntry.specialPrice.setVisibility(View.VISIBLE);
+				holderEntry.price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+				holderEntry.specialPrice.setText(
+						UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getBargainUnitPrice()) + "元/" +
+								UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
+				holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
+						+ ":" + itemSaleInfo.getBargainUnitPrice() + ":" + itemSaleInfo.getUnit());
+			}else{
+				holderEntry.specialPrice.setVisibility(View.GONE);
+				holderEntry.price.getPaint().setFlags(0);
+				holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
+						+ ":" + itemSaleInfo.getUnitPrice() + ":" + itemSaleInfo.getUnit());
 			}
 		}
 		
@@ -204,6 +213,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 		private ImageView image;
 		private TextView productName;
 		private TextView price;
+		private TextView specialPrice;
 		private ImageView bargainIcon;
 	}
 

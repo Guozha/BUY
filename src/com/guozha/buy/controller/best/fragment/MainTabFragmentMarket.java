@@ -43,7 +43,6 @@ import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 逛菜场
@@ -52,7 +51,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClickListener,OnScrollListener{
 	
-	private static final String PAGE_NAME = "MarketPage";
+	private static final String PAGE_NAME = "逛菜场";
 	private static final int HAND_GOODS_DATA_COMPLETED = 0x0002; 
 	private static final int HAND_GOODS_TYPE_COMPLETED = 0x0003;
 	private static final int HAND_ADRESS_COMPLETED = 0x0004;
@@ -246,7 +245,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mMaxDateNum = 0;		//最大数据数
 		mCurrentPage = 0;
 		mMarketHomeItems.clear();
-		
+		isLocked = false;
 		int userId = ConfigManager.getInstance().getUserId();
 		
 		mUserModel.requestListAddress(getActivity(), userId);
@@ -254,9 +253,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		requestGoodsList();
 	}
 	
+	private boolean isLocked = false;
 	private void requestGoodsList(){
-		int addressId = ConfigManager.getInstance().getChoosedAddressId();
-		mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1);
+		if(!isLocked){
+			int addressId = ConfigManager.getInstance().getChoosedAddressId();
+			mGoodsModel.requestGoodsList(getActivity(), addressId, mCurrentPage + 1);
+			isLocked = true;
+		}
 	}
 	
 	/**
@@ -328,23 +331,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	}
 	
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if(getUserVisibleHint()){
-			//View可见
-			//友盟页面统计
-			MobclickAgent.onPageStart(PAGE_NAME);
-		}else{
-			//View不可见
-			//友盟页面统计
-			MobclickAgent.onPageEnd(PAGE_NAME);
-		}
-	}
-	
-	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		if(scrollState == OnScrollListener.SCROLL_STATE_IDLE
-				&& mLastVisibleIndex == mMarketItemListAdapter.getCount()
+				&& mLastVisibleIndex >= mMarketItemListAdapter.getCount()
 				&& mCurrentPage < mTotalPageSize){
 			mLoadText.setVisibility(View.GONE);
 			mLoadProgressBar.setVisibility(View.VISIBLE);
@@ -355,9 +344,9 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
-		mLastVisibleIndex = firstVisibleItem + visibleItemCount - 1;  
+		mLastVisibleIndex = firstVisibleItem + visibleItemCount;  
 		//所有的条目已经和最大数相等，则移除底部的view
-		if(totalItemCount >= mMaxDateNum + 2){	//加了viewHead和viewFooter
+		if(totalItemCount >= mMaxDateNum + 1){	//加了viewHead和viewFooter
 			//mItemList.removeFooterView(mBottomLoadingView);
 			mLoadProgressBar.setVisibility(View.GONE);
 			mLoadText.setVisibility(View.VISIBLE);
@@ -386,6 +375,7 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	class MyGoodsModelResult extends GoodsModelResult{
 		@Override
 		public void requestGoodsListResult(MarketHomePage marketHomePage) {
+			isLocked = false;
 			if(marketHomePage == null) return;
 			mTotalPageSize = marketHomePage.getPageCount();
 			mMaxDateNum = marketHomePage.getTotalCount();
@@ -412,5 +402,10 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 			mAddressInfos = addressInfos;
 			mHandler.sendEmptyMessage(HAND_ADRESS_COMPLETED);
 		}
+	}
+
+	@Override
+	protected String getPageName() {
+		return PAGE_NAME;
 	}
 }

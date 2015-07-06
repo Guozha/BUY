@@ -14,19 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.controller.found.MenuDetailActivity;
 import com.guozha.buy.controller.market.VegetableDetailActivity;
-import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.found.SubjectDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.ShopCartModel;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.util.ConstantUtil;
-import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
@@ -86,7 +82,6 @@ public class FoundSubjectDetailListAdapter extends BaseAdapter implements OnClic
 		FoundSubjectDetailItemListAdapter itemListAdapter = 
 				new FoundSubjectDetailItemListAdapter(mContext, subjectDetail.getItemDetailList(), mBitmapCache);
 		holder.list.setAdapter(itemListAdapter);
-		LogUtil.e("unitPrice== " + subjectDetail.getUnitPrice());
 		holder.price.setText("价格：" + UnitConvertUtil.getSwitchedMoney(subjectDetail.getUnitPrice()) + "元/" +
 				UnitConvertUtil.getSwichedUnit(1000, subjectDetail.getUnit()));
 		return convertView;

@@ -30,7 +30,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.ConstantUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 未完成订单列表
@@ -38,8 +37,6 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class OrderUnFinishFragment extends BaseFragment implements OnScrollListener{
-	
-	private static final String PAGE_NAME = "UnFinishedOrderPage";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;  //数据完成
 	private static final int REQUEST_CODE = 0x0001;			
@@ -185,20 +182,6 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 		}
 	}
 	
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if(getUserVisibleHint()){
-			//View可见	
-			//友盟页面统计
-			MobclickAgent.onPageStart(PAGE_NAME);
-		}else{
-			//View不可见
-			
-			//友盟页面统计
-			MobclickAgent.onPageEnd(PAGE_NAME);
-		}
-	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

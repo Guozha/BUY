@@ -17,6 +17,7 @@ import com.guozha.buy.controller.BaseFragment;
 import com.guozha.buy.entry.found.MenuFirstType;
 import com.guozha.buy.model.FoundModel;
 import com.guozha.buy.model.result.FoundModelResult;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 发现-菜谱
@@ -25,7 +26,7 @@ import com.guozha.buy.model.result.FoundModelResult;
  */
 public class FoundMenuFragment extends BaseFragment{
 	
-	private static final String PAGE_NAE = "FoundMenuPage";
+	private static final String PAGE_NAME = "菜谱分类";
 	private static final int HAND_MENU_TYPES_COMPLETED = 0x0001;
 	private ListView mFoundMenuList;
 	private FoundMenuListAdapter mFoundMenuListAdapter;
@@ -70,5 +71,17 @@ public class FoundMenuFragment extends BaseFragment{
 			mMenuFirstTypes.addAll(menuFirstTypes);
 			mHandler.sendEmptyMessage(HAND_MENU_TYPES_COMPLETED);
 		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart(PAGE_NAME); //统计页面
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd(PAGE_NAME); 
 	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -13,14 +12,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.market.RelationRecipe;
-import com.guozha.buy.entry.market.RelationRecipeMaterial;
-import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
-import com.guozha.buy.model.BaseModel;
-import com.guozha.buy.model.ShopCartModel;
-import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.util.ToastUtil;
-import com.guozha.buy.util.UnitConvertUtil;
 
 public class CookBookListAdapter extends BaseAdapter{
 	
@@ -71,7 +63,7 @@ public class CookBookListAdapter extends BaseAdapter{
 		holder.name.setText(relationRecipe.getMenuName());
 		holder.cookeWay.setText(relationRecipe.getCookieWay());
 		holder.cookeTime.setText(relationRecipe.getCookieTime() + "min");
-		holder.cookeCalorie.setText(relationRecipe.getCalories() + "卡路里");
+		holder.cookeCalorie.setText(relationRecipe.getCalories() + "大卡/100g");
 
 		return convertView;
 	}

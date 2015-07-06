@@ -14,6 +14,7 @@
         android:orientation="vertical" >
 		
         <TextView 
+            android:id="@+id/rule_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="邀请有礼规则"
@@ -21,7 +22,7 @@
             android:textColor="@color/color_app_base_9"/>
         
         <TextView 
-            android:id="@+id/rule_text"
+            android:id="@+id/rule_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

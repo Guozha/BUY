@@ -43,7 +43,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class VegetableDetailActivity extends BaseActivity implements OnClickListener{
 	
-	private static final String PAGE_NAME = "VegetableDetailPage";
+	private static final String PAGE_NAME = "菜品详情";
 	private static final int HAND_DATA_COMPLTED = 0x0001;  
 	private static final int HAND_RELATION_RECIPE_COMPLETED = 0x0002;
 	
@@ -78,7 +78,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		customActionBarStyle("菜品详情");
+		customActionBarStyle(PAGE_NAME);
 		setContentView(R.layout.activity_vegetable_detail);
 		Intent intent = getIntent();
 		if(intent != null){

@@ -33,7 +33,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SearchResultActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SearchResultPage";
+	private static final String PAGE_NAME = "搜索结果";
 	
 	public static final int SEARCH_FAIL = 0;
 	public static final int SEARCH_SUCCESS = 1;
@@ -72,7 +72,7 @@ public class SearchResultActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_result);
-		customActionBarStyle("搜索结果");
+		customActionBarStyle(PAGE_NAME);
 		
 		mIntent = getIntent();
 		if(mIntent != null){
@@ -124,8 +124,9 @@ public class SearchResultActivity extends BaseActivity{
 				Intent intent = new Intent(SearchResultActivity.this, WeightSelectDialog.class);
 				ItemSaleInfo saleInfo = mSearchResultList.get(position);
 				if(saleInfo != null){
+					int price = "1".equals(saleInfo.getBargainFlag()) ? saleInfo.getBargainUnitPrice() : saleInfo.getUnitPrice();
 					intent.putExtra("goodsId", String.valueOf(saleInfo.getGoodsId()));
-					intent.putExtra("unitPrice", String.valueOf(saleInfo.getUnitPrice()));
+					intent.putExtra("unitPrice", String.valueOf(price));
 					intent.putExtra("unit", saleInfo.getUnit());
 				}
 				startActivity(intent);

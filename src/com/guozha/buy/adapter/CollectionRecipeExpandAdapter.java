@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog;
 import com.guozha.buy.controller.dialog.CustomDialog;
-import com.guozha.buy.entry.market.RelationRecipe;
 import com.guozha.buy.entry.mine.collection.CollectionDir;
 import com.guozha.buy.entry.mine.collection.CollectionMenu;
 import com.guozha.buy.global.ConfigManager;
@@ -131,7 +130,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 		holder.name.setText(relationRecipe.getMenuName());
 		holder.cookeWay.setText(relationRecipe.getCookieWay());
 		holder.cookeTime.setText(relationRecipe.getCookieTime() + "min");
-		holder.cookeCalorie.setText(relationRecipe.getCalories() + "卡路里");
+		holder.cookeCalorie.setText(relationRecipe.getCalories() + "大卡/100g");
 		holder.modifyButton.setTag(relationRecipe.getMyMenuId());
 		holder.deleteButton.setTag(relationRecipe.getMyMenuId());
 		return convertView;

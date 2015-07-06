@@ -16,7 +16,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.ShopCartModelResult;
-import com.guozha.buy.util.LogUtil;
 
 public class ShopCartModel extends BaseModel{
 	

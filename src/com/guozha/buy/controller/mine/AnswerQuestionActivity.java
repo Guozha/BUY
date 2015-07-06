@@ -22,7 +22,6 @@ public class AnswerQuestionActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_answer_question);
 		customActionBarStyle("常见问题");
-		
 		initView();
 	}
 	

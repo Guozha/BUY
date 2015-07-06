@@ -257,6 +257,11 @@
             android:name="com.guozha.buy.controller.mine.ChooseDetailActivity"
             android:screenOrientation="portrait"></activity>
         
+        <!-- 选择购物车地址 -->
+        <activity 
+            android:name="com.guozha.buy.controller.cart.ChooseCartAddressActivity"
+            android:screenOrientation="portrait"></activity>
+        
         <!-- *****************对话框**************** -->
         <!-- 重量选择对话框 -->
         <activity 

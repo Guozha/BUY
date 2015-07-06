@@ -1,8 +1,6 @@
 package com.guozha.buy.global.net;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.widget.ImageView;
 
 import com.android.volley.Request.Method;
@@ -12,7 +10,6 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guozha.buy.controller.CustomApplication;

@@ -29,7 +29,6 @@ import com.guozha.buy.util.UnitConvertUtil;
 import com.guozha.buy.view.scroll.WheelView;
 import com.guozha.buy.view.scroll.WheelView.ItemChangeListener;
 import com.guozha.buy.view.scroll.adapter.AbstractWheelTextAdapter;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 重量选择对话框
@@ -38,7 +37,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class WeightSelectDialog extends Activity implements OnClickListener{
 	
-	private static final String PAGE_NAME = "WeightSelectPage";
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	
 	private WheelView mWheelView;
@@ -239,25 +237,7 @@ public class WeightSelectDialog extends Activity implements OnClickListener{
 			}
 		}
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
-	}
-	
+
 	class MyShopCartModelResult extends ShopCartModelResult{
 		@Override
 		public void requestAddCartResult(String returnCode, String msg) {

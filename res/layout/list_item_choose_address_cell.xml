@@ -25,7 +25,6 @@
 	                android:id="@+id/address_receivename"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="李小强"
 	                android:textColor="@color/color_app_base_9"
 	                android:textSize="@dimen/dimen_global_14sp"/>
 	            
@@ -33,7 +32,6 @@
 	                android:id="@+id/address_mobileno"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="18347233234"
 	                android:layout_alignParentRight="true"
 	                android:textColor="@color/color_app_base_9"
 	                android:textSize="@dimen/dimen_global_14sp"/>
@@ -46,18 +44,17 @@
 	            android:textSize="@dimen/dimen_global_14sp"
 	            android:textColor="@color/color_app_base_4"
 	            android:singleLine="true"
-	            android:ellipsize="end"
-	            android:text="金地自在城几幢几单元610"/>
+	            android:ellipsize="end"/>
 	    </LinearLayout>
         <TextView 
             android:id="@+id/address_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="默认"
+            android:text="当前"
             android:layout_gravity="center_vertical"
             android:paddingLeft="18dip"
             android:paddingRight="18dip"
-            android:textColor="@color/color_app_base_2"
+            android:textColor="@color/color_app_base_30"
             android:textSize="@dimen/dimen_global_14sp"/>
 	</LinearLayout>
 </LinearLayout>

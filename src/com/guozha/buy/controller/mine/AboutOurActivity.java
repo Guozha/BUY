@@ -27,7 +27,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class AboutOurActivity extends BaseActivity implements OnClickListener, OnLongClickListener{
 	
-	private static final String PAGE_NAME = "AboutOurPage";
+	private static final String PAGE_NAME = "关于我们";
 	private TextView mVersionNameText;
 	private TextView mBottomVersionText;
 	private TextView mWeixinGZH;
@@ -37,7 +37,7 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener, O
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about_our);
-		customActionBarStyle("关于我们");
+		customActionBarStyle(PAGE_NAME);
 		
 		initView();
 	}
@@ -56,6 +56,7 @@ public class AboutOurActivity extends BaseActivity implements OnClickListener, O
 		mWeixinGZH.setOnLongClickListener(this);
 		findViewById(R.id.about_our_weibo).setOnClickListener(this);
 		mWeixinKF = (TextView) findViewById(R.id.about_our_qq_group);
+		mWeixinKF.setText("客服微信号：" + ConfigManager.getInstance().getWeixinNum());
 		mWeixinKF.setOnClickListener(this);
 		mWeixinKF.setOnLongClickListener(this);
 		findViewById(R.id.about_our_website).setOnClickListener(this);

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.controller.SetWarnTimeActivity;
 import com.guozha.buy.controller.dialog.CustomDialog;
-import com.guozha.buy.controller.mine.AboutOurActivity;
 import com.guozha.buy.controller.mine.MyAddressActivity;
 import com.guozha.buy.controller.mine.MyCollectionActivity;
 import com.guozha.buy.controller.mine.MyInvateNumActivity;
@@ -33,11 +32,15 @@ import com.guozha.buy.util.BitmapUtil;
 import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.umeng.analytics.MobclickAgent;
 
+/**
+ * 我的
+ * @author PeggyTong
+ *
+ */
 public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickListener{
 	
-	private static final String PAGE_NAME = "MinePage";
+	private static final String PAGE_NAME = "我的";
 	
 	public static final int REQUEST_CODE_LOGIN = 0;
 	public static final int REQUEST_CODE_SETTING = 1;
@@ -72,10 +75,15 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_maintab_mine, container, false);
-		initActionBar("我的");
+		initActionBar(PAGE_NAME);
 		initView(view);
-		initData();
 		return view;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		initData();
 	}
 	
 	/**
@@ -320,21 +328,6 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 		clipboard.setPrimaryClip(clip);
 		ToastUtil.showToast(MainTabFragmentMine.this.getActivity(), "已经复制到剪贴板");
 	}
-	
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if(getUserVisibleHint()){
-			//View可见
-			//友盟页面统计
-			MobclickAgent.onPageStart(PAGE_NAME);
-		}else{
-			//View不可见
-			
-			//友盟页面统计
-			MobclickAgent.onPageEnd(PAGE_NAME);
-		}
-	}
 
 	class MyUserModelResult extends UserModelResult{
 		@Override
@@ -342,6 +335,11 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 			mAccountInfo = accountInfo;
 			mHandle.sendEmptyMessage(HAND_ACCOUNT_INFO_COMPLETED);
 		}
+	}
+
+	@Override
+	protected String getPageName() {
+		return PAGE_NAME;
 	}
 
 }

@@ -18,7 +18,6 @@ import com.guozha.buy.adapter.MenuDetailStepListAdapter;
 import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 
 /**
  * 菜谱详情 - 步骤

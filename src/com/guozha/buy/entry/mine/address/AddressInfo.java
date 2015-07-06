@@ -20,6 +20,7 @@ public class AddressInfo implements Serializable{
 	private String buildingName;	//小区名
 	private String detailAddr;	//详细地址
 	private String defaultFlag; //默认标识
+	private int countyId;		//县id
 	
 	public int getAddressId() {
 		return addressId;
@@ -75,6 +76,10 @@ public class AddressInfo implements Serializable{
 	public void setDefaultFlag(String defaultFlag) {
 		this.defaultFlag = defaultFlag;
 	}
-	
-	
+	public int getCountyId() {
+		return countyId;
+	}
+	public void setCountyId(int countyId) {
+		this.countyId = countyId;
+	}
 }

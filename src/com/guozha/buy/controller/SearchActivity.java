@@ -18,7 +18,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SearchActivity extends Activity{
 	
-	private static final String PAGE_NAME = "SearchPage";
+	private static final String PAGE_NAME = "查找";
 	private EditText mSearchKeyWord;
 
 	@Override

@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.VegetableListAdapter;
 import com.guozha.buy.controller.BaseActivity;
-import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.entry.market.ItemSaleInfoPage;
 import com.guozha.buy.global.ConfigManager;
@@ -32,7 +31,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class ListVegetableActivity extends BaseActivity implements OnScrollListener{
 	
-	private static final String PAGE_NAME = "ListVegetable";
+	private static final String PAGE_NAME = "菜品分类列表";
 	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
 	

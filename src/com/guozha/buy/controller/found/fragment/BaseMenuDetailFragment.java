@@ -5,7 +5,7 @@ import java.util.Set;
 import com.guozha.buy.controller.BaseFragment;
 import com.guozha.buy.entry.found.menu.MenuDetail;
 
-public class BaseMenuDetailFragment extends BaseFragment{
+public abstract class BaseMenuDetailFragment extends BaseFragment{
 
 	public void sendMenuDetailData(MenuDetail menuDetail){
 		
@@ -15,4 +15,5 @@ public class BaseMenuDetailFragment extends BaseFragment{
 		
 		return null;
 	}
+	
 }

@@ -33,7 +33,7 @@ import com.umeng.update.UmengUpdateAgent;
  */
 public class SettingActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "SettingPage";
+	private static final String PAGE_NAME = "设置";
 	private static final int RESULT_CODE_SETTING = 0;
 	
 	private ListView mSettingList;
@@ -46,7 +46,7 @@ public class SettingActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
-		customActionBarStyle("设置");
+		customActionBarStyle(PAGE_NAME);
 		initData();
 		initView();
 		setResult(RESULT_CODE_SETTING);

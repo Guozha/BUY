@@ -92,4 +92,11 @@ public class UserModelResult implements UserModelInterface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void requestModefyAddressResult(String returnCode, String msg,
+			int addressId, String buildFlag) {
+		// TODO Auto-generated method stub
+		
+	}
 }

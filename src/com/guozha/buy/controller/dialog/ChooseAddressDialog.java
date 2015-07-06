@@ -92,7 +92,8 @@ public class ChooseAddressDialog extends Activity{
 				ChooseAddressDialog.this.finish();
 			}
 		});
-		mAddressListAdapter = new ChooseAddressListAdapter(this, mAddressInfos);
+		int choosedAddressId = ConfigManager.getInstance().getChoosedAddressId();
+		mAddressListAdapter = new ChooseAddressListAdapter(this, mAddressInfos, choosedAddressId);
 		mChooseAddressList.setAdapter(mAddressListAdapter);
 	}
 	

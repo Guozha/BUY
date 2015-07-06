@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import com.guozha.buy.R;
-import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -19,8 +18,6 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class LicenceActivity extends BaseActivity{
-	
-	private static final String PAGE_NAME = "LicencePage";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,23 +65,5 @@ public class LicenceActivity extends BaseActivity{
 			}
 		}
 		return false;
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

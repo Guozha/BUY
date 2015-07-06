@@ -20,7 +20,6 @@ import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.PayModel;
 import com.guozha.buy.model.result.PayModelResult;
 import com.guozha.buy.util.ToastUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 选择有效菜票
@@ -28,11 +27,7 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class ChooseTicketActivity extends BaseActivity{
-	
-	private static final String PAGE_NAME = "ChooseUsefulTicket";
-	
 	private static final int HAND_DATA_COMPLETED = 0x0001;
-	
 	private ListView mChooseTicketList;
 	private List<MarketTicket> mMarketTickets;
 	
@@ -98,24 +93,6 @@ public class ChooseTicketActivity extends BaseActivity{
 	
 	private void updateView(){
 		mChooseTicketList.setAdapter(new ChooseTicketListAdapter(this, mMarketTickets));
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 	
 	class MyPayModelResult extends PayModelResult{

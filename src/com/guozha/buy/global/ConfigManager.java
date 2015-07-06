@@ -7,16 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Address;
-import android.view.View;
-import android.view.View.OnClickListener;
 
-import com.guozha.buy.R;
 import com.guozha.buy.controller.CustomApplication;
 import com.guozha.buy.controller.LoginActivity;
-import com.guozha.buy.controller.dialog.CustomDialog;
 import com.guozha.buy.controller.mine.AddAddressActivity;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.XMLUtil;
 
 /**
@@ -48,6 +42,14 @@ public class ConfigManager{
 	private int mDefaultPayWay; 					   //默认支付方式
 	private String mWeixinNum;							   //微信服务号
 	
+	/*
+	 * 费用活动规则相关
+	 */
+	private String mServiceFeeRuleTitle;
+	private String mServiceFeeRuleContent;
+	private String mInvateRuleTitle;
+	private String mInvateRuleContent;
+	
 	private static final String USER_ID = "user_id";  				//用户ID
 	private static final String USER_TOKEN = "user_token";  		//用户TOKEN
 	private static final String USER_PWD = "user_pwd";      		//用户密码
@@ -61,6 +63,15 @@ public class ConfigManager{
 	private static final String IMAGE_PATH = "image_path";			//图片路径
 	private static final String DEFAULT_PAYWAY = "default_payway";	//默认支付方式
 	private static final String WEIXIN_NUM = "weixin_num";			//微信服务号
+	
+	/*
+	 * 费用活动规则相关
+	 */
+	private static final String SERVICE_FEE_RULE_TITLE = "service_fee_rule_title";
+	private static final String SERVICE_FEE_RULE_CONTENT = "service_fee_rule_content";
+	private static final String INVATE_RULE_TITLE = "invate_rule_title";
+	private static final String INVATE_RULE_CONTENT = "invate_rule_content";
+	
 	
 	/**
 	 * 获取配置管理对象
@@ -86,6 +97,11 @@ public class ConfigManager{
 		mImagePath = sharedPreference.getString(IMAGE_PATH, "");
 		mDefaultPayWay = sharedPreference.getInt(DEFAULT_PAYWAY, 1);
 		mWeixinNum = sharedPreference.getString(WEIXIN_NUM, "aizhangshaohz");
+		
+		mServiceFeeRuleTitle = sharedPreference.getString(SERVICE_FEE_RULE_TITLE, "服务费规则");
+		mServiceFeeRuleContent = sharedPreference.getString(SERVICE_FEE_RULE_CONTENT, "很抱歉，规则获取失败");
+		mInvateRuleTitle = sharedPreference.getString(INVATE_RULE_TITLE, "活动规则");
+		mInvateRuleContent = sharedPreference.getString(INVATE_RULE_CONTENT, "很抱歉，规则获取失败");
 		initConfigXML();
 	}
 	
@@ -457,6 +473,49 @@ public class ConfigManager{
 		mWeixinNum = weixinnum;
 		setConfig(WEIXIN_NUM, mWeixinNum);
 	}
+	
+	////////////////////////规则相关////////////////////////
+	
+	public String getServiceFeeRuleTitle(){
+		return mServiceFeeRuleTitle;
+	}
+	
+	public String getServiceFeeRuleContent(){
+		return mServiceFeeRuleContent;
+	}
+	
+	public String getInvateRuleTitle(){
+		return mInvateRuleTitle;
+	}
+	
+	public String getInvateRuleContent(){
+		return mInvateRuleContent;
+	}
+	
+	public void setServiceFeeRuleTitle(String title){
+		if(title != null && title.equals(mServiceFeeRuleTitle)) return;
+		mServiceFeeRuleTitle = title;
+		setConfig(SERVICE_FEE_RULE_TITLE, mServiceFeeRuleTitle);
+	}
+	
+	public void setServiceFeeRuleContent(String content){
+		if(content != null && content.equals(mServiceFeeRuleContent)) return;
+		mServiceFeeRuleContent = content;
+		setConfig(SERVICE_FEE_RULE_CONTENT, mServiceFeeRuleContent);
+	}
+	
+	public void setInvateRuleTitle(String title){
+		if(title != null && title.equals(mInvateRuleTitle)) return;
+		mInvateRuleTitle = title;
+		setConfig(INVATE_RULE_TITLE, mInvateRuleTitle);
+	}
+	
+	public void setInvateRuleContent(String content){
+		if(content != null && content.equals(mInvateRuleContent)) return;
+		mInvateRuleContent = content;
+		setConfig(INVATE_RULE_CONTENT, mInvateRuleContent);
+	}
+	
 	
 	////////////////////////////////逻辑相关//////////////////////////////////
 	

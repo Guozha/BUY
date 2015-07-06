@@ -52,7 +52,7 @@
 		        android:layout_height="48dip"
 		        android:text="添加新地址"
 		        android:gravity="center"
-		        android:textColor="@color/color_app_base_2"
+		        android:textColor="@color/color_app_base_21"
 		        android:textSize="@dimen/dimen_global_14sp"/>
 		</LinearLayout>
     </LinearLayout>

@@ -14,10 +14,8 @@ import com.guozha.buy.R;
 import com.guozha.buy.entry.found.menu.MenuDetail;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
 
 public class MenuDetailDescriptFragment extends BaseMenuDetailFragment{
-	
 	private static final int HAND_DETAIL_DATA_COMPLETED = 0x0001;
 	
 	private ImageView mHeadImg;
@@ -81,8 +79,8 @@ public class MenuDetailDescriptFragment extends BaseMenuDetailFragment{
 		mBitmapCache.loadBitmaps(mHeadImg, mMenuDetail.getMenuImg());
 		mHeadTitle.setText(mMenuDetail.getMenuName());
 		mCookWay.setText(mMenuDetail.getCookieWay());
-		mCookTime.setText(mMenuDetail.getCookieTime() + "分钟");
-		mCookCal.setText(mMenuDetail.getCalories() + "卡路里");
+		mCookTime.setText(mMenuDetail.getCookieTime() + "Min");
+		mCookCal.setText(mMenuDetail.getCalories() + "大卡/100g");
 		mDescript.setText(mMenuDetail.getMenuDesc());
 	}	
 	

@@ -27,11 +27,10 @@ import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.util.LogUtil;
-import com.umeng.analytics.MobclickAgent;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
 	
-	private static final String PAGE_NAME = "MainPage";
+	private static final String PAGE_NAME = "精选";
 	
 	private static final int HAND_BEST_LIST_COMPLETED = 0x0001;
 	private ListView mListView;
@@ -102,26 +101,16 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 		mCurrentPage = 0;
 		mLastVisibleIndex = 0;  //可见的最后一条数据
 		mBestMenuItems.clear();
+		isLocked = false;
 		requestBestMenuList();
 	}
 	
-	private void requestBestMenuList(){
-		mMenuModel.requestBestMenuList(getActivity(), mCurrentPage + 1);
-	}
+	private boolean isLocked = false;
 	
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if(getUserVisibleHint()){
-			//View可见
-			//友盟页面统计
-			MobclickAgent.onPageStart(PAGE_NAME);
-			//测试服提示
-		}else{
-			//View不可见
-			
-			//友盟页面统计
-			MobclickAgent.onPageEnd(PAGE_NAME);
+	private void requestBestMenuList(){
+		if(!isLocked){
+			mMenuModel.requestBestMenuList(getActivity(), mCurrentPage + 1);
+			isLocked = true;
 		}
 	}
 	
@@ -172,6 +161,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	class MyMenuModelResult extends MenuModelResult{
 		@Override
 		public void requestBestMenuPageResult(BestMenuPage bestMenuPage) {
+			isLocked = false;
 			if(bestMenuPage == null) return;
 			List<BestMenuItem> bestMenuItem = bestMenuPage.getMenuPickList();
 			if(bestMenuItem == null) return;
@@ -181,5 +171,9 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 			mMaxDateNum = bestMenuPage.getTotalCount();
 			mHandler.sendEmptyMessage(HAND_BEST_LIST_COMPLETED);
 		}
+	}
+	@Override
+	protected String getPageName() {
+		return PAGE_NAME;
 	}
 }

@@ -24,8 +24,6 @@ import com.guozha.buy.entry.mine.address.KeyWord;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
-import com.guozha.buy.util.LogUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 选择小区（详细地址）
@@ -33,8 +31,6 @@ import com.umeng.analytics.MobclickAgent;
  *
  */
 public class ChooseDetailActivity extends BaseActivity{
-	
-	private static final String PAGE_NAME = "ChooseAddrDetailPage";
 	
 	public static final String BUNDLE_DATA = "countrys";
 	private List<KeyWord> mKeyWords = null;
@@ -174,24 +170,6 @@ public class ChooseDetailActivity extends BaseActivity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 	
 	class MyUserModelResult extends UserModelResult{

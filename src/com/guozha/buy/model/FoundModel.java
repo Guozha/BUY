@@ -14,7 +14,6 @@ import com.guozha.buy.entry.found.SubjectDetail;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.FoundModelResult;
-import com.guozha.buy.util.LogUtil;
 
 public class FoundModel extends BaseModel{
 	
@@ -52,8 +51,9 @@ public class FoundModel extends BaseModel{
 		});
 	}
 	
-	public void requestFoundSubjectDetail(final Context context, int subjectId){
+	public void requestFoundSubjectDetail(final Context context, int addressId, int subjectId){
 		RequestParam paramPath = new RequestParam("v31/found/subject/detail")
+		.setParams("addressId", addressId)
 		.setParams("subjectId", subjectId);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			paramPath, new Listener<String>() {

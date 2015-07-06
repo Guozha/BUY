@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseFragment;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * MainActivity的Fragment抽象类
@@ -44,5 +45,18 @@ public abstract class MainTabBaseFragment extends BaseFragment{
 	public void setOnRequestTurnItem(OnRequestTurnItem requestTurnItem){
 		mOnRequestTurnItem = requestTurnItem;
 	}
+	
+	abstract protected String getPageName();
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart(getPageName()); //统计页面
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd(getPageName()); 
+	}
 }

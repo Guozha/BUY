@@ -26,7 +26,7 @@ import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.DimenUtil;
-import com.guozha.buy.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 菜谱列表
@@ -34,7 +34,7 @@ import com.guozha.buy.util.LogUtil;
  *
  */
 public class MenuItemListActivity extends BaseActivity implements OnScrollListener{
-	
+	private static final String PAGE_NAME = "菜谱列表";
 	private static final int HAND_FOUND_MENU_LIST_COMPLETED = 0x0001;
 	
 	private GridView mMenuItemGrid;
@@ -100,11 +100,16 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 		mMaxPageSize = 0;
 		mCurrentPage = 0;
 		mFoundMenus.clear();
+		isLocked = false;
 		requestFoundMenuList();
 	}
 	
+	private boolean isLocked = false;
 	private void requestFoundMenuList(){
-		mMenuModel.requestFoundMenuList(this, mCurrentPage + 1, mMenuTypeId);
+		if(!isLocked){
+			mMenuModel.requestFoundMenuList(this, mCurrentPage + 1, mMenuTypeId);
+			isLocked = true;
+		}
 	}
 	
 	//////////////////////////--分页加载相关--/////////////////////////////
@@ -145,16 +150,14 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 	class MyMenuModelResult extends MenuModelResult{
 		@Override
 		public void requestFoundMenuListResult(FoundMenuPage foundMenuPage) {
+			isLocked = false;
 			if(foundMenuPage == null) return;
 			List<FoundMenu> foundMenus = foundMenuPage.getMenuList();
 			if(foundMenus == null) return;
 			mFoundMenus.addAll(foundMenus);
-			
 			mCurrentPage++;
 			mMaxPageSize = foundMenuPage.getPageCount();
 			mMaxDateNum = foundMenuPage.getTotalCount();
-			LogUtil.e("maxDateNum == " + mMaxDateNum);
-			LogUtil.e("maxPageSize == " + mMaxPageSize);
 			mHander.sendEmptyMessage(HAND_FOUND_MENU_LIST_COMPLETED);
 		}
 	}
@@ -186,8 +189,17 @@ public class MenuItemListActivity extends BaseActivity implements OnScrollListen
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SplashScreen");
+		MobclickAgent.onResume(this);    
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPageEnd("SplashScreen");
+	    MobclickAgent.onPause(this);
 		mBitmapCache.fluchCache();
 	}
 }

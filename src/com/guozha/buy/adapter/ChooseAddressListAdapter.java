@@ -21,10 +21,11 @@ public class ChooseAddressListAdapter extends BaseAdapter{
 	
 	private LayoutInflater mInflater;
 	private List<AddressInfo> mAddressInfos;
-	
-	public ChooseAddressListAdapter(Context context, List<AddressInfo> addressInfo){
+	private int mChoosedAdddressId;
+	public ChooseAddressListAdapter(Context context, List<AddressInfo> addressInfo, int choosedAddressId){
 		mInflater = LayoutInflater.from(context);
 		mAddressInfos = addressInfo;
+		mChoosedAdddressId = choosedAddressId;
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class ChooseAddressListAdapter extends BaseAdapter{
 		nameText.setText(addressInfo.getReceiveName());
 		mobileText.setText(addressInfo.getMobileNo());
 		detailText.setText(addressInfo.getBuildingName() + addressInfo.getDetailAddr());
-		if("1".equals(addressInfo.getDefaultFlag())){
+		if(mChoosedAdddressId == addressInfo.getAddressId()){
 			defaultText.setVisibility(View.VISIBLE);
 		}else{
 			defaultText.setVisibility(View.INVISIBLE);

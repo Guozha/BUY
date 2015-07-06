@@ -54,4 +54,16 @@ public class SystemModelResult implements SystemModelInterface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void requestServiceFeeRuleResult(String title, String content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void requestInviteRuleResult(String title, String content) {
+		// TODO Auto-generated method stub
+		
+	}
 }

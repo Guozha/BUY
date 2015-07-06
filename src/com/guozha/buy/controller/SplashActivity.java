@@ -36,8 +36,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SplashActivity extends Activity{
 	
-	//private static final String PAGE_NAME = "SplashPage";
-	
 	private static final int SPLASH_TIME = 2000; //闪屏持续时间
 	private static final int MSG_START_INIT = 0x0001;  //开始初始化
 	private static final int MSG_TURN_MAIN = 0x0002;  //转向MainActivity
@@ -156,6 +154,9 @@ public class SplashActivity extends Activity{
 		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		//请求微信号
 		mSystemModel.requestWeixinNum(SplashActivity.this, token, addressId);
+		//服务费和邀请有奖规则
+		mSystemModel.requestServiceFeeRule(SplashActivity.this);
+		mSystemModel.requestInviteRule(SplashActivity.this);
 		
 		String mobileNum = ConfigManager.getInstance().getMobileNum();
 		String pwd = ConfigManager.getInstance().getUserPwd();
@@ -210,8 +211,10 @@ public class SplashActivity extends Activity{
 		@Override
 		public void requestListAddressResult(List<AddressInfo> addressInfos) {
 			if(addressInfos != null && !addressInfos.isEmpty()){
-				ConfigManager.getInstance()
-					.setChoosedAddressId(addressInfos.get(0).getAddressId());
+				if(ConfigManager.getInstance().getChoosedAddressId() == -1){
+					ConfigManager.getInstance()
+						.setChoosedAddressId(addressInfos.get(0).getAddressId());
+				}
 			}else{
 				ConfigManager.getInstance().setChoosedAddressId(-1);
 			}
@@ -234,6 +237,26 @@ public class SplashActivity extends Activity{
 		public void requestWeixinNumResult(String weixinnum) {
 			if(weixinnum == null) return;
 			ConfigManager.getInstance().setWeixinNum(weixinnum);
+		}
+		
+		@Override
+		public void requestServiceFeeRuleResult(String title, String content) {
+			if(title != null){
+				ConfigManager.getInstance().setServiceFeeRuleTitle(title);
+			}
+			if(content != null){
+				ConfigManager.getInstance().setServiceFeeRuleContent(content);
+			}
+		}
+		
+		@Override
+		public void requestInviteRuleResult(String title, String content) {
+			if(title != null){
+				ConfigManager.getInstance().setInvateRuleTitle(title);
+			}
+			if(content != null){
+				ConfigManager.getInstance().setInvateRuleContent(content);
+			}
 		}
 	}
 }

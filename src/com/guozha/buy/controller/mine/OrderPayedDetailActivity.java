@@ -19,8 +19,8 @@ import com.guozha.buy.entry.mine.order.OrderDetailMenus;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.UnitConvertUtil;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 订单详情
@@ -29,7 +29,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class OrderPayedDetailActivity extends BaseActivity{
 
-	private static final String PAGE_NAME = "OrderDetailPage";
 	private static final int HAND_DATA_COMPLTED = 0x0001;
 	
 	private int mOrderId; 
@@ -75,7 +74,7 @@ public class OrderPayedDetailActivity extends BaseActivity{
 			Bundle bundle = intent.getExtras();
 			if(bundle != null){
 				mOrderId = bundle.getInt("orderId");
-				mOrderDescript = bundle.getString("orderDescript");
+				mOrderDescript = "订单状态：" + bundle.getString("orderDescript");
 			}
 		}
 		initView();
@@ -121,34 +120,17 @@ public class OrderPayedDetailActivity extends BaseActivity{
 		mOrderModel.requestOrderDetail(this, mOrderId);
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		//友盟界面统计
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart(PAGE_NAME);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		
-		//友盟界面统计
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd(PAGE_NAME);
-	}
-	
 	class MyOrderModelResult extends OrderModelResult{
 
 		@Override
 		public void requestOrderDetailResult(OrderDetail orderDetail) {
 			if(orderDetail == null) return;
 			mOrderNum = "订单号：" + orderDetail.getOrderNo();
-			mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
+			mOrderTime = "配送时间：" + orderDetail.getWantArrivalTimeScope();
+			//mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
-			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice());
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + "元";
 			if(mExpandListDatas == null){
 				mExpandListDatas = new ArrayList<ExpandListData>();
 			}

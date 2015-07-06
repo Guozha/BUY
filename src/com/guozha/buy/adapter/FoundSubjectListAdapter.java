@@ -74,9 +74,14 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		FoundSubject foundSubject = mSubjectItems.get(position);
+		if("1".equals(foundSubject.getOldFlag())){
+			holder.tag.setBackgroundResource(R.drawable.tag_activities_finished);
+		}else{
+			holder.tag.setBackgroundResource(R.drawable.tag_activities_current);
+		}
 		holder.image.setImageResource(R.drawable.default_icon_large);
 		mBitmapCache.loadBitmaps(holder.image, foundSubject.getSubjectImg());
-		holder.tag.setBackgroundResource(R.drawable.temp_subject_item_tag);
+		
 		holder.tag.setText(foundSubject.getSubjectType());
 		holder.title.setText(foundSubject.getSubjectName());
 		return convertView;

@@ -17,6 +17,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.controller.mine.fragment.OrderFinishedFragment;
 import com.guozha.buy.controller.mine.fragment.OrderUnFinishFragment;
 import com.guozha.buy.view.ViewPagerTab;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 我的订单
@@ -24,6 +25,8 @@ import com.guozha.buy.view.ViewPagerTab;
  *
  */
 public class MyOrderActivity extends FragmentActivity{
+	
+	private static final String PAGE_NAME = "我的订单";
 	
 	private ViewPager mViewPager;
 	private ViewPagerAdapter mViewPagerAdapter;
@@ -48,7 +51,7 @@ public class MyOrderActivity extends FragmentActivity{
 		actionbar.setDisplayShowTitleEnabled(true);
 		actionbar.setDisplayUseLogoEnabled(false);
 		actionbar.setDisplayShowCustomEnabled(false);
-		actionbar.setTitle("我的订单");
+		actionbar.setTitle(PAGE_NAME);
 	}
 	
 	
@@ -110,6 +113,20 @@ public class MyOrderActivity extends FragmentActivity{
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);       
+		MobclickAgent.onPageStart("MainScreen"); 
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd("MainScreen"); 
 	}
 
 }

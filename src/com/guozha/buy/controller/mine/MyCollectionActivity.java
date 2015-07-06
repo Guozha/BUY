@@ -36,7 +36,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class MyCollectionActivity extends BaseActivity{
 	
-	private static final String PAGE_NAME = "CollectionRecipePage";
+	private static final String PAGE_NAME = "我的收藏";
 	private static final int HAND_DIR_DATA_COMPLETED = 0x0001;  //收藏文件夹数据请求完毕
 	
 	private AnimatedExpandableListView mCollectionRecipeList;
@@ -63,7 +63,7 @@ public class MyCollectionActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_collection);
-		customActionBarStyle("我的收藏");
+		customActionBarStyle(PAGE_NAME);
 		initView();
 	}
 	

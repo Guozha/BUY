@@ -3,8 +3,6 @@ package com.guozha.buy.entry.mine.collection;
 import java.io.Serializable;
 import java.util.List;
 
-import com.guozha.buy.entry.market.RelationRecipe;
-
 /**
  * 菜谱收藏的文件夹
  * @author PeggyTong

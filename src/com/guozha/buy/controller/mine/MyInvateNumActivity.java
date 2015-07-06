@@ -16,9 +16,10 @@ import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.util.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class MyInvateNumActivity extends BaseActivity{
-
+	private static final String PAGE_NAME = "优惠码";
 	private EditText mEditText;
 	private Button mSubmitButton;
 	private TextView mInvateResult;
@@ -28,7 +29,7 @@ public class MyInvateNumActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_invate_num);
-		customActionBarStyle("优惠码");
+		customActionBarStyle(PAGE_NAME);
 		mEditText = (EditText) findViewById(R.id.mine_invit_invitation);
 		mSubmitButton = (Button) findViewById(R.id.mine_invite_commit_button);
 		mInvateResult = (TextView) findViewById(R.id.invite_result_text);
@@ -78,5 +79,21 @@ public class MyInvateNumActivity extends BaseActivity{
 				ToastUtil.showToast(MyInvateNumActivity.this, msg);
 			}
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//友盟界面统计
+		MobclickAgent.onResume(this);
+		MobclickAgent.onPageStart(PAGE_NAME);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		//友盟界面统计
+		MobclickAgent.onPause(this);
+		MobclickAgent.onPageEnd(PAGE_NAME);
 	}
 }

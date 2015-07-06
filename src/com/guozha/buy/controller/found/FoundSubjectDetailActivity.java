@@ -15,10 +15,12 @@ import com.guozha.buy.R;
 import com.guozha.buy.adapter.FoundSubjectDetailListAdapter;
 import com.guozha.buy.controller.BaseActivity;
 import com.guozha.buy.entry.found.SubjectDetail;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.FoundModel;
 import com.guozha.buy.model.result.FoundModelResult;
 import com.guozha.buy.util.DimenUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 发现-主题 的详情
@@ -99,7 +101,11 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 	
 	private void initData(){
 		mSubjectDetails.clear();
-		mFoundModel.requestFoundSubjectDetail(this, mSubjectId);
+		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
+		if(addressId == -1){
+			return;
+		}
+		mFoundModel.requestFoundSubjectDetail(this, addressId, mSubjectId);
 	}
 	
 	class MyFoundModelResult extends FoundModelResult{
@@ -113,8 +119,15 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		mBitmapCache.fluchCache();
 	}
 }

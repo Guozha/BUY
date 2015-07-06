@@ -63,9 +63,20 @@ public class MenuDetailStepListAdapter extends BaseAdapter{
 		}
 		
 		MenuStep menuStep = mMenuSteps.get(position);
-		holder.image.setImageResource(R.drawable.default_icon_large);
-		mBitmapCache.loadBitmaps(holder.image, menuStep.getStepImg());
-		holder.text.setText(menuStep.getStepDesc());
+		if(menuStep.getStepImg() == null || "".equals(menuStep.getStepImg().trim())){
+			holder.image.setVisibility(View.GONE);
+		}else{
+			holder.image.setVisibility(View.VISIBLE);
+			holder.image.setImageResource(R.drawable.default_icon_large);
+			mBitmapCache.loadBitmaps(holder.image, menuStep.getStepImg());
+		}
+		
+		if(menuStep.getStepDesc() == null || "".equals(menuStep.getStepDesc().trim())){
+			holder.text.setVisibility(View.GONE);
+		}else{
+			holder.text.setVisibility(View.VISIBLE);
+			holder.text.setText(menuStep.getStepDesc());
+		}
 		return convertView;
 	}
 	

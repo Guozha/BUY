@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
+import com.guozha.buy.global.ConfigManager;
 
 /**
  * 活动规则
@@ -36,8 +37,9 @@ public class ActiveRuleActivity extends Activity{
 				ActiveRuleActivity.this.finish();
 			}
 		});
-		
-		TextView ruleText = (TextView) findViewById(R.id.rule_text);
-		ruleText.setText(Html.fromHtml(getResources().getString(R.string.active_rule_string)));
+		TextView ruleTitle = (TextView) findViewById(R.id.rule_title);
+		ruleTitle.setText(Html.fromHtml(ConfigManager.getInstance().getInvateRuleTitle()));
+		TextView ruleText = (TextView) findViewById(R.id.rule_content);
+		ruleText.setText(Html.fromHtml(ConfigManager.getInstance().getInvateRuleContent()));
 	}
 }

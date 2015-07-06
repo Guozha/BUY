@@ -15,6 +15,7 @@ import com.guozha.buy.R;
 import com.guozha.buy.entry.found.SubjectDetailItem;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.util.DimenUtil;
+import com.guozha.buy.util.LogUtil;
 
 public class FoundSubjectDetailItemListAdapter extends BaseAdapter{
 	
@@ -64,7 +65,7 @@ public class FoundSubjectDetailItemListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		SubjectDetailItem detailItem = mItemDetails.get(position);
-		if(detailItem.getItemDetailImg() == null){
+		if(detailItem.getItemDetailImg() == null || "".equals(detailItem.getItemDetailImg().trim())){
 			holder.image.setVisibility(View.GONE);
 		}else{
 			holder.image.setVisibility(View.VISIBLE);

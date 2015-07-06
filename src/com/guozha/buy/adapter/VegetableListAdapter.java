@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guozha.buy.R;
-import com.guozha.buy.controller.LoginActivity;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
-import com.guozha.buy.controller.mine.AddAddressActivity;
 import com.guozha.buy.entry.market.ItemSaleInfo;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
@@ -72,10 +71,11 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 				itemHolder = new ViewItemHolder();
 				View view = holder.items.get(i);
 				view.setOnClickListener(this);
-				itemHolder.chooseIcon = (ImageView) view.findViewById(R.id.vegetable_cell_icon);
 				itemHolder.vegetableIcon = (ImageView) view.findViewById(R.id.vegetable_cell_image);
 				itemHolder.vegetableName = (TextView) view.findViewById(R.id.vegetable_cell_name);
 				itemHolder.vegetablePrice = (TextView) view.findViewById(R.id.vegetable_cell_price);
+				itemHolder.specialPrice = (TextView) view.findViewById(R.id.vegetable_cell_specail_price);
+		    	itemHolder.bargainIcon = (ImageView) view.findViewById(R.id.vegetable_bargain_icon);
 				holder.itemHolder.add(itemHolder);
 			}
 			convertView.setTag(holder);
@@ -93,7 +93,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 				itemHolder.vegetablePrice.setText("");
 				itemHolder.vegetableIcon.setImageDrawable(null);
 			}else{
-				holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());
+				
 				String imgUrl = saleInfo.getGoodsImg();
 				itemHolder.vegetableIcon.setImageResource(R.drawable.default_icon);
 				mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
@@ -101,9 +101,21 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 				itemHolder.vegetablePrice.setText(
 						UnitConvertUtil.getSwitchedMoney(saleInfo.getUnitPrice()) + "元/" +
 						UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
+				if("1".equals(saleInfo.getBargainFlag())){
+					itemHolder.bargainIcon.setVisibility(View.VISIBLE);
+					itemHolder.specialPrice.setVisibility(View.VISIBLE);
+					itemHolder.vegetablePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+					itemHolder.specialPrice.setText(
+							UnitConvertUtil.getSwitchedMoney(saleInfo.getBargainUnitPrice()) + "元/" +
+									UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
+					holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getBargainUnitPrice() + ":" + saleInfo.getUnit());
+				}else{
+					itemHolder.specialPrice.setVisibility(View.GONE);
+					itemHolder.vegetablePrice.getPaint().setFlags(0);
+					holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());
+				}
 			}
 		}
-		
 		return convertView;
 	}
 	
@@ -133,9 +145,10 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 	}
 	
 	static class ViewItemHolder{
-		private ImageView chooseIcon;
 		private ImageView vegetableIcon;
 		private TextView vegetableName;
 		private TextView vegetablePrice;
+		private TextView specialPrice;
+		private ImageView bargainIcon;
 	}
 }

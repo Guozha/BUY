@@ -13,6 +13,7 @@ import com.guozha.buy.entry.global.SearchResult;
 import com.guozha.buy.global.net.HttpManager;
 import com.guozha.buy.global.net.RequestParam;
 import com.guozha.buy.model.result.SystemModelResult;
+import com.guozha.buy.util.LogUtil;
 
 public class SystemModel extends BaseModel{
 	
@@ -79,6 +80,20 @@ public class SystemModel extends BaseModel{
 		 * @param weixinnum
 		 */
 		public void requestWeixinNumResult(String weixinnum);
+		
+		/**
+		 * 服务费规则
+		 * @param title
+		 * @param content
+		 */
+		public void requestServiceFeeRuleResult(String title, String content);
+		
+		/**
+		 * 邀请有奖规则
+		 * @param title
+		 * @param content
+		 */
+		public void requestInviteRuleResult(String title, String content);
 	}
 	
 	/**
@@ -262,6 +277,51 @@ public class SystemModel extends BaseModel{
 					JSONObject response = new JSONObject(responseStr);
 					String weixinnum = response.getString("weiXin");
 					mInterface.requestWeixinNumResult(weixinnum);
+				} catch (JSONException e) {
+					jsonException(context);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 10.4请求服务费规则
+	 * @param context
+	 */
+	public void requestServiceFeeRule(final Context context){
+		LogUtil.e("requestServiceFeeRule");
+		RequestParam paramPath = new RequestParam("system/serviceFeeRule");
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String title = response.getString("title");
+					String content = response.getString("content");
+					mInterface.requestServiceFeeRuleResult(title, content);
+				} catch (JSONException e) {
+					jsonException(context);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 10.5 邀请有奖规则
+	 * @param context
+	 */
+	public void requestInviteRule(final Context context){
+		RequestParam paramPath = new RequestParam("system/inviteRule");
+		HttpManager.getInstance(context).volleyRequestByPost(paramPath, new Listener<String>() {
+			@Override
+			public void onResponse(String responseStr) {
+				try {
+					JSONObject response = new JSONObject(responseStr);
+					String title = response.getString("title");
+					String content = response.getString("content");
+					mInterface.requestInviteRuleResult(title, content);
 				} catch (JSONException e) {
 					jsonException(context);
 					e.printStackTrace();
