@@ -91,7 +91,7 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 		mSubjectDetailAdapter = new FoundSubjectDetailListAdapter(
 				this, mSubjectDetails, mBitmapCache);
 		
-		mHeadImage.setImageResource(R.drawable.default_icon_large);
+		mHeadImage.setImageResource(R.drawable.default_720_360);
 		mBitmapCache.loadBitmaps(mHeadImage, mSubjectImage);
 		mHeadTitle.setText(mSubjectName);
 		mHeadDescript.setText(mSubjectDescript);
@@ -101,10 +101,7 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 	
 	private void initData(){
 		mSubjectDetails.clear();
-		int addressId = ConfigManager.getInstance().getChoosedAddressId(this);
-		if(addressId == -1){
-			return;
-		}
+		int addressId = ConfigManager.getInstance().getChoosedAddressId();
 		mFoundModel.requestFoundSubjectDetail(this, addressId, mSubjectId);
 	}
 	

@@ -67,7 +67,7 @@ public class SearchResultListAdapter extends BaseAdapter{
 		}
 		
 		ItemSaleInfo itemSaleInfo = mItemSaleInfos.get(position);
-		
+		holder.image.setImageResource(R.drawable.default_360_360);
 		mBitmapCache.loadBitmaps(holder.image, itemSaleInfo.getGoodsImg());
 		holder.productName.setText(itemSaleInfo.getGoodsName());
 		holder.price.setText(
@@ -81,6 +81,7 @@ public class SearchResultListAdapter extends BaseAdapter{
 					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getBargainUnitPrice()) + "元/" +
 							UnitConvertUtil.getSwichedUnit(1000, itemSaleInfo.getUnit()));
 		}else{
+			holder.bargainIcon.setVisibility(View.GONE);
 			holder.specialPrice.setVisibility(View.GONE);
 			holder.price.getPaint().setFlags(0);
 		}

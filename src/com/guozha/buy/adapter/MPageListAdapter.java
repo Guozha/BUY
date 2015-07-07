@@ -70,12 +70,12 @@ public class MPageListAdapter extends BaseAdapter{
 			holder.centerView.setLayoutParams(params);
 			holder.leftImage.setLayoutParams(params);
 			holder.rightImage.setLayoutParams(params);
-			
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+		holder.leftImage.setImageResource(R.drawable.default_360_360);
+		holder.rightImage.setImageResource(R.drawable.default_360_360);
 		ImageView imageView;
 		if(position % 2 == 0){
 			holder.leftImage.setVisibility(View.VISIBLE);
@@ -86,9 +86,7 @@ public class MPageListAdapter extends BaseAdapter{
 			holder.rightImage.setVisibility(View.VISIBLE);
 			holder.leftImage.setVisibility(View.GONE);
 		}
-		
 		BestMenuItem menuItem = mMenuItems.get(position);
-		imageView.setImageResource(R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(imageView, menuItem.getMenuImg());
 		holder.centerView.setBackgroundColor(menuItem.getBgColor());
 		holder.centerIcon.setImageResource(R.drawable.icon_drink_color);

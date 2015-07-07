@@ -212,7 +212,8 @@ public class OrderUnPayDetailActivity extends BaseActivity{
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
 			mServiceFee = orderDetail.getServiceFee();
 			mTotalPrice = orderDetail.getTotalPrice();
-			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + "元";
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + 
+					"元,服务费" + UnitConvertUtil.getSwitchedMoney(orderDetail.getServiceFee()) + "元";
 			mOrderStatus = orderDetail.getStatus();
 			if(mExpandListDatas == null){
 				mExpandListDatas = new ArrayList<ExpandListData>();

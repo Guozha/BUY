@@ -111,6 +111,6 @@
 	        android:textSize="@dimen/dimen_global_16sp"
 	        android:textColor="@color/color_app_base_24"
 	        android:background="@drawable/cart_button_bg"
-	        android:text="添加食材"/>
+	        android:text="购买食材"/>
 	</LinearLayout>
 </LinearLayout>

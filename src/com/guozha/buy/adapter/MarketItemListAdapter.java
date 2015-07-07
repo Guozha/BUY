@@ -140,7 +140,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			//holderEntry.image.setImageBitmap(BitmapFactory.decodeByteArray(data, offset, length));
 			holderEntry.productName.setText(itemSaleInfo.getGoodsName());
 			String imgUrl = itemSaleInfo.getGoodsImg();
-			holderEntry.image.setImageResource(R.drawable.default_icon);
+			holderEntry.image.setImageResource(R.drawable.default_360_360);
 			mBitmapCache.loadBitmaps(holderEntry.image, imgUrl);
 			holderEntry.price.setText(
 					UnitConvertUtil.getSwitchedMoney(itemSaleInfo.getUnitPrice()) + "元/" +
@@ -155,6 +155,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 				holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
 						+ ":" + itemSaleInfo.getBargainUnitPrice() + ":" + itemSaleInfo.getUnit());
 			}else{
+				holderEntry.bargainIcon.setVisibility(View.GONE);
 				holderEntry.specialPrice.setVisibility(View.GONE);
 				holderEntry.price.getPaint().setFlags(0);
 				holderEntry.itemVegetable.setTag(itemSaleInfo.getGoodsId() 
@@ -167,7 +168,7 @@ public class MarketItemListAdapter extends BaseAdapter implements OnClickListene
 			holderEntry.itemVegetable.setTag("-1");
 			holderEntry.productName.setVisibility(View.INVISIBLE);
 			holderEntry.price.setVisibility(View.INVISIBLE);
-			holderEntry.image.setImageResource(R.drawable.default_icon);
+			holderEntry.image.setImageResource(R.drawable.default_360_360);
 		}
 		
 		return convertView;

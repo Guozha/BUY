@@ -75,7 +75,7 @@ public class MenuItemGridAdapter extends BaseAdapter{
 			holder.frame.setPadding(0, 0, 0, 0);
 		}
 		FoundMenu foundMenu = mFoundMenus.get(position);
-		holder.icon.setImageResource(R.drawable.default_icon);
+		holder.icon.setImageResource(R.drawable.default_360_360);
 		mBitmapCache.loadBitmaps(holder.icon, foundMenu.getMenuImg());
 		holder.name.setText(foundMenu.getMenuName());
 		return convertView;

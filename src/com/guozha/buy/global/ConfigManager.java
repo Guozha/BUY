@@ -524,9 +524,13 @@ public class ConfigManager{
 	 */
 	public void clearUserInfor(){
 		setUserId(-1);
-		setUserPwd(null);
 		setUserToken(null);
-		setChoosedAddressId(-1);
 	}
-
+	
+	public void loginOutClear(){
+		clearUserInfor();
+		setChoosedAddressId(-1);
+		setCartNumber(0);
+		setUserPwd(null);
+	}
 }

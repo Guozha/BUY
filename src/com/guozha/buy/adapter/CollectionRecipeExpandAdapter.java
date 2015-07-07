@@ -125,7 +125,7 @@ public class CollectionRecipeExpandAdapter extends AnimatedExpandableListAdapter
 			holder = (ChildViewHolder) convertView.getTag();
 		}
 		CollectionMenu relationRecipe = mCollectionDir.get(groupPosition).getMenuInfoList().get(childPosition);
-		holder.image.setImageResource(R.drawable.default_icon);
+		holder.image.setImageResource(R.drawable.default_160_160);
 		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
 		holder.name.setText(relationRecipe.getMenuName());
 		holder.cookeWay.setText(relationRecipe.getCookieWay());

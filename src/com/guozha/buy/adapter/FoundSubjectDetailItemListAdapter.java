@@ -69,7 +69,7 @@ public class FoundSubjectDetailItemListAdapter extends BaseAdapter{
 			holder.image.setVisibility(View.GONE);
 		}else{
 			holder.image.setVisibility(View.VISIBLE);
-			holder.image.setImageResource(R.drawable.default_icon_large);
+			holder.image.setImageResource(R.drawable.default_720_360);
 			mBitmapCache.loadBitmaps(holder.image, detailItem.getItemDetailImg());
 		}
 		if(detailItem.getItemDetailDesc() == null){

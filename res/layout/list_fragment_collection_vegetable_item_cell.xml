@@ -16,7 +16,7 @@
             android:layout_width="90dip"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/default_icon"
+            android:src="@drawable/default_160_160"
             android:layout_marginRight="12dip"/>
         
         <LinearLayout 

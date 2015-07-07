@@ -98,10 +98,10 @@ public class FoundSubjectFragment extends BaseFragment implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String token = ConfigManager.getInstance().getUserToken(FoundSubjectFragment.this.getActivity());
-				if(token == null) return;
-				int addressId = ConfigManager.getInstance().getChoosedAddressId(FoundSubjectFragment.this.getActivity());
-				if(addressId == -1) return;
+				//String token = ConfigManager.getInstance().getUserToken(FoundSubjectFragment.this.getActivity());
+				//if(token == null) return;
+				//int addressId = ConfigManager.getInstance().getChoosedAddressId(FoundSubjectFragment.this.getActivity());
+				//if(addressId == -1) return;
 				FoundSubject foundSubject = mSubjectItems.get(position);
 				Intent intent = new Intent(getActivity(), FoundSubjectDetailActivity.class);
 				intent.putExtra("subjectId", foundSubject.getSubjectId());

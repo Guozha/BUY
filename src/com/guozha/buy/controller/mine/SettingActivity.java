@@ -171,7 +171,7 @@ public class SettingActivity extends BaseActivity{
 		public void requestLoginOutResult(String returnCode, String msg) {
 			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
 				//清空用户相关信息
-				ConfigManager.getInstance().clearUserInfor();
+				ConfigManager.getInstance().loginOutClear();
 				ToastUtil.showToast(SettingActivity.this, "退出成功");
 				//跳到登录界面
 				Intent intent = new Intent(SettingActivity.this, LoginActivity.class);

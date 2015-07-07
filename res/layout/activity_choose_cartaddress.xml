@@ -12,4 +12,8 @@
 	    android:divider="@color/color_app_base_27"
 	    android:background="@color/color_app_base_24"
 	    android:dividerHeight="1px"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
 </LinearLayout>

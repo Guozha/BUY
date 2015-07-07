@@ -366,8 +366,10 @@ com.guozha.buy.R$drawable: int checkbox_unselected
 com.guozha.buy.R$drawable: int circle_normal
 com.guozha.buy.R$drawable: int circle_selected
 com.guozha.buy.R$drawable: int coupon_empty
-com.guozha.buy.R$drawable: int default_icon
-com.guozha.buy.R$drawable: int default_icon_large
+com.guozha.buy.R$drawable: int default_160_160
+com.guozha.buy.R$drawable: int default_360_360
+com.guozha.buy.R$drawable: int default_720_360
+com.guozha.buy.R$drawable: int default_720_480
 com.guozha.buy.R$drawable: int dialog_g
 com.guozha.buy.R$drawable: int dialogue_background
 com.guozha.buy.R$drawable: int dialogue_icon_01

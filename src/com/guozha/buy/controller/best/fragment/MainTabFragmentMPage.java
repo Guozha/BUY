@@ -26,7 +26,6 @@ import com.guozha.buy.entry.mpage.BestMenuPage;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
-import com.guozha.buy.util.LogUtil;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
 	

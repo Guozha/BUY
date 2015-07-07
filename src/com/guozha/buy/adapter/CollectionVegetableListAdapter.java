@@ -82,7 +82,7 @@ public class CollectionVegetableListAdapter extends BaseAdapter{
 		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getUnitPrice()) +
 				"元/" + UnitConvertUtil.getSwichedUnit(1000, goodsItem.getUnit()));
 		holder.deleteButton.setTag(goodsItem.getMyGoodsId());
-		holder.goodsIcon.setImageResource(R.drawable.default_icon);
+		holder.goodsIcon.setImageResource(R.drawable.default_160_160);
 		mBitmapCache.loadBitmaps(holder.goodsIcon, goodsItem.getGoodsImg());
 		return convertView;
 	}

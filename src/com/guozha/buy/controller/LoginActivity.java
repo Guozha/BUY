@@ -29,6 +29,7 @@ import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.receiver.SMSBroadcastReceiver;
 import com.guozha.buy.server.ValidNumTimer;
 import com.guozha.buy.server.ValidNumTimer.TimerObserver;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 
@@ -322,6 +323,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, Time
 				mUserModel.requestListAddress(LoginActivity.this, ConfigManager.getInstance().getUserId());
 			}else{
 				ToastUtil.showToast(LoginActivity.this, msg);
+				ConfigManager.getInstance().clearUserInfor();
 			}
 		}
 		

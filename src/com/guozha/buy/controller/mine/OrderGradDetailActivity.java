@@ -168,7 +168,8 @@ public class OrderGradDetailActivity extends BaseActivity{
 			//mOrderTime = "下单时间：" + DimenUtil.getStringFormatTime(orderDetail.getCreateTime());
 			mOrderAddressName = orderDetail.getReceiveMen() + "   " + orderDetail.getReceiveMobile();
 			mOrderAddressDetail = orderDetail.getReceiveAddr();
-			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) + "元";
+			mOrderTotalPrice = "订单总额 " + UnitConvertUtil.getSwitchedMoney(orderDetail.getTotalPrice()) +
+						"元,服务费" + UnitConvertUtil.getSwitchedMoney(orderDetail.getServiceFee()) + "元";
 			
 			if(mExpandListDatas == null){
 				mExpandListDatas = new ArrayList<ExpandListData>();

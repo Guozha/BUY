@@ -79,7 +79,7 @@ public class FoundSubjectListAdapter extends BaseAdapter{
 		}else{
 			holder.tag.setBackgroundResource(R.drawable.tag_activities_current);
 		}
-		holder.image.setImageResource(R.drawable.default_icon_large);
+		holder.image.setImageResource(R.drawable.default_720_360);
 		mBitmapCache.loadBitmaps(holder.image, foundSubject.getSubjectImg());
 		
 		holder.tag.setText(foundSubject.getSubjectType());

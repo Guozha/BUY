@@ -147,7 +147,8 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	public void onClick(View view) {
 		Intent intent;
 		//如果没有登录
-		if(ConfigManager.getInstance().getUserToken(getActivity()) == null) return;
+		String token = ConfigManager.getInstance().getUserToken(getActivity());
+		if(token == null) return;
 		switch (view.getId()) {
 		case R.id.mine_head_img:  	//更换头像
 			//showChooseImageMethodDialog();

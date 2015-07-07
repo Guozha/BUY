@@ -42,7 +42,7 @@ public class PayModel {
 	}
 
 	public void requestPayWays(final Context context, int addressId){
-		RequestParam paramPath = new RequestParam("payment/listPayWay")
+		RequestParam paramPath = new RequestParam("v31/payment/listPayWay")
 		.setParams("addressId", addressId);
 		HttpManager.getInstance(context).volleyRequestByPost(
 			paramPath, new Listener<String>() {

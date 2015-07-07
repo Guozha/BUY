@@ -8,6 +8,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -205,15 +206,25 @@ public class SplashActivity extends Activity{
 				mUserModel.requestListAddress(SplashActivity.this, ConfigManager.getInstance().getUserId());
 			}else{
 				ToastUtil.showToast(SplashActivity.this, msg);
+				ConfigManager.getInstance().clearUserInfor();
 			}
 		}
 		
 		@Override
 		public void requestListAddressResult(List<AddressInfo> addressInfos) {
 			if(addressInfos != null && !addressInfos.isEmpty()){
-				if(ConfigManager.getInstance().getChoosedAddressId() == -1){
+				int choosedId = ConfigManager.getInstance().getChoosedAddressId();
+				boolean isMatch = false;
+				if(choosedId != -1){
+					for(int i = 0; i < addressInfos.size(); i++){
+						if(addressInfos.get(i).getAddressId() == choosedId){
+							isMatch = true;
+						}
+					}
+				}
+				if(!isMatch){
 					ConfigManager.getInstance()
-						.setChoosedAddressId(addressInfos.get(0).getAddressId());
+					.setChoosedAddressId(addressInfos.get(0).getAddressId());
 				}
 			}else{
 				ConfigManager.getInstance().setChoosedAddressId(-1);

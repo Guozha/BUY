@@ -40,6 +40,7 @@ import com.guozha.buy.model.GoodsModel;
 import com.guozha.buy.model.UserModel;
 import com.guozha.buy.model.result.GoodsModelResult;
 import com.guozha.buy.model.result.UserModelResult;
+import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.view.AnimatedExpandableListView;
 import com.guozha.buy.view.RefreshableView;
 import com.guozha.buy.view.RefreshableView.PullToRefreshListener;
@@ -128,8 +129,13 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		initView(mView);			
 		//初始化ActionBar
 		initActionBar(getActivity().getActionBar());
-		initData();
 		return mView;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		initData();
 	}
 	
 	/**
@@ -247,7 +253,6 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 		mMarketHomeItems.clear();
 		isLocked = false;
 		int userId = ConfigManager.getInstance().getUserId();
-		
 		mUserModel.requestListAddress(getActivity(), userId);
 		mGoodsModel.requestGoodsTypes(getActivity());
 		requestGoodsList();
@@ -266,16 +271,24 @@ public class MainTabFragmentMarket extends MainTabBaseFragment implements OnClic
 	 * 设置地址列表数据
 	 */
 	private void setAddressInfoData(){
-		int choosedId = ConfigManager.getInstance().getChoosedAddressId();
-		if(choosedId == -1) return;
 		String addressName = "";
 		if(mActionBarAddress != null){
-			if(mAddressInfos != null){
-				for(int i = 0; i < mAddressInfos.size(); i++){
-					AddressInfo addressInfo = mAddressInfos.get(i);
-					if(addressInfo.getAddressId() == choosedId){
-						addressName = addressInfo.getBuildingName();
+			if(mAddressInfos != null && !mAddressInfos.isEmpty()){
+				int choosedId = ConfigManager.getInstance().getChoosedAddressId();
+				boolean isMatched = false;
+				if(choosedId != -1){
+					for(int i = 0; i < mAddressInfos.size(); i++){
+						AddressInfo addressInfo = mAddressInfos.get(i);
+						if(addressInfo.getAddressId() == choosedId){
+							isMatched = true;
+							addressName = addressInfo.getBuildingName();
+						}
 					}
+				}
+				if(!isMatched){
+					AddressInfo addressInfo = mAddressInfos.get(0);
+					ConfigManager.getInstance().setChoosedAddressId(addressInfo.getAddressId());
+					addressName = addressInfo.getBuildingName();
 				}
 				mActionBarAddress.setVisibility(View.VISIBLE);
 				mActionBarAddress.setText(addressName);

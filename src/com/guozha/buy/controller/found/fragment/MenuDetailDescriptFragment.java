@@ -75,7 +75,7 @@ public class MenuDetailDescriptFragment extends BaseMenuDetailFragment{
 				|| mCookCal == null 
 				|| mDescript == null
 		) return;
-		mHeadImg.setImageResource(R.drawable.default_icon_large);
+		mHeadImg.setImageResource(R.drawable.default_720_480);
 		mBitmapCache.loadBitmaps(mHeadImg, mMenuDetail.getMenuImg());
 		mHeadTitle.setText(mMenuDetail.getMenuName());
 		mCookWay.setText(mMenuDetail.getCookieWay());

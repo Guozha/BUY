@@ -95,7 +95,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 			}else{
 				
 				String imgUrl = saleInfo.getGoodsImg();
-				itemHolder.vegetableIcon.setImageResource(R.drawable.default_icon);
+				itemHolder.vegetableIcon.setImageResource(R.drawable.default_360_360);
 				mBitmapCache.loadBitmaps(itemHolder.vegetableIcon, imgUrl);
 				itemHolder.vegetableName.setText(saleInfo.getGoodsName());
 				itemHolder.vegetablePrice.setText(
@@ -110,6 +110,7 @@ public class VegetableListAdapter extends BaseAdapter implements OnClickListener
 									UnitConvertUtil.getSwichedUnit(1000, saleInfo.getUnit()));
 					holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getBargainUnitPrice() + ":" + saleInfo.getUnit());
 				}else{
+					itemHolder.bargainIcon.setVisibility(View.GONE);
 					itemHolder.specialPrice.setVisibility(View.GONE);
 					itemHolder.vegetablePrice.getPaint().setFlags(0);
 					holder.items.get(i).setTag(saleInfo.getGoodsId() + ":" + saleInfo.getUnitPrice() + ":" + saleInfo.getUnit());

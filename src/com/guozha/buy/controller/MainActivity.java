@@ -275,6 +275,7 @@ public class MainActivity extends FragmentActivity{
 				ToastUtil.showToast(this, "再按一次退出");
 			}else{
 				mTouchTime = 0;
+				ConfigManager.getInstance().clearUserInfor();
 				finish();
 			}
 			return true;

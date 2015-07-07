@@ -236,11 +236,11 @@ public class AutoViewFlipper extends FrameLayout{
 		List<Bitmap> bitmaps = new ArrayList<Bitmap>();	
 		
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.default_icon_large));
+				getResources(), R.drawable.default_720_360));
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.default_icon_large));
+				getResources(), R.drawable.default_720_360));
 		bitmaps.add(BitmapFactory.decodeResource(
-				getResources(), R.drawable.default_icon_large));
+				getResources(), R.drawable.default_720_360));
 		
 		return bitmaps;
 	}

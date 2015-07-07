@@ -24,7 +24,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox 
                 android:id="@+id/planmenu_detial_line1_checkbox1"
@@ -55,7 +55,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox 
                 android:id="@+id/planmenu_detial_line1_checkbox2"
@@ -87,7 +87,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox 
                 android:id="@+id/planmenu_detial_line1_checkbox3"
@@ -126,7 +126,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox 
                 android:id="@+id/planmenu_detial_line2_checkbox1"
@@ -157,7 +157,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox 
                 android:id="@+id/planmenu_detial_line2_checkbox2"
@@ -189,7 +189,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="240"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_icon"/>
+                android:src="@drawable/default_160_160"/>
             
             <CheckBox
                 android:id="@+id/planmenu_detial_line2_checkbox3" 

@@ -58,7 +58,7 @@ public class CookBookListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		RelationRecipe relationRecipe = mRelationRecipe.get(position);
-		holder.image.setImageResource(R.drawable.default_icon);
+		holder.image.setImageResource(R.drawable.default_160_160);
 		mBitmapCache.loadBitmaps(holder.image, relationRecipe.getMenuImg());
 		holder.name.setText(relationRecipe.getMenuName());
 		holder.cookeWay.setText(relationRecipe.getCookieWay());
