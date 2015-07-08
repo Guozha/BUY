@@ -332,6 +332,7 @@ com.guozha.buy.R$drawable: int address_empty
 com.guozha.buy.R$drawable: int arrow_down
 com.guozha.buy.R$drawable: int arrow_next_down
 com.guozha.buy.R$drawable: int arrow_up
+com.guozha.buy.R$drawable: int background_guide_repeat
 com.guozha.buy.R$drawable: int background_personal
 com.guozha.buy.R$drawable: int basket_empty
 com.guozha.buy.R$drawable: int button_add_cart_normal
@@ -363,8 +364,6 @@ com.guozha.buy.R$drawable: int checkbox_pressed_bg
 com.guozha.buy.R$drawable: int checkbox_selected
 com.guozha.buy.R$drawable: int checkbox_style
 com.guozha.buy.R$drawable: int checkbox_unselected
-com.guozha.buy.R$drawable: int circle_normal
-com.guozha.buy.R$drawable: int circle_selected
 com.guozha.buy.R$drawable: int coupon_empty
 com.guozha.buy.R$drawable: int default_160_160
 com.guozha.buy.R$drawable: int default_360_360
@@ -381,14 +380,12 @@ com.guozha.buy.R$drawable: int found_menutype_bg
 com.guozha.buy.R$drawable: int gradeng_text_bg
 com.guozha.buy.R$drawable: int gray_edit_bg
 com.guozha.buy.R$drawable: int grey_button_nomal_bg
+com.guozha.buy.R$drawable: int guide_background
 com.guozha.buy.R$drawable: int guide_button_comein_bg
 com.guozha.buy.R$drawable: int ic_launcher
 com.guozha.buy.R$drawable: int icon_default
 com.guozha.buy.R$drawable: int icon_drink_color
 com.guozha.buy.R$drawable: int icon_truck
-com.guozha.buy.R$drawable: int img01
-com.guozha.buy.R$drawable: int img02
-com.guozha.buy.R$drawable: int img03
 com.guozha.buy.R$drawable: int img_gain
 com.guozha.buy.R$drawable: int img_two_dimensional_code
 com.guozha.buy.R$drawable: int intro_button
@@ -445,6 +442,9 @@ com.guozha.buy.R$drawable: int nomal_button_nomal_bg
 com.guozha.buy.R$drawable: int nomal_list_item_bg
 com.guozha.buy.R$drawable: int note_icon
 com.guozha.buy.R$drawable: int order_empty
+com.guozha.buy.R$drawable: int page_1
+com.guozha.buy.R$drawable: int page_2
+com.guozha.buy.R$drawable: int page_3
 com.guozha.buy.R$drawable: int pay_on_delivery_icon
 com.guozha.buy.R$drawable: int pay_selectbox_normal
 com.guozha.buy.R$drawable: int pay_selectbox_selected
@@ -487,6 +487,8 @@ com.guozha.buy.R$drawable: int tag_bell
 com.guozha.buy.R$drawable: int tag_call
 com.guozha.buy.R$drawable: int tag_calories
 com.guozha.buy.R$drawable: int tag_chat
+com.guozha.buy.R$drawable: int tag_circle_normal
+com.guozha.buy.R$drawable: int tag_circle_selected
 com.guozha.buy.R$drawable: int tag_code
 com.guozha.buy.R$drawable: int tag_cooking
 com.guozha.buy.R$drawable: int tag_cooktime
@@ -711,6 +713,7 @@ com.guozha.buy.R$id: int create_newfolder_name
 com.guozha.buy.R$id: int current_http_path_text
 com.guozha.buy.R$id: int custom_weight_area
 com.guozha.buy.R$id: int delete_button
+com.guozha.buy.R$id: int descript_msg
 com.guozha.buy.R$id: int description
 com.guozha.buy.R$id: int detail_image
 com.guozha.buy.R$id: int detail_name

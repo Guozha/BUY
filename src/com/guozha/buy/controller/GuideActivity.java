@@ -85,9 +85,9 @@ public class GuideActivity extends Activity{
             imageViews[i] = imageView;    
             if (i == 0) {    
              //默认选中第一张图片  
-                imageViews[i].setImageResource(R.drawable.circle_selected);    
+                imageViews[i].setImageResource(R.drawable.tag_circle_selected);    
             } else {    
-                imageViews[i].setImageResource(R.drawable.circle_normal);    
+                imageViews[i].setImageResource(R.drawable.tag_circle_normal);    
             }    
             group.addView(imageViews[i]);    
         }    
@@ -295,9 +295,9 @@ public class GuideActivity extends Activity{
 	         }else{
 	        	 group.setVisibility(View.VISIBLE);
 	            for (int i = 0; i < imageViews.length; i++) {    
-	                imageViews[arg0].setImageResource(R.drawable.circle_selected);  
+	                imageViews[arg0].setImageResource(R.drawable.tag_circle_selected);  
 	                if (arg0 != i) {    
-	                    imageViews[i].setImageResource(R.drawable.circle_normal);    
+	                    imageViews[i].setImageResource(R.drawable.tag_circle_normal);    
 	                }    
 	            }  
 	         }

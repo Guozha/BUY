@@ -116,6 +116,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		}else{
 			holder = (GroupViewHolder) convertView.getTag();
 		}
+		if(mCartItems.size() <= groupPosition) return convertView;
 		CartBaseItem baseItem = mCartItems.get(groupPosition);
 		holder.cartitemgroup.setTag(baseItem.getCartId());
 		if(baseItem.getCartId() == -1){
@@ -141,7 +142,6 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 			holder.minus.setTag(groupPosition);
 			holder.plus.setTag(groupPosition);
 		}
-		
 		return convertView;
 	}
 
@@ -223,7 +223,14 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	 */
 	private void updateCartItemAmount(final View view, boolean plus) {
 		int position  = (Integer) view.getTag();
+		if(mCartItems.isEmpty()) return;
 		CartBaseItem cartBaseItem = mCartItems.get(position);
+		if(!plus && cartBaseItem.getMinAmount() == cartBaseItem.getAmount()){
+			if(mItemChanged != null){
+				mItemChanged.delete(cartBaseItem.getCartId(), true);
+			}
+			return;
+		}
 		int userId = ConfigManager.getInstance().getUserId();
 		String token = ConfigManager.getInstance().getUserToken(mContext);
 		if(token == null) return;
@@ -264,7 +271,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 	}
 	public interface CartItemChanged{
 		public void changed();
-		public void delete(int cartId);
+		public void delete(int cartId, boolean isMin);
 	}
 
 	@Override
@@ -272,7 +279,7 @@ public class CartItemListAdapter extends BaseExpandableListAdapter implements On
 		Integer cartId  = (Integer) view.getTag();
 		if(cartId == null) return false;
 		if(mItemChanged != null){
-			mItemChanged.delete(cartId);
+			mItemChanged.delete(cartId, false);
 		}
 		return true;
 	}

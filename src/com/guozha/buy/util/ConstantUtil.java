@@ -30,7 +30,6 @@ public class ConstantUtil {
 		return "";
 	}
 	
-	
 	/**
 	 * 获取菜谱类型
 	 * @param key
@@ -76,9 +75,9 @@ public class ConstantUtil {
 		case 2:
 			return "新订单";
 		case 3:
-			return "已接收";
+			return "处理中";
 		case 4:
-			return "已称重";
+			return "称重中";
 		case 5:
 			return "配送中";
 		case 6:

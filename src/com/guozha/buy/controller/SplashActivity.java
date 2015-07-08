@@ -8,7 +8,6 @@ import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -113,6 +112,15 @@ public class SplashActivity extends Activity{
 	 * 跳转到主界面
 	 */
 	private void turnOtherActivity(){
+		//TODO  记得修改这块
+		/*
+		Intent intent;
+		intent = new Intent(SplashActivity.this, GuideActivity.class);
+		startActivity(intent);
+		SplashActivity.this.finish();
+		return;
+		*/
+		
 		Intent intent;
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

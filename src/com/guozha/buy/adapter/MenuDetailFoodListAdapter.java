@@ -73,7 +73,7 @@ public class MenuDetailFoodListAdapter extends BaseAdapter implements OnCheckedC
 		}
 		check.setTag(position);
 		name.setText(menuGoods.getGoodsName());
-		weight.setText(UnitConvertUtil.getSwitchedWeight(menuGoods.getAmount(), menuGoods.getUnit()));
+		weight.setText(menuGoods.getAmount());
 		return convertView;
 	}
 

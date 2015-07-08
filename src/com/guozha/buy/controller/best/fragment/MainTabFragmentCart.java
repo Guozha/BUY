@@ -83,7 +83,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 				initData();
 				break;
 			case HAND_TO_DELETE_ITEM:
-				clickDeleteButton(msg.arg1);
+				clickDeleteButton(msg.arg1, (String)msg.obj);
 				break;
 			case HAND_CHECKED_PRICE:
 				Intent intent = new Intent(MainTabFragmentCart.this.getActivity(), PlanceOrderActivity.class);
@@ -182,9 +182,16 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 			}
 
 			@Override
-			public void delete(int cartId) {
+			public void delete(int cartId, boolean isMin) {
 				Message message = new Message();
 				message.arg1 = cartId;
+				String descriptMsg;
+				if(isMin){
+					descriptMsg = "已经到了起订量，您是否需要删除改商品";
+				}else{
+					descriptMsg = "您确定需要删除该商品";
+				}
+				message.obj = descriptMsg;
 				message.what = HAND_TO_DELETE_ITEM;
 				handler.sendMessage(message);
 			}
@@ -205,8 +212,10 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 	 * 点击删除按钮
 	 * @param view
 	 */
-	private void clickDeleteButton(final int cartId) {
+	private void clickDeleteButton(final int cartId, String descriptMsg) {
 		final CustomDialog deleteDialog = new CustomDialog(getActivity(), R.layout.dialog_delete_notify);
+		TextView textView = (TextView) deleteDialog.getViewById(R.id.descript_msg);
+		textView.setText(descriptMsg);
 		deleteDialog.setDismissButtonId(R.id.cancel_button);
 		deleteDialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
 			@Override

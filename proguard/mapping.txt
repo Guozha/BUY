@@ -14149,6 +14149,7 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int arrow_down -> arrow_down
     int arrow_next_down -> arrow_next_down
     int arrow_up -> arrow_up
+    int background_guide_repeat -> background_guide_repeat
     int background_personal -> background_personal
     int basket_empty -> basket_empty
     int button_add_cart_normal -> button_add_cart_normal
@@ -14180,8 +14181,6 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int checkbox_selected -> checkbox_selected
     int checkbox_style -> checkbox_style
     int checkbox_unselected -> checkbox_unselected
-    int circle_normal -> circle_normal
-    int circle_selected -> circle_selected
     int coupon_empty -> coupon_empty
     int default_160_160 -> default_160_160
     int default_360_360 -> default_360_360
@@ -14198,14 +14197,12 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int gradeng_text_bg -> gradeng_text_bg
     int gray_edit_bg -> gray_edit_bg
     int grey_button_nomal_bg -> grey_button_nomal_bg
+    int guide_background -> guide_background
     int guide_button_comein_bg -> guide_button_comein_bg
     int ic_launcher -> ic_launcher
     int icon_default -> icon_default
     int icon_drink_color -> icon_drink_color
     int icon_truck -> icon_truck
-    int img01 -> img01
-    int img02 -> img02
-    int img03 -> img03
     int img_gain -> img_gain
     int img_two_dimensional_code -> img_two_dimensional_code
     int intro_button -> intro_button
@@ -14262,6 +14259,9 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int nomal_list_item_bg -> nomal_list_item_bg
     int note_icon -> note_icon
     int order_empty -> order_empty
+    int page_1 -> page_1
+    int page_2 -> page_2
+    int page_3 -> page_3
     int pay_on_delivery_icon -> pay_on_delivery_icon
     int pay_selectbox_normal -> pay_selectbox_normal
     int pay_selectbox_selected -> pay_selectbox_selected
@@ -14304,6 +14304,8 @@ com.guozha.buy.R$drawable -> com.guozha.buy.R$drawable:
     int tag_call -> tag_call
     int tag_calories -> tag_calories
     int tag_chat -> tag_chat
+    int tag_circle_normal -> tag_circle_normal
+    int tag_circle_selected -> tag_circle_selected
     int tag_code -> tag_code
     int tag_cooking -> tag_cooking
     int tag_cooktime -> tag_cooktime
@@ -14528,6 +14530,7 @@ com.guozha.buy.R$id -> com.guozha.buy.R$id:
     int current_http_path_text -> current_http_path_text
     int custom_weight_area -> custom_weight_area
     int delete_button -> delete_button
+    int descript_msg -> descript_msg
     int description -> description
     int detail_image -> detail_image
     int detail_name -> detail_name
@@ -15263,14 +15266,14 @@ com.guozha.buy.adapter.CartItemListAdapter -> com.guozha.buy.a.a:
     193:201:void onClick(android.view.View) -> onClick
     208:209:void clickMinusButton(android.view.View) -> a
     216:217:void clickPlusButton(android.view.View) -> b
-    225:245:void updateCartItemAmount(android.view.View,boolean) -> a
-    263:264:void setCartItemChangedListener(com.guozha.buy.adapter.CartItemListAdapter$CartItemChanged) -> a
-    272:277:boolean onLongClick(android.view.View) -> onLongClick
-    260:260:com.guozha.buy.adapter.CartItemListAdapter$CartItemChanged access$0(com.guozha.buy.adapter.CartItemListAdapter) -> a
+    225:252:void updateCartItemAmount(android.view.View,boolean) -> a
+    270:271:void setCartItemChangedListener(com.guozha.buy.adapter.CartItemListAdapter$CartItemChanged) -> a
+    279:284:boolean onLongClick(android.view.View) -> onLongClick
+    267:267:com.guozha.buy.adapter.CartItemListAdapter$CartItemChanged access$0(com.guozha.buy.adapter.CartItemListAdapter) -> a
     37:37:android.app.Activity access$1(com.guozha.buy.adapter.CartItemListAdapter) -> b
 com.guozha.buy.adapter.CartItemListAdapter$CartItemChanged -> com.guozha.buy.a.a$a:
     void changed() -> a
-    void delete(int) -> a
+    void delete(int,boolean) -> a
 com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder -> com.guozha.buy.a.a$b:
     android.widget.TextView title -> a
     188:188:void access$0(com.guozha.buy.adapter.CartItemListAdapter$ChildViewHolder,android.widget.TextView) -> a
@@ -15296,7 +15299,7 @@ com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder -> com.guozha.buy.a.a
     180:180:android.widget.TextView access$11(com.guozha.buy.adapter.CartItemListAdapter$GroupViewHolder) -> f
 com.guozha.buy.adapter.CartItemListAdapter$MyShopCartModelResult -> com.guozha.buy.a.a$d:
     com.guozha.buy.adapter.CartItemListAdapter this$0 -> a
-    250:257:void requestUpdateCartResult(java.lang.String,java.lang.String) -> a
+    257:264:void requestUpdateCartResult(java.lang.String,java.lang.String) -> a
 com.guozha.buy.adapter.ChooseAddressAdapter -> com.guozha.buy.a.b:
     java.util.List mAddressInfos -> a
     android.view.LayoutInflater mInflater -> b
@@ -16152,36 +16155,36 @@ com.guozha.buy.controller.SplashActivity -> com.guozha.buy.controller.SplashActi
     com.guozha.buy.model.UserModel mUserModel -> f
     com.guozha.buy.model.SystemModel mSystemModel -> g
     android.os.Handler handler -> h
-    72:81:void onCreate(android.os.Bundle) -> onCreate
-    89:102:void initJPush() -> a
-    106:110:void onWindowFocusChanged(boolean) -> onWindowFocusChanged
-    118:135:void turnOtherActivity() -> b
-    143:177:void doInit() -> c
-    181:185:void onResume() -> onResume
-    189:193:void onPause() -> onPause
-    44:44:void access$0(com.guozha.buy.controller.SplashActivity,long) -> a
-    140:140:void access$1(com.guozha.buy.controller.SplashActivity) -> a
-    44:44:long access$2(com.guozha.buy.controller.SplashActivity) -> b
-    115:115:void access$3(com.guozha.buy.controller.SplashActivity) -> c
-    49:49:android.os.Handler access$4(com.guozha.buy.controller.SplashActivity) -> d
-    46:46:com.guozha.buy.model.UserModel access$5(com.guozha.buy.controller.SplashActivity) -> e
+    71:80:void onCreate(android.os.Bundle) -> onCreate
+    88:101:void initJPush() -> a
+    105:109:void onWindowFocusChanged(boolean) -> onWindowFocusChanged
+    126:143:void turnOtherActivity() -> b
+    151:185:void doInit() -> c
+    189:193:void onResume() -> onResume
+    197:201:void onPause() -> onPause
+    43:43:void access$0(com.guozha.buy.controller.SplashActivity,long) -> a
+    148:148:void access$1(com.guozha.buy.controller.SplashActivity) -> a
+    43:43:long access$2(com.guozha.buy.controller.SplashActivity) -> b
+    114:114:void access$3(com.guozha.buy.controller.SplashActivity) -> c
+    48:48:android.os.Handler access$4(com.guozha.buy.controller.SplashActivity) -> d
+    45:45:com.guozha.buy.model.UserModel access$5(com.guozha.buy.controller.SplashActivity) -> e
 com.guozha.buy.controller.SplashActivity$1 -> com.guozha.buy.controller.s:
     com.guozha.buy.controller.SplashActivity this$0 -> a
-    51:67:void handleMessage(android.os.Message) -> handleMessage
+    50:66:void handleMessage(android.os.Message) -> handleMessage
 com.guozha.buy.controller.SplashActivity$2 -> com.guozha.buy.controller.t:
     com.guozha.buy.controller.SplashActivity this$0 -> a
-    174:175:void gotResult(int,java.lang.String,java.util.Set) -> a
+    182:183:void gotResult(int,java.lang.String,java.util.Set) -> a
 com.guozha.buy.controller.SplashActivity$MySystemModelResult -> com.guozha.buy.controller.SplashActivity$a:
     com.guozha.buy.controller.SplashActivity this$0 -> a
-    238:239:void requestSystemTime(long) -> a
-    243:245:void requestImagePathResult(java.lang.String) -> a
-    249:251:void requestWeixinNumResult(java.lang.String) -> b
-    255:261:void requestServiceFeeRuleResult(java.lang.String,java.lang.String) -> b
-    265:271:void requestInviteRuleResult(java.lang.String,java.lang.String) -> c
+    246:247:void requestSystemTime(long) -> a
+    251:253:void requestImagePathResult(java.lang.String) -> a
+    257:259:void requestWeixinNumResult(java.lang.String) -> b
+    263:269:void requestServiceFeeRuleResult(java.lang.String,java.lang.String) -> b
+    273:279:void requestInviteRuleResult(java.lang.String,java.lang.String) -> c
 com.guozha.buy.controller.SplashActivity$MyUserModelResult -> com.guozha.buy.controller.SplashActivity$b:
     com.guozha.buy.controller.SplashActivity this$0 -> a
-    200:211:void requestPasswordLogin(java.lang.String,java.lang.String,com.guozha.buy.entry.global.UserInfor) -> b
-    215:232:void requestListAddressResult(java.util.List) -> a
+    208:219:void requestPasswordLogin(java.lang.String,java.lang.String,com.guozha.buy.entry.global.UserInfor) -> b
+    223:240:void requestListAddressResult(java.util.List) -> a
 com.guozha.buy.controller.best.fragment.MainTabBaseFragment -> com.guozha.buy.controller.a.a.a:
     com.guozha.buy.controller.best.fragment.MainTabBaseFragment$OnRequestTurnItem mOnRequestTurnItem -> a
     22:32:void initActionBar(java.lang.String) -> b
@@ -16219,31 +16222,31 @@ com.guozha.buy.controller.best.fragment.MainTabFragmentCart -> com.guozha.buy.co
     112:115:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
     120:122:void onStart() -> h
     129:149:void exchangeDataFormat(com.guozha.buy.entry.cart.CartTotalData) -> a
-    156:202:void initView(android.view.View) -> c
-    209:218:void clickDeleteButton(int) -> c
-    225:229:void requestDeleteCartItem(int) -> d
-    236:257:void requestTurnChooseTime() -> c
-    263:286:void updateViewData() -> d
-    289:299:void setBottomMessageText(int,int,int) -> a
-    302:308:void initData() -> e
-    314:335:void setTextColor() -> f
-    394:394:java.lang.String getPageName() -> b
-    262:262:void access$0(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> a
-    301:301:void access$1(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> b
-    208:208:void access$2(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> a
+    156:209:void initView(android.view.View) -> c
+    216:227:void clickDeleteButton(int,java.lang.String) -> a
+    234:238:void requestDeleteCartItem(int) -> c
+    245:266:void requestTurnChooseTime() -> c
+    272:295:void updateViewData() -> d
+    298:308:void setBottomMessageText(int,int,int) -> a
+    311:317:void initData() -> e
+    323:344:void setTextColor() -> f
+    403:403:java.lang.String getPageName() -> b
+    271:271:void access$0(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> a
+    310:310:void access$1(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> b
+    215:215:void access$2(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int,java.lang.String) -> a
     69:69:int access$3(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> c
     70:70:int access$4(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> d
     72:72:com.guozha.buy.entry.mine.address.AddressInfo access$5(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> e
     66:66:android.view.View access$6(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> f
     67:67:android.widget.TextView access$7(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> g
-    69:69:void access$8(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> b
-    70:70:void access$9(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> c
-    71:71:void access$10(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> d
+    69:69:void access$8(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> a
+    70:70:void access$9(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> b
+    71:71:void access$10(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> c
     128:128:void access$11(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,com.guozha.buy.entry.cart.CartTotalData) -> a
     76:76:android.os.Handler access$12(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> h
     72:72:void access$13(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,com.guozha.buy.entry.mine.address.AddressInfo) -> a
-    234:234:void access$14(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> i
-    224:224:void access$15(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> e
+    243:243:void access$14(com.guozha.buy.controller.best.fragment.MainTabFragmentCart) -> i
+    233:233:void access$15(com.guozha.buy.controller.best.fragment.MainTabFragmentCart,int) -> d
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$1 -> com.guozha.buy.controller.a.a.c:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
     78:106:void handleMessage(android.os.Message) -> handleMessage
@@ -16254,29 +16257,29 @@ com.guozha.buy.controller.best.fragment.MainTabFragmentCart$2 -> com.guozha.buy.
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$3 -> com.guozha.buy.controller.a.a.e:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
     181:182:void changed() -> a
-    186:190:void delete(int) -> a
+    186:197:void delete(int,boolean) -> a
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$4 -> com.guozha.buy.controller.a.a.f:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
-    198:200:void onClick(android.view.View) -> onClick
+    205:207:void onClick(android.view.View) -> onClick
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$5 -> com.guozha.buy.controller.a.a.g:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
     com.guozha.buy.controller.dialog.CustomDialog val$deleteDialog -> b
     int val$cartId -> c
-    214:216:void onClick(android.view.View) -> onClick
+    223:225:void onClick(android.view.View) -> onClick
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$6 -> com.guozha.buy.controller.a.a.h:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
     com.guozha.buy.controller.dialog.CustomDialog val$emptyNotify -> b
-    243:247:void onClick(android.view.View) -> onClick
+    252:256:void onClick(android.view.View) -> onClick
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$MyOrderModelResult -> com.guozha.buy.controller.a.a.b$a:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
-    365:373:void requestOrderConfirmResult(java.lang.String,java.lang.String,int,int) -> a
+    374:382:void requestOrderConfirmResult(java.lang.String,java.lang.String,int,int) -> a
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$MyShopCartModelResult -> com.guozha.buy.controller.a.a.b$b:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
-    340:349:void requestListCartItemResult(com.guozha.buy.entry.cart.CartTotalData) -> a
-    353:358:void requestDeleteCartResult(java.lang.String,java.lang.String) -> c
+    349:358:void requestListCartItemResult(com.guozha.buy.entry.cart.CartTotalData) -> a
+    362:367:void requestDeleteCartResult(java.lang.String,java.lang.String) -> c
 com.guozha.buy.controller.best.fragment.MainTabFragmentCart$MyUserModelResult -> com.guozha.buy.controller.a.a.b$c:
     com.guozha.buy.controller.best.fragment.MainTabFragmentCart this$0 -> a
-    380:389:void requestListAddressResult(java.util.List) -> a
+    389:398:void requestListAddressResult(java.util.List) -> a
 com.guozha.buy.controller.best.fragment.MainTabFragmentFound -> com.guozha.buy.controller.a.a.i:
     java.lang.String PAGE_NAME -> b
     com.guozha.buy.view.ViewPagerTab mViewPagerTab -> c

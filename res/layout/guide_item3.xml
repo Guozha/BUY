@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ff668a">
+    android:background="@drawable/guide_background">
     
  	<Space 
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="180"/>
+        android:layout_weight="72"/>
     
     <ImageView 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@drawable/img03"/>
+        android:src="@drawable/page_3"/>
 
     <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="250">
+        android:layout_weight="228">
         
         <Button 
             android:id="@+id/come_in_button"
