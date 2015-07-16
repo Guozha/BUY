@@ -93,11 +93,13 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				OrderSummary orderSummary = mOrderList.get(position);
-				
+				/*
 				String orderDescript = ConstantUtil.getOrderStatusString(
 						orderSummary.getStatus(),
 						orderSummary.getArrivalPayFlag(), 
 						orderSummary.getCommentFlag());
+						*/
+				String orderDescript = orderSummary.getStatusDesc();
 				//如果是货到付款或者支付成功
 				Intent intent;
 				if("1".equals(orderSummary.getArrivalPayFlag())){

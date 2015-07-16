@@ -146,6 +146,5 @@ public class ViewPagerTab extends ViewGroup{
 		public void onPageScrollStateChanged(int arg0) {
 	
 		}
-
 	}
 }

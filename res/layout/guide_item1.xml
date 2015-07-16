@@ -11,8 +11,9 @@
     
     <ImageView 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:scaleType="centerInside"
+        android:layout_weight="980"
         android:src="@drawable/page_1"/>
     <Space 
         android:layout_width="match_parent"

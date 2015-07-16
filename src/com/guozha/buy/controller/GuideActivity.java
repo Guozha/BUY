@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import com.guozha.buy.R;
+import com.guozha.buy.util.DimenUtil;
 
 /**
  * 第一次安装引导用户的Activity
@@ -80,7 +81,7 @@ public class GuideActivity extends Activity{
         //将小圆点放到imageView数组当中  
         for (int i = 0; i < pageViews.size(); i++) {    
             imageView = new ImageView(GuideActivity.this);    
-            imageView.setLayoutParams(new LayoutParams(40, 40));    
+            imageView.setLayoutParams(new LayoutParams(DimenUtil.dp2px(this, 20), DimenUtil.dp2px(this, 20)));    
             imageView.setScaleType(ScaleType.CENTER_INSIDE);
             imageViews[i] = imageView;    
             if (i == 0) {    

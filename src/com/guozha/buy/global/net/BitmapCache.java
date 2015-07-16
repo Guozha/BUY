@@ -248,11 +248,12 @@ public class BitmapCache implements ImageCache{
 			// 根据Tag找到相应的ImageView控件，将下载好的图片显示出来。
 			//TODO
 			//ImageView imageView = (ImageView) mParentView.findViewWithTag(imageUrl);
-			if(bitmap == null){
-				HttpManager.getInstance(mContext).volleyImageRequest(imageUrl, mImageView, 0, 0);
-			}
-			if(mImageView != null && bitmap != null){
-				mImageView.setImageBitmap(bitmap);
+			if(mImageView != null && imageUrl != null){
+				if(bitmap == null){
+					HttpManager.getInstance(mContext).volleyImageRequest(imageUrl, mImageView, 0, 0);
+				}else{
+					mImageView.setImageBitmap(bitmap);
+				}
 			}
 			mTaskCollection.remove(this);
 		}

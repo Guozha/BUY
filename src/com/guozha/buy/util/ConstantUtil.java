@@ -60,6 +60,7 @@ public class ConstantUtil {
 	 * @param key
 	 * @return
 	 */
+	/*
 	public static String getOrderStatus(String key){
 		int type;
 		try{
@@ -75,7 +76,7 @@ public class ConstantUtil {
 		case 2:
 			return "新订单";
 		case 3:
-			return "处理中";
+			return "已接收";
 		case 4:
 			return "称重中";
 		case 5:
@@ -87,6 +88,7 @@ public class ConstantUtil {
 		}
 		return "";
 	}
+	*/
 	
 	/**
 	 * @param payStatus  支付状态
@@ -94,6 +96,7 @@ public class ConstantUtil {
  	 * @param commentStatus 是否评价过
 	 * @return
 	 */
+	/*
 	public static String getOrderStatusString(String status, String arriviPayStatus, String commentStatus){
 		StringBuffer orderStatu = new StringBuffer();
 		orderStatu.append(ConstantUtil.getOrderStatus(status));
@@ -109,4 +112,5 @@ public class ConstantUtil {
 		}
 		return orderStatu.toString();
 	}
+	*/
 }

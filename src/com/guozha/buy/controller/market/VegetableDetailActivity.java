@@ -3,6 +3,7 @@ package com.guozha.buy.controller.market;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Spannable;
@@ -55,6 +56,7 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private TextView mDetailName;
 	private TextView mDetailPrice;
 	private TextView mDetailDescript;
+	private TextView mOriginalPrice;
 	private BitmapCache mBitmapCache = BitmapCache.getInstance();
 	
 	private String mGoodsId = null;
@@ -114,7 +116,6 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 				startActivity(intent);
 			}
 		});
-		setTextColor();
 	}
 	
 	private void initHeader(View header){
@@ -122,6 +123,8 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		mDetailName = (TextView) header.findViewById(R.id.detail_name);
 		mDetailPrice = (TextView) header.findViewById(R.id.vegetable_detail_item_price);
 		mDetailDescript = (TextView) header.findViewById(R.id.vegetable_description);
+		mOriginalPrice = (TextView) header.findViewById(R.id.vegetable_original_price);
+		mOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		//header.findViewById(R.id.cookbook_add_cart_button).setOnClickListener(this);
 		//header.findViewById(R.id.cookbook_collection_button).setOnClickListener(this);
 	}
@@ -179,9 +182,18 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 		//		mDetailImage, R.drawable.default_icon, R.drawable.default_icon);
 		mBitmapCache.loadBitmaps(mDetailImage, mGoodsDetails.getGoodsImg());
 		mDetailName.setText(mGoodsDetails.getGoodsName());
-		mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/" 
-				+ UnitConvertUtil.getSwichedUnit(1000, mGoodsDetails.getUnit()));
+		String originalPrice = "￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getUnitPrice()) + "元/" 
+				+ UnitConvertUtil.getSwichedUnit(1000, mGoodsDetails.getUnit());
 		mDetailDescript.setText(mGoodsDetails.getMemo());
+		if("1".equals(mGoodsDetails.getBargainFlag())){
+			mOriginalPrice.setVisibility(View.VISIBLE);
+			mOriginalPrice.setText(originalPrice);
+			mDetailPrice.setText("￥" + UnitConvertUtil.getSwitchedMoney(mGoodsDetails.getBargainUnitPrice()) + "元/" 
+					+ UnitConvertUtil.getSwichedUnit(1000, mGoodsDetails.getUnit()));
+		}else{
+			mOriginalPrice.setVisibility(View.GONE);
+			mDetailPrice.setText(originalPrice);
+		}
 		setTextColor();
 	}
 	
@@ -198,7 +210,6 @@ public class VegetableDetailActivity extends BaseActivity implements OnClickList
 	private void setTextColor(){
 		String msgTotal = mDetailPrice.getText().toString();
 		SpannableStringBuilder builder = new SpannableStringBuilder(msgTotal);
-		
 		ForegroundColorSpan redSpan = new ForegroundColorSpan(
 				getResources().getColor(R.color.color_app_base_1));
 		int totalSpanSart = msgTotal.indexOf("/");

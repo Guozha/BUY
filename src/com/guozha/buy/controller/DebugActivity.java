@@ -12,6 +12,8 @@ import com.guozha.buy.R;
 import com.guozha.buy.controller.dialog.WeightSelectDialog;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.model.SystemModel;
+import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.ToastUtil;
@@ -33,6 +35,7 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 	public static final String REAL_URL = "http://120.24.211.45:8080/BUY_SERVER/";
 	public static final String REAL_ALI_PAY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
 
+	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,8 +55,6 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 		
 		//转换测试服和正式服
 		findViewById(R.id.switch_http_path).setOnClickListener(this);
-		
-		
 	}
 
 	private void switchHttpPathText() {
@@ -63,6 +64,7 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 		}else{
 			mCurrentHttpPath.setText("当前是测试服");
 		}
+		mSystemModel.requestImagePath(DebugActivity.this);
 	}
 
 	@Override
@@ -102,5 +104,12 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 
+	class MySystemModelResult extends SystemModelResult{
+		@Override
+		public void requestImagePathResult(String imgPath) {
+			if(imgPath == null) return;
+			ConfigManager.getInstance().setImagePath(imgPath);
+		}
+	}
 
 }

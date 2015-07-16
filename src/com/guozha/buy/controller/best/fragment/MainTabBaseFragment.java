@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.controller.BaseFragment;
+import com.guozha.buy.controller.DebugActivity;
+import com.guozha.buy.global.net.RequestParam;
+import com.guozha.buy.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -44,6 +47,15 @@ public abstract class MainTabBaseFragment extends BaseFragment{
 	
 	public void setOnRequestTurnItem(OnRequestTurnItem requestTurnItem){
 		mOnRequestTurnItem = requestTurnItem;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		//测试服提示
+		if(RequestParam.URL.equals(DebugActivity.TEST_URL)){
+			ToastUtil.showToast(getActivity(), "当前是测试服");
+		}
 	}
 	
 	abstract protected String getPageName();

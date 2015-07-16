@@ -67,10 +67,7 @@ public class OrderListAdapter extends BaseAdapter{
 		Date date = orderSummary.getCreateTime();
 		holder.orderTime.setText(mDateFormat.format(date));
 		holder.orderCount.setText("共" + orderSummary.getQuantity() + "件商品，");
-		holder.orderStatus.setText(ConstantUtil.getOrderStatusString(
-				orderSummary.getStatus(),
-				orderSummary.getArrivalPayFlag(), 
-				orderSummary.getCommentFlag()));
+		holder.orderStatus.setText(orderSummary.getStatusDesc());
 		return convertView;
 	}
 	

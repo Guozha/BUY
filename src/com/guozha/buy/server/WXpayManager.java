@@ -31,9 +31,8 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class WXpayManager {
 	//TODO 注意，这里是测试服地址
-	public static String NOTIFY_URL = "http://120.24.220.86:9999/PAY_WECHAT/notify_url.jsp";
+	public static String NOTIFY_URL = "http://120.24.211.45:9999/PAY_WECHAT/notify_url.jsp";
 	private IWXAPI payApi;
-	
 	private String mOrderNum;
 	private String mSubject;
 	//private String mBody;
@@ -46,8 +45,6 @@ public class WXpayManager {
 		mSubject = subject;
 		//mBody = body;
 		mTotalPrice = price;
-		
-		mTotalPrice = 1;
 		req = new PayReq();
 		payApi = WXAPIFactory.createWXAPI(context, null);
 		//第一步：注册APP_ID
@@ -128,8 +125,6 @@ public class WXpayManager {
 		Log.e("orion",sb.toString());
 		return sb.toString();
 	}
-
-	
 
 	private class GetPrepayIdTask extends AsyncTask<Void, Void, Map<String,String>> {
 		private ProgressDialog dialog;

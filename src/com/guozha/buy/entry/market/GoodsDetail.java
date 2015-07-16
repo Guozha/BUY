@@ -20,6 +20,9 @@ public class GoodsDetail implements Serializable{
 	private String prepareEndDate;
 	private String goodsProp;
 	private int arrivalDays;
+	private String bargainFlag;
+	private int bargainUnitPrice;
+	private String endTime;
 	
 	public int getGoodsId() {
 		return goodsId;
@@ -75,6 +78,22 @@ public class GoodsDetail implements Serializable{
 	public void setArrivalDays(int arrivalDays) {
 		this.arrivalDays = arrivalDays;
 	}
-	
-	
+	public String getBargainFlag() {
+		return bargainFlag;
+	}
+	public void setBargainFlag(String bargainFlag) {
+		this.bargainFlag = bargainFlag;
+	}
+	public int getBargainUnitPrice() {
+		return bargainUnitPrice;
+	}
+	public void setBargainUnitPrice(int bargainUnitPrice) {
+		this.bargainUnitPrice = bargainUnitPrice;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 }

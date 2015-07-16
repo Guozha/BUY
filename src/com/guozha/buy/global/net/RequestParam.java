@@ -22,8 +22,7 @@ public class RequestParam {
 	 * 服务器路径
 	 */
 	//正式服
-	public static String URL = DebugActivity.TEST_URL;
-	
+	public static String URL = DebugActivity.REAL_URL;
 	private Map<String, String> mParams = new HashMap<String, String>();
 	
 	private String mParamsPath;

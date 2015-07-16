@@ -11,7 +11,7 @@ public class LogUtil {
 	
 	private static final String TAG = "BUY_TAG";
 	
-	private static final boolean DEBUG = true; //LOG开关
+	private static final boolean DEBUG = false; //LOG开关
 	
     public static void d(String TAG, String msg){  
     	if(!DEBUG) return;

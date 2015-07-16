@@ -28,6 +28,7 @@ import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.Util;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UpdateResponse;
 
 /**
  * 闪屏界面
@@ -120,7 +121,6 @@ public class SplashActivity extends Activity{
 		SplashActivity.this.finish();
 		return;
 		*/
-		
 		Intent intent;
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

@@ -29,7 +29,6 @@ import com.guozha.buy.model.result.UserModelResult;
 import com.guozha.buy.receiver.SMSBroadcastReceiver;
 import com.guozha.buy.server.ValidNumTimer;
 import com.guozha.buy.server.ValidNumTimer.TimerObserver;
-import com.guozha.buy.util.LogUtil;
 import com.guozha.buy.util.RegularUtil;
 import com.guozha.buy.util.ToastUtil;
 

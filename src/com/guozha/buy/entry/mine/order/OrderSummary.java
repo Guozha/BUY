@@ -23,6 +23,7 @@ public class OrderSummary implements Serializable{
 	private String commentFlag;		//评价完成标识
 	private Date aboutArrivalTime; 	//预计到货时间
 	private String status;			//状态
+	private String statusDesc;		//状态描述
 	public int getOrderId() {
 		return orderId;
 	}
@@ -88,5 +89,11 @@ public class OrderSummary implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 }

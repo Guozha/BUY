@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -68,8 +69,11 @@ public class MainActivity extends FragmentActivity{
 			mCurrentItem = 0;
 		}
 		//添加一个fragment
-		getSupportFragmentManager().beginTransaction()
-			.add(R.id.fragment_container, mFragments.get(mCurrentItem)).commit();
+		List<Fragment> fragments = getSupportFragmentManager().getFragments();
+		if(fragments == null || fragments.isEmpty()){
+			getSupportFragmentManager().beginTransaction()
+				.add(R.id.fragment_container, mFragments.get(mCurrentItem)).commit();
+		}
 		initTabIndicators();
 		initYoumeng();
 		mRedCartNumber = findViewById(R.id.main_cart_number_redpoint);

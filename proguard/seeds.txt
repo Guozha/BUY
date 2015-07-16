@@ -503,7 +503,6 @@ com.guozha.buy.R$drawable: int tag_point
 com.guozha.buy.R$drawable: int tag_tejia
 com.guozha.buy.R$drawable: int tb_munion_icon
 com.guozha.buy.R$drawable: int tb_munion_item_selector
-com.guozha.buy.R$drawable: int temp_mpage_tag1
 com.guozha.buy.R$drawable: int text_background
 com.guozha.buy.R$drawable: int text_left_background
 com.guozha.buy.R$drawable: int text_right_background
@@ -1103,6 +1102,7 @@ com.guozha.buy.R$id: int vegetable_cell_specail_price
 com.guozha.buy.R$id: int vegetable_connect_cookbook_list
 com.guozha.buy.R$id: int vegetable_description
 com.guozha.buy.R$id: int vegetable_detail_item_price
+com.guozha.buy.R$id: int vegetable_original_price
 com.guozha.buy.R$id: int viewpager
 com.guozha.buy.R$id: int viewpager_tab
 com.guozha.buy.R$id: int warn_time_text
@@ -1859,20 +1859,14 @@ com.guozha.buy.entry.found.menu.MenuDetail: void setUnitPrice(java.lang.String)
 com.guozha.buy.entry.found.menu.MenuGoods
 com.guozha.buy.entry.found.menu.MenuGoods: int goodsId
 com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String goodsName
-com.guozha.buy.entry.found.menu.MenuGoods: int amount
-com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String unit
-com.guozha.buy.entry.found.menu.MenuGoods: int minAmount
+com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String amount
 com.guozha.buy.entry.found.menu.MenuGoods: MenuGoods()
 com.guozha.buy.entry.found.menu.MenuGoods: int getGoodsId()
 com.guozha.buy.entry.found.menu.MenuGoods: void setGoodsId(int)
 com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String getGoodsName()
 com.guozha.buy.entry.found.menu.MenuGoods: void setGoodsName(java.lang.String)
-com.guozha.buy.entry.found.menu.MenuGoods: int getAmount()
-com.guozha.buy.entry.found.menu.MenuGoods: void setAmount(int)
-com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String getUnit()
-com.guozha.buy.entry.found.menu.MenuGoods: void setUnit(java.lang.String)
-com.guozha.buy.entry.found.menu.MenuGoods: int getMinAmount()
-com.guozha.buy.entry.found.menu.MenuGoods: void setMinAmount(int)
+com.guozha.buy.entry.found.menu.MenuGoods: java.lang.String getAmount()
+com.guozha.buy.entry.found.menu.MenuGoods: void setAmount(java.lang.String)
 com.guozha.buy.entry.found.menu.MenuSeason
 com.guozha.buy.entry.found.menu.MenuSeason: java.lang.String seasoningsName
 com.guozha.buy.entry.found.menu.MenuSeason: java.lang.String seasoningsAmount
@@ -2036,6 +2030,9 @@ com.guozha.buy.entry.market.GoodsDetail: java.lang.String memo
 com.guozha.buy.entry.market.GoodsDetail: java.lang.String prepareEndDate
 com.guozha.buy.entry.market.GoodsDetail: java.lang.String goodsProp
 com.guozha.buy.entry.market.GoodsDetail: int arrivalDays
+com.guozha.buy.entry.market.GoodsDetail: java.lang.String bargainFlag
+com.guozha.buy.entry.market.GoodsDetail: int bargainUnitPrice
+com.guozha.buy.entry.market.GoodsDetail: java.lang.String endTime
 com.guozha.buy.entry.market.GoodsDetail: GoodsDetail()
 com.guozha.buy.entry.market.GoodsDetail: int getGoodsId()
 com.guozha.buy.entry.market.GoodsDetail: void setGoodsId(int)
@@ -2055,6 +2052,12 @@ com.guozha.buy.entry.market.GoodsDetail: java.lang.String getGoodsProp()
 com.guozha.buy.entry.market.GoodsDetail: void setGoodsProp(java.lang.String)
 com.guozha.buy.entry.market.GoodsDetail: int getArrivalDays()
 com.guozha.buy.entry.market.GoodsDetail: void setArrivalDays(int)
+com.guozha.buy.entry.market.GoodsDetail: java.lang.String getBargainFlag()
+com.guozha.buy.entry.market.GoodsDetail: void setBargainFlag(java.lang.String)
+com.guozha.buy.entry.market.GoodsDetail: int getBargainUnitPrice()
+com.guozha.buy.entry.market.GoodsDetail: void setBargainUnitPrice(int)
+com.guozha.buy.entry.market.GoodsDetail: java.lang.String getEndTime()
+com.guozha.buy.entry.market.GoodsDetail: void setEndTime(java.lang.String)
 com.guozha.buy.entry.market.GoodsItemType
 com.guozha.buy.entry.market.GoodsItemType: long serialVersionUID
 com.guozha.buy.entry.market.GoodsItemType: int frontTypeId
@@ -2562,6 +2565,7 @@ com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String finishPayFlag
 com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String commentFlag
 com.guozha.buy.entry.mine.order.OrderSummary: java.util.Date aboutArrivalTime
 com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String status
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String statusDesc
 com.guozha.buy.entry.mine.order.OrderSummary: OrderSummary()
 com.guozha.buy.entry.mine.order.OrderSummary: int getOrderId()
 com.guozha.buy.entry.mine.order.OrderSummary: void setOrderId(int)
@@ -2585,6 +2589,8 @@ com.guozha.buy.entry.mine.order.OrderSummary: java.util.Date getAboutArrivalTime
 com.guozha.buy.entry.mine.order.OrderSummary: void setAboutArrivalTime(java.util.Date)
 com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String getStatus()
 com.guozha.buy.entry.mine.order.OrderSummary: void setStatus(java.lang.String)
+com.guozha.buy.entry.mine.order.OrderSummary: java.lang.String getStatusDesc()
+com.guozha.buy.entry.mine.order.OrderSummary: void setStatusDesc(java.lang.String)
 com.guozha.buy.entry.mine.order.OrderSummaryPage
 com.guozha.buy.entry.mine.order.OrderSummaryPage: long serialVersionUID
 com.guozha.buy.entry.mine.order.OrderSummaryPage: int totalCount

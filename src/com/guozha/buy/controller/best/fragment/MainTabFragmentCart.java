@@ -298,7 +298,7 @@ public class MainTabFragmentCart extends MainTabBaseFragment{
 		mMesgTotal.setText("合计￥" + UnitConvertUtil.getSwitchedMoney(totalPrice));
 		mMesgServerMoney.setText("预计服务费￥" + UnitConvertUtil.getSwitchedMoney(serverFee));
 		gapFreeFee = gapFreeFee < 0 ? 0 : gapFreeFee;
-		if(gapFreeFee == 0){
+		if(serverFee == 0 || gapFreeFee == 0){
 			mMesgFreeGap.setVisibility(View.INVISIBLE);
 		}else{
 			mMesgFreeGap.setVisibility(View.VISIBLE);

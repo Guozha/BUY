@@ -109,7 +109,7 @@ public class GoodsModel extends BaseModel{
 	 * @param addressId
 	 */
 	public void requestGoodsDetail(final Context context, int goodsId, int addressId){
-		RequestParam paramPath = new RequestParam("goods/general/detail")
+		RequestParam paramPath = new RequestParam("v31/goods/general/detail")
 		.setParams("goodsId", goodsId)
 		.setParams("addressId", addressId == -1 ? "" : String.valueOf(addressId));
 		HttpManager.getInstance(context).volleyRequestByPost(

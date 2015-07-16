@@ -104,10 +104,7 @@ public class OrderFinishedFragment extends BaseFragment implements OnScrollListe
 						OrderFinishedFragment.this.getActivity(), OrderGradDetailActivity.class);
 				
 				}
-				intent.putExtra("orderDescript", ConstantUtil.getOrderStatusString(
-						orderSummary.getStatus(),
-						orderSummary.getArrivalPayFlag(), 
-						orderSummary.getCommentFlag()));
+				intent.putExtra("orderDescript", orderSummary.getStatusDesc());
 				intent.putExtra("orderId", orderSummary.getOrderId());
 				startActivityForResult(intent, REQUEST_CODE);
 			}

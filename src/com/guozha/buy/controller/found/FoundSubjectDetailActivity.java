@@ -6,6 +6,8 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,11 +16,13 @@ import android.widget.TextView;
 import com.guozha.buy.R;
 import com.guozha.buy.adapter.FoundSubjectDetailListAdapter;
 import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.controller.MainActivity;
 import com.guozha.buy.entry.found.SubjectDetail;
 import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.FoundModel;
 import com.guozha.buy.model.result.FoundModelResult;
+import com.guozha.buy.server.ShareManager;
 import com.guozha.buy.util.DimenUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -113,6 +117,32 @@ public class FoundSubjectDetailActivity extends BaseActivity{
 			mSubjectDetails.addAll(subjectDetails);
 			mHandler.sendEmptyMessage(HAND_SUBJECT_DETAIL_COMPLETED);
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_detail_actionbar_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			this.finish();
+			break;
+		case R.id.action_share:
+			ShareManager shareManager = new ShareManager(FoundSubjectDetailActivity.this);
+			shareManager.showSharePlatform(this);
+			break;
+		case R.id.action_cart:
+			Intent intent = new Intent(FoundSubjectDetailActivity.this, MainActivity.class);
+			intent.putExtra("fragmentIndex", MainActivity.FRAGMENT_CART_INDEX);
+			intent.putExtra("canback", true);
+			startActivity(intent);
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override
