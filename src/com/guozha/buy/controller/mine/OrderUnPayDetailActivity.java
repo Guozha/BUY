@@ -24,7 +24,6 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.model.BaseModel;
 import com.guozha.buy.model.OrderModel;
 import com.guozha.buy.model.result.OrderModelResult;
-import com.guozha.buy.util.DimenUtil;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.UnitConvertUtil;
 

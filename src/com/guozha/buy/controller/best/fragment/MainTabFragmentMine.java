@@ -128,11 +128,10 @@ public class MainTabFragmentMine extends MainTabBaseFragment implements OnClickL
 	}
 	
 	private void setInfos(){
-		if(mAccountInfo == null) return;
+		if(!isAdded() || mAccountInfo == null) return;
 		mAccountInfoArea.setVisibility(View.VISIBLE);
 		mHeadArea.setBackgroundColor(getResources().getColor(R.color.color_app_base_24));
 		mMineHeadImg.setImageResource(R.drawable.tag_personal);
-		
 		if(mMinePhoneNum == null) return;
 		mMinePhoneNum.setText(mAccountInfo.getMobileNo());
 		if(mMineTickes == null) return;

@@ -20,4 +20,12 @@ public class Keys {
 	public static final String MCH_ID = "1231381501";
 	//API密钥
 	public static final String API_KEY = "hKpHiW4gGgNN7jZF7BxMiGIZvOrRrier";
+	
+	//支付宝回调地址
+	public static final String REAL_ALI_PAY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
+	public static final String TEST_ALI_PAY_URL = "http://120.24.220.86:9999/PAY_ALI/notify_url.jsp";
+	
+	//微信回调地址
+	public static final String REAL_WX_PAY_URL = "http://120.24.211.45:9999/PAY_WECHAT/notify_url.jsp";
+	public static final String TEST_WX_PAY_URL = "http://120.24.220.86:9999/PAY_WECHAT/notify_url.jsp";
 }

@@ -31,7 +31,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class WXpayManager {
 	//TODO 注意，这里是测试服地址
-	public static String NOTIFY_URL = "http://120.24.211.45:9999/PAY_WECHAT/notify_url.jsp";
+	public static String NOTIFY_URL = Keys.REAL_WX_PAY_URL;
 	private IWXAPI payApi;
 	private String mOrderNum;
 	private String mSubject;

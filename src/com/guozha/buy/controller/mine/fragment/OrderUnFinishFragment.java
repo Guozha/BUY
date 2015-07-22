@@ -92,6 +92,7 @@ public class OrderUnFinishFragment extends BaseFragment implements OnScrollListe
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(mOrderList.size() <= position) return;
 				OrderSummary orderSummary = mOrderList.get(position);
 				/*
 				String orderDescript = ConstantUtil.getOrderStatusString(

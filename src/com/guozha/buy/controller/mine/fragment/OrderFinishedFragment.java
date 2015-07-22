@@ -93,6 +93,7 @@ public class OrderFinishedFragment extends BaseFragment implements OnScrollListe
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(mOrderList.size() <= position) return;
 				OrderSummary orderSummary = mOrderList.get(position);
 				Intent intent;
 				if("1".equals(orderSummary.getCommentFlag())){//已完成评价

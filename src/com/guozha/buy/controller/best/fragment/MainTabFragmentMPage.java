@@ -87,6 +87,7 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(mBestMenuItems.size() <= position) return;
 				Intent intent = new Intent(getActivity(), MenuDetailActivity.class);
 				intent.putExtra("menuId", mBestMenuItems.get(position).getMenuId());
 				startActivity(intent);

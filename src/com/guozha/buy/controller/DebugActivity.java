@@ -16,8 +16,10 @@ import com.guozha.buy.model.SystemModel;
 import com.guozha.buy.model.result.SystemModelResult;
 import com.guozha.buy.server.AlipayManager;
 import com.guozha.buy.server.ShareManager;
+import com.guozha.buy.server.WXpayManager;
 import com.guozha.buy.util.ToastUtil;
 import com.guozha.buy.util.YoumengDeviceManager;
+import com.guozha.buy.util.pay.Keys;
 
 /**
  * 用于测试的UI界面
@@ -30,10 +32,8 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 	
 	//测试服
 	public static final String TEST_URL = "http://120.24.220.86:8080/BUY_SERVER/";
-	public static final String TEST_ALI_PAY_URL = "http://120.24.220.86:9999/PAY_ALI/notify_url.jsp";
 	//正式服
 	public static final String REAL_URL = "http://120.24.211.45:8080/BUY_SERVER/";
-	public static final String REAL_ALI_PAY_URL = "http://120.24.211.45:9999/PAY_ALI/notify_url.jsp";
 
 	private SystemModel mSystemModel = new SystemModel(new MySystemModelResult());
 	@Override
@@ -91,10 +91,12 @@ public class DebugActivity extends BaseActivity implements OnClickListener{
 		case R.id.switch_http_path:
 			if(REAL_URL.equals(RequestParam.URL)){
 				RequestParam.URL = TEST_URL;
-				AlipayManager.NOTIFY_URL = TEST_ALI_PAY_URL;
+				AlipayManager.NOTIFY_URL = Keys.TEST_ALI_PAY_URL;
+				WXpayManager.NOTIFY_URL = Keys.TEST_WX_PAY_URL;
 			}else{
 				RequestParam.URL = REAL_URL;
-				AlipayManager.NOTIFY_URL = REAL_ALI_PAY_URL;
+				AlipayManager.NOTIFY_URL = Keys.REAL_ALI_PAY_URL;
+				WXpayManager.NOTIFY_URL = Keys.REAL_WX_PAY_URL;
 			}
 			ConfigManager.getInstance().clearUserInfor();
 			switchHttpPathText();
