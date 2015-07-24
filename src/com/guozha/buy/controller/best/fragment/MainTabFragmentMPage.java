@@ -23,6 +23,7 @@ import com.guozha.buy.adapter.MPageListAdapter;
 import com.guozha.buy.controller.found.MenuDetailActivity;
 import com.guozha.buy.entry.mpage.BestMenuItem;
 import com.guozha.buy.entry.mpage.BestMenuPage;
+import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
@@ -109,7 +110,8 @@ public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrol
 	
 	private void requestBestMenuList(){
 		if(!isLocked){
-			mMenuModel.requestBestMenuList(getActivity(), mCurrentPage + 1);
+			int addressId = ConfigManager.getInstance().getChoosedAddressId();
+			mMenuModel.requestBestMenuList(getActivity(), addressId, mCurrentPage + 1);
 			isLocked = true;
 		}
 	}
