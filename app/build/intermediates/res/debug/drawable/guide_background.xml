@@ -2,4 +2,4 @@
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/background_guide_repeat"
     android:tileMode="repeat"/>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/guide_background.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/guide_background.xml -->

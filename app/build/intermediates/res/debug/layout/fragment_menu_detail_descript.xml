@@ -96,4 +96,4 @@
 	    android:textColor="@color/color_app_base_26"
 	    android:layout_height="wrap_content"/>
 </LinearLayout>
-</ScrollView><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/fragment_menu_detail_descript.xml -->
+</ScrollView><!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/fragment_menu_detail_descript.xml -->

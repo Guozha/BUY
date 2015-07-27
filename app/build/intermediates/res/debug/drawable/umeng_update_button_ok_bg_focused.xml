@@ -2,4 +2,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <gradient android:startColor="#2700EB" android:endColor="#2700EB" android:angle="90"/>
 </shape>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/umeng_update_button_ok_bg_focused.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/umeng_update_button_ok_bg_focused.xml -->

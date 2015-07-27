@@ -26,4 +26,4 @@
         android:id="@+id/list_item_small_cell3"
         layout="@layout/list_item_small_cell"/> 
 </LinearLayout>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_item_cell_maintab_market.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/list_item_cell_maintab_market.xml -->

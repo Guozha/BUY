@@ -13,4 +13,4 @@
   	    android:padding="20dip"
   	    android:background="@drawable/dialogue_background"
   	    android:src="@drawable/weixin_erweima"/>
-</LinearLayout><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/dialog_custom_erweima.xml -->
+</LinearLayout><!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/dialog_custom_erweima.xml -->

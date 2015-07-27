@@ -4,4 +4,4 @@
     <item android:drawable="@drawable/button_checkbox_normal" android:state_enabled="true" android:state_checked="false"/>  
     <item android:drawable="@drawable/button_checkbox_locked" android:state_enabled="false"/>  
 </selector>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/checkbox_style.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/checkbox_style.xml -->

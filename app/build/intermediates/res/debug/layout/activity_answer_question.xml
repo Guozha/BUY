@@ -9,4 +9,4 @@
 	    android:layout_height="match_parent"
 	    android:id="@+id/answer_question_page"/>
 </LinearLayout>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/activity_answer_question.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/activity_answer_question.xml -->

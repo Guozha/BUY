@@ -80,4 +80,4 @@
 	    android:textSize="@dimen/dimen_global_16sp"
 	    android:background="@drawable/setting_logout_btn_bg"/>
 </LinearLayout>
-</ScrollView><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/activity_setting.xml -->
+</ScrollView><!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/activity_setting.xml -->

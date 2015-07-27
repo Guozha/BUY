@@ -33,4 +33,4 @@
 	    android:layout_height="1px"
 	    android:background="@color/color_app_base_27"/>
 </LinearLayout>
-</ScrollView><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/fragment_menu_detail_food.xml -->
+</ScrollView><!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/fragment_menu_detail_food.xml -->

@@ -4,4 +4,4 @@
         android:radius="3dip"/>
     <solid 
         android:color="@color/checkbox_press_bg"/>
-</shape><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/checkbox_pressed_bg.xml -->
+</shape><!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/checkbox_pressed_bg.xml -->

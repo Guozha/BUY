@@ -4,4 +4,4 @@
         	 android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp"/>
     <solid  android:color="#FCFCFC"/>
     <stroke android:color="#333333" android:width=".5dp"/>
-</shape><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/umeng_update_title_bg.xml -->
+</shape><!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/umeng_update_title_bg.xml -->
