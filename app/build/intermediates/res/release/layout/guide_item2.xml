@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/guide_background">
+    
+ 	<Space 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="72"/>
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:scaleType="centerInside"
+        android:layout_weight="980"
+        android:src="@drawable/page_2"/>
+    <Space 
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="228"/>
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/guide_item2.xml -->

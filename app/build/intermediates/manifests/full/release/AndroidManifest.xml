@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.guozha.buy"
+    android:versionCode="301010"
+    android:versionName="3.1.1" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 极光推送所需权限 -->
+    <!-- Required -->
+    <permission
+        android:name="com.guozha.buy.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- Required -->
+    <uses-permission android:name="com.guozha.buy.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+ <!-- since 1.6.0 -->
+
+
+    <!-- 支付宝所需额外权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- TODO 测试相关，发布时需要注释掉 -->
+    <!--
+ <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.guozha.buy" />
+    -->
+    <application
+        android:name="com.guozha.buy.controller.CustomApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- TODO 测试相关，发布时需要注释掉 -->
+        <!-- <uses-library android:name="android.test.runner" /> -->
+
+
+        <!-- *****************************   业务逻辑Activity BEGIN   **************************** -->
+
+
+        <!-- 闪屏界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 主界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 菜场详细列表 -->
+        <activity
+            android:name="com.guozha.buy.controller.market.ListVegetableActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 登录界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 菜品详情 -->
+        <activity
+            android:name="com.guozha.buy.controller.market.VegetableDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 查找界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Translate"
+            android:windowSoftInputMode="stateVisible|adjustPan" >
+        </activity>
+
+        <!-- 设置提醒 -->
+        <activity
+            android:name="com.guozha.buy.controller.SetWarnTimeActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 菜谱分类列表 -->
+        <activity
+            android:name="com.guozha.buy.controller.found.MenuItemListActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 主题详情 -->
+        <activity
+            android:name="com.guozha.buy.controller.found.FoundSubjectDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.guozha.buy.controller.found.MenuDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 设置界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.SettingActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的订单 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.MyOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 推荐有奖 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.SharePraiseActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的收藏 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.MyCollectionActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的菜票 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.MyTicketActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 支付或货到付款，订单详情 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.OrderPayedDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 微信支付回调 -->
+        <activity
+            android:name="com.guozha.buy.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <!-- 未支付订单详情 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.OrderUnPayDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 已完成订单详情 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.OrderGradDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <!-- 行政区选择 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.ChooseCantonActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的地址 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.MyAddressActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 下单界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.cart.PlanceOrderActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <!-- Debug界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.DebugActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <!-- 添加新地址 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.AddAddressActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 意见反馈 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.FeadbackActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 查询结果展示 -->
+        <activity
+            android:name="com.guozha.buy.controller.SearchResultActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 常见问题 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.AnswerQuestionActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 关于我们 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.AboutOurActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 特供预售的支付界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.cart.PreSpecialPayActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 支付界面 -->
+        <activity
+            android:name="com.guozha.buy.controller.cart.PayActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 服务协议 -->
+        <activity
+            android:name="com.guozha.buy.controller.LicenceActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 选择有效菜票 -->
+        <activity
+            android:name="com.guozha.buy.controller.cart.ChooseTicketActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 输入邀请码 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.MyInvateNumActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 引导页 -->
+        <activity
+            android:name="com.guozha.buy.controller.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
+        <!-- 更新 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.UpdateActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 添加地址，选择小区、楼宇 -->
+        <activity
+            android:name="com.guozha.buy.controller.mine.ChooseDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 选择购物车地址 -->
+        <activity
+            android:name="com.guozha.buy.controller.cart.ChooseCartAddressActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- *****************对话框**************** -->
+        <!-- 重量选择对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.WeightSelectDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CommenDialog" >
+        </activity>
+
+        <!-- 提醒登录对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.RemindLoginDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.WeightSelectDialog" />
+
+        <!-- 菜谱收藏分类对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.CollectionRecipeModifyDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.WeightSelectDialog" />
+
+        <!-- 新建分类对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.CreateFolderDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CommenDialog"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+
+        <!-- 选择地址对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.ChooseAddressDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CommenDialog" />
+
+        <!-- 添加购物车动画对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.AddCartAnimDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/AddCartAnimStyle" />
+
+        <!-- 活动规则对话框 -->
+        <activity
+            android:name="com.guozha.buy.controller.dialog.ActiveRuleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CommenDialog" />
+
+        <receiver
+            android:name="com.guozha.buy.alarm.AlarmReceiver"
+            android:process=":remote" />
+
+        <!-- *****************************   业务逻辑Activity END   **************************** -->
+
+
+        <!-- *****************************   友盟分享 BEGIN   **************************** -->
+
+
+        <!-- 分享编辑页 -->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <!-- QQ空间和QQ SSO授权的Activity注册 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID -->
+                <data android:scheme="tencent1103475446" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <!-- 微信回调activity -->
+        <activity
+            android:name="com.guozha.buy.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- *****************************   友盟分享 END   **************************** -->
+
+
+        <!-- *****************************   友盟自动更新 BEGIN   **************************** -->
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <!-- *****************************   友盟自动更新 END   **************************** -->
+
+
+        <!-- *****************************   友盟通用 BEGIN   **************************** -->
+
+
+        <!-- 友盟的ID和渠道 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54ed98dffd98c5184a0006c8" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
+        <!-- *****************************   友盟通用 END   **************************** -->
+
+
+        <!-- *****************************	 极光推送 BEGIN   *************************** -->
+
+
+        <!-- Required -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- Required -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+ <!-- since 1.3.5 -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+ <!-- since 1.3.5 -->
+                <category android:name="com.guozha.buy" />
+ <!-- since 1.3.5 -->
+            </intent-filter>
+ <!-- since 1.3.5 -->
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.guozha.buy" />
+            </intent-filter>
+        </activity>
+
+        <!-- Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
+        <!-- Required SDK核心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+
+        <!-- 自定义接受极光推送的消息 -->
+        <receiver
+            android:name="com.guozha.buy.receiver.JPushMessageReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+
+                <category android:name="com.guozha.buy" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的APK可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+        <!-- 目前这个渠道统计功能的报表还未开放。 -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+
+        <!-- Required. AppKey copied from Portal -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="bc5b0dd35946496a3fd5afe6" />
+
+        <!-- *****************************   极光推送 END    **************************** -->
+
+
+        <!-- *****************************   支付宝相关 BEGIN********************************* -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <!-- ***************************** 	 支付宝相关 END -->
+    </application>
+
+</manifest>

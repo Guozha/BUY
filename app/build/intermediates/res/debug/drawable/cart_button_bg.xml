@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_pressed="true" android:drawable="@color/color_app_base_31"></item>
+    <item android:state_enabled="true" android:state_pressed="false" android:drawable="@color/color_app_base_21"></item>
+    <item android:state_enabled="false" android:drawable="@drawable/button_background_grey"/>
+</selector>
+
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/cart_button_bg.xml -->

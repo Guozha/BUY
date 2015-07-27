@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
+    android:orientation="vertical" >
+    
+	<ListView 
+	    android:id="@+id/my_address_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:divider="@color/color_app_base_27"
+	    android:background="@color/color_app_base_24"
+	    android:dividerHeight="1px"/>
+	<View 
+	    android:layout_below="@id/my_address_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+	
+	<Button 
+	    android:id="@+id/myaddress_add_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:text="添加新地址"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_21"
+	    android:layout_alignParentBottom="true"
+	    android:background="@drawable/nomal_list_item_bg"/>
+	
+	<View 
+	    android:layout_above="@id/myaddress_add_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:layout_marginTop="8dip"
+	    android:background="@color/color_app_base_27"/>
+	
+	<LinearLayout 
+	    android:id="@+id/empty_view"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:gravity="center_horizontal"
+	    android:orientation="vertical">
+	<ImageView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/address_empty"
+	    android:scaleType="centerInside"/>
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="18dip"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_8"
+	    android:text="送菜是要地址的哦"/>
+	</LinearLayout>
+</RelativeLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/activity_my_address.xml -->

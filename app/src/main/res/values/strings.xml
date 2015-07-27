@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">爱掌勺</string>
+
+    <string name="activity_main_tab1_title">精选</string>
+    <string name="activity_main_tab2_title">发现</string>
+    <string name="activity_main_tab3_title">逛菜场</string>
+    <string name="activity_main_tab4_title">购物车</string>
+    <string name="activity_main_tab5_title">我的</string>
+    
+    <string name="list_paging_bottom_text">数据全部加载完毕</string>
+    
+    <!-- activity_login -->
+    <string name="activity_login_phonenum_hint">输入手机号码</string>
+    <string name="activity_login_pwd_hint">输入密码</string>
+    <string name="activity_login_button_text">登录</string>
+    <string name="activity_login_remind_regist_text"><u>去注册</u></string>
+    <string name="activity_login_remind_findpwd_text"><u>忘记密码？</u></string>
+    
+    <!-- activity_regist -->
+    <string name="activity_regist_phonenum_hint">输入手机号码</string>
+    <string name="activity_regist_verify_num_hint">输入验证码</string>
+    <string name="activity_regist_pwd_hint">输入密码</string>
+    <string name="activity_regist_obtain_verify_button_text">获取</string>
+    <string name="activity_regist_protocol_affirm_text">我已阅读并同意《用户协议》</string>
+    <string name="activity_regist_button_text">注册</string>
+    
+    <!-- activity_findpwd -->
+    <string name="activity_findpwd_phonenum_hint">输入手机号码</string>
+    <string name="activity_findpwd_verify_num_hint">输入验证码</string>
+    <string name="activity_findpwd_obtain_verify_button_text">获取</string>
+    <string name="activity_findpwd_pwd_hint">输入密码</string>
+    <string name="activity_findpwd_repeat_pwd_hint">确认密码</string>
+    <string name="activity_findpwd_confirm_button_text">确认</string>
+    
+    <!-- 列表刷新相关 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>  
+    <string name="release_to_refresh">释放立即刷新</string>  
+    <string name="refreshing">正在刷新…</string>  
+    <string name="not_updated_yet">暂未更新过</string>  
+    <string name="updated_at">上次更新于%1$s前</string>  
+    <string name="updated_just_now">刚刚更新</string>  
+    <string name="time_error">时间有问题</string>  
+    
+    <string name="active_rule_string">
+        <Data>
+		<![CDATA[ <html><body>
+				<font color="#8a8584" >1. 发放人应为已注册用户。<br/></font>
+				<font color="#8a8584" >2. 领用人应为未注册用户。<br/></font>
+				<font color="#8a8584" >3. 领用人收货地址不得与发放人收货地址为同一地址，否则果吒有权取消发放人发放”邀请菜票“资格，并收回已发放的奖励菜票。<br/></font>
+				<font color="#8a8584" >4. “邀请菜票”面值5元，订单金额满20元方可使用，长期有效。<br/></font>
+				<font color="#8a8584" >5. 发放人收益：<br/></font>
+				<font color="#8a8584" >a) 邀请收益：每邀请1人，且该人领取后，每5次领取，奖励5元菜票1张（订单金额满20元方可使用，有效期自奖励菜票发放日起1个月）。<br/></font>
+				<font color="#8a8584" >b) 使用收益：本人发出的“邀请菜票”由领用人使用后，奖励5元菜票1张（订单金额满20元方可使用，有效期自奖励菜票发放日起1个月）。<br/></font>
+				<font color="#8a8584" >6. 以上规则解释权归果吒所有。<br/></font>
+				</body>
+				</html> ]]>
+		</Data>
+    </string>
+</resources>
+

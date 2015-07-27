@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_app_base_6"
+    android:paddingBottom="20dip"
+    android:orientation="vertical" >
+    
+	<TextView 
+	    android:id="@+id/search_result_count"
+	    android:layout_width="wrap_content"
+	    android:layout_height="40dip"
+	    android:text="共搜索到0个结果"
+	    android:gravity="center_vertical"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:layout_marginLeft="12dip"
+	    android:textColor="@color/color_app_base_26"/>
+	
+	<com.guozha.buy.view.MultiGridView
+	    android:id="@+id/search_result_list"
+	    android:layout_width="match_parent"
+	    android:numColumns="3"
+	    android:horizontalSpacing="1dip"
+	    android:verticalSpacing="1dip"
+	    android:layout_height="wrap_content"/>
+	
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="40dip"
+	    android:text="相关菜谱"
+	    android:gravity="center_vertical"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:textColor="@color/color_app_base_26"
+	    android:layout_marginLeft="12dip"/>
+	
+	<com.guozha.buy.view.MultiListView
+	    android:id="@+id/search_relate_recipe_list" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"/>
+</LinearLayout>
+</ScrollView>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/activity_search_result.xml -->

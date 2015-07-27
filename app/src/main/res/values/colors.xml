@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- global -->
+    <color name="app_base_text_color">#666666</color> <!-- app默认字体颜色 -->
+    <color name="app_base_nomal_background_color">#f4f4f4</color> <!-- app默认背景 -->
+    
+    <color name="app_base_yellow_color">#ffcc33</color>
+    <color name="app_base_hint_text_color">#bebebe</color>
+    
+    <color name="addcart_float_anim_bg_color">#7f000000</color> <!-- 添加购物车动画背景 -->
+    
+    
+
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <!-- tab bar -->
+    <color name="main_bottom_tab_bg_color">#fefefe</color>
+    <color name="main_bottom_tab_item_bg_color">#df3411</color>
+    
+    <!-- actionBar -->
+	<color name="actionbar_bg_color">#fefefe</color>
+	<color name="actionbar_text_color">#df3411</color>
+	<color name="actionbar_title_color">#ffffff</color>
+	
+	<!-- splash -->
+	<color name="activity_splash_bg_color">#e9a22f</color>
+	<color name="checkbox_press_bg">#60df3411</color>
+	<!-- main_frgment_mpage -->
+	
+	<!-- scroll wheel -->
+	<color name="scroll_wheel_line_color">#e8e8e8</color>
+	
+	<color name="color_app_base_1">#df3411</color>
+	<color name="color_app_base_2">#669999</color>
+	<color name="color_app_base_3">#e5806c</color>
+	<color name="color_app_base_4">#8a8584</color>
+	<color name="color_app_base_5">#fefefe</color>
+	<color name="color_app_base_6">#f0f0f0</color>
+	<color name="color_app_base_7">#dadada</color>
+	<color name="color_app_base_8">#bdbab9</color>
+	<color name="color_app_base_9">#4c4a49</color>
+	<color name="color_app_base_10">#f0f5f5</color>
+	<color name="color_app_base_11">#89cccc</color>
+	<color name="color_app_base_12">#44000000</color>
+	
+	<color name="color_app_base_21">#df3411</color>
+	<color name="color_app_base_22">#878787</color>
+	<color name="color_app_base_23">#f7f7f7</color>
+	<color name="color_app_base_24">#ffffff</color>
+	<color name="color_app_base_25">#383838</color>
+	<color name="color_app_base_26">#787878</color>
+	<color name="color_app_base_27">#e6e6e6</color>
+	<color name="color_app_base_28">#e0e0e0</color>
+	<color name="color_app_base_29">#5cb531</color>
+	<color name="color_app_base_30">#ba9590</color>
+	<color name="color_app_base_31">#e6e6e6</color>
+	<color name="color_app_base_32">#991a00</color>
+	<color name="color_app_base_33">#4b000000</color>
+	<color name="color_app_base_34">#32000000</color>
+	<color name="color_app_base_35">#1a000000</color>
+</resources>

@@ -1,0 +1,152 @@
+package com.guozha.buy.adapter;
+
+import java.util.List;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.guozha.buy.R;
+import com.guozha.buy.controller.dialog.CustomDialog;
+import com.guozha.buy.entry.mine.collection.GoodsListItem;
+import com.guozha.buy.global.ConfigManager;
+import com.guozha.buy.global.net.BitmapCache;
+import com.guozha.buy.model.BaseModel;
+import com.guozha.buy.model.CollectionModel;
+import com.guozha.buy.model.result.CollectionModelResult;
+import com.guozha.buy.util.ToastUtil;
+import com.guozha.buy.util.UnitConvertUtil;
+
+/**
+ * 收集菜品列表适配器
+ * @author PeggyTong
+ *
+ */
+public class CollectionVegetableListAdapter extends BaseAdapter{
+	
+	private LayoutInflater mInflater;
+	
+	private DeleteClickListener mDeletedClickListener;
+	private List<GoodsListItem> mGoodsListItems;
+	private Context mContext;
+	private BitmapCache mBitmapCache;
+	private CollectionModel mCollectionModel;
+	
+	public CollectionVegetableListAdapter(Context context, List<GoodsListItem> goodsListItems, BitmapCache bitmapCache){
+		mContext = context;
+		mDeletedClickListener = new DeleteClickListener();
+		mGoodsListItems = goodsListItems;
+		mInflater = LayoutInflater.from(context);
+		mBitmapCache = bitmapCache;
+		mCollectionModel = new CollectionModel(new MyCollectionModelResult());
+	}
+
+	@Override
+	public int getCount() {
+		if(mGoodsListItems == null) return 0;
+		return mGoodsListItems.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return mGoodsListItems.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+		if(convertView == null){
+			convertView = mInflater.inflate(R.layout.list_fragment_collection_vegetable_item_cell, null);
+			holder = new ViewHolder();
+			holder.goodsIcon = (ImageView) convertView.findViewById(R.id.goods_icon);
+			holder.goodsName = (TextView) convertView.findViewById(R.id.goods_name);
+			holder.goodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
+			holder.deleteButton = (ImageView) convertView.findViewById(R.id.delete_button);
+			holder.deleteButton.setOnClickListener(mDeletedClickListener);
+			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
+		}
+		GoodsListItem goodsItem = mGoodsListItems.get(position);
+		holder.goodsName.setText(goodsItem.getGoodsName());
+		holder.goodsPrice.setText(UnitConvertUtil.getSwitchedMoney(goodsItem.getUnitPrice()) +
+				"元/" + UnitConvertUtil.getSwichedUnit(1000, goodsItem.getUnit()));
+		holder.deleteButton.setTag(goodsItem.getMyGoodsId());
+		holder.goodsIcon.setImageResource(R.drawable.default_160_160);
+		mBitmapCache.loadBitmaps(holder.goodsIcon, goodsItem.getGoodsImg());
+		return convertView;
+	}
+	
+	static class ViewHolder{
+		private ImageView goodsIcon;
+		private ImageView deleteButton;
+		private TextView goodsName;
+		private TextView goodsPrice;
+	}
+	
+	
+	/**
+	 * 删除按钮监听
+	 * @author PeggyTong
+	 *
+	 */
+	class DeleteClickListener implements OnClickListener{
+
+		@Override
+		public void onClick(View view) {
+			final int goodsId = (Integer) view.getTag();
+			final CustomDialog dialog = new CustomDialog(mContext, R.layout.dialog_delete_notify);
+			dialog.setDismissButtonId(R.id.cancel_button);
+			dialog.getViewById(R.id.agree_button).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					requestDeleteVegetable(goodsId);
+					dialog.dismiss();
+				}
+			});
+		}
+	}
+	
+	/**
+	 * 请求删除菜品
+	 * @param goodsId
+	 */
+	private void requestDeleteVegetable(final int goodsId) {
+		String token = ConfigManager.getInstance().getUserToken(mContext);
+		if(token == null) return;
+		mCollectionModel.requestDeletGoodsCollect(mContext, token, goodsId);
+	}
+	
+	private UpdateVegetableListener mUpdateRecipeListener;
+	
+	public interface UpdateVegetableListener{
+		public void update();
+	}
+	
+	public void setOnUpdateVegetableListener(UpdateVegetableListener updateVegetableListener){
+		this.mUpdateRecipeListener = updateVegetableListener;
+	}
+
+	class MyCollectionModelResult extends CollectionModelResult{
+		@Override
+		public void requestDeletGoodsCollectResult(String returnCode, String msg) {
+			if(BaseModel.REQUEST_SUCCESS.equals(returnCode)){
+				if(mUpdateRecipeListener != null){
+					mUpdateRecipeListener.update();
+				}
+			}else{
+				ToastUtil.showToast(mContext, msg);
+			}
+		}
+	}
+}

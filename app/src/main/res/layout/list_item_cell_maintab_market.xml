@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <include 
+        android:id="@+id/list_item_small_cell1"
+        layout="@layout/list_item_small_cell"/>
+    
+    <View 
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_base_27"/>
+    
+    <include 
+        android:id="@+id/list_item_small_cell2"
+        layout="@layout/list_item_small_cell"/> 
+        
+    <View 
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_base_27"/>
+        
+    <include 
+        android:id="@+id/list_item_small_cell3"
+        layout="@layout/list_item_small_cell"/> 
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="48dip"
+	    android:gravity="center_vertical"
+	    android:orientation="horizontal">
+	    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scaleType="centerInside"
+	        android:layout_marginLeft="25dip"
+	        android:src="@drawable/main_folder"/>
+	    
+	    <TextView 
+	        android:id="@+id/collection_recipe_folder_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="我爱吃的"
+	        android:layout_marginLeft="25dip"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"/>
+	</LinearLayout>
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_collection_recipe_modify_item_cell.xml -->

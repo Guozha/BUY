@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_6"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:id="@+id/choose_detail_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+        
+	    <EditText
+	        android:id="@+id/choose_detail_text"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="@null"
+	        android:singleLine="true"
+	        android:hint="如果找不到，请在详细地址中填写"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/app_base_text_color"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:gravity="center_vertical"
+	        android:maxLength="15"
+	        android:inputType="text"/>
+	    
+	     <ImageView
+            android:id="@+id/choose_detail_clear"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            android:src="@drawable/login_wrong_state" />
+    </LinearLayout>
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/color_app_base_7"/>
+    
+	<ListView
+	    android:id="@+id/canton_item_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:divider="@color/color_app_base_7"
+	    android:background="@color/color_app_base_5"
+	    android:dividerHeight="1dip"/>
+	
+	
+	<LinearLayout 
+	    android:id="@+id/other_addr_area"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingLeft="10dip"
+	    android:paddingRight="10dip"
+	    android:orientation="vertical">
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dip"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:textColor="@color/color_app_base_4"
+	        android:text="该地址暂未收录，选择“其他地址”后，在详细地址中输入。"/>
+	    
+	    <Button 
+	        android:id="@+id/other_addr_button"
+	        android:layout_width="130dip"
+	        android:layout_height="40dip"
+	        android:layout_marginTop="30dip"
+	        android:layout_gravity="center_horizontal"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/color_app_base_2"
+	        android:gravity="center"
+	        android:background="@drawable/dialog_g"
+	        android:text="其他地址"/>
+	</LinearLayout>
+</LinearLayout>

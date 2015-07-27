@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/color_app_base_7"/>
+    <item android:state_pressed="false" android:drawable="@color/color_app_base_5"></item>
+</selector>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/white_list_selector_bg.xml -->

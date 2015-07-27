@@ -1,0 +1,140 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- 主题 -->
+    
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/BaseActionBarStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/action_bar_back</item>
+	    <!-- <item name="android:actionBarItemBackground">@drawable/actionbar_item_background</item>   -->    
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="BaseActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/actionbar_bg_color</item>
+        <item name="android:titleTextStyle">@style/BaseActionBarTextStyle</item>
+        <item name="android:backgroundSplit">@android:color/black</item>
+    </style>
+    
+    <style name="BaseActionBarTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/actionbar_text_color</item>
+    </style>
+    
+    <!--样式-->
+
+	<style name="ActionbarMainTitleStyle">
+	    <item name="android:textSize">@dimen/actionbar_title_size</item>
+	    <item name="android:textColor">@color/actionbar_title_color</item>
+	</style>
+	
+	
+	<!-- 重量选择对话框主题 -->
+	<style name="Theme.WeightSelectDialog" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/BottomInOutAnimStyle</item>
+	</style>
+	
+	<!-- 通用对话框主题 -->
+	<style name="Theme.CommenDialog" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+	</style>
+	
+	<!-- 查找主题 -->
+	<style name="Theme.Translate" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!-- 背景模糊显示 -->
+        <item name="android:backgroundDimAmount">0.0</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/RightInOutAnimStyle</item>
+	</style>
+	
+	<style name="AddCartAnimStyle" parent="Theme.Translate">
+	    <item name="android:windowAnimationStyle">@style/noAnimation</item>
+	</style>
+	
+	<style name="noAnimation">  
+        <item name="android:activityOpenEnterAnimation">@null</item>  
+        <item name="android:activityOpenExitAnimation">@null</item>  
+        <item name="android:activityCloseEnterAnimation">@null</item>  
+        <item name="android:activityCloseExitAnimation">@null</item>  
+        <item name="android:taskOpenEnterAnimation">@null</item>  
+        <item name="android:taskOpenExitAnimation">@null</item>  
+        <item name="android:taskCloseEnterAnimation">@null</item>  
+        <item name="android:taskCloseExitAnimation">@null</item> 
+        <item name="android:taskToFrontEnterAnimation">@null</item>  
+        <item name="android:taskToFrontExitAnimation">@null</item> 
+        <item name="android:taskToBackEnterAnimation">@null</item>  
+        <item name="android:taskToBackExitAnimation">@null</item>  
+    </style>  
+	
+	<!-- 逛菜场菜单动画 -->
+    <style name="BottomInOutAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/umeng_socialize_slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_weight_select_out_from_bottom</item>
+    </style> 	
+    
+    <style name="RightInOutAnimStyle">
+          <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+	
+    <style name="CheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+    
+    <!-- Switch开关样式 -->
+    <style name="switch_button_style">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">right</item>
+    </style>
+    
+    <!-- 我的界面列表 -->
+    <style name="mine_menu_list_area">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:background">@drawable/nomal_list_item_bg</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="mine_menu_list_text">
+        <item name="android:textSize">@dimen/dimen_global_14sp</item>
+        <item name="android:textColor">@color/color_app_base_26</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">8dip</item>
+    </style>
+    
+    <style name="RatingBarStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
+        <item name="android:minHeight">27dp</item>
+        <item name="android:maxHeight">30dp</item>
+    </style>
+</resources>

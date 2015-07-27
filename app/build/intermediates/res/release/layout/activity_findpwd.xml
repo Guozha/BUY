@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
+    android:orientation="vertical" >
+       
+   <!-- 手机号码 -->
+   <LinearLayout 
+        android:id="@+id/findpwd_phone_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+        
+	    <EditText
+	        android:id="@+id/findpwd_phonenum"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="@null"
+	        android:singleLine="true"
+	        android:hint="@string/activity_findpwd_phonenum_hint"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
+	        android:gravity="center_vertical"
+	        android:maxLength="15"
+	        android:inputType="phone"/>
+	    
+	     <ImageView
+            android:id="@+id/findpwd_phonenum_clear"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            android:src="@drawable/login_wrong_state" />
+    </LinearLayout>
+    
+    <!-- 验证码 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+	    <LinearLayout 
+	        android:id="@+id/findpwd_validenum_input_area"
+	        android:layout_width="0dip"
+	        android:layout_weight="1.0"
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal"
+	        android:background="@drawable/text_left_background"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip">
+	
+	        <EditText
+		        android:id="@+id/findpwd_validenum"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="@string/activity_findpwd_verify_num_hint"
+		        android:textColorHint="@color/app_base_hint_text_color"
+		        android:textSize="@dimen/dimen_global_16sp"
+		        android:textColor="@color/app_base_text_color"
+		        android:singleLine="true"
+		        android:background="@null"
+		        android:gravity="center_vertical"
+		        android:layout_gravity="center_vertical"
+		        android:maxLength="15"
+		        android:inputType="number"/>
+	    </LinearLayout>
+	    <Button 
+	            android:id="@+id/findpwd_obtain_validenum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:paddingLeft="20dip"
+	            android:paddingRight="20dip"
+	            android:layout_gravity="center_vertical"
+	            android:background="@drawable/text_right_background"
+	            android:text="@string/activity_findpwd_obtain_verify_button_text"
+	            android:textSize="@dimen/dimen_global_16sp"
+	            android:textColor="#ffffff"
+	            android:gravity="center"/>
+    </LinearLayout>
+    
+    <!-- 密码 -->
+    <LinearLayout 
+        android:id="@+id/findpwd_pwd_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+	     
+	    <EditText
+	        android:id="@+id/findpwd_pwd"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1.0"
+	        android:hint="@string/activity_findpwd_pwd_hint"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/app_base_text_color"
+	        android:singleLine="true"
+	        android:background="@null"
+	        android:maxLength="18"
+	        android:gravity="center_vertical"
+	        android:inputType="textPassword"/>
+	    
+	     <ImageView
+	        android:id="@+id/findpwd_pwd_clear"
+	        android:layout_width="24dip"
+	        android:layout_height="24dip"
+	        android:scaleType="centerInside"
+	        android:visibility="invisible"
+	        android:src="@drawable/login_wrong_state" />
+    </LinearLayout>
+    
+    <!-- 确认密码 -->
+    <LinearLayout 
+        android:id="@+id/findpwd_repeat_pwd_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+	     
+	    <EditText
+	        android:id="@+id/findpwd_repeat_pwd"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1.0"
+	        android:hint="@string/activity_findpwd_repeat_pwd_hint"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:textColor="@color/app_base_text_color"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:singleLine="true"
+	        android:background="@null"
+	        android:maxLength="18"
+	        android:gravity="center_vertical"
+	        android:inputType="textPassword"/>
+	    
+	     <ImageView
+	        android:id="@+id/findpwd_repeat_pwd_clear"
+	        android:layout_width="24dip"
+	        android:layout_height="24dip"
+	        android:scaleType="centerInside"
+	        android:visibility="invisible"
+	        android:src="@drawable/login_wrong_state" />
+    </LinearLayout>
+    
+    <!-- 确认按钮 -->
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:text="@string/activity_findpwd_confirm_button_text"
+        android:textSize="@dimen/dimen_global_18sp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dip"
+        android:background="@drawable/nomal_button_nomal_bg"/>
+
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/activity_findpwd.xml -->

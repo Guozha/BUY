@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dip"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:background="@drawable/dialogue_background"
+    android:orientation="vertical" >
+    
+	<TextView 
+	    android:layout_marginTop="18dip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:singleLine="true"
+	    android:ellipsize="end"
+	    android:text="设置头像"/>
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dip"
+        android:layout_marginBottom="8dip"
+        android:orientation="horizontal">
+        
+        <Button 
+            android:id="@+id/album_button"
+            android:layout_width="130dip"
+            android:layout_height="40dip"
+            android:text="相册"
+            android:textColor="@color/color_app_base_5"
+            android:textSize="@dimen/dimen_global_16sp"
+            android:background="@drawable/grey_button_nomal_bg"/>
+        
+       <Button 
+            android:id="@+id/photograph_button"
+            android:layout_marginLeft="20dip"
+            android:layout_width="130dip"
+            android:layout_height="40dip"
+            android:text="拍照"
+            android:textColor="@color/color_app_base_5"
+            android:background="@drawable/nomal_button_nomal_bg"
+            android:textSize="@dimen/dimen_global_16sp"/>
+    </LinearLayout>
+</LinearLayout><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/dialog_set_head.xml -->

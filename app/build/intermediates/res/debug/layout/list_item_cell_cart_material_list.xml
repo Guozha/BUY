@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="40dp"
+		    android:orientation="horizontal"
+		    android:background="@color/color_app_base_5"
+		    android:paddingLeft="18dip"
+		    android:gravity="center_vertical">
+		    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	      	android:scaleType="centerInside"
+	      	android:paddingLeft="8dip"
+	      	android:paddingRight="8dip"
+	        android:src="@drawable/main_spot_8px"/>
+	    
+	    <TextView 
+	        android:id="@+id/cart_list_cell_material_title"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="西红柿炒鸡蛋"
+	        android:gravity="center_vertical|left"
+	        android:textColor="@color/color_app_base_4"
+	        android:textSize="@dimen/dimen_global_14sp"
+	        android:singleLine="true"
+	        android:layout_marginRight="10dip"
+	        android:ellipsize="end"/>
+	</LinearLayout>
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_item_cell_cart_material_list.xml -->

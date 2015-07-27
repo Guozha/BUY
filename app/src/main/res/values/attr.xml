@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- TabBarItem -->
+    <declare-styleable name="TabBarItem">
+	    <attr name="checked_item" format="boolean"></attr>
+	    <attr name="nomal_icon" format="reference"></attr>
+	    <attr name="check_icon" format="reference"></attr>
+	    <attr name="text" format="string"></attr>
+	    <attr name="text_size" format="dimension"></attr>
+	    <attr name="nomal_color" format="color"></attr>
+	    <attr name="check_color" format="color"></attr>
+    </declare-styleable>
+    
+    <!-- ViewPagerTab -->
+    <declare-styleable name="ViewPagerTab">
+        <attr name="tab_num" format="enum">
+            <enum name="num2" value="2"/>
+            <enum name="num3" value="3"/>
+            <enum name="num4" value="4"/>
+        </attr>
+    </declare-styleable>
+    
+</resources>

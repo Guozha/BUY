@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_33"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/select_weight_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="340dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_app_base_5"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="45dip"
+            android:text="选择收藏夹"
+            android:textColor="@color/color_app_base_1"
+            android:gravity="center"
+            android:background="@color/color_app_base_5"
+            android:textSize="@dimen/dimen_global_16sp"/>
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_app_base_7"/>
+        <ListView 
+            android:id="@+id/collection_recipe_modify_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/color_app_base_7"
+            android:dividerHeight="1dip"/>
+         <View 
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_app_base_7"/>
+        <TextView 
+            android:id="@+id/create_new_class"
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
+            android:text="新建文件夹"
+            android:gravity="center"
+            android:drawableLeft="@drawable/main_folder_add"
+            android:drawablePadding="20dip"
+            android:background="@color/color_app_base_5"
+            android:textColor="@color/color_app_base_2"
+            android:textSize="@dimen/dimen_global_14sp"/>
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_app_base_7"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/select_weight_free_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/select_weight_bottom_layout" />
+
+</RelativeLayout>

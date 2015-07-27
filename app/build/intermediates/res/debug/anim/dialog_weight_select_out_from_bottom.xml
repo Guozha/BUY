@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="300">
+<translate 
+    android:fromXDelta="0.0%"
+    android:fromYDelta="0.0%"
+    android:toXDelta="0.0%"
+    android:interpolator="@android:anim/accelerate_interpolator"
+    android:toYDelta="100.0%" />
+<alpha 
+    android:fromAlpha="0.5"
+    android:toAlpha="0.1"/>
+</set>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/anim/dialog_weight_select_out_from_bottom.xml -->

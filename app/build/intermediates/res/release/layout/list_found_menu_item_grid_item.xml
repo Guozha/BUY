@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_item_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/dimen_global_12sp"
+    android:textColor="@color/color_app_base_26"
+    android:background="@drawable/found_menutype_bg"
+    android:gravity="center"
+    android:ellipsize="end"
+    android:singleLine="true"
+    android:padding="10dip"/>
+
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_found_menu_item_grid_item.xml -->

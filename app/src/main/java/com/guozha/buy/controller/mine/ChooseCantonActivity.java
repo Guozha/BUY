@@ -1,0 +1,100 @@
+package com.guozha.buy.controller.mine;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.guozha.buy.R;
+import com.guozha.buy.controller.BaseActivity;
+import com.guozha.buy.entry.mine.address.Country;
+import com.guozha.buy.model.UserModel;
+import com.guozha.buy.model.result.UserModelResult;
+
+/**
+ * 选择行政区
+ * @author PeggyTong
+ *
+ */
+public class ChooseCantonActivity extends BaseActivity{
+	
+	public static final String BUNDLE_DATA = "countrys";
+	
+	private static final int HAND_AREA_COMPLETED = 0x0001;
+	private List<Country> mCountrys;
+	private ListView mCantonList;	
+	private UserModel mUserModel = new UserModel(new MyUserModelResult());
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case HAND_AREA_COMPLETED:
+				if(mCantonList == null) return;
+				List<String> cantons = new ArrayList<String>();
+				for(int i = 0; i < mCountrys.size(); i++){
+					cantons.add(mCountrys.get(i).getAreaName());
+				}
+				mCantonList.setAdapter(new ArrayAdapter<String>(
+						ChooseCantonActivity.this, R.layout.list_canton_item_cell, cantons));
+				break;
+			}
+		};
+	};
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.activity_choose_canton);
+		customActionBarStyle("选择小区/写字楼");
+
+		initView();
+		requestCountryList();
+	
+		setResult(0, null);
+	}
+
+	/**
+	 * 初始化View
+	 */
+	private void initView() {
+		mCantonList = (ListView) findViewById(R.id.canton_item_list);
+		mCantonList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = getIntent();
+				intent.putExtra("areaId", mCountrys.get(position).getAreaId());
+				intent.putExtra("areaName", mCountrys.get(position).getAreaName());
+				setResult(0, intent);
+				ChooseCantonActivity.this.finish();
+			}
+		});
+	}
+	
+	/**
+	 * 请求区列表
+	 */
+	private void requestCountryList(){
+		mUserModel.requestCountryList(this);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+	
+	class MyUserModelResult extends UserModelResult{
+		@Override
+		public void requestCountryListResult(List<Country> countrys) {
+			mCountrys = countrys;
+			handler.sendEmptyMessage(HAND_AREA_COMPLETED);
+		}
+	}
+}

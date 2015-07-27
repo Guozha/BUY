@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="@color/color_app_base_1"
+        android:textSize="18sp"
+        android:layout_marginLeft="18dip"
+        android:gravity="center_vertical"
+        android:text="逛菜场"/>
+    
+    <Space 
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+	<TextView 
+	    android:id="@+id/actionbar_address"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:drawableLeft="@drawable/action_bar_location"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:layout_marginLeft="20dip"
+	    android:gravity="center_vertical"
+	    android:drawablePadding="5dip"
+	    android:ellipsize="end"
+	    android:maxWidth="120dip"
+	    android:singleLine="true"
+	    android:text="添加地址"/>
+	
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/actionbar_market_custom_view.xml -->

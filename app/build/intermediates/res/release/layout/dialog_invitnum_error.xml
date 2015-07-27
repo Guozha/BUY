@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dip"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialogue_background"
+    android:orientation="vertical" >
+    
+	<TextView 
+	    android:layout_marginTop="18dip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:singleLine="true"
+	    android:ellipsize="end"
+	    android:text="提示"/>
+	
+	<TextView 
+	    android:layout_marginTop="14dip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:paddingLeft="20dip"
+	    android:paddingRight="20dip"
+	    android:layout_marginBottom="18dip"
+	    android:text="您输入的邀请码错误，如果没有可以不输入"/>
+
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/dialog_invitnum_error.xml -->

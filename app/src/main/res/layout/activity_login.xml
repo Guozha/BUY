@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
+    android:background="@color/color_app_base_6"
+    android:orientation="vertical" >
+    
+   <!-- 手机号码 -->
+   <LinearLayout 
+        android:id="@+id/login_phone_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/text_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+        
+	    <EditText
+	        android:id="@+id/login_phonenum"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:background="@null"
+	        android:singleLine="true"
+	        android:hint="@string/activity_login_phonenum_hint"
+	        android:textSize="@dimen/dimen_global_16sp"
+	        android:textColor="@color/app_base_text_color"
+	        android:textColorHint="@color/app_base_hint_text_color"
+	        android:gravity="center_vertical"
+	        android:maxLength="15"
+	        android:inputType="phone"/>
+	    
+	     <ImageView
+            android:id="@+id/login_phonenum_clear"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            android:src="@drawable/login_wrong_state" />
+    </LinearLayout>
+    
+    <!-- 验证码 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+           <LinearLayout 
+               android:id="@+id/login_validenum_input_area"
+	           android:layout_width="0dip"
+               android:layout_weight="1.0"
+               android:layout_height="50dip"
+               android:orientation="horizontal"
+               android:gravity="center_horizontal"
+               android:background="@drawable/text_left_background"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip">
+       
+               <EditText
+                       android:id="@+id/login_validenum"
+                       android:layout_width="match_parent"
+                       android:layout_height="50dip"
+                       android:hint="@string/activity_regist_verify_num_hint"
+                       android:textColorHint="@color/app_base_hint_text_color"
+                       android:textSize="@dimen/dimen_global_16sp"
+                       android:singleLine="true"
+                       android:background="@null"
+                       android:textColor="@color/app_base_text_color"
+                       android:gravity="center_vertical"
+                       android:layout_gravity="center_vertical"
+                       android:maxLength="15"
+                       android:inputType="number"/>
+           </LinearLayout>
+           <Button 
+                   android:id="@+id/login_obtain_validenum"
+                   android:layout_width="120dip"
+                   android:layout_height="50dip"
+                   android:layout_gravity="center_vertical"
+                   android:textSize="@dimen/dimen_global_16sp"
+                   android:gravity="center"/>
+    </LinearLayout>
+    
+     <!-- 邀请码 -->
+    <!-- 
+    <LinearLayout 
+        android:id="@+id/login_invitation_input_area"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/main_dialog_background"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+            
+           <EditText
+               android:id="@+id/login_invitation"
+               android:layout_width="0dip"
+               android:layout_height="wrap_content"
+               android:layout_weight="1.0"
+               android:hint="输入邀请码获得菜票（此项可不填）"
+               android:textColorHint="@color/app_base_hint_text_color"
+               android:textColor="@color/app_base_text_color"
+               android:textSize="@dimen/dimen_global_16sp"
+               android:singleLine="true"
+               android:background="@null"
+               android:maxLength="18"
+               android:gravity="center_vertical"
+               android:inputType="number"/>
+    </LinearLayout>
+     -->
+    <!-- 同意协议 -->
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="40dip"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/login_protocal_affirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CheckBoxTheme"
+            android:checked="true"/>
+        <TextView 
+            android:id="@+id/login_licence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_22"
+            android:text="@string/activity_regist_protocol_affirm_text"/>
+    </LinearLayout>
+    
+    <!-- 登录按钮 -->
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:text="@string/activity_login_button_text"
+        android:textSize="@dimen/dimen_global_18sp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dip"
+        android:background="@drawable/nomal_button_nomal_bg"/>
+</LinearLayout>

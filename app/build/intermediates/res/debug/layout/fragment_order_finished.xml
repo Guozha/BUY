@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_6">
+
+	<ListView 
+	    android:id="@+id/order_finished_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="8dip"
+	    android:background="@color/color_app_base_5"
+	    android:divider="@color/color_app_base_6"
+	    android:dividerHeight="8dip"/>
+	
+	<LinearLayout 
+	    android:id="@+id/empty_view"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:gravity="center_horizontal"
+	    android:orientation="vertical">
+	<ImageView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/order_empty"
+	    android:scaleType="centerInside"/>
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="18dip"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_8"
+	    android:text="噗，您还没下过单呢"/>
+	</LinearLayout>
+</RelativeLayout>
+
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/fragment_order_finished.xml -->

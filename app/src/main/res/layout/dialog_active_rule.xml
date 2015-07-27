@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_base_33"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/active_rule_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="340dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_app_base_5"
+        android:gravity="center_horizontal"
+        android:padding="15dip"
+        android:orientation="vertical" >
+		
+        <TextView 
+            android:id="@+id/rule_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邀请有礼规则"
+            android:textSize="@dimen/dimen_global_14sp"
+            android:textColor="@color/color_app_base_9"/>
+        
+        <TextView 
+            android:id="@+id/rule_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/active_rule_free_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/select_weight_bottom_layout" />
+
+</RelativeLayout>

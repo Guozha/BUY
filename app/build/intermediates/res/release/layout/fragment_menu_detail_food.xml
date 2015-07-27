@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:scrollbars="none"
+    android:background="@color/color_app_base_23"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_app_base_23"
+    android:orientation="vertical" >
+    
+    <!-- 食材 -->
+	<com.guozha.buy.view.MultiListView 
+	    android:id="@+id/menu_detail_food_list"
+	    android:layout_width="match_parent"
+	    android:divider="@color/color_app_base_27"
+	    android:dividerHeight="1px"
+	    android:layout_height="wrap_content"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+	<!-- 辅料 -->
+	<com.guozha.buy.view.MultiListView 
+	    android:id="@+id/menu_detail_soup_list"
+	    android:layout_width="match_parent"
+	    android:divider="@color/color_app_base_27"
+	    android:dividerHeight="1px"
+	    android:layout_height="wrap_content"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+</LinearLayout>
+</ScrollView><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/fragment_menu_detail_food.xml -->

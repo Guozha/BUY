@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dip"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialogue_background"
+    android:orientation="vertical" >
+    
+	<TextView 
+	    android:layout_marginTop="18dip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="@dimen/dimen_global_16sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:singleLine="true"
+	    android:ellipsize="end"
+	    android:text="版本更新"/>
+	
+	<TextView 
+	    android:layout_marginTop="14dip"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="@dimen/dimen_global_14sp"
+	    android:textColor="@color/color_app_base_4"
+	    android:paddingLeft="20dip"
+	    android:paddingRight="20dip"
+	    android:text="您确定要更新到最新版本吗？"/>
+	
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dip"
+        android:layout_marginBottom="8dip"
+        android:orientation="horizontal">
+        
+        <Button 
+            android:id="@+id/cancel_button"
+            android:layout_width="130dip"
+            android:layout_height="40dip"
+            android:text="取消"
+            android:textColor="@color/color_app_base_5"
+            android:textSize="@dimen/dimen_global_16sp"
+            android:background="@drawable/grey_button_nomal_bg"/>
+        
+       <Button 
+            android:id="@+id/agree_button"
+            android:layout_marginLeft="20dip"
+            android:layout_width="130dip"
+            android:layout_height="40dip"
+            android:text="确定"
+            android:textColor="@color/color_app_base_5"
+            android:background="@drawable/nomal_button_nomal_bg"
+            android:textSize="@dimen/dimen_global_16sp"/>
+    </LinearLayout>
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/dialog_version_update.xml -->

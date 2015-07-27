@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_app_base_27"/>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="80dip"
+	    android:gravity="center_vertical"
+	    android:orientation="horizontal">
+	    
+	    <LinearLayout 
+	        android:layout_width="0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_marginLeft="18dip"
+	        android:gravity="center_vertical"
+	        android:orientation="vertical">
+	        
+	        <TextView 
+	            android:id="@+id/order_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="4月1日 14：23"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+	        
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_marginTop="12dip">
+	            
+	            <TextView 
+	            android:id="@+id/order_product_count"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="共%d件商品，"
+	            android:textColor="@color/color_app_base_4"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+	            
+	            <TextView 
+	            android:id="@+id/order_status"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="已支付，预计%d月%d号送达"
+	            android:singleLine="true"
+	            android:ellipsize="end"
+	            android:textColor="@color/color_app_base_1"
+	            android:textSize="@dimen/dimen_global_14sp"/>
+	        </LinearLayout>
+	        
+	    </LinearLayout>
+	    
+	    <ImageView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:scaleType="centerInside"
+	        android:paddingLeft="18dip"
+	        android:paddingRight="18dip"
+	        android:src="@drawable/button_next"/>
+	</LinearLayout>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="1px"
+	    android:background="@color/color_app_base_27"/>
+</LinearLayout>
+<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_order_item_cell.xml -->
