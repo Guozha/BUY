@@ -34,4 +34,4 @@
         android:layout_above="@+id/select_weight_bottom_layout" />
 
 </RelativeLayout>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/dialog_active_rule.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/dialog_active_rule.xml -->

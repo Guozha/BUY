@@ -3,4 +3,4 @@
     <item android:state_pressed="true" android:drawable="@drawable/subject_detail_goodsdetail_btn_pressed_bg"></item>
     <item android:state_pressed="false" android:drawable="@drawable/subject_detail_goodsdetail_btn_nomal_bg"></item>
 </selector>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/subject_detail_goodsdetail_btn_bg.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/subject_detail_goodsdetail_btn_bg.xml -->

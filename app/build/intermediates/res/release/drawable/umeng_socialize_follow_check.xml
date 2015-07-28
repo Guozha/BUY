@@ -4,4 +4,4 @@
     <item android:drawable="@drawable/umeng_socialize_follow_off" android:state_checked="false"/>
     <item android:drawable="@drawable/umeng_socialize_follow_on" android:state_checked="true"/>
 
-</selector><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/umeng_socialize_follow_check.xml -->
+</selector><!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/umeng_socialize_follow_check.xml -->

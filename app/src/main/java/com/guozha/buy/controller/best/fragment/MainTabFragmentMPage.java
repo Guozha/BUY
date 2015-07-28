@@ -1,8 +1,5 @@
 package com.guozha.buy.controller.best.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +24,9 @@ import com.guozha.buy.global.ConfigManager;
 import com.guozha.buy.global.net.BitmapCache;
 import com.guozha.buy.model.MenuModel;
 import com.guozha.buy.model.result.MenuModelResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainTabFragmentMPage extends MainTabBaseFragment implements OnScrollListener{
 	

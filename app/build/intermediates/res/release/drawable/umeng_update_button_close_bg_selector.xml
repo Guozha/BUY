@@ -8,4 +8,4 @@
 	<item android:state_focused="true"
 		  android:drawable="@drawable/umeng_update_close_bg_tap" />
 </selector>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/umeng_update_button_close_bg_selector.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/umeng_update_button_close_bg_selector.xml -->

@@ -28,4 +28,4 @@
           android:state_enabled="true"
           android:drawable="@drawable/umeng_update_btn_check_on_holo_light" />
 </selector>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/umeng_update_button_check_selector.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/umeng_update_button_check_selector.xml -->

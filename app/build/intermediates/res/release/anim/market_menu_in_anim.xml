@@ -4,4 +4,4 @@
     android:fromYDelta="-100%p"
     android:interpolator="@android:anim/accelerate_interpolator"
     android:toYDelta="0%p" />
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/anim/market_menu_in_anim.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/anim/market_menu_in_anim.xml -->

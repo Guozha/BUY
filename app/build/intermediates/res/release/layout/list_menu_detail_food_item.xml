@@ -35,4 +35,4 @@
 	    android:background="@drawable/checkbox_bg"
 	    android:checked="true"/>
 </LinearLayout>
-<!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/layout/list_menu_detail_food_item.xml -->
+<!-- From: file:/H:/GitHub/BUY/app/src/main/res/layout/list_menu_detail_food_item.xml -->

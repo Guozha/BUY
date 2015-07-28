@@ -8,6 +8,6 @@ public final class BuildConfig {
   public static final String APPLICATION_ID = "com.guozha.buy";
   public static final String BUILD_TYPE = "release";
   public static final String FLAVOR = "";
-  public static final int VERSION_CODE = 301010;
-  public static final String VERSION_NAME = "3.1.1";
+  public static final int VERSION_CODE = 300010;
+  public static final String VERSION_NAME = "3.0.1";
 }

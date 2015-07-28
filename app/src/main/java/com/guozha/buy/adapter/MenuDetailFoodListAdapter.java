@@ -1,9 +1,5 @@
 package com.guozha.buy.adapter;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +12,10 @@ import android.widget.TextView;
 
 import com.guozha.buy.R;
 import com.guozha.buy.entry.found.menu.MenuGoods;
-import com.guozha.buy.util.UnitConvertUtil;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 菜谱详情-食材  适配器
@@ -30,6 +29,7 @@ public class MenuDetailFoodListAdapter extends BaseAdapter implements OnCheckedC
 	private boolean mCanChoose;
 	private Set<String> mCheckedId;
 	public MenuDetailFoodListAdapter(Context context, boolean canChoose, List<MenuGoods> menuGoods){
+		if(context == null) return;
 		mInflater = LayoutInflater.from(context);
 		mMenuGoodss = menuGoods;
 		mCanChoose = canChoose;

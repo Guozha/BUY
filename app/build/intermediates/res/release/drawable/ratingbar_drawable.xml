@@ -6,4 +6,4 @@
             android:drawable="@drawable/button_star_normal"></item>
             <item android:id="@+android:id/progress"
     android:drawable="@drawable/button_star_pressed"></item>
-</layer-list><!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/drawable/ratingbar_drawable.xml -->
+</layer-list><!-- From: file:/H:/GitHub/BUY/app/src/main/res/drawable/ratingbar_drawable.xml -->

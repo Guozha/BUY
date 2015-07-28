@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="actionbar_bg_color">#fefefe</color>
     <color name="actionbar_text_color">#df3411</color>
@@ -42,13 +42,13 @@
     <color name="main_bottom_tab_bg_color">#fefefe</color>
     <color name="main_bottom_tab_item_bg_color">#df3411</color>
     <color name="scroll_wheel_line_color">#e8e8e8</color>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/tb_munion_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/tb_munion_strings.xml -->
     <eat-comment/>
     <color name="tb_munion_item_force">#e3e3e3</color>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="transparent">#00000000</color>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_colors.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_colors.xml -->
     <eat-comment/>
     <color name="umeng_socialize_color_group">#2c3035</color>
     <color name="umeng_socialize_comments_bg">#F4F4F4</color>
@@ -63,18 +63,18 @@
     <color name="umeng_socialize_text_title">#464f61</color>
     <color name="umeng_socialize_text_ucenter">#595959</color>
     <color name="umeng_socialize_ucenter_bg">#EEEEEE</color>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="white">#ffffff</color>
     <declare-styleable name="TabBarItem"><attr format="boolean" name="checked_item"/><attr format="reference" name="nomal_icon"/><attr format="reference" name="check_icon"/><attr format="string" name="text"/><attr format="dimension" name="text_size"/><attr format="color" name="nomal_color"/><attr format="color" name="check_color"/></declare-styleable>
     <declare-styleable name="ViewPagerTab"><attr format="enum" name="tab_num"><enum name="num2" value="2"/><enum name="num3" value="3"/><enum name="num4" value="4"/></attr></declare-styleable>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/dimen.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/dimen.xml -->
     <eat-comment/>
     <dimen name="actionbar_title_size">18sp</dimen>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <dimen name="alphabet_size">12dip</dimen>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/dimen.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/dimen.xml -->
     <eat-comment/>
     <dimen name="app_base_text_size">18sp</dimen>
     <dimen name="app_big_text_size">18sp</dimen>
@@ -90,11 +90,11 @@
     <dimen name="dimen_global_30sp">30sp</dimen>
     <dimen name="dimen_global_39sp">39sp</dimen>
     <dimen name="dimen_global_60sp">60sp</dimen>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <dimen name="umeng_socialize_pad_window_height">350dip</dimen>
     <dimen name="umeng_socialize_pad_window_width">580dip</dimen>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_update_string.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_update_string.xml -->
     <eat-comment/>
     <string name="UMAppUpdate">App updating</string>
     <string name="UMBreak_Network">Please make sure you are connected to internet,update failed</string>
@@ -110,7 +110,7 @@
     <string name="UMUpdateNow">Update now</string>
     <string name="UMUpdateSize">Update size: </string>
     <string name="UMUpdateTitle">New version found</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="active_rule_string">
         <Data>
@@ -150,31 +150,31 @@
     <string name="activity_regist_pwd_hint">输入密码</string>
     <string name="activity_regist_verify_num_hint">输入验证码</string>
     <string name="app_name">爱掌勺</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <string name="com_facebook_loading">Loading...</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="list_paging_bottom_text">数据全部加载完毕</string>
     <string name="not_updated_yet">暂未更新过</string>
     <string name="pull_to_refresh">下拉可以刷新</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <string name="pull_to_refresh_pull_label" translatable="false">向下拉动可以刷新</string>
     <string name="pull_to_refresh_refreshing_label" translatable="false">加载中…</string>
     <string name="pull_to_refresh_release_label" translatable="false">松开可以刷新</string>
     <string name="pull_to_refresh_tap_label" translatable="false">点击刷新</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="refreshing">正在刷新…</string>
     <string name="release_to_refresh">释放立即刷新</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/tb_munion_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/tb_munion_strings.xml -->
     <eat-comment/>
     <string name="tb_munion_tip_download_prefix">正在下载:</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="time_error">时间有问题</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_common_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_common_strings.xml -->
     <eat-comment/>
     <string name="umeng_common_action_cancel">Cancel</string>
     <string name="umeng_common_action_continue">Continue</string>
@@ -191,7 +191,7 @@
     <string name="umeng_common_silent_download_finish">New version is ready,click to install it.</string>
     <string name="umeng_common_start_download_notification">Download start.</string>
     <string name="umeng_common_start_patch_notification">Patch start.</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_strings.xml -->
     <eat-comment/>
     <string name="umeng_example_home_btn_plus">社交分享</string>
     <string name="umeng_socialize_back" translatable="false">返回</string>
@@ -250,11 +250,11 @@
     <string name="umeng_socialize_tip_loginfailed" translatable="false">登录失败…</string>
     <string name="umeng_socialize_ucenter_login_title_guide" translatable="false">游客登录</string>
     <string name="umeng_socialize_ucenter_login_title_platform" translatable="false">登录帐号</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="updated_at">上次更新于%1$s前</string>
     <string name="updated_just_now">刚刚更新</string>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="ActionbarMainTitleStyle">
 	    <item name="android:textSize">@dimen/actionbar_title_size</item>
@@ -318,14 +318,14 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowAnimationStyle">@style/RightInOutAnimStyle</item>
 	</style>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_style.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_style.xml -->
     <eat-comment/>
     <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"/>
     <style name="Theme.UMDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="Theme.WeightSelectDialog" parent="@android:style/Theme.Dialog">
 	    <item name="android:windowFrame">@null</item><!-- windowFrame框为无 -->
@@ -371,7 +371,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">right</item>
     </style>
-    <!-- From: file:/H:/StudioProjects/BUY/app/src/main/res/values/umeng_socialize_style.xml -->
+    <!-- From: file:/H:/GitHub/BUY/app/src/main/res/values/umeng_socialize_style.xml -->
     <eat-comment/>
     <style name="umeng_socialize_action_bar_item_im">
         <item name="android:layout_width">25dp</item>
